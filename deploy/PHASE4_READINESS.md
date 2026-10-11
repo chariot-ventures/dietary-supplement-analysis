@@ -19,9 +19,10 @@ Chain values are governance parameters: re-run `live_params.py` before acting on
 
 ## Before registering
 
-- [ ] Make the GitHub repo public, merge to `main`, and tag `v0.1.0`; the card points at
-      `raw.githubusercontent.com/.../v0.1.0/openapi/openapi.json`, `OPERATORS.md` and the README.
-- [ ] Write `OPERATORS.md` (the card's `serving.docs`).
+- [x] Merge to `main` and tag `v0.1.0` (done 2026-10-11).
+- [x] Write `OPERATORS.md` (the card's `serving.docs`).
+- [ ] Make the GitHub repo public (owner, in GitHub settings). The card's spec, docs and operator
+      links point at `main` and the `v0.1.0` tag and must be readable without a login.
 - [ ] Owner checks the DRI values in `data/source/manual.json` against the NIH ODS fact sheets.
 - [ ] VPS (Ubuntu 24.04, 2 vCPU, 4 GB RAM, 25+ GB SSD) and DNS for `beta-supplement.<domain>` and `api-supplement.<domain>`.
 - [ ] Owner, operator and application keys created on the developer's machine (macOS: `pocketd`
