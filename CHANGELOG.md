@@ -2,7 +2,7 @@
 
 ## 0.12.5 (2026-10-11)
 
-- FDA summary: \"1 FDA adverse event report names a product\" (was \"name\").
+- FDA summary: "1 FDA adverse event report names a product" (was "name").
 - README: the judges' section is now real questions with the live answers, plus why the service matters for Pocket Network; Dependabot opens minor and patch updates only.
 
 ## 0.12.4 (2026-10-11)
