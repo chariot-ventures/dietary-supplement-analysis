@@ -39,7 +39,10 @@ curl -s https://agents.trackmysupplement.com/v1/products/fda -H 'Content-Type: a
 
 6. In Claude or any MCP client: add https://agents.trackmysupplement.com/mcp as a custom connector (no key) and ask "I take Centrum Silver and 5000 IU of vitamin D and I'm on warfarin. Anything I should know?"
 
-7. Through Pocket Network: stake an application for dietary-supplement-analysis on Beta TestNet and relay with pocket-ap using deploy/beta-stake/pocket-ap.yaml (README, "Through Pocket Network (paid relay)"). The test transaction above is the settled claim for such a relay.
+7. Agent to agent, where much of the volume should come from: examples/agent-flows.sh in the repo runs five calls other agents make with no person in the loop. A pharmacy agent checks a new levothyroxine prescription against the supplements on file, a shopping agent gets a verdict for each item in a cart, a vision agent passes along a label it read from a photo, a health-coach agent runs its weekly check, and a medication-review agent combines this service with drug-drug services such as Pocket's med-safety. examples/agent_loop.py is a 50-line assistant that loads GET /v1/tools and lets a model call them. The pharmacy agent's call:
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{"age":66,"sex":"female","detail":"summary","medications":["levothyroxine"],"products":[{"query":"Centrum Silver Women 50+"},{"query":"Caltrate 600+D3"}]}' | jq '.interactions.findings[] | {trigger_name, nutrient_ids, summary, timing}'
+
+8. Through Pocket Network: stake an application for dietary-supplement-analysis on Beta TestNet and relay with pocket-ap using deploy/beta-stake/pocket-ap.yaml (README, "Through Pocket Network (paid relay)"). The test transaction above is the settled claim for such a relay.
 
 Every response is a JSON object, errors are 4xx (never 5xx), and GET /openapi.json and GET /v1/tools describe every operation. The README's "Why it matters for Pocket Network" section covers demand, repeat relays and the free-trial-to-paid path.
 ```
