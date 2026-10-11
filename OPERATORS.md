@@ -195,7 +195,7 @@ Image versions follow the card's `serving.implementations` (`dietary-supplement-
 curl -fsSL https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/main/deploy/autodeploy/install.sh | sudo bash
 ```
 
-It installs a systemd timer that checks GitHub every 5 minutes for the newest `vX.Y.Z` tag. A new tag is built, smoke-tested in a throwaway container (the version must match the tag, and `/v1/health` and the card's functional probe must pass), then swapped in with the compose file from that tag. If the live container fails the same checks, the previous image is restored and the tag is marked failed so it isn't retried. Only the backend container changes; the RelayMiner, Redis, Caddy and on-chain state are untouched. Logs: `journalctl -u dsa-autodeploy` and `/opt/pocket/services/dietary-supplement-analysis/autodeploy/deploy.log`.
+It installs a systemd timer that checks GitHub every 5 minutes for the newest release: the highest `vX.Y.Z` tag, or the head of the `release` branch when its `package.json` carries a higher version (set `TRACK` in `/etc/dsa-autodeploy.env` to change this, for example `TRACK=branch:main`). A new release is built, smoke-tested in a throwaway container (`/v1/version` must report the release's version, and `/v1/health` and the card's functional probe must pass), then swapped in with the compose file from that release. If the live container fails the same checks, the previous image is restored and the release is marked failed so it isn't retried. Only the backend container changes; the RelayMiner, Redis, Caddy and on-chain state are untouched. Logs: `journalctl -u dsa-autodeploy` and `/opt/pocket/services/dietary-supplement-analysis/autodeploy/deploy.log`.
 
 ## Troubleshooting
 

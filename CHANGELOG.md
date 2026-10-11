@@ -14,7 +14,7 @@ One call now goes from what a user says to what they should look at.
 - **`agent_summary`**: two to five plain sentences, generated deterministically from the numbers.
 - **Data checks.** `DATA_SUSPECT` gaps flag NIH label records that look wrong: the same ingredient twice under one heading, nested amounts over their total, a %DV that contradicts the amount, or an amount over 50 times the highest adult UL.
 - **Discovery.** `GET /v1/tools` (tool definitions with JSON Schema inputs), `GET /v1/guide` and [llms.txt](llms.txt) (usage guide), and request examples in the OpenAPI spec.
-- **Operations.** Release tags deploy themselves to the supplier server ([deploy/autodeploy/](deploy/autodeploy/)).
+- **Operations.** Releases deploy themselves to the supplier server: a new `vX.Y.Z` tag, or a push to the `release` branch with a higher version ([deploy/autodeploy/](deploy/autodeploy/)).
 
 ## 0.1.0 (2026-10-11)
 

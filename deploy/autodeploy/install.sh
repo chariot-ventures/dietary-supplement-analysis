@@ -15,6 +15,13 @@ for f in autodeploy.sh backend-compose.yaml; do
 done
 install -m 755 /usr/local/share/dsa-autodeploy/autodeploy.sh /usr/local/bin/dsa-autodeploy
 
+# What to follow: the highest vX.Y.Z tag, or the release branch when it carries a newer version.
+[ -f /etc/dsa-autodeploy.env ] || cat > /etc/dsa-autodeploy.env <<'ENV'
+# Read by /usr/local/bin/dsa-autodeploy. See deploy/autodeploy/autodeploy.sh.
+TRACK=tags
+TRACK_FALLBACK_BRANCH=release
+ENV
+
 cat > /etc/systemd/system/dsa-autodeploy.service <<'UNIT'
 [Unit]
 Description=Deploy the newest dietary-supplement-analysis release tag
