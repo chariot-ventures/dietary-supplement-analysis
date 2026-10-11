@@ -220,7 +220,7 @@ describe('discovery for agents', () => {
     const res = await app.inject({ method: 'GET', url: '/v1/tools' });
     expect(res.statusCode).toBe(200);
     const body = res.json();
-    expect(body.tools.map((t: { name: string }) => t.name)).toEqual(['stack_analyze', 'products_search', 'products_lookup', 'products_get', 'interactions_check', 'nutrients_reference']);
+    expect(body.tools.map((t: { name: string }) => t.name)).toEqual(['stack_analyze', 'products_search', 'products_lookup', 'products_get', 'interactions_check', 'products_fda_reports', 'nutrients_reference']);
     for (const t of body.tools) {
       expect(t.input_schema.type).toBe('object');
       expect(t.description.length).toBeGreaterThan(40);

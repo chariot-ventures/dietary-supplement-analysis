@@ -3,6 +3,7 @@ import { parseBody, toolRequest } from '../schemas/requests.js';
 import type { Deps } from './deps.js';
 import { nutrientReference } from './nutrients.js';
 import { getProducts, lookupProduct, searchProducts } from './products.js';
+import { fdaReports } from './fda.js';
 import { checkInteractions } from './interactions.js';
 import { analyze } from './stack.js';
 
@@ -23,6 +24,8 @@ export function registerToolRoute(app: FastifyInstance, deps: Deps): void {
         return analyze(args, deps);
       case 'interactions_check':
         return checkInteractions(args, deps);
+      case 'products_fda_reports':
+        return fdaReports(args, deps);
     }
   });
 }

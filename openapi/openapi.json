@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Dietary Supplement Label and Nutrient Intake Analysis",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "description": "Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Label and reference data only; not medical advice."
   },
   "externalDocs": {
@@ -326,6 +326,295 @@
                     },
                     "product": {
                       "$ref": "#/components/schemas/Label"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Source"
+                      }
+                    },
+                    "disclaimer": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND (unknown DSLD ID or nutrient)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "UNSUPPORTED (pregnancy or lactation outside ages 14-50)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "UPSTREAM_UNAVAILABLE: NIH DSLD unreachable and nothing cached (retryable)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/products/fda": {
+      "post": {
+        "summary": "FDA recalls and adverse event reports",
+        "description": "Recalls (openFDA food enforcement reports, which cover dietary supplements) and CAERS adverse event reports for one product, given as a DSLD ID, barcode, name, or brand and name. A recall is listed only when its description carries the product's barcode or the brand and every distinctive product-name word; others mentioning the brand are counted. Adverse event reports are counted for the product (brand and name words) or, failing that, the brand. A report does not show that the product caused the event.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dsld_id": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 10000000,
+                    "description": "DSLD label ID, e.g. from /v1/products/search"
+                  },
+                  "upc": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 32,
+                    "description": "UPC-A or EAN barcode digits as printed on the bottle, e.g. \"031604026974\" (spaces and dashes are ignored)"
+                  },
+                  "query": {
+                    "description": "Product as the user named it; resolved to a DSLD label",
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 200
+                  },
+                  "brand": {
+                    "description": "Brand (with \"name\", or to narrow \"query\")",
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 100
+                  },
+                  "name": {
+                    "description": "Product name as printed, used with \"brand\" when the product is not in DSLD",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                },
+                "additionalProperties": false
+              },
+              "examples": {
+                "by_name": {
+                  "value": {
+                    "query": "Nature Made Vitamin D3 1000 IU"
+                  }
+                },
+                "by_brand": {
+                  "value": {
+                    "brand": "Nature Made",
+                    "name": "D3 1000 IU"
+                  }
+                },
+                "by_barcode": {
+                  "value": {
+                    "upc": "031604026974"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "FDA records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string",
+                      "const": "dietary-supplement-analysis"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "as_of": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "product": {
+                      "type": "object",
+                      "properties": {
+                        "dsld_id": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "brand": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "upc": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "agent_summary": {
+                      "type": "string"
+                    },
+                    "recalls": {
+                      "type": "object",
+                      "properties": {
+                        "matched": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "recall_number": {
+                                "type": "string"
+                              },
+                              "classification": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "status": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reason_for_recall": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "product_description": {
+                                "type": "string"
+                              },
+                              "recalling_firm": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "recall_initiation_date": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "report_date": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "matched_by": {
+                                "type": "string",
+                                "enum": [
+                                  "upc",
+                                  "brand_and_name"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "brand_recalls_total": {
+                          "type": "integer"
+                        },
+                        "last_updated": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "search_url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "adverse_events": {
+                      "type": "object",
+                      "properties": {
+                        "scope": {
+                          "type": "string",
+                          "enum": [
+                            "product",
+                            "brand",
+                            "none"
+                          ]
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "top_reactions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "term": {
+                                "type": "string"
+                              },
+                              "count": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        },
+                        "last_updated": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "search_url": {
+                          "type": "string"
+                        },
+                        "note": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "data_gaps": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DataGap"
+                      }
                     },
                     "sources": {
                       "type": "array",
@@ -1718,7 +2007,8 @@
                       "products_lookup",
                       "nutrients_reference",
                       "stack_analyze",
-                      "interactions_check"
+                      "interactions_check",
+                      "products_fda_reports"
                     ]
                   },
                   "arguments": {
@@ -1993,7 +2283,8 @@
               "PRODUCT_NOT_RESOLVED",
               "INTERACTIONS_NOT_ASSESSED",
               "INTERACTIONS_PARTIAL",
-              "MEDICATION_NOT_RECOGNIZED"
+              "MEDICATION_NOT_RECOGNIZED",
+              "FDA_UNAVAILABLE"
             ]
           },
           "product_ref": {

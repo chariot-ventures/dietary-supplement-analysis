@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { GUIDE } from '../lib/guide.js';
 import { requestSchema } from '../openapi.js';
-import { analyzeRequest, getRequest, interactionsRequest, lookupRequest, referenceRequest, searchRequest } from '../schemas/requests.js';
+import { analyzeRequest, fdaRequest, getRequest, interactionsRequest, lookupRequest, referenceRequest, searchRequest } from '../schemas/requests.js';
 import { DOCS_URL, SERVICE_ID, VERSION } from '../version.js';
 
 /**
@@ -41,6 +41,13 @@ export function toolDefinitions() {
       description:
         'Which vitamins and minerals interact with given medications (generic or brand names, e.g. "warfarin", "Synthroid") or conditions, per the NIH Office of Dietary Supplements fact sheets, with timing advice (e.g. take levothyroxine 4 hours apart from calcium). No product list needed; to check an actual stack, pass medications to stack_analyze instead. Not exhaustive.',
       input_schema: requestSchema(interactionsRequest),
+    },
+    {
+      name: 'products_fda_reports',
+      path: '/v1/products/fda',
+      description:
+        'FDA recalls and adverse event reports (CAERS) for one supplement, from openFDA. Give a product name, barcode, DSLD ID, or brand and name. Recalls are listed only when they carry the barcode or the brand and every product-name word; adverse event reports are counted with their most common reactions. Reports do not show that a product caused an event.',
+      input_schema: requestSchema(fdaRequest),
     },
     {
       name: 'nutrients_reference',

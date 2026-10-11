@@ -5,7 +5,7 @@
  * test fails if it drifts from this function.
  */
 import { z } from 'zod';
-import { analyzeRequest, getRequest, interactionsRequest, lookupRequest, referenceRequest, searchRequest, toolRequest } from './schemas/requests.js';
+import { analyzeRequest, fdaRequest, getRequest, interactionsRequest, lookupRequest, referenceRequest, searchRequest, toolRequest } from './schemas/requests.js';
 import { DOCS_URL, SERVICE_ID, VERSION } from './version.js';
 
 type Json = Record<string, unknown>;
@@ -99,6 +99,7 @@ const components: Json = {
           'INTERACTIONS_NOT_ASSESSED',
           'INTERACTIONS_PARTIAL',
           'MEDICATION_NOT_RECOGNIZED',
+          'FDA_UNAVAILABLE',
         ],
       },
       product_ref: { type: 'string' },
@@ -384,6 +385,37 @@ export function buildOpenApi(): Json {
           product: { $ref: '#/components/schemas/Label' },
         }),
         { upc: { upc: '031604026974' } },
+      ),
+      '/v1/products/fda': post(
+        'FDA recalls and adverse event reports',
+        'Recalls (openFDA food enforcement reports, which cover dietary supplements) and CAERS adverse event reports for one product, given as a DSLD ID, barcode, name, or brand and name. A recall is listed only when its description carries the product\'s barcode or the brand and every distinctive product-name word; others mentioning the brand are counted. Adverse event reports are counted for the product (brand and name words) or, failing that, the brand. A report does not show that the product caused the event.',
+        fdaRequest,
+        ok('FDA records', {
+          product: { type: 'object', properties: { dsld_id: nullable('integer'), brand: { type: 'string' }, name: { type: 'string' }, upc: nullable('string') } },
+          agent_summary: { type: 'string' },
+          recalls: {
+            type: 'object',
+            properties: {
+              matched: { type: 'array', items: { type: 'object', properties: { recall_number: { type: 'string' }, classification: nullable('string'), status: nullable('string'), reason_for_recall: nullable('string'), product_description: { type: 'string' }, recalling_firm: nullable('string'), recall_initiation_date: nullable('string'), report_date: nullable('string'), matched_by: { type: 'string', enum: ['upc', 'brand_and_name'] } } } },
+              brand_recalls_total: { type: 'integer' },
+              last_updated: nullable('string'),
+              search_url: { type: 'string' },
+            },
+          },
+          adverse_events: {
+            type: 'object',
+            properties: {
+              scope: { type: 'string', enum: ['product', 'brand', 'none'] },
+              total: { type: 'integer' },
+              top_reactions: { type: 'array', items: { type: 'object', properties: { term: { type: 'string' }, count: { type: 'integer' } } } },
+              last_updated: nullable('string'),
+              search_url: { type: 'string' },
+              note: { type: 'string' },
+            },
+          },
+          data_gaps: { type: 'array', items: { $ref: '#/components/schemas/DataGap' } },
+        }),
+        { by_name: { query: 'Nature Made Vitamin D3 1000 IU' }, by_brand: { brand: 'Nature Made', name: 'D3 1000 IU' }, by_barcode: { upc: '031604026974' } },
       ),
       '/v1/products/get': post(
         'Get normalized labels',

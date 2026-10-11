@@ -1,6 +1,7 @@
 import Fastify, { LogController, type FastifyInstance, type FastifyServerOptions } from 'fastify';
 import { AppError } from './lib/errors.js';
 import { escapeGatewayPhrases } from './lib/phrases.js';
+import { registerFdaRoutes } from './routes/fda.js';
 import { registerInteractionRoutes } from './routes/interactions.js';
 import { registerMcpRoute } from './routes/mcp.js';
 import { registerMetaRoutes } from './routes/meta.js';
@@ -70,6 +71,7 @@ export function buildApp(opts: AppOptions): FastifyInstance {
   registerProductRoutes(app, opts);
   registerStackRoutes(app, opts);
   registerInteractionRoutes(app, opts);
+  registerFdaRoutes(app, opts);
   registerToolRoute(app, opts);
   registerToolsRoutes(app);
   registerMcpRoute(app, opts);

@@ -149,8 +149,23 @@ export const interactionsRequest = z
   .strict()
   .refine((v) => v.medications || v.conditions, { message: 'Give medications, conditions or both', path: ['medications'] });
 
+export const fdaRequest = z
+  .object({
+    dsld_id: dsldId.optional(),
+    upc: upc.optional(),
+    query: z.string().trim().min(2).max(200).optional().describe('Product as the user named it; resolved to a DSLD label'),
+    brand: z.string().trim().min(2).max(100).optional().describe('Brand (with "name", or to narrow "query")'),
+    name: z.string().trim().min(1).max(200).optional().describe('Product name as printed, used with "brand" when the product is not in DSLD'),
+  })
+  .strict()
+  .refine((v) => [v.dsld_id !== undefined, v.upc !== undefined, v.query !== undefined, v.name !== undefined].filter(Boolean).length === 1, {
+    message: 'Give exactly one of dsld_id, upc, query, or brand with name',
+    path: ['dsld_id'],
+  })
+  .refine((v) => v.name === undefined || v.brand !== undefined, { message: 'name needs brand', path: ['brand'] });
+
 export const toolRequest = z.object({
-  tool: z.enum(['products_search', 'products_get', 'products_lookup', 'nutrients_reference', 'stack_analyze', 'interactions_check']),
+  tool: z.enum(['products_search', 'products_get', 'products_lookup', 'nutrients_reference', 'stack_analyze', 'interactions_check', 'products_fda_reports']),
   arguments: z.record(z.string(), z.unknown()).default({}),
 });
 

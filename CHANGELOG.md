@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0 (2026-10-11)
+
+- **New: `POST /v1/products/fda`** (tool `products_fda_reports`): FDA recalls and CAERS adverse event reports for one supplement from openFDA, by name, barcode, DSLD ID, or brand and name. A recall is listed only when it carries the product's barcode or the brand and every distinctive name word; recalls that only mention the brand are counted. Adverse event reports are counted with their most common reactions, with FDA's caveat that a report does not show causation. Cached for a day; `OPENFDA_API_KEY` raises openFDA's daily limit; `OPENFDA=off` turns it off.
+
 ## 0.7.0 (2026-10-11)
 
 - **Botanicals.** 16 herbs and other non-nutrients with NIH NCCIH/ODS safety signals are reported in `botanicals[]`: liver injury (ashwagandha, kava, black cohosh, garcinia, green tea extract, bioavailable curcumin), bleeding (ginkgo), drug interactions (St. John's wort, goldenseal), statin-like effects (red yeast rice), heart risks (yohimbe), the 2004 ephedra ban, sedation (kava, valerian) and allergies (echinacea), each with its pregnancy statement. Matching is exact on the DSLD ingredient group or the name without plant-part words.

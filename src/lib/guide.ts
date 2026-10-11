@@ -48,6 +48,7 @@ Read the response in this order:
 
 - POST /v1/products/search {"query", "brand"?, "ingredient"?, "limit"<=10, "dedupe_versions"=true}: product summaries, one per product (older label versions in other_versions).
 - POST /v1/products/lookup {"upc"}: the label for a barcode, newest version first.
+- POST /v1/products/fda {"query"} or {"upc"} or {"dsld_id"} or {"brand", "name"}: FDA recalls matching the product and CAERS adverse event report counts (reports do not show causation).
 - POST /v1/products/get {"dsld_id"} or {"dsld_ids": [...]}: full normalized labels.
 - POST /v1/interactions/check {"medications"?, "conditions"?, "nutrients"?}: NIH-listed nutrient interactions for medications or conditions, without a stack.
 - POST /v1/nutrients/reference {"nutrient", "age", "sex"}: RDA, EAR, AI, UL and UL basis. Offline.

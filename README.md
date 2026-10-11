@@ -104,7 +104,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.7.0"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.8.0"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
 | POST | `/mcp` | Remote MCP server (Streamable HTTP, stateless): the same tools for MCP clients |
@@ -115,6 +115,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | POST | `/v1/interactions/check` | NIH-listed nutrient interactions for medications or conditions, no stack needed: `{"medications":["Synthroid"],"nutrients":["calcium"]}` |
 | POST | `/v1/products/search` | Find products in DSLD: `{"query":"vitamin d3 5000","brand":"NOW","limit":5}`; label versions collapsed |
 | POST | `/v1/products/lookup` | Label for a barcode: `{"upc":"031604026974"}` |
+| POST | `/v1/products/fda` | FDA recalls and adverse event reports (openFDA) for one product: `{"query":"Nature Made D3 1000 IU"}`, `{"upc":...}`, `{"dsld_id":...}` or `{"brand":...,"name":...}` |
 | POST | `/v1/products/get` | Normalized labels: `{"dsld_id":12345}` or `{"dsld_ids":[...]}` (max 10) |
 | POST | `/v1/nutrients/reference` | RDA/EAR/AI/UL and UL basis for one nutrient: `{"nutrient":"vitamin d","age":34,"sex":"female"}` (offline) |
 | POST | `/v1/tool` | MCP-style dispatcher: `{"tool":"stack_analyze","arguments":{...}}` |
@@ -199,6 +200,7 @@ Each nutrient total includes:
 | `DATA_SUSPECT` | NIH's label record looks inconsistent; the amount is still counted. `check` says which test failed: `duplicate_row` (the same ingredient twice under one heading, like EPA entered as DHA), `nested_exceeds_parent` (rows add up to more than their declared total), `percent_dv_mismatch` (the printed %DV contradicts the amount under both the current and the pre-2016 Daily Value), `implausible_amount` (over 50 times the highest adult UL, typically mg typed for mcg) |
 | `INTERACTIONS_NOT_ASSESSED` | No `medications` were given, so medication interactions weren't checked. Supplement-to-supplement interactions are never evaluated |
 | `INTERACTIONS_PARTIAL` | Medications were checked, but only against the interactions named in the NIH ODS fact sheets; the list is not exhaustive |
+| `FDA_UNAVAILABLE` | `/v1/products/fda` only: openFDA couldn't be reached for recalls or adverse events; the rest of the answer stands |
 | `MEDICATION_NOT_RECOGNIZED` | A medication name matched no class in the NIH fact sheet interaction list (directly or through RxNorm), so nothing was checked for it |
 
 ## How the numbers are produced

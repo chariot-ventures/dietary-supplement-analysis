@@ -3,6 +3,7 @@ import { buildApp } from './app.js';
 import { DsldClient } from './lib/dsld.js';
 import { createFixtureFetch, loadFixtureLabels } from './lib/dsld-fixtures.js';
 import { RxNormClient } from './lib/interactions.js';
+import { OpenFdaClient } from './lib/openfda.js';
 import { openLabelStore } from './lib/store.js';
 import { startWarmer } from './lib/warm.js';
 import { SERVICE_ID, VERSION } from './version.js';
@@ -24,6 +25,7 @@ const dsld = new DsldClient({
 const app = buildApp({
   dsld,
   // RXNORM=off (or offline fixtures) keeps medication matching to the names in data/interactions.json.
+  openfda: fixturesDir || process.env.OPENFDA === 'off' ? null : new OpenFdaClient(undefined, process.env.OPENFDA_BASE_URL || undefined, process.env.OPENFDA_API_KEY || undefined),
   rxnorm: fixturesDir || process.env.RXNORM === 'off' ? null : new RxNormClient(undefined, process.env.RXNORM_BASE_URL || undefined),
   logger: { level: process.env.LOG_LEVEL ?? 'info' },
   ...(process.env.UPSTREAM_BUDGET_MS ? { upstreamBudgetMs: Number(process.env.UPSTREAM_BUDGET_MS) } : {}),
