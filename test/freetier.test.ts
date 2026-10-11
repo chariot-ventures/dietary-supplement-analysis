@@ -70,6 +70,15 @@ describe('free trial on the demo hostname', () => {
     expect((await rest('1.1.1.1')).statusCode).toBe(200);
   });
 
+  it('ignores caller-supplied X-Forwarded-For entries (only the proxy-appended last one counts)', async () => {
+    const t = new FreeTier([DEMO], { ...limits, perIpRest: 1, global: 100 }, null, () => new Date('2026-10-11T12:00:00Z'));
+    const a = buildApp({ dsld: fixtureClient(), freeTier: t });
+    const go = (xff: string) => a.inject({ method: 'POST', url: '/v1/nutrients/reference', headers: { host: DEMO, 'x-forwarded-for': xff }, payload: ref });
+    expect((await go('6.6.6.6, 7.7.7.7')).statusCode).toBe(200);
+    expect((await go('8.8.8.8, 7.7.7.7')).statusCode).toBe(429); // spoofed first entry changed, real client the same
+    await a.close();
+  });
+
   it('groups IPv6 by /64 and reads IPv4-mapped addresses', () => {
     expect(ipKey('2001:db8:1:2:aaaa::1')).toBe('2001:db8:1:2::/64');
     expect(ipKey('::ffff:10.0.0.1')).toBe('10.0.0.1');

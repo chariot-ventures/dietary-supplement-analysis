@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.1 (2026-10-11)
+
+- The free trial reads the client address from the last X-Forwarded-For entry (the one the proxy adds), so a caller-supplied header cannot reset a quota.
+
 ## 0.11.0 (2026-10-11)
 
 - **Free trial on the demo host, paid route unchanged.** `agents.trackmysupplement.com` (REST and `/mcp`) now has daily quotas that reset at 00:00 UTC: 25 tool calls per MCP connection, 100 REST calls per IP, 1,000 MCP calls per IP, and 5,000 free calls in total. Discovery calls are free, and results are never degraded.

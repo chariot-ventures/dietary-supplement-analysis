@@ -85,10 +85,16 @@ export class FreeTier {
     return this.hosts.has(host);
   }
 
-  /** Client IP as Caddy reports it (Caddy replaces any client-supplied X-Forwarded-For). */
+  /**
+   * Client IP as the proxy in front saw it: the last X-Forwarded-For entry, which the
+   * proxy appends itself. Earlier entries can be supplied by the caller, so they're ignored.
+   */
   clientIp(req: FastifyRequest): string {
-    const xff = String(req.headers['x-forwarded-for'] ?? '').split(',')[0]!.trim();
-    return xff || req.ip;
+    const xff = String(req.headers['x-forwarded-for'] ?? '')
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+    return xff[xff.length - 1] ?? req.ip;
   }
 
   private hash(s: string): string {
