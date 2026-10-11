@@ -1,0 +1,7 @@
+{
+  "network": "beta",
+  "keyring_backend": "os",
+  "owner":       { "key": "dsa-owner",    "address": "pokt1yypd76yqufdd8emv406ukjk8pu7ync57k9m3l3" },
+  "operator":    { "key": "dsa-operator", "address": "pokt1mj9574ugmp9ujm5qre8h7fyclmaequ0jxttfw5" },
+  "application": { "key": "dsa-app",      "address": "pokt183ua3gtgfnjn24fp3vnm57d9xhl9hmsjrjy38w" }
+}

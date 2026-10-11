@@ -23,10 +23,21 @@ Chain values are governance parameters: re-run `live_params.py` before acting on
 - [x] Write `OPERATORS.md` (the card's `serving.docs`).
 - [ ] Make the GitHub repo public (owner, in GitHub settings). The card's spec, docs and operator
       links point at `main` and the `v0.1.0` tag and must be readable without a login.
-- [ ] Owner checks the DRI values in `data/source/manual.json` against the NIH ODS fact sheets.
+- [x] DRI values in `data/source/manual.json` checked against the NIH ODS fact sheets in a browser
+      (2026-10-11): every RDA, AI and UL for ages 1+ matches. The fact sheets do not print EARs, so those
+      were not checked there. Fixed one conversion: 1 IU supplemental beta-carotene = 0.3 mcg RAE (was 0.15).
 - [ ] VPS (Ubuntu 24.04, 2 vCPU, 4 GB RAM, 25+ GB SSD) and DNS for `beta-supplement.<domain>` and `api-supplement.<domain>`.
-- [ ] Owner, operator and application keys created on the developer's machine (macOS: `pocketd`
-      command-line workflow); funded from the faucet.
+- [x] Owner, operator and application keys created on the owner's Mac with `deploy/macos-keys.sh`
+      (pocketd 0.1.35, passphrase-protected key file); addresses in `deploy/beta-addresses.json`.
+      Each funded with 100,000 POKT from the Beta faucet on 2026-10-11:
+      owner `88161BFA…FACC1C` (height 722333), operator `6CE7C10D…AB3F69C` (722334),
+      application `B64D18A2…139C4524` (722336). All three succeeded (code 0).
+
+## Done on Beta TestNet
+
+| Step | Tx hash | Height | Result |
+|---|---|---|---|
+| Register `dietary-supplement-analysis`, 500 CU/relay, card from `card/card.json` (owner `dsa-owner`) | `BC01B11FFF4100473B84D483026F266111CF73CE9B07584E3083EDCF19B47DD5` | 722359 | code 0; on-chain card is byte-identical to `card/card.json` (3,474 bytes, SHA-256 `e9dde0dd…25eae79a`). Fee 1,000 POKT + ~0.33 POKT gas. |
 
 ## Order (skill workflow steps 6-9)
 

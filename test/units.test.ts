@@ -65,7 +65,7 @@ describe('vitamin A', () => {
   });
   it('IU converts only when the form is unambiguous', () => {
     expect(amountOf(toCanonical(n('vitamin-a'), 10000, 'IU', 'preformed'))).toBe(3000);
-    expect(amountOf(toCanonical(n('vitamin-a'), 10000, 'IU', 'beta_carotene'))).toBe(1500);
+    expect(amountOf(toCanonical(n('vitamin-a'), 10000, 'IU', 'beta_carotene'))).toBe(3000);
     expect(toCanonical(n('vitamin-a'), 10000, 'IU', null).ok).toBe(false);
     expect(toCanonical(n('vitamin-a'), 10000, 'IU', 'other_carotenoid').ok).toBe(false);
   });

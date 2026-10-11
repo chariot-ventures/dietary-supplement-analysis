@@ -114,7 +114,7 @@ The response contains `summary`, `assumptions`, `nutrient_totals`, `overlaps`, `
 - **Unit conversion** happens only when the result is unambiguous:
   - Vitamin D: 1 mcg = 40 IU.
   - Vitamin E: natural form 0.67 mg per IU, synthetic form 0.45 mg per IU. An unknown form becomes a data gap.
-  - Vitamin A: IU converts only for retinol (0.3 mcg RAE per IU) or supplemental beta-carotene (0.15 mcg RAE per IU).
+  - Vitamin A: IU converts only for retinol (0.3 mcg RAE per IU) or supplemental beta-carotene (0.3 mcg RAE per IU).
   - Folate: plain mcg of folic acid × 1.7 = mcg DFE.
   - Percent DV is shown exactly as on the label and is never used in totals.
 - **UL scope** is stored for each nutrient and explained in the response:

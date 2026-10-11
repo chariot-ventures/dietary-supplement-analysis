@@ -8,7 +8,6 @@ Pocket Network service `dietary-supplement-analysis`: NIH DSLD supplement labels
 - **Keys** stay on the owner's Mac (`pocketd` keyring) and in a mode-0600 secrets file on the VPS. Never commit them, paste them into chat, or put them in an answers file.
 - **Open owner tasks:**
   - Make the GitHub repo public.
-  - Check the DRI values in `data/source/manual.json` against the NIH ODS fact sheets. ods.od.nih.gov blocks automated clients, so use a real browser.
   - Provide a VPS provider account and a domain.
 
 ## Commands

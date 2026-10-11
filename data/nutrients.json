@@ -5104,11 +5104,11 @@
         },
         {
           "from": "IU",
-          "factor": 0.15,
+          "factor": 0.3,
           "applies_to_forms": [
             "beta_carotene"
           ],
-          "note": "1 IU supplemental beta-carotene = 0.15 mcg RAE"
+          "note": "1 IU supplemental beta-carotene = 0.3 mcg RAE"
         },
         {
           "from": "mcg",
