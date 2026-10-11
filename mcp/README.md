@@ -40,4 +40,8 @@ Without `DSA_BASE_URL` the bridge uses the public demo endpoint.
 
 ## Registries
 
-[`server.json`](server.json) is the entry for the official MCP Registry. Publish it with `mcp-publisher login github` and `mcp-publisher publish` from this folder. The `io.github.chariot-ventures/` name needs the repository owner's GitHub login (CI publishes it automatically on each release). The same URL can be submitted to Smithery and mcp.so through their web forms.
+Listed in:
+
+- **Official MCP Registry:** `io.github.chariot-ventures/dietary-supplement-analysis`, from [`server.json`](server.json). CI republishes it from the release branch on every release (GitHub OIDC, no secret). To publish by hand: `mcp-publisher login github` as the repository owner, then `mcp-publisher publish` from this folder. Directories that read the registry (PulseMCP and others) pick it up from there.
+- **Smithery:** [smithery.ai/servers/chariot-ventures/dietary-supplement-analysis](https://smithery.ai/servers/chariot-ventures/dietary-supplement-analysis), a URL listing of `https://agents.trackmysupplement.com/mcp` with no connection parameters. Smithery rescans the server when a new release is published from its Releases tab.
+- **mcp.so** now charges a submission fee, so it isn't listed there.
