@@ -1,13 +1,27 @@
 # Dietary Supplement Label and Nutrient Intake Analysis
 
-A Pocket Network service (`dietary-supplement-analysis`) for AI agents. Give it a list of supplements and it returns per-nutrient daily totals across the whole stack, compared with NIH reference intakes (RDA/AI) and upper limits (UL). Every number traces back to its label and source.
+AI assistants call this service when someone asks "is my supplement routine OK?". Give it the products the way a person names them (product name, barcode or NIH label ID), with age and sex, and optionally their medications, conditions and what they eat. It finds each label in the NIH Dietary Supplement Label Database, totals every vitamin and mineral per day across all of them, and compares the totals with NIH reference intakes and upper limits. It also reports the medication interactions named in the NIH fact sheets, herbs with NIH safety signals, and FDA recalls and adverse event reports. Every answer starts with a plain-language summary an assistant can relay (English or Spanish), and every number traces back to its label or NIH source.
 
-- **Label data:** [NIH Dietary Supplement Label Database (DSLD)](https://dsld.od.nih.gov/) API v9
-- **Reference values:** Food and Nutrition Board DRIs, as published on the [NIH Office of Dietary Supplements fact sheets](https://ods.od.nih.gov/factsheets/list-all/)
-- **Running a supplier or gateway:** see [OPERATORS.md](OPERATORS.md).
-- **What it is not:** medical advice, an efficacy database or an interaction checker. It reports what labels declare and how the totals compare with published reference values. For medications, see the Pocket services `med-safety` and `fda`.
+It runs on Pocket Network Beta TestNet as the paid service `dietary-supplement-analysis`, and as a remote MCP server with a free trial.
 
-> **Status:** live on Beta TestNet; the running version is at [`/v1/version`](https://agents.trackmysupplement.com/v1/version) and every release is in [CHANGELOG.md](CHANGELOG.md). The service passes all 9 Pocket portal acceptance rules, and its accuracy is checked against 56 hand-worked cases ([EVAL.md](EVAL.md)). Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
+| | |
+|---|---|
+| Try it | [For judges: try it in one minute](#for-judges-try-it-in-one-minute) |
+| Pocket Network | Service ID `dietary-supplement-analysis` on Beta TestNet, relay endpoint `https://pokt-beta.trackmysupplement.com`. Passes all 9 Pocket portal acceptance rules, with a paid relay settled on-chain ([record](#on-chain-record-beta-testnet)) |
+| MCP server | `https://agents.trackmysupplement.com/mcp`, listed in the [official MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=dietary-supplement-analysis) and on [Smithery](https://smithery.ai/servers/chariot-ventures/dietary-supplement-analysis). See [mcp/README.md](mcp/README.md) |
+| Accuracy | 56 hand-worked cases, all passing ([EVAL.md](EVAL.md)) |
+| Running version | [`/v1/version`](https://agents.trackmysupplement.com/v1/version); every release is in [CHANGELOG.md](CHANGELOG.md) |
+| Run a supplier or gateway | [OPERATORS.md](OPERATORS.md): a multi-arch image is published for every release |
+
+**Data sources**, all public:
+
+- **Labels:** [NIH Dietary Supplement Label Database (DSLD)](https://dsld.od.nih.gov/), API v9 plus a weekly mirror of NIH's full download (214,782 labels).
+- **Reference values:** Food and Nutrition Board DRIs, as published on the [NIH Office of Dietary Supplements fact sheets](https://ods.od.nih.gov/factsheets/list-all/).
+- **Interactions and herbs:** NIH ODS and [NCCIH](https://www.nccih.nih.gov/health/herbsataglance) fact sheets; medication names are normalized with NIH RxNorm.
+- **Recalls and adverse events:** [openFDA](https://open.fda.gov/).
+- **Foods:** USDA SR28 (FoodData Central "SR Legacy"); typical US intake from What We Eat in America, NHANES 2017–March 2020.
+
+**What it is not:** medical advice or a diagnosis. It reports what labels declare, compares the totals with published reference values, and relays the interactions and safety statements NIH publishes. The interaction list is not exhaustive, and no flag means nothing was found to report, not an all-clear.
 
 ## For judges: try it in one minute
 
@@ -15,7 +29,7 @@ A Pocket Network service (`dietary-supplement-analysis`) for AI agents. Give it 
 |---|---|
 | Service ID | `dietary-supplement-analysis` (Pocket Network Beta TestNet, `rpc_type: REST`, 500 compute units per relay) |
 | Relay endpoint (staked supplier) | `https://pokt-beta.trackmysupplement.com`. Accepts signed Pocket relays only. |
-| Demo endpoint (direct, free) | `https://agents.trackmysupplement.com`. The same backend without the relay layer, so you can use `curl`. Limited to 30 requests per minute per client; over the limit it returns `429` with `"code":"RATE_LIMITED"` and a `Retry-After` header. |
+| Demo endpoint (direct, free trial) | `https://agents.trackmysupplement.com`. The same backend without the relay layer, so you can use `curl`. Up to 30 requests a minute and 100 calls a day per client ([details](#limits)); over a limit it returns `429` with `"code":"RATE_LIMITED"` and a `Retry-After` header. |
 
 **1. Reference intakes for one nutrient** (offline data, instant):
 
@@ -64,15 +78,33 @@ curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: 
     {"name": "Custom magnesium", "ingredients": [{"name": "magnesium", "amount": 250, "unit": "mg"}]}]}'
 ```
 
-**4. Look up a bottle by its barcode:**
+**4. Medications, an herb and a Spanish summary:**
+
+```bash
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
+  "age": 70, "sex": "male", "lang": "es", "detail": "summary",
+  "medications": ["warfarin", "Synthroid"],
+  "products": [{"query": "Centrum Silver Men 50+"},
+    {"name": "Herbal", "ingredients": [{"name": "Ginkgo biloba leaf extract", "amount": 120, "unit": "mg"}]}]}'
+```
+
+The summary, in Spanish, names the bleeding risk of ginkgo with warfarin, the multivitamin's vitamin K against warfarin, and its calcium against Synthroid with NIH's 4-hour spacing, each from the NIH or NCCIH fact sheets. `agent_summary_en` has the English text.
+
+**5. FDA recalls and adverse event reports for one product:**
+
+```bash
+curl -s https://agents.trackmysupplement.com/v1/products/fda -H 'Content-Type: application/json' -d '{"query":"Nature Made Vitamin D3 1000 IU"}'
+```
+
+**6. Look up a bottle by its barcode:**
 
 ```bash
 curl -s https://agents.trackmysupplement.com/v1/products/lookup -H 'Content-Type: application/json' -d '{"upc":"031604026974"}'
 ```
 
-**5. As an MCP server:** add `https://agents.trackmysupplement.com/mcp` as a custom connector in Claude (or any MCP client). See [mcp/README.md](mcp/README.md), including a local bridge that pays per call through Pocket Network.
+**7. As an MCP server:** add `https://agents.trackmysupplement.com/mcp` as a custom connector in Claude (or any MCP client); no key is needed for the free trial. See [mcp/README.md](mcp/README.md), including a local bridge that pays per call through Pocket Network.
 
-**6. For agent frameworks:** `GET /v1/tools` returns every operation as a tool definition with a JSON Schema input, and `GET /v1/guide` returns a usage guide (also in [llms.txt](llms.txt)).
+**8. For agent frameworks:** `GET /v1/tools` returns every operation as a tool definition with a JSON Schema input, and `GET /v1/guide` returns a usage guide (also in [llms.txt](llms.txt)).
 
 ### Through Pocket Network (paid relay)
 
@@ -141,7 +173,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 - **Products** (1–15) can be a product name (`query`, optionally with `brand`), a barcode (`upc`), a DSLD ID, or a custom product with explicit ingredients. Custom ingredients may give a `form` (for example `"folic acid"` or `"d-alpha tocopherol"`) so IU and DFE conversions can be applied.
 - **Names and barcodes** are resolved server-side. A name is matched against DSLD search results by the share of its words found in the brand and product name; label versions of the same product are collapsed and the newest on-market one is used. `resolutions[]` records each match with `confidence` (`high`: every word matched one product; `medium`: every word matched but other products did too, or most words matched; `low`: under 60%) and up to three alternatives. A product that can't be identified is reported (`PRODUCT_NOT_RESOLVED`) and left out; the call fails with 404 only when nothing could be identified.
 - **`diet: "typical"`** adds the US average daily intake from food and drinks for the age and sex (What We Eat in America, NHANES 2017–March 2020) and repeats the comparisons in `with_typical_diet`. Food counts toward a UL only where the UL covers it: all of it for total-intake ULs, food folic acid for folate, retinol for vitamin A, added vitamin E for vitamin E, none for magnesium. It isn't applied under age 2 or in pregnancy and lactation.
-- **`medications`** (up to 30, generic or brand names as the user gives them) are matched to 35 drug classes and checked against the 55 medication interactions listed in the NIH Office of Dietary Supplements fact sheets ([data/interactions.json](data/interactions.json)). Names the list doesn't know are normalized to their ingredient with NIH RxNorm (RxNav) when the service can reach it; matching is whole-word, never fuzzy. `interactions.findings[]` gives each interaction's kind (`supplement_changes_drug`, `drug_lowers_nutrient`, `drug_raises_nutrient`, `additive_risk`, `two_way`), NIH's timing advice where it gives any, the fact sheet, and `in_stack` with the products involved; in-stack findings come first and lead `agent_summary`. The list is not exhaustive (`INTERACTIONS_PARTIAL`), and medication names are never logged.
+- **`medications`** (up to 30, generic or brand names as the user gives them) are matched to 46 drug classes and checked against the 55 medication interactions listed in the NIH Office of Dietary Supplements fact sheets ([data/interactions.json](data/interactions.json)). Names the list doesn't know are normalized to their ingredient with NIH RxNorm (RxNav) when the service can reach it; matching is whole-word, never fuzzy. `interactions.findings[]` gives each interaction's kind (`supplement_changes_drug`, `drug_lowers_nutrient`, `drug_raises_nutrient`, `additive_risk`, `two_way`), NIH's timing advice where it gives any, the fact sheet, and `in_stack` with the products involved; in-stack findings come first and lead `agent_summary`. The list is not exhaustive (`INTERACTIONS_PARTIAL`), and medication names are never logged.
 - **Botanicals.** Herbs and other non-nutrient ingredients with NIH safety signals (16 so far: ashwagandha, kava, St. John's wort, ginkgo, green tea extract, turmeric/curcumin, black cohosh, garcinia cambogia, red yeast rice, goldenseal, berberine, yohimbe, ephedra, valerian, echinacea, creatine) are reported in `botanicals[]` with the NCCIH or ODS statement, the pregnancy statement, and dose checks where NIH cites doses (creatine above 5 g and 25 g a day, EGCG at 843 mg a day, valerian above 600 mg a day). They're matched on DSLD's ingredient group or the exact name after dropping plant-part and preparation words ("Ashwagandha Root Extract" is ashwagandha), never by substring ([data/botanicals.json](data/botanicals.json)). With `medications`, botanical-drug pairs NIH names (St. John's wort with birth control, warfarin or SSRIs; ginkgo with anticoagulants; kava and valerian with sedatives; red yeast rice with statins; goldenseal with metformin) become interaction findings.
 - **`conditions`**: `smoker` (current or former, or asbestos exposure: beta-carotene from 20 mg a day, counting vitamin A declared as beta-carotene), `kidney_disease` (potassium, magnesium, phosphorus), `hemochromatosis` (iron; vitamin C from 500 mg), `lab_test_soon` (biotin from 1 mg skews thyroid, troponin and other tests), `cancer_treatment` (high-dose vitamin C and E).
 - **`foods`** (up to 30) lists what the person eats in a day: `{"query": "spinach cooked", "amount": 1, "unit": "cup"}` or `{"query": "whole milk", "grams": 488}` or `{"ndb_number": "11458", "grams": 180}`. Foods are matched offline against the 8,789 foods of USDA SR28 (FoodData Central's "SR Legacy"), using whole words and the USDA household portions, and added to the supplement totals in `nutrient_totals[].with_foods`. Nutrients only the foods supply are checked in `foods.totals`. Food counts toward a UL only where the UL covers food, as for `diet`. Nutrients USDA didn't analyze for a food are listed, not assumed zero; three SR28 manganese values that are off by orders of magnitude are excluded and reported. Use `foods` or `diet: "typical"`, not both.
@@ -212,8 +244,7 @@ Each nutrient total includes:
 
 Accuracy is checked against 56 hand-worked cases; see [EVAL.md](EVAL.md).
 
-
-- **DSLD label details** that current labels need:
+- **Reading DSLD labels:**
   - DSLD often stores vitamin A as plain mcg or mg. It's read as mcg RAE only when the label's %DV matches the 900 mcg RAE Daily Value.
   - When DSLD leaves out a unit (for example "6 NP"), it's inferred only if the label's %DV matches the FDA Daily Value; otherwise it's a gap.
   - Rows nested under a nutrient break it down by form (folate 800 mcg DFE = folic acid 480 mcg). They give the exact UL portion and are never counted twice.
@@ -247,7 +278,10 @@ docker compose up --build     # container on 127.0.0.1:8080
 | Env var | Default | Purpose |
 |---|---|---|
 | `PORT` / `HOST` | `8080` / `0.0.0.0` | Listen address |
-| `DSLD_API_KEY` | none | Sent to DSLD as `X-Api-Key` if set |
+| `DSLD_API_KEY` | none | An [api.data.gov key](https://api.data.gov/signup/), sent to DSLD as `X-Api-Key` (raises NIH's limit from 1,000 to 10,000 requests an hour) |
+| `OPENFDA_API_KEY` | none | The same api.data.gov key, for openFDA |
+| `OPENFDA` / `RXNORM` | on | `off` stops calls to openFDA or RxNorm (medication matching then uses only the names in [data/interactions.json](data/interactions.json)) |
+| `FREE_TIER_HOSTS` | none | Host names that get the free-trial quotas (the demo uses `agents.trackmysupplement.com`); requests on other hosts, such as Pocket relays, are never metered. `FREE_TIER_PER_SESSION`, `FREE_TIER_PER_IP`, `FREE_TIER_PER_IP_MCP` and `FREE_TIER_GLOBAL` change the quotas |
 | `DSLD_BASE_URL` | `https://api.ods.od.nih.gov/dsld/v9` | DSLD API base |
 | `DSLD_PREWARM_IDS` | none | Comma-separated label IDs to cache at startup |
 | `DSLD_STORE_PATH` | `/data/dsld.sqlite` in the container, off otherwise | Persistent label store (SQLite). Every fetched label is kept; when NIH is unreachable, labels, barcodes and searches are answered from it. Empty turns it off |
@@ -274,4 +308,4 @@ docker compose up --build     # container on 127.0.0.1:8080
 
 ## Disclaimer and licenses
 
-Label and reference data only. Not medical advice. Totals exclude food and medications. DSLD and ODS content are U.S. Government works from the National Institutes of Health. No license has been chosen for the code yet.
+Information from labels and published reference data, not medical advice. Totals cover supplements only unless `diet` or `foods` is given; medications are checked for interactions, not counted. DSLD, ODS, NCCIH, RxNorm, openFDA and USDA content are U.S. Government works. No license has been chosen for the code yet.
