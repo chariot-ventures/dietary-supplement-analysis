@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import { agentSummary, compareCandidate, suggestFixes, type CandidateResult, type SummaryContext } from '../lib/advise.js';
+import { agentSummary, compareCandidate, productName, suggestFixes, type CandidateResult, type SummaryContext } from '../lib/advise.js';
 import { agentSummaryEs } from '../lib/summary-es.js';
 import { analyzeStack, type Profile, type StackAnalysis, type StackProduct } from '../lib/analyze.js';
 import { applyFoodEstimate, applyTypicalDiet, DIET_SOURCE, dietOnlyFlags } from '../lib/diet.js';
@@ -106,6 +106,9 @@ async function resolveItem(item: StackProductInput, path: string, dsld: DsldClie
     return { kind: 'none', label: `UPC ${item.upc}` };
   }
 }
+
+/** "Centrum Silver Women 50+", not "Centrum Centrum Silver Women 50+" when the name already starts with the brand. */
+const displayName = (brand: string | null, name: string | null): string | null => (name ? productName({ brand, name }) : brand);
 
 export async function analyze(body: unknown, deps: Deps) {
   const req = parseBody(analyzeRequest, body);
@@ -261,7 +264,7 @@ export async function analyze(body: unknown, deps: Deps) {
   const suggestions = suggestFixes(analysis);
   const lowConfidence = resolutions
     .filter((r) => r.status === 'resolved' && r.confidence === 'low' && 'query' in r.input)
-    .map((r) => ({ input: (r.input as { query: string }).query, chosen: [r.brand, r.name].filter(Boolean).join(' ') }));
+    .map((r) => ({ input: (r.input as { query: string }).query, chosen: displayName(r.brand, r.name) ?? '' }));
   const timing = timingTips(analysis, baseProducts, botanicals, findings);
   const summaryCtx: SummaryContext = {
     timing,
@@ -308,9 +311,9 @@ export async function analyze(body: unknown, deps: Deps) {
                 input_path: r.input_path,
                 status: r.status,
                 dsld_id: r.dsld_id,
-                name: [r.brand, r.name].filter(Boolean).join(' ') || null,
+                name: displayName(r.brand, r.name),
                 confidence: r.confidence,
-                alternatives: r.alternatives.slice(0, 2).map((a) => ({ dsld_id: a.dsld_id, name: [a.brand, a.name].filter(Boolean).join(' ') })),
+                alternatives: r.alternatives.slice(0, 2).map((a) => ({ dsld_id: a.dsld_id, name: displayName(a.brand, a.name) })),
               })),
             }
           : {}),

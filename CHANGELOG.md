@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.1 (2026-10-11)
+
+- Compact answers no longer repeat the brand in product names ("Centrum Centrum Silver...").
+
 ## 0.12.0 (2026-10-11)
 
 - **NIH DSLD mirrored.** The full DSLD download (214,782 labels, NIH's January 2026 edition) is imported into the label store and refreshed weekly when NIH publishes a new one (`deploy/mirror/dsld-mirror.sh`, `src/tools/import-dsld.ts`).
