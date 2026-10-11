@@ -1,0 +1,450 @@
+{
+  "_fixture_note": "SYNTHETIC FIXTURE: hand-built in the DSLD v9 /label shape for offline tests. Not a real product; IDs 9000xx do not exist in DSLD. Replace or supplement with recorded real labels (scripts/record-fixtures.ts) when api.ods.od.nih.gov is reachable.",
+  "id": 900002,
+  "fullName": "Daily Multivitamin",
+  "brandName": "Fixture Labs",
+  "upcSku": "0 00000 900002 0",
+  "offMarket": 0,
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Vitamin"
+  },
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 60,
+      "unit": "Tablet(s)",
+      "display": "60 Tablet(s)"
+    }
+  ],
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 2,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Tablet(s)",
+      "notes": "",
+      "inSFB": true
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "name": "Vitamin A",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin A",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "Retinyl Palmitate",
+          "ingredientGroup": "Vitamin A",
+          "uniiCode": null
+        },
+        {
+          "order": 2,
+          "name": "Beta-Carotene",
+          "ingredientGroup": "Vitamin A",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 900,
+          "unit": "mcg RAE",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 2,
+      "name": "Vitamin C",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin C",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "Ascorbic Acid",
+          "ingredientGroup": "Vitamin C",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 90,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 3,
+      "name": "Vitamin D",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin D",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "Cholecalciferol",
+          "ingredientGroup": "Vitamin D",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 25,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 125,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 4,
+      "name": "Vitamin E",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin E",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "dl-Alpha Tocopheryl Acetate",
+          "ingredientGroup": "Vitamin E",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 30,
+          "unit": "IU",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 90,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 5,
+      "name": "Folate",
+      "category": "vitamin",
+      "ingredientGroup": "Folate",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "Folic Acid",
+          "ingredientGroup": "Folate",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 680,
+          "unit": "mcg DFE",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 170,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 6,
+      "name": "Vitamin B12",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B12",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "Cyanocobalamin",
+          "ingredientGroup": "Vitamin B12",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 6,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 250,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 7,
+      "name": "Iron",
+      "category": "mineral",
+      "ingredientGroup": "Iron",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "Ferrous Fumarate",
+          "ingredientGroup": "Iron",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 18,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 8,
+      "name": "Magnesium",
+      "category": "mineral",
+      "ingredientGroup": "Magnesium",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "Magnesium Oxide",
+          "ingredientGroup": "Magnesium",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 100,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 24,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 9,
+      "name": "Zinc",
+      "category": "mineral",
+      "ingredientGroup": "Zinc",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "Zinc Oxide",
+          "ingredientGroup": "Zinc",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 15,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 136,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 10,
+      "name": "Lutein",
+      "category": "non-nutrient/non-botanical",
+      "ingredientGroup": "Lutein",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 250,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 11,
+      "name": "Energy Blend",
+      "category": "blend",
+      "ingredientGroup": "Blend",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 50,
+          "unit": "mg",
+          "dailyValueTargetGroup": [],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 1,
+          "name": "Green Tea leaf extract",
+          "category": "botanical",
+          "ingredientGroup": "Green Tea",
+          "uniiCode": null,
+          "notes": "",
+          "alternateNames": [],
+          "forms": [],
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 1,
+              "operator": "=",
+              "quantity": 0,
+              "unit": "NP",
+              "dailyValueTargetGroup": [],
+              "servingSizeUnit": "Tablet(s)"
+            }
+          ],
+          "nestedRows": []
+        },
+        {
+          "order": 2,
+          "name": "Ginseng root",
+          "category": "botanical",
+          "ingredientGroup": "Ginseng",
+          "uniiCode": null,
+          "notes": "",
+          "alternateNames": [],
+          "forms": [],
+          "quantity": [],
+          "nestedRows": []
+        }
+      ]
+    }
+  ],
+  "statements": [],
+  "events": [
+    {
+      "date": "2026-10-11",
+      "type": "Fixture created"
+    }
+  ]
+}

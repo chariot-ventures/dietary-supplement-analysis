@@ -1,0 +1,749 @@
+{
+  "_doc": "Hand-maintained nutrient source data. scripts/build-nutrients.ts expands dri_bands against age_bands into data/nutrients.json. Values follow the Food and Nutrition Board DRI tables as reproduced on each nutrient's NIH ODS health-professional fact sheet (source_url). A null in a band array means no value is established for that band. 'both' applies one array to male and female. Ages are whole years; infants (<1 year) are out of scope in v1.",
+  "dri_reviewed": "2026-10-11",
+  "age_bands": [[1, 3], [4, 8], [9, 13], [14, 18], [19, 30], [31, 50], [51, 70], [71, null]],
+  "nutrients": [
+    {
+      "id": "vitamin-a",
+      "name": "Vitamin A",
+      "canonical_unit": "mcg RAE",
+      "synonyms": ["vitamin a", "vit a", "vitamin a rae"],
+      "dsld_ingredient_groups": ["Vitamin A"],
+      "forms": [
+        { "name": "retinol", "kind": "preformed" },
+        { "name": "retinyl palmitate", "kind": "preformed" },
+        { "name": "retinyl acetate", "kind": "preformed" },
+        { "name": "retinyl propionate", "kind": "preformed" },
+        { "name": "vitamin a palmitate", "kind": "preformed" },
+        { "name": "vitamin a acetate", "kind": "preformed" },
+        { "name": "beta carotene", "kind": "beta_carotene" },
+        { "name": "beta-carotene", "kind": "beta_carotene" },
+        { "name": "natural beta carotene", "kind": "beta_carotene" },
+        { "name": "mixed carotenoids", "kind": "other_carotenoid" },
+        { "name": "alpha carotene", "kind": "other_carotenoid" },
+        { "name": "beta cryptoxanthin", "kind": "other_carotenoid" }
+      ],
+      "unit_conversions": [
+        { "from": "IU", "factor": 0.3, "applies_to_forms": ["preformed"], "note": "1 IU retinol = 0.3 mcg RAE" },
+        { "from": "IU", "factor": 0.15, "applies_to_forms": ["beta_carotene"], "note": "1 IU supplemental beta-carotene = 0.15 mcg RAE" },
+        { "from": "mcg", "factor": 1, "applies_to_forms": ["preformed"], "note": "mcg of preformed vitamin A equals mcg RAE" }
+      ],
+      "dri_bands": {
+        "rda": { "male": [300, 400, 600, 900, 900, 900, 900, 900], "female": [300, 400, 600, 700, 700, 700, 700, 700] },
+        "ear": { "male": [210, 275, 445, 630, 625, 625, 625, 625], "female": [210, 275, 420, 485, 500, 500, 500, 500] },
+        "ai": null,
+        "ul": { "both": [600, 900, 1700, 2800, 3000, 3000, 3000, 3000] }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "preformed",
+      "ul_scope": "preformed_vitamin_a",
+      "ul_note": "The UL applies to preformed vitamin A (retinol and retinyl esters) only, not to beta-carotene or other carotenoids.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-c",
+      "name": "Vitamin C",
+      "canonical_unit": "mg",
+      "synonyms": ["vitamin c", "vit c", "ascorbic acid", "l ascorbic acid"],
+      "dsld_ingredient_groups": ["Vitamin C"],
+      "forms": [
+        { "name": "ascorbic acid", "kind": "ascorbate" },
+        { "name": "sodium ascorbate", "kind": "ascorbate" },
+        { "name": "calcium ascorbate", "kind": "ascorbate" },
+        { "name": "ascorbyl palmitate", "kind": "ascorbate" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "male": [15, 25, 45, 75, 90, 90, 90, 90], "female": [15, 25, 45, 65, 75, 75, 75, 75] },
+        "ear": { "male": [13, 22, 39, 63, 75, 75, 75, 75], "female": [13, 22, 39, 56, 60, 60, 60, 60] },
+        "ai": null,
+        "ul": { "both": [400, 650, 1200, 1800, 2000, 2000, 2000, 2000] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": "Smokers need 35 mg/day more than the RDA shown.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-d",
+      "name": "Vitamin D",
+      "canonical_unit": "mcg",
+      "synonyms": ["vitamin d", "vit d", "vitamin d3", "vitamin d2", "cholecalciferol", "ergocalciferol"],
+      "dsld_ingredient_groups": ["Vitamin D"],
+      "forms": [
+        { "name": "cholecalciferol", "kind": "d3" },
+        { "name": "vitamin d3", "kind": "d3" },
+        { "name": "ergocalciferol", "kind": "d2" },
+        { "name": "vitamin d2", "kind": "d2" }
+      ],
+      "unit_conversions": [
+        { "from": "IU", "factor": 0.025, "applies_to_forms": ["*"], "note": "1 mcg vitamin D = 40 IU" }
+      ],
+      "dri_bands": {
+        "rda": { "both": [15, 15, 15, 15, 15, 15, 15, 20] },
+        "ear": { "both": [10, 10, 10, 10, 10, 10, 10, 10] },
+        "ai": null,
+        "ul": { "both": [63, 75, 100, 100, 100, 100, 100, 100] }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-e",
+      "name": "Vitamin E",
+      "canonical_unit": "mg",
+      "synonyms": ["vitamin e", "vit e", "alpha tocopherol"],
+      "dsld_ingredient_groups": ["Vitamin E"],
+      "forms": [
+        { "name": "d alpha tocopherol", "kind": "natural" },
+        { "name": "d alpha tocopheryl acetate", "kind": "natural" },
+        { "name": "d alpha tocopheryl succinate", "kind": "natural" },
+        { "name": "d alpha tocopheryl acid succinate", "kind": "natural" },
+        { "name": "rrr alpha tocopherol", "kind": "natural" },
+        { "name": "natural vitamin e", "kind": "natural" },
+        { "name": "dl alpha tocopherol", "kind": "synthetic" },
+        { "name": "dl alpha tocopheryl acetate", "kind": "synthetic" },
+        { "name": "dl alpha tocopheryl succinate", "kind": "synthetic" },
+        { "name": "all rac alpha tocopherol", "kind": "synthetic" },
+        { "name": "synthetic vitamin e", "kind": "synthetic" }
+      ],
+      "unit_conversions": [
+        { "from": "IU", "factor": 0.67, "applies_to_forms": ["natural"], "note": "1 IU natural (d-alpha, RRR) = 0.67 mg alpha-tocopherol" },
+        { "from": "IU", "factor": 0.45, "applies_to_forms": ["synthetic"], "note": "1 IU synthetic (dl-alpha, all-rac) = 0.45 mg alpha-tocopherol" }
+      ],
+      "plain_mass_is_canonical": true,
+      "dri_bands": {
+        "rda": { "both": [6, 7, 11, 15, 15, 15, 15, 15] },
+        "ear": { "both": [5, 6, 9, 12, 12, 12, 12, 12] },
+        "ai": null,
+        "ul": { "both": [200, 300, 600, 800, 1000, 1000, 1000, 1000] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "supplemental_alpha_tocopherol",
+      "ul_note": "The UL applies to any form of supplemental alpha-tocopherol.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-k",
+      "name": "Vitamin K",
+      "canonical_unit": "mcg",
+      "synonyms": ["vitamin k", "vit k", "vitamin k1", "vitamin k2", "phylloquinone", "phytonadione", "menaquinone", "menaquinone 7", "menaquinone 4", "mk 7", "mk 4"],
+      "dsld_ingredient_groups": ["Vitamin K"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": { "male": [30, 55, 60, 75, 120, 120, 120, 120], "female": [30, 55, 60, 75, 90, 90, 90, 90] },
+        "ul": null
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established. Vitamin K can interact with warfarin; interactions are not assessed by this service.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/"
+    },
+    {
+      "id": "thiamin",
+      "name": "Thiamin",
+      "canonical_unit": "mg",
+      "synonyms": ["thiamin", "thiamine", "vitamin b1", "vit b1", "thiamine mononitrate", "thiamine hydrochloride", "thiamine hcl"],
+      "dsld_ingredient_groups": ["Thiamin", "Thiamine", "Vitamin B1"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "male": [0.5, 0.6, 0.9, 1.2, 1.2, 1.2, 1.2, 1.2], "female": [0.5, 0.6, 0.9, 1.0, 1.1, 1.1, 1.1, 1.1] },
+        "ear": { "male": [0.4, 0.5, 0.7, 1.0, 1.0, 1.0, 1.0, 1.0], "female": [0.4, 0.5, 0.7, 0.9, 0.9, 0.9, 0.9, 0.9] },
+        "ai": null,
+        "ul": null
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/"
+    },
+    {
+      "id": "riboflavin",
+      "name": "Riboflavin",
+      "canonical_unit": "mg",
+      "synonyms": ["riboflavin", "vitamin b2", "vit b2", "riboflavin 5 phosphate", "riboflavin 5' phosphate"],
+      "dsld_ingredient_groups": ["Riboflavin", "Vitamin B2"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "male": [0.5, 0.6, 0.9, 1.3, 1.3, 1.3, 1.3, 1.3], "female": [0.5, 0.6, 0.9, 1.0, 1.1, 1.1, 1.1, 1.1] },
+        "ear": { "male": [0.4, 0.5, 0.8, 1.1, 1.1, 1.1, 1.1, 1.1], "female": [0.4, 0.5, 0.8, 0.9, 0.9, 0.9, 0.9, 0.9] },
+        "ai": null,
+        "ul": null
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/"
+    },
+    {
+      "id": "niacin",
+      "name": "Niacin",
+      "canonical_unit": "mg",
+      "synonyms": ["niacin", "vitamin b3", "vit b3", "nicotinic acid", "niacinamide", "nicotinamide", "inositol hexanicotinate", "inositol hexaniacinate"],
+      "dsld_ingredient_groups": ["Niacin", "Vitamin B3"],
+      "forms": [
+        { "name": "nicotinic acid", "kind": "nicotinic_acid" },
+        { "name": "niacinamide", "kind": "nicotinamide" },
+        { "name": "nicotinamide", "kind": "nicotinamide" },
+        { "name": "inositol hexanicotinate", "kind": "inositol_hexanicotinate" },
+        { "name": "inositol hexaniacinate", "kind": "inositol_hexanicotinate" }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": true,
+      "dri_bands": {
+        "rda": { "male": [6, 8, 12, 16, 16, 16, 16, 16], "female": [6, 8, 12, 14, 14, 14, 14, 14] },
+        "ear": { "male": [5, 6, 9, 12, 12, 12, 12, 12], "female": [5, 6, 9, 11, 11, 11, 11, 11] },
+        "ai": null,
+        "ul": { "both": [10, 15, 20, 30, 35, 35, 35, 35] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "supplements_and_fortified_foods",
+      "ul_note": "RDA is in mg niacin equivalents (NE); supplement niacin is counted as mg niacin. The UL applies to niacin from supplements and fortified foods.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-b6",
+      "name": "Vitamin B6",
+      "canonical_unit": "mg",
+      "synonyms": ["vitamin b6", "vit b6", "pyridoxine", "pyridoxine hydrochloride", "pyridoxine hcl", "pyridoxal 5 phosphate", "pyridoxal 5' phosphate", "p 5 p", "p5p"],
+      "dsld_ingredient_groups": ["Vitamin B6"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "male": [0.5, 0.6, 1.0, 1.3, 1.3, 1.3, 1.7, 1.7], "female": [0.5, 0.6, 1.0, 1.2, 1.3, 1.3, 1.5, 1.5] },
+        "ear": { "male": [0.4, 0.5, 0.8, 1.1, 1.1, 1.1, 1.4, 1.4], "female": [0.4, 0.5, 0.8, 1.0, 1.1, 1.1, 1.3, 1.3] },
+        "ai": null,
+        "ul": { "both": [30, 40, 60, 80, 100, 100, 100, 100] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/"
+    },
+    {
+      "id": "folate",
+      "name": "Folate",
+      "canonical_unit": "mcg DFE",
+      "synonyms": ["folate", "folic acid", "vitamin b9", "vit b9", "folacin"],
+      "dsld_ingredient_groups": ["Folate", "Folic Acid"],
+      "forms": [
+        { "name": "folic acid", "kind": "folic_acid" },
+        { "name": "pteroylmonoglutamic acid", "kind": "folic_acid" },
+        { "name": "l methylfolate", "kind": "other_folate" },
+        { "name": "l 5 methyltetrahydrofolate", "kind": "other_folate" },
+        { "name": "5 methyltetrahydrofolate", "kind": "other_folate" },
+        { "name": "5 mthf", "kind": "other_folate" },
+        { "name": "methylfolate", "kind": "other_folate" },
+        { "name": "calcium l methylfolate", "kind": "other_folate" },
+        { "name": "l methylfolate calcium", "kind": "other_folate" },
+        { "name": "folinic acid", "kind": "other_folate" },
+        { "name": "calcium folinate", "kind": "other_folate" },
+        { "name": "food folate", "kind": "other_folate" }
+      ],
+      "unit_conversions": [
+        { "from": "mcg", "factor": 1.7, "applies_to_forms": ["folic_acid"], "note": "1 mcg folic acid from a supplement = 1.7 mcg DFE" }
+      ],
+      "dri_bands": {
+        "rda": { "both": [150, 200, 300, 400, 400, 400, 400, 400] },
+        "ear": { "both": [120, 160, 250, 330, 320, 320, 320, 320] },
+        "ai": null,
+        "ul": { "both": [300, 400, 600, 800, 1000, 1000, 1000, 1000] }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "folic_acid",
+      "ul_scope": "supplements_and_fortified_foods",
+      "ul_note": "The UL is in mcg of folic acid and applies to folic acid from supplements and fortified foods, not to food folate or other supplemental forms. Folic acid mcg = mcg DFE / 1.7.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-b12",
+      "name": "Vitamin B12",
+      "canonical_unit": "mcg",
+      "synonyms": ["vitamin b12", "vit b12", "cobalamin", "cyanocobalamin", "methylcobalamin", "adenosylcobalamin", "hydroxocobalamin"],
+      "dsld_ingredient_groups": ["Vitamin B12"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "both": [0.9, 1.2, 1.8, 2.4, 2.4, 2.4, 2.4, 2.4] },
+        "ear": { "both": [0.7, 1.0, 1.5, 2.0, 2.0, 2.0, 2.0, 2.0] },
+        "ai": null,
+        "ul": null
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/"
+    },
+    {
+      "id": "biotin",
+      "name": "Biotin",
+      "canonical_unit": "mcg",
+      "synonyms": ["biotin", "d biotin", "vitamin b7", "vit b7", "vitamin h"],
+      "dsld_ingredient_groups": ["Biotin"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": { "both": [8, 12, 20, 25, 30, 30, 30, 30] },
+        "ul": null
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established. High-dose biotin can interfere with some laboratory tests.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/"
+    },
+    {
+      "id": "pantothenic-acid",
+      "name": "Pantothenic Acid",
+      "canonical_unit": "mg",
+      "synonyms": ["pantothenic acid", "vitamin b5", "vit b5", "calcium pantothenate", "d calcium pantothenate", "pantethine"],
+      "dsld_ingredient_groups": ["Pantothenic Acid"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": { "both": [2, 3, 4, 5, 5, 5, 5, 5] },
+        "ul": null
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/"
+    },
+    {
+      "id": "choline",
+      "name": "Choline",
+      "canonical_unit": "mg",
+      "synonyms": ["choline", "choline bitartrate", "choline chloride"],
+      "dsld_ingredient_groups": ["Choline"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": { "male": [200, 250, 375, 550, 550, 550, 550, 550], "female": [200, 250, 375, 400, 425, 425, 425, 425] },
+        "ul": { "both": [1000, 1000, 2000, 3000, 3500, 3500, 3500, 3500] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Choline-HealthProfessional/"
+    },
+    {
+      "id": "calcium",
+      "name": "Calcium",
+      "canonical_unit": "mg",
+      "synonyms": ["calcium"],
+      "dsld_ingredient_groups": ["Calcium"],
+      "forms": [
+        { "name": "calcium carbonate", "kind": "compound" },
+        { "name": "calcium citrate", "kind": "compound" },
+        { "name": "calcium citrate malate", "kind": "compound" },
+        { "name": "calcium phosphate", "kind": "compound" },
+        { "name": "dicalcium phosphate", "kind": "compound" },
+        { "name": "tricalcium phosphate", "kind": "compound" },
+        { "name": "calcium lactate", "kind": "compound" },
+        { "name": "calcium gluconate", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "male": [700, 1000, 1300, 1300, 1000, 1000, 1000, 1200], "female": [700, 1000, 1300, 1300, 1000, 1000, 1200, 1200] },
+        "ear": { "male": [500, 800, 1100, 1100, 800, 800, 800, 1000], "female": [500, 800, 1100, 1100, 800, 800, 1000, 1000] },
+        "ai": null,
+        "ul": { "both": [2500, 2500, 3000, 3000, 2500, 2500, 2000, 2000] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/"
+    },
+    {
+      "id": "chromium",
+      "name": "Chromium",
+      "canonical_unit": "mcg",
+      "synonyms": ["chromium"],
+      "dsld_ingredient_groups": ["Chromium"],
+      "forms": [
+        { "name": "chromium picolinate", "kind": "compound" },
+        { "name": "chromium polynicotinate", "kind": "compound" },
+        { "name": "chromium chloride", "kind": "compound" },
+        { "name": "chromium nicotinate glycinate chelate", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": { "male": [11, 15, 25, 35, 35, 35, 30, 30], "female": [11, 15, 21, 24, 25, 25, 20, 20] },
+        "ul": null
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Chromium-HealthProfessional/"
+    },
+    {
+      "id": "copper",
+      "name": "Copper",
+      "canonical_unit": "mcg",
+      "synonyms": ["copper"],
+      "dsld_ingredient_groups": ["Copper"],
+      "forms": [
+        { "name": "copper gluconate", "kind": "compound" },
+        { "name": "cupric oxide", "kind": "compound" },
+        { "name": "copper sulfate", "kind": "compound" },
+        { "name": "cupric sulfate", "kind": "compound" },
+        { "name": "copper bisglycinate", "kind": "compound" },
+        { "name": "copper citrate", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "both": [340, 440, 700, 890, 900, 900, 900, 900] },
+        "ear": { "both": [260, 340, 540, 685, 700, 700, 700, 700] },
+        "ai": null,
+        "ul": { "both": [1000, 3000, 5000, 8000, 10000, 10000, 10000, 10000] }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/"
+    },
+    {
+      "id": "iodine",
+      "name": "Iodine",
+      "canonical_unit": "mcg",
+      "synonyms": ["iodine", "iodide"],
+      "dsld_ingredient_groups": ["Iodine"],
+      "forms": [
+        { "name": "potassium iodide", "kind": "compound" },
+        { "name": "sodium iodide", "kind": "compound" },
+        { "name": "potassium iodate", "kind": "compound" },
+        { "name": "kelp", "kind": "food_source" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "both": [90, 90, 120, 150, 150, 150, 150, 150] },
+        "ear": { "both": [65, 65, 73, 95, 95, 95, 95, 95] },
+        "ai": null,
+        "ul": { "both": [200, 300, 600, 900, 1100, 1100, 1100, 1100] }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/"
+    },
+    {
+      "id": "iron",
+      "name": "Iron",
+      "canonical_unit": "mg",
+      "synonyms": ["iron"],
+      "dsld_ingredient_groups": ["Iron"],
+      "forms": [
+        { "name": "ferrous sulfate", "kind": "compound" },
+        { "name": "ferrous fumarate", "kind": "compound" },
+        { "name": "ferrous gluconate", "kind": "compound" },
+        { "name": "ferrous bisglycinate", "kind": "compound" },
+        { "name": "ferrous bisglycinate chelate", "kind": "compound" },
+        { "name": "iron bisglycinate", "kind": "compound" },
+        { "name": "ferric citrate", "kind": "compound" },
+        { "name": "carbonyl iron", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "male": [7, 10, 8, 11, 8, 8, 8, 8], "female": [7, 10, 8, 15, 18, 18, 8, 8] },
+        "ear": { "male": [3.0, 4.1, 5.9, 7.7, 6, 6, 6, 6], "female": [3.0, 4.1, 5.7, 7.9, 8.1, 8.1, 5, 5] },
+        "ai": null,
+        "ul": { "both": [40, 40, 40, 45, 45, 45, 45, 45] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/"
+    },
+    {
+      "id": "magnesium",
+      "name": "Magnesium",
+      "canonical_unit": "mg",
+      "synonyms": ["magnesium"],
+      "dsld_ingredient_groups": ["Magnesium"],
+      "forms": [
+        { "name": "magnesium glycinate", "kind": "compound" },
+        { "name": "magnesium bisglycinate", "kind": "compound" },
+        { "name": "magnesium citrate", "kind": "compound" },
+        { "name": "magnesium oxide", "kind": "compound" },
+        { "name": "magnesium malate", "kind": "compound" },
+        { "name": "magnesium chloride", "kind": "compound" },
+        { "name": "magnesium aspartate", "kind": "compound" },
+        { "name": "magnesium taurate", "kind": "compound" },
+        { "name": "magnesium l threonate", "kind": "compound" },
+        { "name": "magnesium threonate", "kind": "compound" },
+        { "name": "magnesium lactate", "kind": "compound" },
+        { "name": "magnesium sulfate", "kind": "compound" },
+        { "name": "magnesium carbonate", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "male": [80, 130, 240, 410, 400, 420, 420, 420], "female": [80, 130, 240, 360, 310, 320, 320, 320] },
+        "ear": { "male": [65, 110, 200, 340, 330, 350, 350, 350], "female": [65, 110, 200, 300, 255, 265, 265, 265] },
+        "ai": null,
+        "ul": { "both": [65, 110, 350, 350, 350, 350, 350, 350] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "supplements_and_medications",
+      "ul_note": "The UL applies to magnesium from supplements and medications only, not to magnesium naturally present in food and water.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+    },
+    {
+      "id": "manganese",
+      "name": "Manganese",
+      "canonical_unit": "mg",
+      "synonyms": ["manganese"],
+      "dsld_ingredient_groups": ["Manganese"],
+      "forms": [
+        { "name": "manganese gluconate", "kind": "compound" },
+        { "name": "manganese sulfate", "kind": "compound" },
+        { "name": "manganese bisglycinate", "kind": "compound" },
+        { "name": "manganese citrate", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": { "male": [1.2, 1.5, 1.9, 2.2, 2.3, 2.3, 2.3, 2.3], "female": [1.2, 1.5, 1.6, 1.6, 1.8, 1.8, 1.8, 1.8] },
+        "ul": { "both": [2, 3, 6, 9, 11, 11, 11, 11] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Manganese-HealthProfessional/"
+    },
+    {
+      "id": "molybdenum",
+      "name": "Molybdenum",
+      "canonical_unit": "mcg",
+      "synonyms": ["molybdenum"],
+      "dsld_ingredient_groups": ["Molybdenum"],
+      "forms": [
+        { "name": "sodium molybdate", "kind": "compound" },
+        { "name": "molybdenum glycinate", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "both": [17, 22, 34, 43, 45, 45, 45, 45] },
+        "ear": { "both": [13, 17, 26, 33, 34, 34, 34, 34] },
+        "ai": null,
+        "ul": { "both": [300, 600, 1100, 1700, 2000, 2000, 2000, 2000] }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Molybdenum-HealthProfessional/"
+    },
+    {
+      "id": "phosphorus",
+      "name": "Phosphorus",
+      "canonical_unit": "mg",
+      "synonyms": ["phosphorus", "phosphorous"],
+      "dsld_ingredient_groups": ["Phosphorus"],
+      "forms": [
+        { "name": "dicalcium phosphate", "kind": "compound" },
+        { "name": "tricalcium phosphate", "kind": "compound" },
+        { "name": "potassium phosphate", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "both": [460, 500, 1250, 1250, 700, 700, 700, 700] },
+        "ear": { "both": [380, 405, 1055, 1055, 580, 580, 580, 580] },
+        "ai": null,
+        "ul": { "both": [3000, 3000, 4000, 4000, 4000, 4000, 4000, 3000] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/"
+    },
+    {
+      "id": "potassium",
+      "name": "Potassium",
+      "canonical_unit": "mg",
+      "synonyms": ["potassium"],
+      "dsld_ingredient_groups": ["Potassium"],
+      "forms": [
+        { "name": "potassium chloride", "kind": "compound" },
+        { "name": "potassium citrate", "kind": "compound" },
+        { "name": "potassium gluconate", "kind": "compound" },
+        { "name": "potassium aspartate", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": { "male": [2000, 2300, 2500, 3000, 3400, 3400, 3400, 3400], "female": [2000, 2300, 2300, 2300, 2600, 2600, 2600, 2600] },
+        "ul": null
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established (2019 DRI report).",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/"
+    },
+    {
+      "id": "selenium",
+      "name": "Selenium",
+      "canonical_unit": "mcg",
+      "synonyms": ["selenium"],
+      "dsld_ingredient_groups": ["Selenium"],
+      "forms": [
+        { "name": "l selenomethionine", "kind": "compound" },
+        { "name": "selenomethionine", "kind": "compound" },
+        { "name": "sodium selenite", "kind": "compound" },
+        { "name": "sodium selenate", "kind": "compound" },
+        { "name": "selenium yeast", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "both": [20, 30, 40, 55, 55, 55, 55, 55] },
+        "ear": { "both": [17, 23, 35, 45, 45, 45, 45, 45] },
+        "ai": null,
+        "ul": { "both": [90, 150, 280, 400, 400, 400, 400, 400] }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/"
+    },
+    {
+      "id": "zinc",
+      "name": "Zinc",
+      "canonical_unit": "mg",
+      "synonyms": ["zinc"],
+      "dsld_ingredient_groups": ["Zinc"],
+      "forms": [
+        { "name": "zinc gluconate", "kind": "compound" },
+        { "name": "zinc picolinate", "kind": "compound" },
+        { "name": "zinc citrate", "kind": "compound" },
+        { "name": "zinc oxide", "kind": "compound" },
+        { "name": "zinc sulfate", "kind": "compound" },
+        { "name": "zinc bisglycinate", "kind": "compound" },
+        { "name": "zinc acetate", "kind": "compound" }
+      ],
+      "unit_conversions": [],
+      "dri_bands": {
+        "rda": { "male": [3, 5, 8, 11, 11, 11, 11, 11], "female": [3, 5, 8, 9, 8, 8, 8, 8] },
+        "ear": { "male": [2.5, 4.0, 7.0, 8.5, 9.4, 9.4, 9.4, 9.4], "female": [2.5, 4.0, 7.0, 7.3, 6.8, 6.8, 6.8, 6.8] },
+        "ai": null,
+        "ul": { "both": [7, 12, 23, 34, 40, 40, 40, 40] }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/"
+    },
+    {
+      "id": "beta-carotene",
+      "name": "Beta-Carotene",
+      "canonical_unit": "mcg",
+      "synonyms": ["beta carotene", "beta-carotene", "b carotene"],
+      "dsld_ingredient_groups": ["Beta-Carotene", "beta-Carotene"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "Listed separately when a label declares beta-carotene as its own row rather than as a form of vitamin A. Not converted to vitamin A RAE.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/"
+    },
+    {
+      "id": "epa",
+      "name": "EPA (Eicosapentaenoic Acid)",
+      "canonical_unit": "mg",
+      "synonyms": ["epa", "eicosapentaenoic acid", "epa eicosapentaenoic acid"],
+      "dsld_ingredient_groups": ["EPA", "Eicosapentaenoic Acid"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No DRI or UL. FDA considers up to 5 g/day of combined EPA and DHA from supplements acceptable; this is not a DRI and is not used for flags.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/"
+    },
+    {
+      "id": "dha",
+      "name": "DHA (Docosahexaenoic Acid)",
+      "canonical_unit": "mg",
+      "synonyms": ["dha", "docosahexaenoic acid", "dha docosahexaenoic acid"],
+      "dsld_ingredient_groups": ["DHA", "Docosahexaenoic Acid"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No DRI or UL. FDA considers up to 5 g/day of combined EPA and DHA from supplements acceptable; this is not a DRI and is not used for flags.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/"
+    },
+    {
+      "id": "melatonin",
+      "name": "Melatonin",
+      "canonical_unit": "mg",
+      "synonyms": ["melatonin"],
+      "dsld_ingredient_groups": ["Melatonin"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "Not a nutrient; no DRI or UL. Totaled for overlap detection only.",
+      "factsheet_url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know"
+    },
+    {
+      "id": "coenzyme-q10",
+      "name": "Coenzyme Q10",
+      "canonical_unit": "mg",
+      "synonyms": ["coenzyme q10", "coq10", "co q10", "ubiquinone", "ubiquinol", "ubidecarenone"],
+      "dsld_ingredient_groups": ["Coenzyme Q10", "CoQ10"],
+      "forms": [],
+      "unit_conversions": [],
+      "dri_bands": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "Not a nutrient; no DRI or UL. Totaled for overlap detection only.",
+      "factsheet_url": "https://www.nccih.nih.gov/health/coenzyme-q10"
+    }
+  ]
+}

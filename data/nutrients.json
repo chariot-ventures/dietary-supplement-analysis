@@ -1,0 +1,6805 @@
+{
+  "_generated": "Built by scripts/build-nutrients.ts from data/source/. Do not edit by hand.",
+  "dri_reviewed": "2026-10-11",
+  "nutrients": [
+    {
+      "id": "beta-carotene",
+      "name": "Beta-Carotene",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "beta carotene",
+        "beta-carotene",
+        "b carotene"
+      ],
+      "dsld_ingredient_groups": [
+        "Beta-Carotene",
+        "beta-Carotene"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "Listed separately when a label declares beta-carotene as its own row rather than as a form of vitamin A. Not converted to vitamin A RAE.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/"
+    },
+    {
+      "id": "biotin",
+      "name": "Biotin",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "biotin",
+        "d biotin",
+        "vitamin b7",
+        "vit b7",
+        "vitamin h"
+      ],
+      "dsld_ingredient_groups": [
+        "Biotin"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 8
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 12
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 20
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 25
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 30
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 30
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 30
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 30
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 8
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 12
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 20
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 25
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 30
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 30
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 30
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 30
+            }
+          ]
+        },
+        "ul": null
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established. High-dose biotin can interfere with some laboratory tests.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/"
+    },
+    {
+      "id": "calcium",
+      "name": "Calcium",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "calcium"
+      ],
+      "dsld_ingredient_groups": [
+        "Calcium"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "calcium carbonate",
+          "kind": "compound"
+        },
+        {
+          "name": "calcium citrate",
+          "kind": "compound"
+        },
+        {
+          "name": "calcium citrate malate",
+          "kind": "compound"
+        },
+        {
+          "name": "calcium phosphate",
+          "kind": "compound"
+        },
+        {
+          "name": "dicalcium phosphate",
+          "kind": "compound"
+        },
+        {
+          "name": "tricalcium phosphate",
+          "kind": "compound"
+        },
+        {
+          "name": "calcium lactate",
+          "kind": "compound"
+        },
+        {
+          "name": "calcium gluconate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 700
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1000
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1300
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1300
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1200
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 700
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1000
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1300
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1300
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1200
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1200
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 500
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 800
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1100
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1100
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 800
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 800
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 800
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1000
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 500
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 800
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1100
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1100
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 800
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 800
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1000
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2500
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 2500
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 3000
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 3000
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2500
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2500
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2000
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2500
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 2500
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 3000
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 3000
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2500
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2500
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2000
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/"
+    },
+    {
+      "id": "choline",
+      "name": "Choline",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "choline",
+        "choline bitartrate",
+        "choline chloride"
+      ],
+      "dsld_ingredient_groups": [
+        "Choline"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 200
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 250
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 375
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 550
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 550
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 550
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 550
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 550
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 200
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 250
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 375
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 400
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 425
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 425
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 425
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 425
+            }
+          ]
+        },
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 1000
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1000
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 2000
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 3000
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 3500
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 3500
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 3500
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 3500
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 1000
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1000
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 2000
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 3000
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 3500
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 3500
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 3500
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 3500
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Choline-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Choline-HealthProfessional/"
+    },
+    {
+      "id": "chromium",
+      "name": "Chromium",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "chromium"
+      ],
+      "dsld_ingredient_groups": [
+        "Chromium"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "chromium picolinate",
+          "kind": "compound"
+        },
+        {
+          "name": "chromium polynicotinate",
+          "kind": "compound"
+        },
+        {
+          "name": "chromium chloride",
+          "kind": "compound"
+        },
+        {
+          "name": "chromium nicotinate glycinate chelate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 11
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 15
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 25
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 35
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 35
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 35
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 30
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 30
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 11
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 15
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 21
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 24
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 25
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 25
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 20
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 20
+            }
+          ]
+        },
+        "ul": null
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Chromium-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Chromium-HealthProfessional/"
+    },
+    {
+      "id": "coenzyme-q10",
+      "name": "Coenzyme Q10",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "coenzyme q10",
+        "coq10",
+        "co q10",
+        "ubiquinone",
+        "ubiquinol",
+        "ubidecarenone"
+      ],
+      "dsld_ingredient_groups": [
+        "Coenzyme Q10",
+        "CoQ10"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "Not a nutrient; no DRI or UL. Totaled for overlap detection only.",
+      "factsheet_url": "https://www.nccih.nih.gov/health/coenzyme-q10",
+      "source_url": "https://www.nccih.nih.gov/health/coenzyme-q10"
+    },
+    {
+      "id": "copper",
+      "name": "Copper",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "copper"
+      ],
+      "dsld_ingredient_groups": [
+        "Copper"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "copper gluconate",
+          "kind": "compound"
+        },
+        {
+          "name": "cupric oxide",
+          "kind": "compound"
+        },
+        {
+          "name": "copper sulfate",
+          "kind": "compound"
+        },
+        {
+          "name": "cupric sulfate",
+          "kind": "compound"
+        },
+        {
+          "name": "copper bisglycinate",
+          "kind": "compound"
+        },
+        {
+          "name": "copper citrate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 340
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 440
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 700
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 890
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 900
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 900
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 900
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 900
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 340
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 440
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 700
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 890
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 900
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 900
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 900
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 900
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 260
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 340
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 540
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 685
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 700
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 700
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 700
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 700
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 260
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 340
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 540
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 685
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 700
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 700
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 700
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 700
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 1000
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 3000
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 5000
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 8000
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 10000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 10000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 10000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 10000
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 1000
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 3000
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 5000
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 8000
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 10000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 10000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 10000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 10000
+            }
+          ]
+        }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/"
+    },
+    {
+      "id": "dha",
+      "name": "DHA (Docosahexaenoic Acid)",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "dha",
+        "docosahexaenoic acid",
+        "dha docosahexaenoic acid"
+      ],
+      "dsld_ingredient_groups": [
+        "DHA",
+        "Docosahexaenoic Acid"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No DRI or UL. FDA considers up to 5 g/day of combined EPA and DHA from supplements acceptable; this is not a DRI and is not used for flags.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/"
+    },
+    {
+      "id": "epa",
+      "name": "EPA (Eicosapentaenoic Acid)",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "epa",
+        "eicosapentaenoic acid",
+        "epa eicosapentaenoic acid"
+      ],
+      "dsld_ingredient_groups": [
+        "EPA",
+        "Eicosapentaenoic Acid"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No DRI or UL. FDA considers up to 5 g/day of combined EPA and DHA from supplements acceptable; this is not a DRI and is not used for flags.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/"
+    },
+    {
+      "id": "folate",
+      "name": "Folate",
+      "canonical_unit": "mcg DFE",
+      "synonyms": [
+        "folate",
+        "folic acid",
+        "vitamin b9",
+        "vit b9",
+        "folacin"
+      ],
+      "dsld_ingredient_groups": [
+        "Folate",
+        "Folic Acid"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "folic acid",
+          "kind": "folic_acid"
+        },
+        {
+          "name": "pteroylmonoglutamic acid",
+          "kind": "folic_acid"
+        },
+        {
+          "name": "l methylfolate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "l 5 methyltetrahydrofolate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "5 methyltetrahydrofolate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "5 mthf",
+          "kind": "other_folate"
+        },
+        {
+          "name": "methylfolate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "calcium l methylfolate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "l methylfolate calcium",
+          "kind": "other_folate"
+        },
+        {
+          "name": "folinic acid",
+          "kind": "other_folate"
+        },
+        {
+          "name": "calcium folinate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "food folate",
+          "kind": "other_folate"
+        }
+      ],
+      "unit_conversions": [
+        {
+          "from": "mcg",
+          "factor": 1.7,
+          "applies_to_forms": [
+            "folic_acid"
+          ],
+          "note": "1 mcg folic acid from a supplement = 1.7 mcg DFE"
+        }
+      ],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 150
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 200
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 300
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 400
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 400
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 400
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 400
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 400
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 150
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 200
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 300
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 400
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 400
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 400
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 400
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 400
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 120
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 160
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 250
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 330
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 320
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 320
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 320
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 320
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 120
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 160
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 250
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 330
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 320
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 320
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 320
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 320
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 300
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 400
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 600
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 800
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1000
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 300
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 400
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 600
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 800
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1000
+            }
+          ]
+        }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "folic_acid",
+      "ul_scope": "supplements_and_fortified_foods",
+      "ul_note": "The UL is in mcg of folic acid and applies to folic acid from supplements and fortified foods, not to food folate or other supplemental forms. Folic acid mcg = mcg DFE / 1.7.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/"
+    },
+    {
+      "id": "iodine",
+      "name": "Iodine",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "iodine",
+        "iodide"
+      ],
+      "dsld_ingredient_groups": [
+        "Iodine"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "potassium iodide",
+          "kind": "compound"
+        },
+        {
+          "name": "sodium iodide",
+          "kind": "compound"
+        },
+        {
+          "name": "potassium iodate",
+          "kind": "compound"
+        },
+        {
+          "name": "kelp",
+          "kind": "food_source"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 90
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 90
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 120
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 150
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 150
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 150
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 150
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 150
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 90
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 90
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 120
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 150
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 150
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 150
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 150
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 150
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 65
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 65
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 73
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 95
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 95
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 95
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 95
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 95
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 65
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 65
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 73
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 95
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 95
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 95
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 95
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 95
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 200
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 300
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 600
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 900
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1100
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1100
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1100
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1100
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 200
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 300
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 600
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 900
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1100
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1100
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1100
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1100
+            }
+          ]
+        }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/"
+    },
+    {
+      "id": "iron",
+      "name": "Iron",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "iron"
+      ],
+      "dsld_ingredient_groups": [
+        "Iron"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "ferrous sulfate",
+          "kind": "compound"
+        },
+        {
+          "name": "ferrous fumarate",
+          "kind": "compound"
+        },
+        {
+          "name": "ferrous gluconate",
+          "kind": "compound"
+        },
+        {
+          "name": "ferrous bisglycinate",
+          "kind": "compound"
+        },
+        {
+          "name": "ferrous bisglycinate chelate",
+          "kind": "compound"
+        },
+        {
+          "name": "iron bisglycinate",
+          "kind": "compound"
+        },
+        {
+          "name": "ferric citrate",
+          "kind": "compound"
+        },
+        {
+          "name": "carbonyl iron",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 7
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 10
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 11
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 8
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 8
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 8
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 8
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 7
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 10
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 15
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 18
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 18
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 8
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 8
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 3
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 4.1
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 5.9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 7.7
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 6
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 6
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 6
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 6
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 3
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 4.1
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 5.7
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 7.9
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 8.1
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 8.1
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 5
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 5
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 40
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 40
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 40
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 45
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 45
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 45
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 45
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 45
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 40
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 40
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 40
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 45
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 45
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 45
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 45
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 45
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/"
+    },
+    {
+      "id": "magnesium",
+      "name": "Magnesium",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "magnesium"
+      ],
+      "dsld_ingredient_groups": [
+        "Magnesium"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "magnesium glycinate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium bisglycinate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium citrate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium oxide",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium malate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium chloride",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium aspartate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium taurate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium l threonate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium threonate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium lactate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium sulfate",
+          "kind": "compound"
+        },
+        {
+          "name": "magnesium carbonate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 80
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 130
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 240
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 410
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 400
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 420
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 420
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 420
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 80
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 130
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 240
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 360
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 310
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 320
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 320
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 320
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 65
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 110
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 200
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 340
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 330
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 350
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 350
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 350
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 65
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 110
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 200
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 300
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 255
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 265
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 265
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 265
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 65
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 110
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 350
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 350
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 350
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 350
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 350
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 350
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 65
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 110
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 350
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 350
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 350
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 350
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 350
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 350
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "supplements_and_medications",
+      "ul_note": "The UL applies to magnesium from supplements and medications only, not to magnesium naturally present in food and water.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+    },
+    {
+      "id": "manganese",
+      "name": "Manganese",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "manganese"
+      ],
+      "dsld_ingredient_groups": [
+        "Manganese"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "manganese gluconate",
+          "kind": "compound"
+        },
+        {
+          "name": "manganese sulfate",
+          "kind": "compound"
+        },
+        {
+          "name": "manganese bisglycinate",
+          "kind": "compound"
+        },
+        {
+          "name": "manganese citrate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 1.2
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1.5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1.9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 2.2
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2.3
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2.3
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2.3
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2.3
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 1.2
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1.5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1.6
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1.6
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.8
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.8
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.8
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.8
+            }
+          ]
+        },
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 3
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 6
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 9
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 11
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 11
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 11
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 11
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 3
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 6
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 9
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 11
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 11
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 11
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 11
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Manganese-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Manganese-HealthProfessional/"
+    },
+    {
+      "id": "melatonin",
+      "name": "Melatonin",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "melatonin"
+      ],
+      "dsld_ingredient_groups": [
+        "Melatonin"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": null,
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "Not a nutrient; no DRI or UL. Totaled for overlap detection only.",
+      "factsheet_url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know",
+      "source_url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know"
+    },
+    {
+      "id": "molybdenum",
+      "name": "Molybdenum",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "molybdenum"
+      ],
+      "dsld_ingredient_groups": [
+        "Molybdenum"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "sodium molybdate",
+          "kind": "compound"
+        },
+        {
+          "name": "molybdenum glycinate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 17
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 22
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 34
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 43
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 45
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 45
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 45
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 45
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 17
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 22
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 34
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 43
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 45
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 45
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 45
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 45
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 13
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 17
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 26
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 33
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 34
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 34
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 34
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 34
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 13
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 17
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 26
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 33
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 34
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 34
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 34
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 34
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 300
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 600
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1100
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1700
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2000
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 300
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 600
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1100
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1700
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2000
+            }
+          ]
+        }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Molybdenum-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Molybdenum-HealthProfessional/"
+    },
+    {
+      "id": "niacin",
+      "name": "Niacin",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "niacin",
+        "vitamin b3",
+        "vit b3",
+        "nicotinic acid",
+        "niacinamide",
+        "nicotinamide",
+        "inositol hexanicotinate",
+        "inositol hexaniacinate"
+      ],
+      "dsld_ingredient_groups": [
+        "Niacin",
+        "Vitamin B3"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "nicotinic acid",
+          "kind": "nicotinic_acid"
+        },
+        {
+          "name": "niacinamide",
+          "kind": "nicotinamide"
+        },
+        {
+          "name": "nicotinamide",
+          "kind": "nicotinamide"
+        },
+        {
+          "name": "inositol hexanicotinate",
+          "kind": "inositol_hexanicotinate"
+        },
+        {
+          "name": "inositol hexaniacinate",
+          "kind": "inositol_hexanicotinate"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": true,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 6
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 8
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 12
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 16
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 16
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 16
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 16
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 16
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 6
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 8
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 12
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 14
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 14
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 14
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 14
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 14
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 12
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 12
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 12
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 12
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 12
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 11
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 11
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 11
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 11
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 11
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 10
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 15
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 20
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 30
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 35
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 35
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 35
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 35
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 10
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 15
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 20
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 30
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 35
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 35
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 35
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 35
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "supplements_and_fortified_foods",
+      "ul_note": "RDA is in mg niacin equivalents (NE); supplement niacin is counted as mg niacin. The UL applies to niacin from supplements and fortified foods.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/"
+    },
+    {
+      "id": "pantothenic-acid",
+      "name": "Pantothenic Acid",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "pantothenic acid",
+        "vitamin b5",
+        "vit b5",
+        "calcium pantothenate",
+        "d calcium pantothenate",
+        "pantethine"
+      ],
+      "dsld_ingredient_groups": [
+        "Pantothenic Acid"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 3
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 4
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 5
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 5
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 5
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 5
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 5
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 3
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 4
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 5
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 5
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 5
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 5
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 5
+            }
+          ]
+        },
+        "ul": null
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/"
+    },
+    {
+      "id": "phosphorus",
+      "name": "Phosphorus",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "phosphorus",
+        "phosphorous"
+      ],
+      "dsld_ingredient_groups": [
+        "Phosphorus"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "dicalcium phosphate",
+          "kind": "compound"
+        },
+        {
+          "name": "tricalcium phosphate",
+          "kind": "compound"
+        },
+        {
+          "name": "potassium phosphate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 460
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 500
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1250
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1250
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 700
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 700
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 700
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 700
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 460
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 500
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1250
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1250
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 700
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 700
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 700
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 700
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 380
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 405
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1055
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1055
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 580
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 580
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 580
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 580
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 380
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 405
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1055
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1055
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 580
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 580
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 580
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 580
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 3000
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 3000
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 4000
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 4000
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 4000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 4000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 4000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 3000
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 3000
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 3000
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 4000
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 4000
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 4000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 4000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 4000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 3000
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/"
+    },
+    {
+      "id": "potassium",
+      "name": "Potassium",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "potassium"
+      ],
+      "dsld_ingredient_groups": [
+        "Potassium"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "potassium chloride",
+          "kind": "compound"
+        },
+        {
+          "name": "potassium citrate",
+          "kind": "compound"
+        },
+        {
+          "name": "potassium gluconate",
+          "kind": "compound"
+        },
+        {
+          "name": "potassium aspartate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2000
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 2300
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 2500
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 3000
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 3400
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 3400
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 3400
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 3400
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2000
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 2300
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 2300
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 2300
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2600
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2600
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2600
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2600
+            }
+          ]
+        },
+        "ul": null
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established (2019 DRI report).",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/"
+    },
+    {
+      "id": "riboflavin",
+      "name": "Riboflavin",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "riboflavin",
+        "vitamin b2",
+        "vit b2",
+        "riboflavin 5 phosphate",
+        "riboflavin 5' phosphate"
+      ],
+      "dsld_ingredient_groups": [
+        "Riboflavin",
+        "Vitamin B2"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1.3
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.3
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.3
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.3
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.3
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.1
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.1
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.1
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.1
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.4
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1.1
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.1
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.1
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.1
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.1
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.4
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 0.9
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 0.9
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 0.9
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 0.9
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 0.9
+            }
+          ]
+        },
+        "ai": null,
+        "ul": null
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/"
+    },
+    {
+      "id": "selenium",
+      "name": "Selenium",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "selenium"
+      ],
+      "dsld_ingredient_groups": [
+        "Selenium"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "l selenomethionine",
+          "kind": "compound"
+        },
+        {
+          "name": "selenomethionine",
+          "kind": "compound"
+        },
+        {
+          "name": "sodium selenite",
+          "kind": "compound"
+        },
+        {
+          "name": "sodium selenate",
+          "kind": "compound"
+        },
+        {
+          "name": "selenium yeast",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 20
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 30
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 40
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 55
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 55
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 55
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 55
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 55
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 20
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 30
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 40
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 55
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 55
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 55
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 55
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 55
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 17
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 23
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 35
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 45
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 45
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 45
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 45
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 45
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 17
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 23
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 35
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 45
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 45
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 45
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 45
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 45
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 90
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 150
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 280
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 400
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 400
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 400
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 400
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 400
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 90
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 150
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 280
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 400
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 400
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 400
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 400
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 400
+            }
+          ]
+        }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/"
+    },
+    {
+      "id": "thiamin",
+      "name": "Thiamin",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "thiamin",
+        "thiamine",
+        "vitamin b1",
+        "vit b1",
+        "thiamine mononitrate",
+        "thiamine hydrochloride",
+        "thiamine hcl"
+      ],
+      "dsld_ingredient_groups": [
+        "Thiamin",
+        "Thiamine",
+        "Vitamin B1"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1.2
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.2
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.2
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.2
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.2
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.1
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.1
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.1
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.1
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.4
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.7
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.4
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.7
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 0.9
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 0.9
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 0.9
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 0.9
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 0.9
+            }
+          ]
+        },
+        "ai": null,
+        "ul": null
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-a",
+      "name": "Vitamin A",
+      "canonical_unit": "mcg RAE",
+      "synonyms": [
+        "vitamin a",
+        "vit a",
+        "vitamin a rae"
+      ],
+      "dsld_ingredient_groups": [
+        "Vitamin A"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "retinol",
+          "kind": "preformed"
+        },
+        {
+          "name": "retinyl palmitate",
+          "kind": "preformed"
+        },
+        {
+          "name": "retinyl acetate",
+          "kind": "preformed"
+        },
+        {
+          "name": "retinyl propionate",
+          "kind": "preformed"
+        },
+        {
+          "name": "vitamin a palmitate",
+          "kind": "preformed"
+        },
+        {
+          "name": "vitamin a acetate",
+          "kind": "preformed"
+        },
+        {
+          "name": "beta carotene",
+          "kind": "beta_carotene"
+        },
+        {
+          "name": "beta-carotene",
+          "kind": "beta_carotene"
+        },
+        {
+          "name": "natural beta carotene",
+          "kind": "beta_carotene"
+        },
+        {
+          "name": "mixed carotenoids",
+          "kind": "other_carotenoid"
+        },
+        {
+          "name": "alpha carotene",
+          "kind": "other_carotenoid"
+        },
+        {
+          "name": "beta cryptoxanthin",
+          "kind": "other_carotenoid"
+        }
+      ],
+      "unit_conversions": [
+        {
+          "from": "IU",
+          "factor": 0.3,
+          "applies_to_forms": [
+            "preformed"
+          ],
+          "note": "1 IU retinol = 0.3 mcg RAE"
+        },
+        {
+          "from": "IU",
+          "factor": 0.15,
+          "applies_to_forms": [
+            "beta_carotene"
+          ],
+          "note": "1 IU supplemental beta-carotene = 0.15 mcg RAE"
+        },
+        {
+          "from": "mcg",
+          "factor": 1,
+          "applies_to_forms": [
+            "preformed"
+          ],
+          "note": "mcg of preformed vitamin A equals mcg RAE"
+        }
+      ],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 300
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 400
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 600
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 900
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 900
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 900
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 900
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 900
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 300
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 400
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 600
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 700
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 700
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 700
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 700
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 700
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 210
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 275
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 445
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 630
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 625
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 625
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 625
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 625
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 210
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 275
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 420
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 485
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 500
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 500
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 500
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 500
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 600
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 900
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1700
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 2800
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 3000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 3000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 3000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 3000
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 600
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 900
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1700
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 2800
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 3000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 3000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 3000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 3000
+            }
+          ]
+        }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "preformed",
+      "ul_scope": "preformed_vitamin_a",
+      "ul_note": "The UL applies to preformed vitamin A (retinol and retinyl esters) only, not to beta-carotene or other carotenoids.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-b12",
+      "name": "Vitamin B12",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "vitamin b12",
+        "vit b12",
+        "cobalamin",
+        "cyanocobalamin",
+        "methylcobalamin",
+        "adenosylcobalamin",
+        "hydroxocobalamin"
+      ],
+      "dsld_ingredient_groups": [
+        "Vitamin B12"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.9
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1.2
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1.8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 2.4
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2.4
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2.4
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2.4
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2.4
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.9
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1.2
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1.8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 2.4
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2.4
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2.4
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2.4
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2.4
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.7
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1.5
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 2
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.7
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 1
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1.5
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 2
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2
+            }
+          ]
+        },
+        "ai": null,
+        "ul": null
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-b6",
+      "name": "Vitamin B6",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "vitamin b6",
+        "vit b6",
+        "pyridoxine",
+        "pyridoxine hydrochloride",
+        "pyridoxine hcl",
+        "pyridoxal 5 phosphate",
+        "pyridoxal 5' phosphate",
+        "p 5 p",
+        "p5p"
+      ],
+      "dsld_ingredient_groups": [
+        "Vitamin B6"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1.3
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.3
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.3
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.7
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.7
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1.2
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.3
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.3
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.5
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.5
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.4
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1.1
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.1
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.1
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.4
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.4
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 0.4
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 0.5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 0.8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1.1
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1.1
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1.3
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1.3
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 30
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 40
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 60
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 80
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 100
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 100
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 100
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 100
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 30
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 40
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 60
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 80
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 100
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 100
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 100
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 100
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-c",
+      "name": "Vitamin C",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "vitamin c",
+        "vit c",
+        "ascorbic acid",
+        "l ascorbic acid"
+      ],
+      "dsld_ingredient_groups": [
+        "Vitamin C"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "ascorbic acid",
+          "kind": "ascorbate"
+        },
+        {
+          "name": "sodium ascorbate",
+          "kind": "ascorbate"
+        },
+        {
+          "name": "calcium ascorbate",
+          "kind": "ascorbate"
+        },
+        {
+          "name": "ascorbyl palmitate",
+          "kind": "ascorbate"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 15
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 25
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 45
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 75
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 90
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 90
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 90
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 90
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 15
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 25
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 45
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 65
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 75
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 75
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 75
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 75
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 13
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 22
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 39
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 63
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 75
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 75
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 75
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 75
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 13
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 22
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 39
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 56
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 60
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 60
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 60
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 60
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 400
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 650
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1200
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1800
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2000
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 400
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 650
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 1200
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 1800
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 2000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 2000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 2000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 2000
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": "Smokers need 35 mg/day more than the RDA shown.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-d",
+      "name": "Vitamin D",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "vitamin d",
+        "vit d",
+        "vitamin d3",
+        "vitamin d2",
+        "cholecalciferol",
+        "ergocalciferol"
+      ],
+      "dsld_ingredient_groups": [
+        "Vitamin D"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "cholecalciferol",
+          "kind": "d3"
+        },
+        {
+          "name": "vitamin d3",
+          "kind": "d3"
+        },
+        {
+          "name": "ergocalciferol",
+          "kind": "d2"
+        },
+        {
+          "name": "vitamin d2",
+          "kind": "d2"
+        }
+      ],
+      "unit_conversions": [
+        {
+          "from": "IU",
+          "factor": 0.025,
+          "applies_to_forms": [
+            "*"
+          ],
+          "note": "1 mcg vitamin D = 40 IU"
+        }
+      ],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 15
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 15
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 15
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 15
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 15
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 15
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 15
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 20
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 15
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 15
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 15
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 15
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 15
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 15
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 15
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 20
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 10
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 10
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 10
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 10
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 10
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 10
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 10
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 10
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 10
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 10
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 10
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 10
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 10
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 10
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 10
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 10
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 63
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 75
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 100
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 100
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 100
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 100
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 100
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 100
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 63
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 75
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 100
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 100
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 100
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 100
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 100
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 100
+            }
+          ]
+        }
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-e",
+      "name": "Vitamin E",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "vitamin e",
+        "vit e",
+        "alpha tocopherol"
+      ],
+      "dsld_ingredient_groups": [
+        "Vitamin E"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "d alpha tocopherol",
+          "kind": "natural"
+        },
+        {
+          "name": "d alpha tocopheryl acetate",
+          "kind": "natural"
+        },
+        {
+          "name": "d alpha tocopheryl succinate",
+          "kind": "natural"
+        },
+        {
+          "name": "d alpha tocopheryl acid succinate",
+          "kind": "natural"
+        },
+        {
+          "name": "rrr alpha tocopherol",
+          "kind": "natural"
+        },
+        {
+          "name": "natural vitamin e",
+          "kind": "natural"
+        },
+        {
+          "name": "dl alpha tocopherol",
+          "kind": "synthetic"
+        },
+        {
+          "name": "dl alpha tocopheryl acetate",
+          "kind": "synthetic"
+        },
+        {
+          "name": "dl alpha tocopheryl succinate",
+          "kind": "synthetic"
+        },
+        {
+          "name": "all rac alpha tocopherol",
+          "kind": "synthetic"
+        },
+        {
+          "name": "synthetic vitamin e",
+          "kind": "synthetic"
+        }
+      ],
+      "unit_conversions": [
+        {
+          "from": "IU",
+          "factor": 0.67,
+          "applies_to_forms": [
+            "natural"
+          ],
+          "note": "1 IU natural (d-alpha, RRR) = 0.67 mg alpha-tocopherol"
+        },
+        {
+          "from": "IU",
+          "factor": 0.45,
+          "applies_to_forms": [
+            "synthetic"
+          ],
+          "note": "1 IU synthetic (dl-alpha, all-rac) = 0.45 mg alpha-tocopherol"
+        }
+      ],
+      "plain_mass_is_canonical": true,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 6
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 7
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 11
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 15
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 15
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 15
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 15
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 15
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 6
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 7
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 11
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 15
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 15
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 15
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 15
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 15
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 12
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 12
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 12
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 12
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 12
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 9
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 12
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 12
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 12
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 12
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 12
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 200
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 300
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 600
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 800
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1000
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 200
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 300
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 600
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 800
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 1000
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 1000
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 1000
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 1000
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "supplemental_alpha_tocopherol",
+      "ul_note": "The UL applies to any form of supplemental alpha-tocopherol.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/"
+    },
+    {
+      "id": "vitamin-k",
+      "name": "Vitamin K",
+      "canonical_unit": "mcg",
+      "synonyms": [
+        "vitamin k",
+        "vit k",
+        "vitamin k1",
+        "vitamin k2",
+        "phylloquinone",
+        "phytonadione",
+        "menaquinone",
+        "menaquinone 7",
+        "menaquinone 4",
+        "mk 7",
+        "mk 4"
+      ],
+      "dsld_ingredient_groups": [
+        "Vitamin K"
+      ],
+      "unii_codes": [],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 30
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 55
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 60
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 75
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 120
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 120
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 120
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 120
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 30
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 55
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 60
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 75
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 90
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 90
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 90
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 90
+            }
+          ]
+        },
+        "ul": null
+      },
+      "ul_unit": "mcg",
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "No UL has been established. Vitamin K can interact with warfarin; interactions are not assessed by this service.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/"
+    },
+    {
+      "id": "zinc",
+      "name": "Zinc",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "zinc"
+      ],
+      "dsld_ingredient_groups": [
+        "Zinc"
+      ],
+      "unii_codes": [],
+      "forms": [
+        {
+          "name": "zinc gluconate",
+          "kind": "compound"
+        },
+        {
+          "name": "zinc picolinate",
+          "kind": "compound"
+        },
+        {
+          "name": "zinc citrate",
+          "kind": "compound"
+        },
+        {
+          "name": "zinc oxide",
+          "kind": "compound"
+        },
+        {
+          "name": "zinc sulfate",
+          "kind": "compound"
+        },
+        {
+          "name": "zinc bisglycinate",
+          "kind": "compound"
+        },
+        {
+          "name": "zinc acetate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 3
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 11
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 11
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 11
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 11
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 11
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 3
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 5
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 8
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 9
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 8
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 8
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 8
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 8
+            }
+          ]
+        },
+        "ear": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2.5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 4
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 7
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 8.5
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 9.4
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 9.4
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 9.4
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 9.4
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 2.5
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 4
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 7
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 7.3
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 6.8
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 6.8
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 6.8
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 6.8
+            }
+          ]
+        },
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 7
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 12
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 23
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 34
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 40
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 40
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 40
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 40
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 7
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 12
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 23
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 34
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 40
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 40
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 40
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 40
+            }
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/"
+    }
+  ]
+}

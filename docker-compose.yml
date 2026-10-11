@@ -1,0 +1,17 @@
+# Backend only. The supplier stack (RelayMiner, Redis, Caddy) lives in deploy/.
+services:
+  dietary-supplement-analysis:
+    build: .
+    image: dietary-supplement-analysis:0.1.0
+    container_name: dietary-supplement-analysis
+    restart: unless-stopped
+    expose:
+      - "8080"
+    # Local testing only; drop this on the supplier host (the relayer reaches the backend over the Docker network).
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      LOG_LEVEL: info
+      DSLD_API_KEY: ${DSLD_API_KEY:-}
+      DSLD_PREWARM_IDS: ${DSLD_PREWARM_IDS:-}
+    mem_limit: 512m

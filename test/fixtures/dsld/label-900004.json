@@ -1,0 +1,106 @@
+{
+  "_fixture_note": "SYNTHETIC FIXTURE: hand-built in the DSLD v9 /label shape for offline tests. Not a real product; IDs 9000xx do not exist in DSLD. Replace or supplement with recorded real labels (scripts/record-fixtures.ts) when api.ods.od.nih.gov is reachable.",
+  "id": 900004,
+  "fullName": "Vitamin A and E 10000 IU (discontinued)",
+  "brandName": "Fixture Labs",
+  "upcSku": "0 00000 900004 0",
+  "offMarket": 1,
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Vitamin"
+  },
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 60,
+      "unit": "Softgel(s)",
+      "display": "60 Softgel(s)"
+    }
+  ],
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 1,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Softgel(s)",
+      "notes": "",
+      "inSFB": true
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "name": "Vitamin A",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin A",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 10000,
+          "unit": "IU",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 200,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Softgel(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 2,
+      "name": "Vitamin E",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin E",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "d-Alpha Tocopherol",
+          "ingredientGroup": "Vitamin E",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 400,
+          "unit": "IU",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 1333,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Softgel(s)"
+        }
+      ],
+      "nestedRows": []
+    }
+  ],
+  "statements": [],
+  "events": [
+    {
+      "date": "2026-10-11",
+      "type": "Fixture created"
+    }
+  ]
+}

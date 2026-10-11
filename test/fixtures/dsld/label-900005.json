@@ -1,0 +1,144 @@
+{
+  "_fixture_note": "SYNTHETIC FIXTURE: hand-built in the DSLD v9 /label shape for offline tests. Not a real product; IDs 9000xx do not exist in DSLD. Replace or supplement with recorded real labels (scripts/record-fixtures.ts) when api.ods.od.nih.gov is reachable.",
+  "id": 900005,
+  "fullName": "Calm Ashwagandha Complex",
+  "brandName": "Fixture Labs",
+  "upcSku": "0 00000 900005 0",
+  "offMarket": 0,
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Vitamin"
+  },
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 60,
+      "unit": "Capsule(s)",
+      "display": "60 Capsule(s)"
+    }
+  ],
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 1,
+      "minDailyServings": 1,
+      "maxDailyServings": 2,
+      "unit": "Capsule(s)",
+      "notes": "",
+      "inSFB": true
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "name": "Ashwagandha root extract",
+      "category": "botanical",
+      "ingredientGroup": "Ashwagandha",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 300,
+          "unit": "mg",
+          "dailyValueTargetGroup": [],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 2,
+      "name": "Calcium Carbonate",
+      "category": "mineral",
+      "ingredientGroup": "Calcium",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 500,
+          "unit": "mg",
+          "dailyValueTargetGroup": [],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 3,
+      "name": "Proprietary Calm Blend",
+      "category": "blend",
+      "ingredientGroup": "Blend",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 200,
+          "unit": "mg",
+          "dailyValueTargetGroup": [],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 1,
+          "name": "L-Theanine",
+          "category": "amino acid",
+          "ingredientGroup": "Theanine",
+          "uniiCode": null,
+          "notes": "",
+          "alternateNames": [],
+          "forms": [],
+          "quantity": [],
+          "nestedRows": []
+        },
+        {
+          "order": 2,
+          "name": "Chamomile flower",
+          "category": "botanical",
+          "ingredientGroup": "Chamomile",
+          "uniiCode": null,
+          "notes": "",
+          "alternateNames": [],
+          "forms": [],
+          "quantity": [],
+          "nestedRows": []
+        },
+        {
+          "order": 3,
+          "name": "Lemon Balm leaf",
+          "category": "botanical",
+          "ingredientGroup": "Lemon Balm",
+          "uniiCode": null,
+          "notes": "",
+          "alternateNames": [],
+          "forms": [],
+          "quantity": [],
+          "nestedRows": []
+        }
+      ]
+    }
+  ],
+  "statements": [],
+  "events": [
+    {
+      "date": "2026-10-11",
+      "type": "Fixture created"
+    }
+  ]
+}

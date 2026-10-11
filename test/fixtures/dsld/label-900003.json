@@ -1,0 +1,77 @@
+{
+  "_fixture_note": "SYNTHETIC FIXTURE: hand-built in the DSLD v9 /label shape for offline tests. Not a real product; IDs 9000xx do not exist in DSLD. Replace or supplement with recorded real labels (scripts/record-fixtures.ts) when api.ods.od.nih.gov is reachable.",
+  "id": 900003,
+  "fullName": "Magnesium Glycinate 200",
+  "brandName": "Fixture Labs",
+  "upcSku": "0 00000 900003 0",
+  "offMarket": 0,
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Vitamin"
+  },
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 60,
+      "unit": "Capsule(s)",
+      "display": "60 Capsule(s)"
+    }
+  ],
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 2,
+      "maxQuantity": 2,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Capsule(s)",
+      "notes": "",
+      "inSFB": true
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "name": "Magnesium",
+      "category": "mineral",
+      "ingredientGroup": "Magnesium",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "name": "Magnesium Glycinate",
+          "ingredientGroup": "Magnesium",
+          "uniiCode": null
+        }
+      ],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 200,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 48,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": []
+    }
+  ],
+  "statements": [],
+  "events": [
+    {
+      "date": "2026-10-11",
+      "type": "Fixture created"
+    }
+  ]
+}
