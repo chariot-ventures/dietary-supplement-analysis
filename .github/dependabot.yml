@@ -8,13 +8,22 @@ updates:
       day: monday
     open-pull-requests-limit: 5
     groups:
+      # Minor and patch updates only, grouped. Major versions come up in the weekly
+      # Claude review instead, since they usually need code changes.
       dev-dependencies:
         dependency-type: development
+        update-types: [minor, patch]
       production-dependencies:
         dependency-type: production
+        update-types: [minor, patch]
     ignore:
       # Pinned on purpose: the USDA SR28 files are verified by checksum in scripts/build-foods.ts.
       - dependency-name: fda-nutrient-database
+      # Node types follow the Node version the service runs on (22).
+      - dependency-name: "@types/node"
+        update-types: [version-update:semver-major]
+      - dependency-name: "*"
+        update-types: [version-update:semver-major]
   - package-ecosystem: github-actions
     directory: /
     schedule:
