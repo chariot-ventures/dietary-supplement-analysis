@@ -1,0 +1,29 @@
+# SAGE (PATH) gateway entry for the Pocket Network service dietary-supplement-analysis.
+# Merge into your gateway config; see OPERATORS.md "Gateway operators (SAGE)".
+gateway_config:
+  services:
+    - id: dietary-supplement-analysis
+      type: passthrough
+      rpc_types: ["rest"]
+      timeout_config:
+        relay_timeout: 30s
+  active_health_checks:
+    local:
+      - service_id: dietary-supplement-analysis
+        enabled: true
+        checks:
+          - name: version
+            type: rest
+            method: GET
+            path: /v1/version
+            expected_status_code: 200
+            reputation_signal: critical_error
+            timeout: 5s
+          - name: health
+            type: rest
+            method: GET
+            path: /v1/health
+            expected_status_code: 200
+            reputation_signal: major_error
+            timeout: 5s
+        # No sync_check or sync_allowance: this is not a blockchain service.

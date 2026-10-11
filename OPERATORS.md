@@ -11,10 +11,38 @@ A runbook for suppliers who serve the Pocket Network service `dietary-supplement
 | Card | [card/card.json](card/card.json) |
 | API spec | [openapi/openapi.json](openapi/openapi.json), also served by the backend at `GET /openapi.json` |
 
+## Run a supplier in 5 minutes
+
+If you already run an HA RelayMiner (relayer, miner, Redis on the `pocket-supplier` Docker network) with a staked operator key, adding this service takes three steps. No build is needed: CI publishes a multi-arch image (amd64 and arm64) for every release at `ghcr.io/micallb/dietary-supplement-analysis`.
+
+1. **Start the backend.**
+
+   ```bash
+   docker volume create dsld-store
+   docker run -d --name dietary-supplement-analysis-backend --restart unless-stopped \
+     --network pocket-supplier --memory 512m -v dsld-store:/data \
+     ghcr.io/micallb/dietary-supplement-analysis:release
+   docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
+   ```
+
+2. **Add the service to the relayer**: paste the `dietary-supplement-analysis` block from [RelayMiner configuration](#relayminer-configuration) into the relayer's `services:` and recreate the relayer.
+
+3. **Stake it**: add this entry to your supplier stake config (the config lists all of a supplier's services, so keep the existing ones), then run `pocketd tx supplier stake-supplier --config <file> --from <operator> --network=beta --gas auto --gas-prices 1upokt --gas-adjustment 1.5`. This changes your staked supplier, so it's the operator's call. The new service activates at the next session boundary:
+
+   ```yaml
+   services:
+     - service_id: dietary-supplement-analysis
+       endpoints:
+         - publicly_exposed_url: https://<your-relay-host>
+           rpc_type: REST
+   ```
+
+To stay current, either pull `:release` on a timer (`docker pull` then recreate the container), or install the [auto-deploy](#automatic-upgrades-from-release-tags) used by the reference supplier. Gateway operators: [deploy/gateway-config.yaml](deploy/gateway-config.yaml) is the SAGE entry below as a file.
+
 ## Requirements
 
 - **Host:** 1 GB of RAM and 2 GB of disk for the backend alone (the label store grows to a few hundred MB). On a supplier host, size the box for the RelayMiner stack (relayer, miner, Redis) as Pocket's server guidance describes. The backend container is limited to 512 MB.
-- **Outbound HTTPS to `api.ods.od.nih.gov`.** This is the only network dependency. Nutrient reference data ships inside the image.
+- **Outbound HTTPS to `api.ods.od.nih.gov`** (labels). Optional: `rxnav.nlm.nih.gov` (normalizing medication names the interaction list doesn't know) and `api.fda.gov` (`/v1/products/fda`). Without them those features degrade to name matching and a 422 respectively; everything else works. Nutrient reference, interaction and botanical data ship inside the image.
 - **No inbound ports.** The backend is reached only by the relayer over the supplier's private Docker network.
 - **No credentials.** The backend never reads caller headers or expects auth. Gateways drop caller headers anyway.
 
@@ -34,7 +62,7 @@ Create `docker-compose.yaml` here:
 services:
   backend:
     build: ../backend
-    image: dietary-supplement-analysis-backend:0.5.0
+    image: dietary-supplement-analysis-backend:local
     container_name: dietary-supplement-analysis-backend
     restart: unless-stopped
     expose:
@@ -62,7 +90,7 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.5.0"}
+# {"service":"dietary-supplement-analysis","version":"0.8.0"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.
@@ -78,6 +106,8 @@ The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`
 | `DSLD_PREWARM_IDS` | none | Comma-separated label IDs to cache at startup |
 | `DSLD_STORE_PATH` | `/data/dsld.sqlite` in the container, off otherwise | Persistent label store (SQLite). Every fetched label is kept; when NIH is unreachable, labels, barcodes and searches are answered from it. Empty turns it off |
 | `DSLD_WARM` | `1` | With the store on, a background job fetches popular products into it at about one request per second (queries in [data/warm-queries.json](data/warm-queries.json)). `0` turns it off |
+| `RXNORM` / `RXNORM_BASE_URL` | on / `https://rxnav.nlm.nih.gov/REST` | `off` keeps medication matching to the names in data/interactions.json |
+| `OPENFDA` / `OPENFDA_API_KEY` / `OPENFDA_BASE_URL` | on / none / `https://api.fda.gov` | `off` disables `/v1/products/fda`. Without a key openFDA allows about 1,000 requests a day per IP; answers are cached for a day |
 | `UPSTREAM_BUDGET_MS` | `8000` | Total time one request may wait on DSLD before answering `424 UPSTREAM_UNAVAILABLE` |
 
 Do not set `DSLD_FIXTURES_DIR` in production; it serves test fixtures instead of live data.
