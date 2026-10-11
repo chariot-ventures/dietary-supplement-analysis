@@ -2,9 +2,17 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
   "name": "io.github.micallb/dietary-supplement-analysis",
   "title": "Dietary Supplement Analysis (NIH data)",
-  "description": "Checks a list of dietary supplements against NIH upper limits and RDAs: names or barcodes in, plain-language findings, fixes and citations out.",
-  "version": "0.5.0",
+  "description": "NIH supplement checks: upper limits, drug and herb interactions, FDA recalls, with citations.",
+  "version": "0.9.0",
   "websiteUrl": "https://github.com/micallb/dietary-supplement-analysis",
-  "repository": { "url": "https://github.com/micallb/dietary-supplement-analysis", "source": "github" },
-  "remotes": [{ "type": "streamable-http", "url": "https://agents.trackmysupplement.com/mcp" }]
+  "repository": {
+    "url": "https://github.com/micallb/dietary-supplement-analysis",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://agents.trackmysupplement.com/mcp"
+    }
+  ]
 }
