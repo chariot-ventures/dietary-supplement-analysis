@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Dietary Supplement Label and Nutrient Intake Analysis",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Label and reference data only; not medical advice."
   },
   "externalDocs": {
@@ -119,6 +119,25 @@
                     "type": "integer",
                     "minimum": 1,
                     "maximum": 10
+                  },
+                  "dedupe_versions": {
+                    "default": true,
+                    "description": "Collapse label versions of the same product (same brand and name) into one result, newest first; older IDs are listed in other_versions",
+                    "type": "boolean"
+                  }
+                }
+              },
+              "examples": {
+                "by_name": {
+                  "value": {
+                    "query": "vitamin d3 5000",
+                    "limit": 3
+                  }
+                },
+                "by_brand_and_ingredient": {
+                  "value": {
+                    "brand": "Thorne",
+                    "ingredient": "magnesium"
                   }
                 }
               }
@@ -158,6 +177,147 @@
                       "items": {
                         "$ref": "#/components/schemas/ProductSummary"
                       }
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Source"
+                      }
+                    },
+                    "disclaimer": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND (unknown DSLD ID or nutrient)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "UNSUPPORTED (e.g. pregnancy, infants)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "UPSTREAM_UNAVAILABLE: NIH DSLD unreachable and nothing cached (retryable)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/products/lookup": {
+      "post": {
+        "summary": "Look up a product by barcode",
+        "description": "The DSLD label whose UPC matches, newest version first. Spaces and dashes in the barcode are ignored; a 13-digit EAN with a leading 0 matches its 12-digit UPC.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "upc": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 32,
+                    "description": "UPC-A or EAN barcode digits as printed on the bottle, e.g. \"031604026974\" (spaces and dashes are ignored)"
+                  }
+                },
+                "required": [
+                  "upc"
+                ],
+                "additionalProperties": false
+              },
+              "examples": {
+                "upc": {
+                  "value": {
+                    "upc": "031604026974"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Label for the barcode",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string",
+                      "const": "dietary-supplement-analysis"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "as_of": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "upc": {
+                      "type": "string"
+                    },
+                    "dsld_id": {
+                      "type": "integer"
+                    },
+                    "other_versions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "dsld_id": {
+                            "type": "integer"
+                          },
+                          "entry_date": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "on_market": {
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "product": {
+                      "$ref": "#/components/schemas/Label"
                     },
                     "sources": {
                       "type": "array",
@@ -373,6 +533,22 @@
                   "age",
                   "sex"
                 ]
+              },
+              "examples": {
+                "vitamin_d": {
+                  "value": {
+                    "nutrient": "vitamin d",
+                    "age": 34,
+                    "sex": "female"
+                  }
+                },
+                "zinc": {
+                  "value": {
+                    "nutrient": "zinc",
+                    "age": 6,
+                    "sex": "male"
+                  }
+                }
               }
             }
           }
@@ -490,7 +666,7 @@
     "/v1/stack/analyze": {
       "post": {
         "summary": "Analyze a supplement stack",
-        "description": "Per-nutrient daily totals across 1-15 products (DSLD IDs or custom ingredient lists), compared with reference intakes when age and sex are given. No flag means nothing to report, not a judgement about the stack.",
+        "description": "Per-nutrient daily totals across 1-15 products (product names, barcodes, DSLD IDs or custom ingredient lists), compared with upper limits and reference intakes when age and sex are given. Returns a plain-language agent_summary, how each named product was identified, single-product changes that would bring above-UL nutrients under the UL, and (with candidates) the effect of adding each candidate. No flag means nothing to report, not a judgement about the stack.",
         "requestBody": {
           "required": true,
           "content": {
@@ -535,6 +711,54 @@
                           },
                           "required": [
                             "dsld_id"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "query": {
+                              "type": "string",
+                              "minLength": 2,
+                              "maxLength": 200,
+                              "description": "Product as the user named it, e.g. \"Centrum Silver Women 50+\". Resolved to the best-matching DSLD label; see resolutions[]"
+                            },
+                            "brand": {
+                              "description": "Brand, if known separately",
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "servings_per_day": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50,
+                              "description": "Servings taken per day. Default: the label maximum daily servings, else 1."
+                            }
+                          },
+                          "required": [
+                            "query"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "upc": {
+                              "type": "string",
+                              "minLength": 8,
+                              "maxLength": 32,
+                              "description": "UPC-A or EAN barcode digits as printed on the bottle, e.g. \"031604026974\" (spaces and dashes are ignored)"
+                            },
+                            "servings_per_day": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50,
+                              "description": "Servings taken per day. Default: the label maximum daily servings, else 1."
+                            }
+                          },
+                          "required": [
+                            "upc"
                           ],
                           "additionalProperties": false
                         },
@@ -605,12 +829,210 @@
                         }
                       ]
                     },
-                    "description": "1-15 products: each a DSLD ID or a custom product with explicit ingredients"
+                    "description": "1-15 products. Each is one of: {\"dsld_id\"}, {\"query\"} (a product name, resolved server-side), {\"upc\"} (barcode), or a custom product {\"name\",\"ingredients\"}. Add \"servings_per_day\" to any of them."
+                  },
+                  "candidates": {
+                    "description": "Optional, up to 5: products the user is considering adding. Each is evaluated as an addition to the stack in candidate_results[]; they are not included in nutrient_totals.",
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "dsld_id": {
+                              "type": "integer",
+                              "exclusiveMinimum": 0,
+                              "maximum": 10000000,
+                              "description": "DSLD label ID, e.g. from /v1/products/search"
+                            },
+                            "servings_per_day": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50,
+                              "description": "Servings taken per day. Default: the label maximum daily servings, else 1."
+                            }
+                          },
+                          "required": [
+                            "dsld_id"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "query": {
+                              "type": "string",
+                              "minLength": 2,
+                              "maxLength": 200,
+                              "description": "Product as the user named it, e.g. \"Centrum Silver Women 50+\". Resolved to the best-matching DSLD label; see resolutions[]"
+                            },
+                            "brand": {
+                              "description": "Brand, if known separately",
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "servings_per_day": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50,
+                              "description": "Servings taken per day. Default: the label maximum daily servings, else 1."
+                            }
+                          },
+                          "required": [
+                            "query"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "upc": {
+                              "type": "string",
+                              "minLength": 8,
+                              "maxLength": 32,
+                              "description": "UPC-A or EAN barcode digits as printed on the bottle, e.g. \"031604026974\" (spaces and dashes are ignored)"
+                            },
+                            "servings_per_day": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50,
+                              "description": "Servings taken per day. Default: the label maximum daily servings, else 1."
+                            }
+                          },
+                          "required": [
+                            "upc"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "servings_per_day": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50,
+                              "description": "Servings taken per day. Default: the label maximum daily servings, else 1."
+                            },
+                            "ingredients": {
+                              "minItems": 1,
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  },
+                                  "amount": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 10000000
+                                  },
+                                  "unit": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 30,
+                                    "description": "mg, mcg, g, IU, mcg DFE, mcg RAE, mg NE"
+                                  },
+                                  "form": {
+                                    "description": "Declared form, e.g. \"folic acid\", \"retinyl palmitate\", \"d-alpha tocopherol\"",
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  },
+                                  "nutrient_basis": {
+                                    "description": "For minerals: whether amount is elemental or the whole compound weight",
+                                    "type": "string",
+                                    "enum": [
+                                      "elemental",
+                                      "compound"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "amount",
+                                  "unit"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "ingredients"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
                   }
                 },
                 "required": [
                   "products"
                 ]
+              },
+              "examples": {
+                "by_name": {
+                  "value": {
+                    "age": 62,
+                    "sex": "female",
+                    "products": [
+                      {
+                        "query": "Centrum Silver Women 50+"
+                      },
+                      {
+                        "query": "Thompson Zinc 50 mg",
+                        "servings_per_day": 1
+                      },
+                      {
+                        "upc": "031604026974"
+                      }
+                    ]
+                  }
+                },
+                "what_if": {
+                  "value": {
+                    "age": 34,
+                    "sex": "female",
+                    "products": [
+                      {
+                        "dsld_id": 338022
+                      }
+                    ],
+                    "candidates": [
+                      {
+                        "query": "vitamin d3 5000 iu"
+                      }
+                    ]
+                  }
+                },
+                "custom": {
+                  "value": {
+                    "age": 6,
+                    "sex": "male",
+                    "products": [
+                      {
+                        "name": "Immune gummy",
+                        "ingredients": [
+                          {
+                            "name": "zinc",
+                            "amount": 10,
+                            "unit": "mg"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
               }
             }
           }
@@ -664,19 +1086,52 @@
                         "above_ul": {
                           "type": "integer"
                         },
-                        "below_reference": {
+                        "near_ul": {
                           "type": "integer"
                         },
                         "data_gaps": {
                           "type": "integer"
+                        },
+                        "data_suspect": {
+                          "type": "integer"
+                        },
+                        "products_unresolved": {
+                          "type": "integer"
+                        },
+                        "suggestions": {
+                          "type": "integer"
                         }
                       }
+                    },
+                    "agent_summary": {
+                      "type": "string",
+                      "description": "Two to five plain sentences summarizing the result, ready to relay as written"
+                    },
+                    "resolutions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Resolution"
+                      },
+                      "description": "Present when any product was given as {query} or {upc}"
                     },
                     "assumptions": {
                       "type": "array",
                       "items": {
                         "type": "string"
                       }
+                    },
+                    "suggestions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Suggestion"
+                      }
+                    },
+                    "candidate_results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CandidateResult"
+                      },
+                      "description": "Present when candidates were given"
                     },
                     "nutrient_totals": {
                       "type": "array",
@@ -747,6 +1202,12 @@
                               "default"
                             ]
                           },
+                          "entry_date": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
                           "source_url": {
                             "type": [
                               "string",
@@ -813,6 +1274,47 @@
         }
       }
     },
+    "/v1/tools": {
+      "get": {
+        "summary": "Tool definitions for function calling",
+        "description": "Every operation as {name, path, description, input_schema} (JSON Schema). Call them via their path or POST /v1/tool.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/guide": {
+      "get": {
+        "summary": "Usage guide for agents",
+        "description": "Markdown guide (the same text as llms.txt in the repository) inside a JSON object.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "guide": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/tool": {
       "post": {
         "summary": "Tool dispatcher",
@@ -829,6 +1331,7 @@
                     "enum": [
                       "products_search",
                       "products_get",
+                      "products_lookup",
                       "nutrients_reference",
                       "stack_analyze"
                     ]
@@ -978,6 +1481,8 @@
               "NO_REFERENCE",
               "PROFILE_MISSING",
               "SERVINGS_UNKNOWN",
+              "DATA_SUSPECT",
+              "PRODUCT_NOT_RESOLVED",
               "INTERACTIONS_NOT_ASSESSED"
             ]
           },
@@ -986,6 +1491,16 @@
           },
           "nutrient_id": {
             "type": "string"
+          },
+          "check": {
+            "type": "string",
+            "enum": [
+              "duplicate_row",
+              "nested_exceeds_parent",
+              "percent_dv_mismatch",
+              "implausible_amount"
+            ],
+            "description": "DATA_SUSPECT only: which consistency check on the DSLD record failed"
           },
           "detail": {
             "type": "string"
@@ -1207,6 +1722,20 @@
               "null"
             ]
           },
+          "entry_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Date this label version was entered into DSLD"
+          },
+          "other_versions": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "DSLD IDs of older versions of the same product"
+          },
           "serving": {
             "$ref": "#/components/schemas/Serving"
           },
@@ -1248,6 +1777,12 @@
           "on_market": {
             "type": [
               "boolean",
+              "null"
+            ]
+          },
+          "entry_date": {
+            "type": [
+              "string",
               "null"
             ]
           },
@@ -1338,6 +1873,13 @@
               "string",
               "null"
             ]
+          },
+          "ul_basis": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "What the UL protects against (the critical adverse effect it is based on)"
           }
         }
       },
@@ -1420,15 +1962,56 @@
               "null"
             ]
           },
+          "coverage": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "reference": {
+                    "type": "string",
+                    "enum": [
+                      "rda",
+                      "ai"
+                    ]
+                  },
+                  "percent": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "reference",
+                  "percent"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Percent of the RDA (or AI) supplied by these supplements alone. Informational: diet normally supplies the rest"
+          },
           "flags": {
             "type": "array",
             "items": {
               "type": "string",
               "enum": [
                 "above_ul",
-                "below_reference"
+                "near_ul"
               ]
-            }
+            },
+            "description": "above_ul: the amount the UL applies to exceeds it. near_ul: 90-100% of the UL. No flag means nothing to report"
+          },
+          "severity": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "high",
+              "moderate",
+              "low",
+              null
+            ],
+            "description": "high: 2x the UL or more; moderate: above the UL; low: within 10% of the UL"
           },
           "factsheet_url": {
             "type": "string"
@@ -1491,6 +2074,290 @@
                 }
               }
             }
+          }
+        }
+      },
+      "Resolution": {
+        "type": "object",
+        "description": "How a {query} or {upc} product was identified",
+        "properties": {
+          "input_path": {
+            "type": "string",
+            "description": "e.g. products.0 or candidates.1"
+          },
+          "input": {
+            "type": "object"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "resolved",
+              "not_found"
+            ]
+          },
+          "matched_by": {
+            "type": "string",
+            "enum": [
+              "query",
+              "upc"
+            ]
+          },
+          "dsld_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "product_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "brand": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "entry_date": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "high",
+              "medium",
+              "low",
+              null
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "other_versions": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "alternatives": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "dsld_id": {
+                  "type": "integer"
+                },
+                "brand": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "name": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "entry_date": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "on_market": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "score": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Suggestion": {
+        "type": "object",
+        "description": "A single-product change and its arithmetic effect on an above-UL nutrient",
+        "properties": {
+          "nutrient_id": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "reduce_servings",
+              "remove_product"
+            ]
+          },
+          "product_ref": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "servings_per_day": {
+            "type": "number",
+            "description": "reduce_servings only"
+          },
+          "resolves": {
+            "type": "boolean",
+            "description": "True when this change alone brings the amount to or under the UL"
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "amount_toward_ul": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "unit": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "unit"
+                ]
+              },
+              "percent_of_ul": {
+                "type": "number"
+              }
+            }
+          },
+          "also_resolves": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "also_lowers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "CandidateResult": {
+        "type": "object",
+        "description": "Effect of adding one candidate product to the stack",
+        "properties": {
+          "product_ref": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "adds_above_ul",
+              "increases_above_ul",
+              "adds_near_ul",
+              "no_new_flags"
+            ]
+          },
+          "new_flags": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nutrient_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "flag": {
+                  "type": "string"
+                },
+                "percent_of_ul": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "changes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nutrient_id": {
+                  "type": "string"
+                },
+                "from": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "amount",
+                    "unit"
+                  ]
+                },
+                "to": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "amount",
+                    "unit"
+                  ]
+                },
+                "percent_of_ul_to": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "coverage_percent_to": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "text": {
+            "type": "string"
           }
         }
       }

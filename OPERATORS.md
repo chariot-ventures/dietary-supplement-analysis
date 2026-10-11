@@ -23,7 +23,7 @@ A runbook for suppliers who serve the Pocket Network service `dietary-supplement
 On the supplier host, next to the HA RelayMiner stack (`pocket-supplier` Docker network):
 
 ```bash
-git clone --branch v0.1.0 https://github.com/micallb/dietary-supplement-analysis /opt/pocket/services/dietary-supplement-analysis/backend
+git clone --branch v0.2.0 https://github.com/micallb/dietary-supplement-analysis /opt/pocket/services/dietary-supplement-analysis/backend
 mkdir -p /opt/pocket/services/dietary-supplement-analysis/deploy
 cd /opt/pocket/services/dietary-supplement-analysis/deploy
 ```
@@ -34,7 +34,7 @@ Create `docker-compose.yaml` here:
 services:
   backend:
     build: ../backend
-    image: dietary-supplement-analysis-backend:0.1.0
+    image: dietary-supplement-analysis-backend:0.2.0
     container_name: dietary-supplement-analysis-backend
     restart: unless-stopped
     expose:
@@ -57,7 +57,7 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.1.0"}
+# {"service":"dietary-supplement-analysis","version":"0.2.0"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.
@@ -165,7 +165,7 @@ These rules come from Pocket's gateway design rules, and the test suite checks e
 
 The first supplier runs on one Oracle Cloud Always Free ARM VM (1 OCPU, 4 GB RAM), set up by
 [deploy/provision-beta.sh](deploy/provision-beta.sh). That script covers Docker, swap and firewall, this backend, an operator key
-created on the server, the HA RelayMiner stack (`pocket-relay-miner:v0.1.0`, Redis `8.10.1-alpine`) and Caddy for TLS.
+created on the server, the HA RelayMiner stack (`pocket-relay-miner:v0.1.0`, Redis `8.10.1-alpine`) and Caddy for TLS, with a per-client rate limit on the public demo route. Backend releases deploy themselves from tags (see [Automatic upgrades](#automatic-upgrades-from-release-tags)).
 The staking configs are in [deploy/beta-stake/](deploy/beta-stake/), and the transactions, including a settled claim, are
 in [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md). For relay-miner v0.1.0, leave `pocket_node.chain_id` out of the
 relayer config and use `logging.format` without `logging.output` in the miner config. Validation rejects both.
@@ -185,7 +185,17 @@ Every check should pass. Then send relays through Pocket with `pocket-ap` and co
 
 ## Upgrades
 
-Image versions follow the card's `serving.implementations` (`dietary-supplement-analysis >= 0.1.0`). To upgrade, check out the new tag in `backend/` and run `docker compose -p dietary-supplement-analysis up -d --build`. The health check paths and the response contract stay stable within 0.x. A breaking change would ship under a new service ID or a new `apis[]` value.
+Image versions follow the card's `serving.implementations` (`dietary-supplement-analysis >= 0.2.0`). To upgrade by hand, check out the new tag in `backend/` and run `docker compose -p dietary-supplement-analysis up -d --build`. The health check paths and the response contract stay stable within 0.x; fields are added, not renamed (0.2.0 replaced the `below_reference` flag with `coverage`, see [CHANGELOG.md](CHANGELOG.md)). A breaking change would ship under a new service ID or a new `apis[]` value.
+
+### Automatic upgrades from release tags
+
+[deploy/autodeploy/](deploy/autodeploy/) makes a supplier follow this repository's releases with no manual step:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/main/deploy/autodeploy/install.sh | sudo bash
+```
+
+It installs a systemd timer that checks GitHub every 5 minutes for the newest `vX.Y.Z` tag. A new tag is built, smoke-tested in a throwaway container (the version must match the tag, and `/v1/health` and the card's functional probe must pass), then swapped in with the compose file from that tag. If the live container fails the same checks, the previous image is restored and the tag is marked failed so it isn't retried. Only the backend container changes; the RelayMiner, Redis, Caddy and on-chain state are untouched. Logs: `journalctl -u dsa-autodeploy` and `/opt/pocket/services/dietary-supplement-analysis/autodeploy/deploy.log`.
 
 ## Troubleshooting
 

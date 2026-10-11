@@ -50,12 +50,16 @@ export interface Nutrient {
   dri: DriTables | null;
   /** FDA Daily Value used on current labels; lets a plain-mass amount be read in the canonical basis when the label's %DV matches it. */
   label_dv: { amount: number; unit: string } | null;
+  /** Pre-2016 FDA Daily Value; only used to recognize the %DV printed on older labels. */
+  label_dv_legacy: { amount: number; unit: string } | null;
   /** DSLD ingredient groups in which an exact name match to this nutrient wins over the group's nutrient. */
   name_overrides_groups: string[];
   ul_unit: string | null;
   ul_component: UlComponent;
   ul_scope: string;
   ul_note: string | null;
+  /** The adverse effect the UL protects against (the Food and Nutrition Board's critical effect). */
+  ul_basis: string | null;
   factsheet_url: string;
   source_url: string;
 }

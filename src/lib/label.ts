@@ -66,12 +66,19 @@ export type DataGapCode =
   | 'NO_REFERENCE'
   | 'PROFILE_MISSING'
   | 'SERVINGS_UNKNOWN'
+  | 'DATA_SUSPECT'
+  | 'PRODUCT_NOT_RESOLVED'
   | 'INTERACTIONS_NOT_ASSESSED';
+
+/** Why a DATA_SUSPECT gap was raised. */
+export type SuspectCheck = 'duplicate_row' | 'nested_exceeds_parent' | 'percent_dv_mismatch' | 'implausible_amount';
 
 export interface DataGap {
   code: DataGapCode;
   product_ref?: string;
   nutrient_id?: string;
+  /** For DATA_SUSPECT: which consistency check failed. */
+  check?: SuspectCheck;
   detail: string;
 }
 
@@ -91,6 +98,8 @@ export interface NormalizedLabel {
   name: string;
   upc: string | null;
   on_market: boolean | null;
+  /** Date the label version was entered into DSLD; newer entries are newer label versions. */
+  entry_date: string | null;
   serving: ServingInfo;
   ingredient_count: number;
   ingredients: NormalizedIngredient[];
@@ -126,6 +135,12 @@ function percentDv(q: DsldQuantity | undefined): number | null {
   return typeof p === 'number' ? p : null;
 }
 
+/** %DV for the general adult population only; other groups (children, pregnancy) use different Daily Values. */
+function adultPercentDv(q: DsldQuantity | undefined): number | null {
+  const g = (q?.dailyValueTargetGroup ?? []).find((x) => typeof x.percent === 'number' && /adults and children 4/i.test(x.name ?? ''));
+  return typeof g?.percent === 'number' ? g.percent : null;
+}
+
 interface RowContext {
   productRef: string;
   out: NormalizedLabel;
@@ -142,6 +157,8 @@ interface RowInput extends IngredientInput {
   isCustom: boolean;
   breakdown?: FormBreakdownEntry[];
   notes?: string | null;
+  /** %DV printed for adults and children 4+, for the label consistency check. */
+  adultPercentDv?: number | null;
 }
 
 type FormSplit = { status: 'none' } | { status: 'partial'; detail: string } | { status: 'full'; parts: { kind: string; pct: number }[] };
@@ -317,12 +334,102 @@ function addRow(row: RowInput, ctx: RowContext): { nutrient: Nutrient | null; qu
         multi?.ok === true
           ? (multi.towardUl ?? null)
           : ((n.ul_component === 'all' ? null : ulFromBreakdown(n, breakdown)) ?? ulPortion(n, conv.amount, formKind));
+      if (!row.isCustom) checkAmount(n, row, ing, ctx);
     } else {
       gap('UNIT_NOT_CONVERTIBLE', split.status === 'partial' ? `${conv.reason} (${split.detail})` : conv.reason);
     }
   }
   out.ingredients.push(ing);
   return { nutrient: n, quantified: row.amount !== null };
+}
+
+const pctFmt = (v: number) => `${Math.round(v)}%`;
+
+/**
+ * Consistency checks on a converted DSLD row. They catch data-entry errors in
+ * DSLD (an amount typed in the wrong unit, a %DV that contradicts the amount).
+ * The amount is still counted; the gap tells the caller to check the label.
+ */
+function checkAmount(n: Nutrient, row: RowInput, ing: NormalizedIngredient, ctx: RowContext): void {
+  const per = ing.per_serving;
+  if (!per) return;
+  const suspect = (check: SuspectCheck, detail: string) =>
+    ctx.out.data_gaps.push({ code: 'DATA_SUSPECT', check, product_ref: ctx.productRef, nutrient_id: n.id, detail });
+
+  // Far above any adult UL: typically mg typed for mcg (1000x).
+  const ulTable = n.dri?.ul;
+  if (ulTable && n.ul_unit && ing.toward_ul_per_serving !== null) {
+    const maxUl = Math.max(...[...ulTable.male, ...ulTable.female].map((r) => r.amount));
+    if (ing.toward_ul_per_serving > maxUl * 50) {
+      suspect(
+        'implausible_amount',
+        `"${row.name}" lists ${row.amount?.amount} ${row.amount?.unit} per serving, over 50 times the highest adult UL for ${n.name} (${maxUl} ${n.ul_unit}). The unit may have been entered wrongly in DSLD; check the label image before relying on this total.`,
+      );
+      return;
+    }
+  }
+
+  // The printed %DV should match the amount under the current or the pre-2016 Daily Value.
+  const pdv = row.adultPercentDv ?? null;
+  if (pdv === null || pdv < 5 || !n.label_dv || !n.label_dv_legacy || (ing.conversion_note ?? '').includes('DV')) return;
+  const canon = parseUnit(per.unit);
+  const dvs = [n.label_dv, n.label_dv_legacy].map((dv) => ({ dv, u: parseUnit(dv.unit) }));
+  if (canon.kind !== 'mass') return;
+  const expected: number[] = [];
+  for (const { dv, u } of dvs) {
+    if (u.kind !== 'mass' || u.basis !== canon.basis) return;
+    expected.push((convertMass(per.amount, canon.unit, u.unit) / dv.amount) * 100);
+  }
+  const close = expected.some((e) => Math.abs(e - pdv) <= Math.max(5, pdv * 0.25));
+  if (!close) {
+    suspect(
+      'percent_dv_mismatch',
+      `"${row.name}" lists ${row.amount?.amount} ${row.amount?.unit} with ${pdv}% DV, but that amount is ${expected.map(pctFmt).join(' (current DV) or ')} (pre-2016 DV). The amount or the %DV may have been entered wrongly in DSLD.`,
+    );
+  }
+}
+
+/** Same nutrient listed twice under one parent with the same name: usually a DSLD entry error (e.g. EPA entered as DHA). */
+function checkDuplicates(out: NormalizedLabel): void {
+  const groups = new Map<string, NormalizedIngredient[]>();
+  for (const ing of out.ingredients) {
+    if (!ing.label_amount) continue;
+    const key = `${ing.blend_name ?? ''}\u0000${ing.nutrient_id}\u0000${ing.label_name.trim().toLowerCase()}`;
+    groups.set(key, [...(groups.get(key) ?? []), ing]);
+  }
+  for (const list of groups.values()) {
+    if (list.length < 2) continue;
+    const first = list[0]!;
+    out.data_gaps.push({
+      code: 'DATA_SUSPECT',
+      check: 'duplicate_row',
+      product_ref: out.product_ref,
+      nutrient_id: first.nutrient_id,
+      detail: `"${first.label_name}" appears ${list.length} times${first.blend_name ? ` in "${first.blend_name}"` : ''} with amounts ${list.map((i) => `${i.label_amount!.amount} ${i.label_amount!.unit}`).join(' and ')}. One row may be a different ingredient entered under the wrong name in DSLD; all are counted.`,
+    });
+  }
+}
+
+/** Nested rows whose amounts add up to more than their parent's declared total. */
+function checkNestedSum(parent: DsldIngredientRow, parentAmount: Amount | null, servingOrder: number, ctx: RowContext): void {
+  const pu = parentAmount ? parseUnit(parentAmount.unit) : null;
+  if (!parentAmount || !pu || pu.kind !== 'mass' || pu.basis !== null || parentAmount.amount <= 0) return;
+  let sum = 0;
+  for (const row of parent.nestedRows ?? []) {
+    const a = labelAmount(pickQuantity(row, servingOrder));
+    if (!a) continue;
+    const u = parseUnit(a.unit);
+    if (u.kind !== 'mass' || u.basis !== null) return; // mixed bases: not comparable
+    sum += convertMass(a.amount, u.unit, pu.unit);
+  }
+  if (sum > parentAmount.amount * 1.05 + 1e-9) {
+    ctx.out.data_gaps.push({
+      code: 'DATA_SUSPECT',
+      check: 'nested_exceeds_parent',
+      product_ref: ctx.productRef,
+      detail: `The rows listed under "${parent.name}" add up to ${round(sum, 3)} ${pu.unit}, more than its declared ${parentAmount.amount} ${parentAmount.unit}. An amount or unit may have been entered wrongly in DSLD.`,
+    });
+  }
 }
 
 function rowInput(row: DsldIngredientRow, servingOrder: number): RowInput {
@@ -336,6 +443,7 @@ function rowInput(row: DsldIngredientRow, servingOrder: number): RowInput {
     category: row.category,
     amount: labelAmount(q),
     percentDv: percentDv(q),
+    adultPercentDv: adultPercentDv(q),
     inBlend: false,
     isCustom: false,
     notes: row.notes ?? null,
@@ -379,6 +487,7 @@ function walkDsldRows(rows: DsldIngredientRow[], servingOrder: number, ctx: RowC
     // A row with nested rows that is not itself a nutrient is a blend container.
     if (nested.length && !match) {
       ctx.out.unrecognized_ingredients.push({ label_name: row.name, category: row.category ?? null, per_serving: amount, in_blend: inBlend, is_blend: true });
+      checkNestedSum(row, amount, servingOrder, ctx);
       const inner = { name: row.name, unquantified: [] as string[] };
       walkDsldRows(nested, servingOrder, ctx, inner);
       if (inner.unquantified.length) {
@@ -434,7 +543,7 @@ function servingInfo(label: DsldLabel): { info: ServingInfo; order: number } {
   };
 }
 
-function emptyLabel(partial: Pick<NormalizedLabel, 'dsld_id' | 'product_ref' | 'brand' | 'name' | 'upc' | 'on_market' | 'serving' | 'source_url'>): NormalizedLabel {
+function emptyLabel(partial: Pick<NormalizedLabel, 'dsld_id' | 'product_ref' | 'brand' | 'name' | 'upc' | 'on_market' | 'entry_date' | 'serving' | 'source_url'>): NormalizedLabel {
   return { ...partial, ingredient_count: 0, ingredients: [], unrecognized_ingredients: [], data_gaps: [], statements: [] };
 }
 
@@ -447,11 +556,13 @@ export function normalizeDsldLabel(label: DsldLabel): NormalizedLabel {
     name: label.fullName ?? `DSLD label ${label.id}`,
     upc: label.upcSku ?? null,
     on_market: typeof label.offMarket === 'number' ? label.offMarket === 0 : null,
+    entry_date: typeof label.entryDate === 'string' && label.entryDate ? label.entryDate : null,
     serving: info,
     source_url: dsldLabelUrl(label.id),
   });
   const rows = label.ingredientRows ?? [];
   walkDsldRows(rows, order, { productRef: out.product_ref, out });
+  checkDuplicates(out);
   out.ingredient_count = rows.length;
   out.statements = (label.statements ?? [])
     .filter((s) => s?.notes)
@@ -475,6 +586,7 @@ export function normalizeCustomProduct(productRef: string, name: string, ingredi
     name,
     upc: null,
     on_market: null,
+    entry_date: null,
     serving: { quantity: 1, unit: 'serving', daily_servings: { min: null, max: null }, label_text: null },
     source_url: null,
   });

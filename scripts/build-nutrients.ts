@@ -56,12 +56,14 @@ const manualNutrient = z
       .default([]),
     plain_mass_is_canonical: z.boolean().default(false),
     label_dv: z.object({ amount: z.number().positive(), unit: z.string() }).strict().nullable().default(null),
+    label_dv_legacy: z.object({ amount: z.number().positive(), unit: z.string() }).strict().nullable().default(null),
     name_overrides_groups: z.array(z.string()).default([]),
     dri_bands: z.object({ rda: bandTable, ear: bandTable, ai: bandTable, ul: bandTable }).strict().nullable(),
     ul_unit: z.string().nullable(),
     ul_component: z.enum(['all', 'preformed', 'folic_acid']),
     ul_scope: z.string(),
     ul_note: z.string().nullable(),
+    ul_basis: z.string().nullable().default(null),
     factsheet_url: z.string(),
     source_url: z.string().optional(),
   })
@@ -72,6 +74,8 @@ const manualFile = z
     _doc: z.string().optional(),
     dri_reviewed: z.string(),
     label_dv_source: z.string().optional(),
+    label_dv_legacy_source: z.string().optional(),
+    ul_basis_source: z.string().optional(),
     age_bands: z.array(z.tuple([z.number().int().nonnegative(), z.number().int().nonnegative().nullable()])),
     nutrients: z.array(manualNutrient),
   })
@@ -118,11 +122,13 @@ export const builtNutrientSchema = z
     plain_mass_is_canonical: z.boolean(),
     dri: z.object({ rda: sexTable, ear: sexTable, ai: sexTable, ul: sexTable }).strict().nullable(),
     label_dv: z.object({ amount: z.number().positive(), unit: z.string() }).strict().nullable(),
+    label_dv_legacy: z.object({ amount: z.number().positive(), unit: z.string() }).strict().nullable(),
     name_overrides_groups: z.array(z.string()),
     ul_unit: z.string().nullable(),
     ul_component: z.enum(['all', 'preformed', 'folic_acid']),
     ul_scope: z.string(),
     ul_note: z.string().nullable(),
+    ul_basis: z.string().min(1).nullable(),
     factsheet_url: httpsUrl,
     source_url: httpsUrl,
   })
@@ -168,11 +174,13 @@ function fromManual(n: ManualNutrient, bands: ManualFile['age_bands']): Nutrient
     plain_mass_is_canonical: n.plain_mass_is_canonical,
     dri,
     label_dv: n.label_dv,
+    label_dv_legacy: n.label_dv_legacy,
     name_overrides_groups: n.name_overrides_groups,
     ul_unit: n.ul_unit,
     ul_component: n.ul_component,
     ul_scope: n.ul_scope,
     ul_note: n.ul_note,
+    ul_basis: n.ul_basis,
     factsheet_url: n.factsheet_url,
     source_url: n.source_url ?? n.factsheet_url,
   };
@@ -223,11 +231,13 @@ function fromExport(row: z.infer<typeof exportRow>): Nutrient {
     plain_mass_is_canonical: false,
     dri,
     label_dv: null,
+    label_dv_legacy: null,
     name_overrides_groups: [],
     ul_unit: dri?.ul ? unit : null,
     ul_component: 'all',
     ul_scope: dri?.ul ? 'total_intake' : 'not_established',
     ul_note: null,
+    ul_basis: null,
     factsheet_url: factsheet ?? '',
     source_url: factsheet ?? '',
   };
@@ -263,6 +273,10 @@ export function validateNutrients(list: Nutrient[]): string[] {
       const dv = parseUnit(n.label_dv.unit);
       if (dv.kind !== 'mass' || canonical.kind !== 'mass' || dv.basis !== canonical.basis) errors.push(`${n.id}: label_dv unit "${n.label_dv.unit}" must be a mass unit in the canonical basis`);
     }
+    if (n.label_dv_legacy) {
+      const dv = parseUnit(n.label_dv_legacy.unit);
+      if (dv.kind !== 'mass' || canonical.kind !== 'mass' || dv.basis !== canonical.basis) errors.push(`${n.id}: label_dv_legacy unit "${n.label_dv_legacy.unit}" must be a mass unit in the canonical basis`);
+    }
     if (n.ul_unit !== null && parseUnit(n.ul_unit).kind !== 'mass') errors.push(`${n.id}: ul_unit "${n.ul_unit}" is not a known mass unit`);
     for (const c of n.unit_conversions) {
       if (parseUnit(c.from).kind === 'unknown') errors.push(`${n.id}: unit_conversions.from "${c.from}" is not a known unit`);
@@ -280,6 +294,7 @@ export function validateNutrients(list: Nutrient[]): string[] {
     if (n.dri) {
       if (!n.source_url) errors.push(`${n.id}: DRI values need a source_url`);
       if (n.dri.ul && n.ul_unit === null) errors.push(`${n.id}: has a UL but no ul_unit`);
+      if (n.dri.ul && !n.ul_basis && n.label_dv !== null) errors.push(`${n.id}: has a UL but no ul_basis (the adverse effect the UL protects against)`);
       if (!n.dri.rda && !n.dri.ai && !n.dri.ear && !n.dri.ul) errors.push(`${n.id}: dri object has no tables; use dri: null`);
       for (const t of DRI_TYPES) {
         const table = n.dri[t];

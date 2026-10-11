@@ -1,0 +1,63 @@
+{
+  "_fixture_note": "SYNTHETIC FIXTURE: hand-built in the DSLD v9 /label shape for offline tests. Not a real product; IDs 9000xx do not exist in DSLD.",
+  "id": 900006,
+  "fullName": "Zinc 50 mg",
+  "brandName": "Fixture Labs",
+  "upcSku": "0 12345 67890 5",
+  "offMarket": 0,
+  "entryDate": "2018-01-10",
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Mineral"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 1,
+      "minDailyServings": 1,
+      "maxDailyServings": 2,
+      "unit": "Tablet(s)",
+      "notes": "",
+      "inSFB": true
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "name": "Zinc",
+      "category": "mineral",
+      "ingredientGroup": "Zinc",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 50,
+          "unit": "mg",
+          "servingSizeUnit": "Tablet(s)",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 455,
+              "footnote": null
+            }
+          ]
+        }
+      ],
+      "nestedRows": []
+    }
+  ],
+  "statements": [],
+  "events": [
+    {
+      "date": "2018-01-10",
+      "type": "Date entered into DSLD"
+    }
+  ]
+}

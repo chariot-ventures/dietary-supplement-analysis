@@ -1,6 +1,6 @@
 {
   "service": "dietary-supplement-analysis",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "as_of": "<date>",
   "profile": {
     "age": 34,
@@ -10,9 +10,13 @@
     "products_matched": 4,
     "nutrients_totaled": 21,
     "above_ul": 2,
-    "below_reference": 4,
-    "data_gaps": 2
+    "near_ul": 0,
+    "data_gaps": 2,
+    "data_suspect": 0,
+    "products_unresolved": 0,
+    "suggestions": 4
   },
+  "agent_summary": "2 nutrients are above the upper limit (UL) for a 34-year-old female from these supplements alone. Magnesium: 575 mg a day vs a UL of 350 mg (164%), mostly from Natrol Magnesium Night High Absorption 325 mg Naturally Flavored. The UL guards against diarrhea and other gastrointestinal upset from supplemental magnesium. Vitamin D: 150 mcg a day vs a UL of 100 mcg (150%), mostly from Natural Healthy Concepts Vitamin D3 Concepts 5000. The UL guards against high blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues. Leaving out Custom magnesium would bring magnesium to 325 mg (92.9% of the UL), still near it. Totals exclude food, drinks and medications. Label data, not medical advice.",
   "assumptions": [
     "dsld:230932: servings_per_day not given; used label maximum of 1 (label: 1 Softgel(s), 1 time(s) daily)",
     "dsld:338022: servings_per_day not given; used label maximum of 1 (label: 1 Tablet(s), 1 time(s) daily)",
@@ -20,7 +24,98 @@
     "custom:1: servings_per_day not given; amounts treated as one serving per day",
     "Totals cover the listed supplements only; food, beverages and medications are not included.",
     "The UL for Calcium, Copper, Iodine, Iron, Phosphorus, Selenium, Vitamin B6, Vitamin C, Vitamin D and Zinc applies to total intake from food and supplements; a supplement total under the UL does not show that total intake is under it.",
-    "below_reference compares supplement totals alone with the RDA (or AI); diet normally supplies much of the reference amount."
+    "coverage compares supplement totals alone with the RDA (or AI); diet normally supplies much of the reference amount, so low coverage does not indicate a shortfall."
+  ],
+  "suggestions": [
+    {
+      "nutrient_id": "magnesium",
+      "action": "remove_product",
+      "product_ref": "custom:1",
+      "product_name": "Custom magnesium",
+      "resolves": true,
+      "result": {
+        "amount_toward_ul": {
+          "amount": 325,
+          "unit": "mg"
+        },
+        "percent_of_ul": 92.9
+      },
+      "also_resolves": [],
+      "also_lowers": [],
+      "text": "Leaving out Custom magnesium would bring magnesium to 325 mg (92.9% of the UL), still near it."
+    },
+    {
+      "nutrient_id": "magnesium",
+      "action": "remove_product",
+      "product_ref": "dsld:332278",
+      "product_name": "Natrol Magnesium Night High Absorption 325 mg Naturally Flavored",
+      "resolves": true,
+      "result": {
+        "amount_toward_ul": {
+          "amount": 250,
+          "unit": "mg"
+        },
+        "percent_of_ul": 71.4
+      },
+      "also_resolves": [],
+      "also_lowers": [
+        "potassium"
+      ],
+      "text": "Leaving out Natrol Magnesium Night High Absorption 325 mg Naturally Flavored would bring magnesium to 250 mg (71.4% of the UL)."
+    },
+    {
+      "nutrient_id": "vitamin-d",
+      "action": "remove_product",
+      "product_ref": "dsld:230932",
+      "product_name": "Natural Healthy Concepts Vitamin D3 Concepts 5000",
+      "resolves": true,
+      "result": {
+        "amount_toward_ul": {
+          "amount": 25,
+          "unit": "mcg"
+        },
+        "percent_of_ul": 25
+      },
+      "also_resolves": [],
+      "also_lowers": [],
+      "text": "Leaving out Natural Healthy Concepts Vitamin D3 Concepts 5000 would bring Vitamin D to 25 mcg (25% of the UL)."
+    },
+    {
+      "nutrient_id": "vitamin-d",
+      "action": "remove_product",
+      "product_ref": "dsld:338022",
+      "product_name": "Noor Vitamins Women's Complete Multivitamin",
+      "resolves": false,
+      "result": {
+        "amount_toward_ul": {
+          "amount": 125,
+          "unit": "mcg"
+        },
+        "percent_of_ul": 125
+      },
+      "also_resolves": [],
+      "also_lowers": [
+        "biotin",
+        "calcium",
+        "copper",
+        "folate",
+        "iodine",
+        "iron",
+        "niacin",
+        "pantothenic-acid",
+        "phosphorus",
+        "riboflavin",
+        "selenium",
+        "thiamin",
+        "vitamin-a",
+        "vitamin-b12",
+        "vitamin-b6",
+        "vitamin-c",
+        "vitamin-e",
+        "zinc"
+      ],
+      "text": "Leaving out Noor Vitamins Women's Complete Multivitamin would bring Vitamin D to 125 mcg (125% of the UL), still above it."
+    }
   ],
   "nutrient_totals": [
     {
@@ -39,7 +134,8 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "supplements_and_medications",
-        "ul_note": "The UL applies to magnesium from supplements and medications only, not to magnesium naturally present in food and water."
+        "ul_note": "The UL applies to magnesium from supplements and medications only, not to magnesium naturally present in food and water.",
+        "ul_basis": "Diarrhea and other gastrointestinal upset from supplemental magnesium"
       },
       "amount_toward_ul": {
         "amount": 575,
@@ -48,9 +144,14 @@
       "percent_of_ul": 164.3,
       "percent_of_rda": 179.7,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 179.7
+      },
       "flags": [
         "above_ul"
       ],
+      "severity": "moderate",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
       "contributions": [
         {
@@ -93,7 +194,8 @@
         "unit": "mcg",
         "ul_unit": "mcg",
         "ul_scope": "total_intake",
-        "ul_note": null
+        "ul_note": null,
+        "ul_basis": "High blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues"
       },
       "amount_toward_ul": {
         "amount": 150,
@@ -102,9 +204,14 @@
       "percent_of_ul": 150,
       "percent_of_rda": 1000,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 1000
+      },
       "flags": [
         "above_ul"
       ],
+      "severity": "moderate",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
       "contributions": [
         {
@@ -147,13 +254,19 @@
         "unit": "mcg",
         "ul_unit": "mcg",
         "ul_scope": "not_established",
-        "ul_note": "No UL has been established. High-dose biotin can interfere with some laboratory tests."
+        "ul_note": "No UL has been established. High-dose biotin can interfere with some laboratory tests.",
+        "ul_basis": null
       },
       "amount_toward_ul": null,
       "percent_of_ul": null,
       "percent_of_rda": null,
       "percent_of_ai": 133.3,
+      "coverage": {
+        "reference": "ai",
+        "percent": 133.3
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
       "contributions": [
         {
@@ -185,7 +298,8 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "total_intake",
-        "ul_note": null
+        "ul_note": null,
+        "ul_basis": "Kidney stones; high blood calcium at higher intakes"
       },
       "amount_toward_ul": {
         "amount": 200,
@@ -194,9 +308,12 @@
       "percent_of_ul": 8,
       "percent_of_rda": 20,
       "percent_of_ai": null,
-      "flags": [
-        "below_reference"
-      ],
+      "coverage": {
+        "reference": "rda",
+        "percent": 20
+      },
+      "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
       "contributions": [
         {
@@ -228,7 +345,8 @@
         "unit": "mcg",
         "ul_unit": "mcg",
         "ul_scope": "total_intake",
-        "ul_note": null
+        "ul_note": null,
+        "ul_basis": "Liver damage"
       },
       "amount_toward_ul": {
         "amount": 900,
@@ -237,7 +355,12 @@
       "percent_of_ul": 9,
       "percent_of_rda": 100,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 100
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/",
       "contributions": [
         {
@@ -273,7 +396,8 @@
         "unit": "mcg DFE",
         "ul_unit": "mcg",
         "ul_scope": "supplements_and_fortified_foods",
-        "ul_note": "The UL is in mcg of folic acid and applies to folic acid from supplements and fortified foods, not to food folate or other supplemental forms. Folic acid mcg = mcg DFE / 1.7."
+        "ul_note": "The UL is in mcg of folic acid and applies to folic acid from supplements and fortified foods, not to food folate or other supplemental forms. Folic acid mcg = mcg DFE / 1.7.",
+        "ul_basis": "Folic acid can mask the anemia of vitamin B12 deficiency while its nerve damage progresses"
       },
       "amount_toward_ul": {
         "amount": 480,
@@ -282,7 +406,12 @@
       "percent_of_ul": 48,
       "percent_of_rda": 200,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 200
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
       "contributions": [
         {
@@ -314,7 +443,8 @@
         "unit": "mcg",
         "ul_unit": "mcg",
         "ul_scope": "total_intake",
-        "ul_note": null
+        "ul_note": null,
+        "ul_basis": "Thyroid dysfunction (raised TSH, goiter)"
       },
       "amount_toward_ul": {
         "amount": 250,
@@ -323,7 +453,12 @@
       "percent_of_ul": 22.7,
       "percent_of_rda": 166.7,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 166.7
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/",
       "contributions": [
         {
@@ -355,7 +490,8 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "total_intake",
-        "ul_note": null
+        "ul_note": null,
+        "ul_basis": "Gastrointestinal upset: constipation, nausea, vomiting"
       },
       "amount_toward_ul": {
         "amount": 27,
@@ -364,7 +500,12 @@
       "percent_of_ul": 60,
       "percent_of_rda": 150,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 150
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
       "contributions": [
         {
@@ -396,7 +537,8 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "supplements_and_fortified_foods",
-        "ul_note": "RDA is in mg niacin equivalents (NE); supplement niacin is counted as mg niacin. The UL applies to niacin from supplements and fortified foods."
+        "ul_note": "RDA is in mg niacin equivalents (NE); supplement niacin is counted as mg niacin. The UL applies to niacin from supplements and fortified foods.",
+        "ul_basis": "Flushing of the skin from supplemental nicotinic acid"
       },
       "amount_toward_ul": {
         "amount": 16,
@@ -405,7 +547,12 @@
       "percent_of_ul": 45.7,
       "percent_of_rda": 114.3,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 114.3
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
       "contributions": [
         {
@@ -437,13 +584,19 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "not_established",
-        "ul_note": "No UL has been established."
+        "ul_note": "No UL has been established.",
+        "ul_basis": null
       },
       "amount_toward_ul": null,
       "percent_of_ul": null,
       "percent_of_rda": null,
       "percent_of_ai": 140,
+      "coverage": {
+        "reference": "ai",
+        "percent": 140
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/",
       "contributions": [
         {
@@ -475,7 +628,8 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "total_intake",
-        "ul_note": null
+        "ul_note": null,
+        "ul_basis": "High blood phosphate (hyperphosphatemia)"
       },
       "amount_toward_ul": {
         "amount": 150,
@@ -484,9 +638,12 @@
       "percent_of_ul": 3.8,
       "percent_of_rda": 21.4,
       "percent_of_ai": null,
-      "flags": [
-        "below_reference"
-      ],
+      "coverage": {
+        "reference": "rda",
+        "percent": 21.4
+      },
+      "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/",
       "contributions": [
         {
@@ -518,15 +675,19 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "not_established",
-        "ul_note": "No UL has been established (2019 DRI report)."
+        "ul_note": "No UL has been established (2019 DRI report).",
+        "ul_basis": null
       },
       "amount_toward_ul": null,
       "percent_of_ul": null,
       "percent_of_rda": null,
       "percent_of_ai": 8.9,
-      "flags": [
-        "below_reference"
-      ],
+      "coverage": {
+        "reference": "ai",
+        "percent": 8.9
+      },
+      "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/",
       "contributions": [
         {
@@ -558,13 +719,19 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "not_established",
-        "ul_note": "No UL has been established."
+        "ul_note": "No UL has been established.",
+        "ul_basis": null
       },
       "amount_toward_ul": null,
       "percent_of_ul": null,
       "percent_of_rda": 118.2,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 118.2
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
       "contributions": [
         {
@@ -596,7 +763,8 @@
         "unit": "mcg",
         "ul_unit": "mcg",
         "ul_scope": "total_intake",
-        "ul_note": null
+        "ul_note": null,
+        "ul_basis": "Selenosis: brittle hair and nails, hair and nail loss"
       },
       "amount_toward_ul": {
         "amount": 30,
@@ -605,9 +773,12 @@
       "percent_of_ul": 7.5,
       "percent_of_rda": 54.5,
       "percent_of_ai": null,
-      "flags": [
-        "below_reference"
-      ],
+      "coverage": {
+        "reference": "rda",
+        "percent": 54.5
+      },
+      "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
       "contributions": [
         {
@@ -639,13 +810,19 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "not_established",
-        "ul_note": "No UL has been established."
+        "ul_note": "No UL has been established.",
+        "ul_basis": null
       },
       "amount_toward_ul": null,
       "percent_of_ul": null,
       "percent_of_rda": 109.1,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 109.1
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
       "contributions": [
         {
@@ -677,7 +854,8 @@
         "unit": "mcg RAE",
         "ul_unit": "mcg",
         "ul_scope": "preformed_vitamin_a",
-        "ul_note": "The UL applies to preformed vitamin A (retinol and retinyl esters) only, not to beta-carotene or other carotenoids."
+        "ul_note": "The UL applies to preformed vitamin A (retinol and retinyl esters) only, not to beta-carotene or other carotenoids.",
+        "ul_basis": "Liver damage, and birth defects when taken in pregnancy (preformed vitamin A only)"
       },
       "amount_toward_ul": {
         "amount": 0,
@@ -686,7 +864,12 @@
       "percent_of_ul": 0,
       "percent_of_rda": 150,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 150
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
       "contributions": [
         {
@@ -722,13 +905,19 @@
         "unit": "mcg",
         "ul_unit": "mcg",
         "ul_scope": "not_established",
-        "ul_note": "No UL has been established."
+        "ul_note": "No UL has been established.",
+        "ul_basis": null
       },
       "amount_toward_ul": null,
       "percent_of_ul": null,
       "percent_of_rda": 250,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 250
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
       "contributions": [
         {
@@ -760,7 +949,8 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "total_intake",
-        "ul_note": null
+        "ul_note": null,
+        "ul_basis": "Sensory nerve damage (peripheral neuropathy)"
       },
       "amount_toward_ul": {
         "amount": 2,
@@ -769,7 +959,12 @@
       "percent_of_ul": 2,
       "percent_of_rda": 153.8,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 153.8
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
       "contributions": [
         {
@@ -801,7 +996,8 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "total_intake",
-        "ul_note": "Smokers need 35 mg/day more than the RDA shown."
+        "ul_note": "Smokers need 35 mg/day more than the RDA shown.",
+        "ul_basis": "Diarrhea and other gastrointestinal upset"
       },
       "amount_toward_ul": {
         "amount": 90,
@@ -810,7 +1006,12 @@
       "percent_of_ul": 4.5,
       "percent_of_rda": 120,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 120
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
       "contributions": [
         {
@@ -842,7 +1043,8 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "supplemental_alpha_tocopherol",
-        "ul_note": "The UL applies to any form of supplemental alpha-tocopherol."
+        "ul_note": "The UL applies to any form of supplemental alpha-tocopherol.",
+        "ul_basis": "Bleeding (hemorrhagic effects) from supplemental alpha-tocopherol"
       },
       "amount_toward_ul": {
         "amount": 15,
@@ -851,7 +1053,12 @@
       "percent_of_ul": 1.5,
       "percent_of_rda": 100,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 100
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
       "contributions": [
         {
@@ -883,7 +1090,8 @@
         "unit": "mg",
         "ul_unit": "mg",
         "ul_scope": "total_intake",
-        "ul_note": null
+        "ul_note": null,
+        "ul_basis": "Reduced copper status (zinc blocks copper absorption)"
       },
       "amount_toward_ul": {
         "amount": 11,
@@ -892,7 +1100,12 @@
       "percent_of_ul": 27.5,
       "percent_of_rda": 137.5,
       "percent_of_ai": null,
+      "coverage": {
+        "reference": "rda",
+        "percent": 137.5
+      },
       "flags": [],
+      "severity": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
       "contributions": [
         {
@@ -973,6 +1186,7 @@
       "name": "Vitamin D3 Concepts 5000",
       "servings_per_day_used": 1,
       "servings_source": "label_maximum",
+      "entry_date": "2020-07-23",
       "source_url": "https://dsld.od.nih.gov/label/230932"
     },
     {
@@ -982,6 +1196,7 @@
       "name": "Women's Complete Multivitamin",
       "servings_per_day_used": 1,
       "servings_source": "label_maximum",
+      "entry_date": "2025-09-25",
       "source_url": "https://dsld.od.nih.gov/label/338022"
     },
     {
@@ -991,6 +1206,7 @@
       "name": "Magnesium Night High Absorption 325 mg Naturally Flavored",
       "servings_per_day_used": 1,
       "servings_source": "label_maximum",
+      "entry_date": "2025-09-25",
       "source_url": "https://dsld.od.nih.gov/label/332278"
     },
     {
@@ -1000,6 +1216,7 @@
       "name": "Custom magnesium",
       "servings_per_day_used": 1,
       "servings_source": "default",
+      "entry_date": null,
       "source_url": null
     }
   ],

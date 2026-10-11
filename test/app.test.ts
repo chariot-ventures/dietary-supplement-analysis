@@ -29,6 +29,10 @@ const SUCCESS_CALLS: [string, string, unknown?][] = [
   ['GET', '/openapi.json'],
   ['POST', '/v1/products/search', { query: 'vitamin' }],
   ['POST', '/v1/products/get', { dsld_ids: [900001, 900002, 900004, 900005] }],
+  ['POST', '/v1/products/lookup', { upc: '012345678905' }],
+  ['GET', '/v1/tools'],
+  ['GET', '/v1/guide'],
+  ['POST', '/v1/stack/analyze', { age: 62, sex: 'female', products: [{ query: 'zinc 50' }, { dsld_id: 900008 }], candidates: [{ upc: '012345678912' }] }],
   ['POST', '/v1/nutrients/reference', { nutrient: 'vitamin-d', age: 30, sex: 'female' }],
   ['POST', '/v1/stack/analyze', STACK],
   ['POST', '/v1/stack/analyze', { products: [{ dsld_id: 900003 }] }],
@@ -38,12 +42,12 @@ const SUCCESS_CALLS: [string, string, unknown?][] = [
 describe('identity and health', () => {
   it('/v1/version is exactly service + version', async () => {
     const res = await app.inject({ method: 'GET', url: '/v1/version' });
-    expect(res.json()).toEqual({ service: 'dietary-supplement-analysis', version: '0.1.0' });
+    expect(res.json()).toEqual({ service: 'dietary-supplement-analysis', version: '0.2.0' });
   });
 
   it('version matches package.json', () => {
     const pkg = JSON.parse(readFileSync(path.join(ROOT, 'package.json'), 'utf8')) as { version: string };
-    expect(pkg.version).toBe('0.1.0');
+    expect(pkg.version).toBe('0.2.0');
   });
 
   it('GET / and HEAD / answer 2xx JSON', async () => {

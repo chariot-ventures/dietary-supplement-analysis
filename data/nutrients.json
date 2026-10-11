@@ -21,11 +21,13 @@
       "plain_mass_is_canonical": false,
       "dri": null,
       "label_dv": null,
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "Listed separately when a label declares beta-carotene as its own row rather than as a form of vitamin A. Not converted to vitamin A RAE.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/"
     },
@@ -145,11 +147,16 @@
         "amount": 30,
         "unit": "mcg"
       },
+      "label_dv_legacy": {
+        "amount": 300,
+        "unit": "mcg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No UL has been established. High-dose biotin can interfere with some laboratory tests.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/"
     },
@@ -284,11 +291,13 @@
         }
       },
       "label_dv": null,
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": "No RDA or AI has been established; only a UL.",
+      "ul_basis": "Impaired reproduction and development (animal studies)",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Boron-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Boron-HealthProfessional/"
     },
@@ -606,11 +615,16 @@
         "amount": 1300,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 1000,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Kidney stones; high blood calcium at higher intakes",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/"
     },
@@ -813,11 +827,13 @@
         "amount": 550,
         "unit": "mg"
       },
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Low blood pressure and a fishy body odor",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Choline-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Choline-HealthProfessional/"
     },
@@ -949,11 +965,16 @@
         "amount": 35,
         "unit": "mcg"
       },
+      "label_dv_legacy": {
+        "amount": 120,
+        "unit": "mcg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No UL has been established.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Chromium-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Chromium-HealthProfessional/"
     },
@@ -980,11 +1001,13 @@
       "plain_mass_is_canonical": false,
       "dri": null,
       "label_dv": null,
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "Not a nutrient; no DRI or UL. Totaled for overlap detection only.",
+      "ul_basis": null,
       "factsheet_url": "https://www.nccih.nih.gov/health/coenzyme-q10",
       "source_url": "https://www.nccih.nih.gov/health/coenzyme-q10"
     },
@@ -1294,11 +1317,16 @@
         "amount": 0.9,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 2,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Liver damage",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/"
     },
@@ -1325,11 +1353,13 @@
       "plain_mass_is_canonical": false,
       "dri": null,
       "label_dv": null,
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No DRI or UL. FDA considers up to 5 g/day of combined EPA and DHA from supplements acceptable; this is not a DRI and is not used for flags.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/"
     },
@@ -1355,11 +1385,13 @@
       "plain_mass_is_canonical": false,
       "dri": null,
       "label_dv": null,
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No DRI or UL. FDA considers up to 5 g/day of combined EPA and DHA from supplements acceptable; this is not a DRI and is not used for flags.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/"
     },
@@ -1748,11 +1780,13 @@
         }
       },
       "label_dv": null,
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "folic_acid",
       "ul_scope": "supplements_and_fortified_foods",
       "ul_note": "The UL is in mcg of folic acid and applies to folic acid from supplements and fortified foods, not to food folate or other supplemental forms. Folic acid mcg = mcg DFE / 1.7.",
+      "ul_basis": "Folic acid can mask the anemia of vitamin B12 deficiency while its nerve damage progresses",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/"
     },
@@ -2055,11 +2089,16 @@
         "amount": 150,
         "unit": "mcg"
       },
+      "label_dv_legacy": {
+        "amount": 150,
+        "unit": "mcg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Thyroid dysfunction (raised TSH, goiter)",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/"
     },
@@ -2377,11 +2416,16 @@
         "amount": 18,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 18,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Gastrointestinal upset: constipation, nausea, vomiting",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/"
     },
@@ -2719,11 +2763,16 @@
         "amount": 420,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 400,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "supplements_and_medications",
       "ul_note": "The UL applies to magnesium from supplements and medications only, not to magnesium naturally present in food and water.",
+      "ul_basis": "Diarrhea and other gastrointestinal upset from supplemental magnesium",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
     },
@@ -2940,11 +2989,16 @@
         "amount": 2.3,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 2,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Raised blood manganese and nervous system effects",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Manganese-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Manganese-HealthProfessional/"
     },
@@ -2964,11 +3018,13 @@
       "plain_mass_is_canonical": false,
       "dri": null,
       "label_dv": null,
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "Not a nutrient; no DRI or UL. Totaled for overlap detection only.",
+      "ul_basis": null,
       "factsheet_url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know",
       "source_url": "https://www.nccih.nih.gov/health/melatonin-what-you-need-to-know"
     },
@@ -3262,11 +3318,16 @@
         "amount": 45,
         "unit": "mcg"
       },
+      "label_dv_legacy": {
+        "amount": 75,
+        "unit": "mcg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Impaired reproduction and fetal development (animal studies)",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Molybdenum-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Molybdenum-HealthProfessional/"
     },
@@ -3585,11 +3646,16 @@
         "amount": 16,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 20,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "supplements_and_fortified_foods",
       "ul_note": "RDA is in mg niacin equivalents (NE); supplement niacin is counted as mg niacin. The UL applies to niacin from supplements and fortified foods.",
+      "ul_basis": "Flushing of the skin from supplemental nicotinic acid",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/"
     },
@@ -3623,6 +3689,7 @@
       "plain_mass_is_canonical": false,
       "dri": null,
       "label_dv": null,
+      "label_dv_legacy": null,
       "name_overrides_groups": [
         "Vitamin E",
         "Vitamin E (Alpha-Tocomonoenol)",
@@ -3671,6 +3738,7 @@
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "Non-alpha tocopherols and tocotrienols do not count toward vitamin E (alpha-tocopherol) requirements or its UL. Totaled for overlap detection only.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/"
     },
@@ -3796,11 +3864,16 @@
         "amount": 5,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 10,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No UL has been established.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/"
     },
@@ -4099,11 +4172,16 @@
         "amount": 1250,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 1000,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "High blood phosphate (hyperphosphatemia)",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/"
     },
@@ -4235,11 +4313,16 @@
         "amount": 4700,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 3500,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No UL has been established (2019 DRI report).",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/"
     },
@@ -4450,11 +4533,16 @@
         "amount": 1.3,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 1.7,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No UL has been established.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/"
     },
@@ -4760,11 +4848,16 @@
         "amount": 55,
         "unit": "mcg"
       },
+      "label_dv_legacy": {
+        "amount": 70,
+        "unit": "mcg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Selenosis: brittle hair and nails, hair and nail loss",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/"
     },
@@ -4981,11 +5074,16 @@
         "amount": 1.2,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 1.5,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No UL has been established.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/"
     },
@@ -5385,11 +5483,13 @@
         "amount": 900,
         "unit": "mcg RAE"
       },
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "preformed",
       "ul_scope": "preformed_vitamin_a",
       "ul_note": "The UL applies to preformed vitamin A (retinol and retinyl esters) only, not to beta-carotene or other carotenoids.",
+      "ul_basis": "Liver damage, and birth defects when taken in pregnancy (preformed vitamin A only)",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/"
     },
@@ -5606,11 +5706,16 @@
         "amount": 2.4,
         "unit": "mcg"
       },
+      "label_dv_legacy": {
+        "amount": 6,
+        "unit": "mcg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No UL has been established.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/"
     },
@@ -5919,11 +6024,16 @@
         "amount": 1.7,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 2,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Sensory nerve damage (peripheral neuropathy)",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/"
     },
@@ -6238,11 +6348,16 @@
         "amount": 90,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 60,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": "Smokers need 35 mg/day more than the RDA shown.",
+      "ul_basis": "Diarrhea and other gastrointestinal upset",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/"
     },
@@ -6564,11 +6679,16 @@
         "amount": 20,
         "unit": "mcg"
       },
+      "label_dv_legacy": {
+        "amount": 10,
+        "unit": "mcg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "High blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
     },
@@ -6967,11 +7087,13 @@
         "amount": 15,
         "unit": "mg"
       },
+      "label_dv_legacy": null,
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "supplemental_alpha_tocopherol",
       "ul_note": "The UL applies to any form of supplemental alpha-tocopherol.",
+      "ul_basis": "Bleeding (hemorrhagic effects) from supplemental alpha-tocopherol",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/"
     },
@@ -7104,11 +7226,16 @@
         "amount": 120,
         "unit": "mcg"
       },
+      "label_dv_legacy": {
+        "amount": 80,
+        "unit": "mcg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No UL has been established. Vitamin K can interact with warfarin; interactions are not assessed by this service.",
+      "ul_basis": null,
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/"
     },
@@ -7422,11 +7549,16 @@
         "amount": 11,
         "unit": "mg"
       },
+      "label_dv_legacy": {
+        "amount": 15,
+        "unit": "mg"
+      },
       "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
       "ul_note": null,
+      "ul_basis": "Reduced copper status (zinc blocks copper absorption)",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/"
     }

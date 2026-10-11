@@ -4,6 +4,7 @@ import { AppError } from '../lib/errors.js';
 export const MAX_STACK_PRODUCTS = 15;
 export const MAX_GET_IDS = 10;
 export const MAX_SEARCH_LIMIT = 10;
+export const MAX_CANDIDATES = 5;
 
 const dsldId = z.number().int().positive().max(10_000_000).describe('DSLD label ID, e.g. from /v1/products/search');
 const sex = z.enum(['male', 'female']);
@@ -21,6 +22,10 @@ export const searchRequest = z
     ingredient: z.string().trim().min(1).max(100).optional().describe('Ingredient name, e.g. "cholecalciferol"'),
     on_market_only: z.boolean().default(true),
     limit: z.number().int().min(1).max(MAX_SEARCH_LIMIT).default(5),
+    dedupe_versions: z
+      .boolean()
+      .default(true)
+      .describe('Collapse label versions of the same product (same brand and name) into one result, newest first; older IDs are listed in other_versions'),
   })
   .refine((v) => v.query || v.brand || v.ingredient, { message: 'Give at least one of query, brand or ingredient', path: ['query'] });
 
@@ -33,6 +38,15 @@ export const getRequest = z
     message: `Give exactly one of dsld_id or dsld_ids (max ${MAX_GET_IDS})`,
     path: ['dsld_id'],
   });
+
+const upc = z
+  .string()
+  .trim()
+  .min(8)
+  .max(32)
+  .describe('UPC-A or EAN barcode digits as printed on the bottle, e.g. "031604026974" (spaces and dashes are ignored)');
+
+export const lookupRequest = z.object({ upc }).strict();
 
 export const referenceRequest = z.object({
   nutrient: z.string().trim().min(1).max(100).describe('Nutrient ID ("vitamin-d") or any synonym ("cholecalciferol")'),
@@ -52,6 +66,14 @@ export const customIngredient = z.object({
 });
 
 export const dsldProduct = z.object({ dsld_id: dsldId, servings_per_day: servingsPerDay.optional() }).strict();
+export const queryProduct = z
+  .object({
+    query: z.string().trim().min(2).max(200).describe('Product as the user named it, e.g. "Centrum Silver Women 50+". Resolved to the best-matching DSLD label; see resolutions[]'),
+    brand: z.string().trim().min(1).max(100).optional().describe('Brand, if known separately'),
+    servings_per_day: servingsPerDay.optional(),
+  })
+  .strict();
+export const upcProduct = z.object({ upc, servings_per_day: servingsPerDay.optional() }).strict();
 export const customProduct = z
   .object({
     name: z.string().trim().min(1).max(200).optional(),
@@ -60,20 +82,30 @@ export const customProduct = z
   })
   .strict();
 
+export const stackProduct = z.union([dsldProduct, queryProduct, upcProduct, customProduct]);
+
 export const analyzeRequest = z
   .object({
     age: age.optional(),
     sex: sex.optional(),
     products: z
-      .array(z.union([dsldProduct, customProduct]))
+      .array(stackProduct)
       .min(1)
       .max(MAX_STACK_PRODUCTS)
-      .describe(`1-${MAX_STACK_PRODUCTS} products: each a DSLD ID or a custom product with explicit ingredients`),
+      .describe(
+        `1-${MAX_STACK_PRODUCTS} products. Each is one of: {"dsld_id"}, {"query"} (a product name, resolved server-side), {"upc"} (barcode), or a custom product {"name","ingredients"}. Add "servings_per_day" to any of them.`,
+      ),
+    candidates: z
+      .array(stackProduct)
+      .min(1)
+      .max(MAX_CANDIDATES)
+      .optional()
+      .describe(`Optional, up to ${MAX_CANDIDATES}: products the user is considering adding. Each is evaluated as an addition to the stack in candidate_results[]; they are not included in nutrient_totals.`),
   })
   .refine((v) => (v.age === undefined) === (v.sex === undefined), { message: 'Give age and sex together, or neither', path: ['age'] });
 
 export const toolRequest = z.object({
-  tool: z.enum(['products_search', 'products_get', 'nutrients_reference', 'stack_analyze']),
+  tool: z.enum(['products_search', 'products_get', 'products_lookup', 'nutrients_reference', 'stack_analyze']),
   arguments: z.record(z.string(), z.unknown()).default({}),
 });
 
@@ -81,6 +113,8 @@ export type SearchRequest = z.infer<typeof searchRequest>;
 export type GetRequest = z.infer<typeof getRequest>;
 export type ReferenceRequest = z.infer<typeof referenceRequest>;
 export type AnalyzeRequest = z.infer<typeof analyzeRequest>;
+export type StackProductInput = z.infer<typeof stackProduct>;
+export type LookupRequest = z.infer<typeof lookupRequest>;
 
 const UNSUPPORTED_PROFILE_FIELDS = ['pregnant', 'pregnancy', 'lactating', 'lactation', 'breastfeeding', 'life_stage'];
 

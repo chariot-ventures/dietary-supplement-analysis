@@ -1,27 +1,130 @@
 import type { FastifyInstance } from 'fastify';
-import { analyzeStack, type StackProduct } from '../lib/analyze.js';
+import { agentSummary, compareCandidate, suggestFixes, type CandidateResult } from '../lib/advise.js';
+import { analyzeStack, type Profile, type StackAnalysis, type StackProduct } from '../lib/analyze.js';
+import { lookupUpc, resolveQuery, type Candidate, type Confidence } from '../lib/catalog.js';
+import type { CallOptions, DsldClient, LabelResult } from '../lib/dsld.js';
 import { AppError } from '../lib/errors.js';
-import { envelope } from '../lib/envelope.js';
-import { normalizeCustomProduct, normalizeDsldLabel } from '../lib/label.js';
-import { analyzeRequest, assertSupportedAge, parseBody } from '../schemas/requests.js';
+import { dedupeSources, envelope, type Source } from '../lib/envelope.js';
+import { normalizeCustomProduct, normalizeDsldLabel, type DataGap } from '../lib/label.js';
+import { analyzeRequest, assertSupportedAge, parseBody, type StackProductInput } from '../schemas/requests.js';
 import { upstreamBudget, type Deps } from './deps.js';
+
+export interface Resolution {
+  /** Where the input was: "products.2" or "candidates.0". */
+  input_path: string;
+  input: { query: string; brand?: string } | { upc: string };
+  status: 'resolved' | 'not_found';
+  matched_by: 'query' | 'upc';
+  dsld_id: number | null;
+  product_ref: string | null;
+  brand: string | null;
+  name: string | null;
+  entry_date: string | null;
+  confidence: Confidence | null;
+  reason: string;
+  /** Older DSLD versions of the chosen product. */
+  other_versions: number[];
+  /** Other products the description could mean (query only). */
+  alternatives: Omit<Candidate, 'other_versions'>[];
+}
+
+/** A request item after resolution: a DSLD ID, a custom product, or nothing (not found). */
+type Resolved = { kind: 'dsld'; dsld_id: number; spd?: number | undefined } | { kind: 'custom'; item: Extract<StackProductInput, { ingredients: unknown }> } | { kind: 'none'; label: string };
+
+async function resolveItem(item: StackProductInput, path: string, dsld: DsldClient, opts: CallOptions, resolutions: Resolution[]): Promise<Resolved> {
+  if ('dsld_id' in item) return { kind: 'dsld', dsld_id: item.dsld_id, spd: item.servings_per_day };
+  if ('ingredients' in item) return { kind: 'custom', item };
+
+  if ('query' in item) {
+    const r = await resolveQuery(dsld, item.query, item.brand, opts);
+    const input = item.brand ? { query: item.query, brand: item.brand } : { query: item.query };
+    const c = r.chosen;
+    resolutions.push({
+      input_path: path,
+      input,
+      status: c ? 'resolved' : 'not_found',
+      matched_by: 'query',
+      dsld_id: c?.dsld_id ?? null,
+      product_ref: c ? `dsld:${c.dsld_id}` : null,
+      brand: c?.brand ?? null,
+      name: c?.name ?? null,
+      entry_date: c?.entry_date ?? null,
+      confidence: r.confidence,
+      reason: r.reason,
+      other_versions: c?.other_versions ?? [],
+      alternatives: r.alternatives.map(({ other_versions: _ignored, ...alt }) => alt),
+    });
+    return c ? { kind: 'dsld', dsld_id: c.dsld_id, spd: item.servings_per_day } : { kind: 'none', label: item.query };
+  }
+
+  try {
+    const m = await lookupUpc(dsld, item.upc, opts, `${path}.upc`);
+    const v = m.versions[0]!;
+    resolutions.push({
+      input_path: path,
+      input: { upc: m.upc },
+      status: 'resolved',
+      matched_by: 'upc',
+      dsld_id: v.id,
+      product_ref: `dsld:${v.id}`,
+      brand: v.brand,
+      name: v.name,
+      entry_date: v.entry_date,
+      confidence: 'high',
+      reason: m.versions.length > 1 ? `barcode matches ${m.versions.length} label versions; using the newest` : 'barcode matches this label',
+      other_versions: m.versions.slice(1).map((x) => x.id),
+      alternatives: [],
+    });
+    return { kind: 'dsld', dsld_id: v.id, spd: item.servings_per_day };
+  } catch (err) {
+    if (!(err instanceof AppError) || err.code !== 'NOT_FOUND') throw err;
+    resolutions.push({
+      input_path: path,
+      input: { upc: item.upc },
+      status: 'not_found',
+      matched_by: 'upc',
+      dsld_id: null,
+      product_ref: null,
+      brand: null,
+      name: null,
+      entry_date: null,
+      confidence: null,
+      reason: err.message,
+      other_versions: [],
+      alternatives: [],
+    });
+    return { kind: 'none', label: `UPC ${item.upc}` };
+  }
+}
 
 export async function analyze(body: unknown, deps: Deps) {
   const req = parseBody(analyzeRequest, body);
   assertSupportedAge(req.age);
-
-  // Fetch each distinct DSLD label once (shared concurrency limit in the client).
-  const ids = [...new Set(req.products.flatMap((p) => ('dsld_id' in p ? [p.dsld_id] : [])))];
   const signal = upstreamBudget(deps);
-  const fetched = new Map(
+  const opts = { signal };
+
+  // 1. Resolve names and barcodes to DSLD IDs (in parallel).
+  const resolutions: Resolution[] = [];
+  const all = [...req.products.map((p, i) => ({ p, path: `products.${i}` })), ...(req.candidates ?? []).map((p, i) => ({ p, path: `candidates.${i}` }))];
+  const resolved = await Promise.all(all.map(({ p, path }) => resolveItem(p, path, deps.dsld, opts, resolutions)));
+  resolutions.sort((a, b) => all.findIndex((x) => x.path === a.input_path) - all.findIndex((x) => x.path === b.input_path));
+  const base = resolved.slice(0, req.products.length);
+  const cands = resolved.slice(req.products.length);
+  if (base.every((r) => r.kind === 'none')) {
+    throw new AppError('NOT_FOUND', 'None of the products could be identified in DSLD. Try a dsld_id from /v1/products/search, or a custom product.', { field: 'products' });
+  }
+
+  // 2. Fetch each distinct DSLD label once (shared concurrency limit in the client).
+  const ids = [...new Set(resolved.flatMap((r) => (r.kind === 'dsld' ? [r.dsld_id] : [])))];
+  const fetched = new Map<number, LabelResult>(
     await Promise.all(
       ids.map(async (id) => {
         try {
-          return [id, await deps.dsld.getLabel(id, { signal })] as const;
+          return [id, await deps.dsld.getLabel(id, opts)] as const;
         } catch (err) {
           if (err instanceof AppError && err.code === 'NOT_FOUND') {
-            const index = req.products.findIndex((p) => 'dsld_id' in p && p.dsld_id === id);
-            throw new AppError('NOT_FOUND', err.message, { field: `products.${index}.dsld_id` });
+            const index = resolved.findIndex((r) => r.kind === 'dsld' && r.dsld_id === id);
+            throw new AppError('NOT_FOUND', err.message, { field: `${all[index]!.path}.dsld_id` });
           }
           throw err;
         }
@@ -29,32 +132,91 @@ export async function analyze(body: unknown, deps: Deps) {
     ),
   );
 
+  // 3. Normalize into stack products with unique refs.
   const seenRefs = new Map<string, number>();
   const uniqueRef = (ref: string) => {
     const n = (seenRefs.get(ref) ?? 0) + 1;
     seenRefs.set(ref, n);
     return n === 1 ? ref : `${ref}#${n}`;
   };
-
   let customCount = 0;
-  const products: StackProduct[] = req.products.map((p) => {
-    if ('dsld_id' in p) {
-      const { label, retrieved } = fetched.get(p.dsld_id)!;
+  const toStackProduct = (r: Resolved): StackProduct | null => {
+    if (r.kind === 'none') return null;
+    if (r.kind === 'dsld') {
+      const { label, retrieved } = fetched.get(r.dsld_id)!;
       const normalized = normalizeDsldLabel(label);
       normalized.product_ref = uniqueRef(normalized.product_ref);
       for (const g of normalized.data_gaps) g.product_ref = normalized.product_ref;
-      return { label: normalized, servings_per_day: p.servings_per_day, retrieved };
+      return { label: normalized, servings_per_day: r.spd, retrieved };
     }
     customCount++;
     const ref = uniqueRef(`custom:${customCount}`);
-    return { label: normalizeCustomProduct(ref, p.name ?? `Custom product ${customCount}`, p.ingredients), servings_per_day: p.servings_per_day };
+    return {
+      label: normalizeCustomProduct(ref, r.item.name ?? `Custom product ${customCount}`, r.item.ingredients),
+      servings_per_day: r.item.servings_per_day,
+    };
+  };
+  const baseProducts = base.map(toStackProduct).filter((p): p is StackProduct => p !== null);
+  const candProducts = cands.map(toStackProduct);
+
+  // Point resolutions at the refs actually used (a repeated product gets dsld:ID#2).
+  let cursor = 0;
+  for (const [i, r] of resolved.entries()) {
+    if (r.kind === 'none') continue;
+    const sp = i < base.length ? baseProducts[cursor++] : candProducts[i - base.length];
+    const res = resolutions.find((x) => x.input_path === all[i]!.path);
+    if (res && sp) res.product_ref = sp.label.product_ref;
+  }
+
+  // 4. Analyze the stack, then each candidate added to it.
+  const profile: Profile | null = req.age !== undefined && req.sex !== undefined ? { age: req.age, sex: req.sex } : null;
+  const analysis = analyzeStack(baseProducts, profile);
+  const unresolvedGaps: DataGap[] = resolutions
+    .filter((r) => r.status === 'not_found')
+    .map((r) => ({ code: 'PRODUCT_NOT_RESOLVED', detail: `${r.input_path}: ${'query' in r.input ? `"${r.input.query}"` : `UPC ${r.input.upc}`} could not be identified in DSLD and is not counted. ${r.reason}.` }));
+  analysis.data_gaps.unshift(...unresolvedGaps);
+  analysis.summary.data_gaps += unresolvedGaps.length;
+
+  const candidateResults: CandidateResult[] = [];
+  const extraSources: Source[] = [];
+  for (const cp of candProducts) {
+    if (!cp) continue;
+    const combined: StackAnalysis = analyzeStack([...baseProducts, cp], profile);
+    const summary = combined.products.find((p) => p.product_ref === cp.label.product_ref)!;
+    candidateResults.push(compareCandidate(analysis, combined, summary));
+    extraSources.push(...combined.sources);
+  }
+
+  const suggestions = suggestFixes(analysis);
+  const lowConfidence = resolutions
+    .filter((r) => r.status === 'resolved' && r.confidence === 'low' && 'query' in r.input)
+    .map((r) => ({ input: (r.input as { query: string }).query, chosen: [r.brand, r.name].filter(Boolean).join(' ') }));
+  const text = agentSummary(analysis, {
+    suggestions,
+    unresolved: resolutions.filter((r) => r.status === 'not_found').map((r) => ('query' in r.input ? r.input.query : `UPC ${r.input.upc}`)),
+    lowConfidence,
+    candidates: candidateResults,
   });
 
-  const profile = req.age !== undefined && req.sex !== undefined ? { age: req.age, sex: req.sex } : null;
-  const { sources, ...result } = analyzeStack(products, profile);
-  const { products: productSummaries, ...rest } = result;
-  // Large arrays last; products after data_gaps as documented.
-  return envelope({ ...rest, products: productSummaries }, sources);
+  const { sources, products, summary, profile: prof, assumptions, nutrient_totals, overlaps, unrecognized_ingredients, data_gaps } = analysis;
+  // Short fields first (gateways and agents read the start); large arrays last.
+  return envelope(
+    {
+      profile: prof,
+      summary: { ...summary, products_unresolved: unresolvedGaps.length, suggestions: suggestions.length },
+      agent_summary: text,
+      ...(resolutions.length ? { resolutions } : {}),
+      assumptions,
+      suggestions,
+      ...(req.candidates ? { candidate_results: candidateResults } : {}),
+      nutrient_totals,
+      overlaps,
+      unrecognized_ingredients,
+      data_gaps,
+      products,
+    },
+    dedupeSources([...sources, ...extraSources]),
+  );
 }
 
 export function registerStackRoutes(app: FastifyInstance, deps: Deps): void {

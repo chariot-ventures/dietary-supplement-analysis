@@ -37,7 +37,14 @@ export interface Contribution {
   daily_toward_ul: number | null;
 }
 
-export type Flag = 'above_ul' | 'below_reference';
+/** above_ul: the amount the UL applies to exceeds it. near_ul: at NEAR_UL_PERCENT-100% of the UL. */
+export type Flag = 'above_ul' | 'near_ul';
+export type Severity = 'high' | 'moderate' | 'low';
+
+/** Percent of the UL from which a total is flagged near_ul. */
+export const NEAR_UL_PERCENT = 90;
+/** Percent of the UL from which an above_ul total has high severity. */
+export const HIGH_SEVERITY_PERCENT = 200;
 
 export interface NutrientTotal {
   nutrient_id: string;
@@ -54,13 +61,19 @@ export interface NutrientTotal {
     ul_unit: string | null;
     ul_scope: string;
     ul_note: string | null;
+    /** What the UL protects against (the Food and Nutrition Board's critical adverse effect). */
+    ul_basis: string | null;
   } | null;
   /** Amount compared with the UL (e.g. folic acid only, preformed vitamin A only), in ul_unit. */
   amount_toward_ul: Amount | null;
   percent_of_ul: number | null;
   percent_of_rda: number | null;
   percent_of_ai: number | null;
+  /** How much of the RDA (or AI) these supplements alone supply. Informational: diet supplies the rest. */
+  coverage: { reference: 'rda' | 'ai'; percent: number } | null;
   flags: Flag[];
+  /** high: at least twice the UL; moderate: above the UL; low: within 10% of the UL. Null when nothing is flagged. */
+  severity: Severity | null;
   factsheet_url: string;
   contributions: Contribution[];
 }
@@ -72,12 +85,13 @@ export interface ProductSummary {
   name: string;
   servings_per_day_used: number;
   servings_source: 'request' | 'label_maximum' | 'default';
+  entry_date: string | null;
   source_url: string | null;
 }
 
 export interface StackAnalysis {
   profile: Profile | null;
-  summary: { products_matched: number; nutrients_totaled: number; above_ul: number; below_reference: number; data_gaps: number };
+  summary: { products_matched: number; nutrients_totaled: number; above_ul: number; near_ul: number; data_gaps: number; data_suspect: number };
   assumptions: string[];
   nutrient_totals: NutrientTotal[];
   overlaps: { nutrient_id: string; product_refs: string[] }[];
@@ -142,6 +156,7 @@ export function analyzeStack(products: StackProduct[], profile: Profile | null):
       name: label.name,
       servings_per_day_used: spd,
       servings_source: servingsSource,
+      entry_date: label.entry_date,
       source_url: label.source_url,
     });
     if (label.source_url) sources.push(dsldSource(label.source_url, p.retrieved ?? ''));
@@ -182,7 +197,7 @@ export function analyzeStack(products: StackProduct[], profile: Profile | null):
   const incomplete = new Set(gaps.filter((g) => g.nutrient_id).map((g) => g.nutrient_id));
   const totals: NutrientTotal[] = [];
   const totalIntakeUl: string[] = [];
-  let anyBelow = false;
+  let anyCoverage = false;
 
   for (const b of buckets.values()) {
     if (b.contributions.length === 0) continue;
@@ -209,11 +224,18 @@ export function analyzeStack(products: StackProduct[], profile: Profile | null):
       if (n.ul_scope === 'total_intake') totalIntakeUl.push(n.name);
     }
 
+    if (percentUl !== null && !flags.includes('above_ul') && percentUl >= NEAR_UL_PERCENT) flags.push('near_ul');
+    const severity: Severity | null = flags.includes('above_ul')
+      ? percentUl !== null && percentUl >= HIGH_SEVERITY_PERCENT
+        ? 'high'
+        : 'moderate'
+      : flags.includes('near_ul')
+        ? 'low'
+        : null;
+
     const target = ref ? targetIntake(ref) : null;
-    if (target && complete && total < target.amount) {
-      flags.push('below_reference');
-      anyBelow = true;
-    }
+    const coverage = target ? { reference: target.type, percent: pct(total, target.amount)! } : null;
+    if (coverage) anyCoverage = true;
 
     totals.push({
       nutrient_id: n.id,
@@ -221,20 +243,24 @@ export function analyzeStack(products: StackProduct[], profile: Profile | null):
       daily_total: { amount: total, unit: n.canonical_unit },
       complete,
       reference: ref
-        ? { ...ref, unit: n.canonical_unit, ul_unit: n.ul_unit, ul_scope: n.ul_scope, ul_note: n.ul_note }
+        ? { ...ref, unit: n.canonical_unit, ul_unit: n.ul_unit, ul_scope: n.ul_scope, ul_note: n.ul_note, ul_basis: ref.ul !== null ? n.ul_basis : null }
         : null,
       amount_toward_ul: n.ul_unit && n.dri?.ul ? { amount: towardUl, unit: n.ul_component === 'folic_acid' ? `${n.ul_unit} folic acid` : n.ul_unit } : null,
       percent_of_ul: percentUl,
       percent_of_rda: ref ? pct(total, ref.rda) : null,
       percent_of_ai: ref && ref.rda === null ? pct(total, ref.ai) : null,
+      coverage,
       flags,
+      severity,
       factsheet_url: n.factsheet_url,
       contributions: b.contributions,
     });
     if (ref) sources.push(factsheetSource(n.name, n.factsheet_url, nutrientIndex.driReviewed));
   }
 
-  totals.sort((a, b) => Number(b.flags.includes('above_ul')) - Number(a.flags.includes('above_ul')) || a.name.localeCompare(b.name));
+  // Most severe first, then by how far over (or near) the UL, then by name.
+  const rank = (t: NutrientTotal) => (t.severity === 'high' ? 3 : t.severity === 'moderate' ? 2 : t.severity === 'low' ? 1 : 0);
+  totals.sort((a, b) => rank(b) - rank(a) || (b.percent_of_ul ?? 0) * Number(rank(b) > 0) - (a.percent_of_ul ?? 0) * Number(rank(a) > 0) || a.name.localeCompare(b.name));
 
   const overlaps = totals
     .map((t) => ({ nutrient_id: t.nutrient_id, product_refs: [...new Set(t.contributions.map((c) => c.product_ref))] }))
@@ -246,8 +272,8 @@ export function analyzeStack(products: StackProduct[], profile: Profile | null):
       `The UL for ${listNames(totalIntakeUl.sort())} applies to total intake from food and supplements; a supplement total under the UL does not show that total intake is under it.`,
     );
   }
-  if (anyBelow) {
-    assumptions.push('below_reference compares supplement totals alone with the RDA (or AI); diet normally supplies much of the reference amount.');
+  if (anyCoverage) {
+    assumptions.push('coverage compares supplement totals alone with the RDA (or AI); diet normally supplies much of the reference amount, so low coverage does not indicate a shortfall.');
   }
   if (!profile) {
     gaps.push({ code: 'PROFILE_MISSING', detail: 'age and sex were not given, so totals are not compared with reference intakes or upper limits' });
@@ -263,8 +289,9 @@ export function analyzeStack(products: StackProduct[], profile: Profile | null):
       products_matched: products.length,
       nutrients_totaled: totals.length,
       above_ul: totals.filter((t) => t.flags.includes('above_ul')).length,
-      below_reference: totals.filter((t) => t.flags.includes('below_reference')).length,
+      near_ul: totals.filter((t) => t.flags.includes('near_ul')).length,
       data_gaps: gaps.length,
+      data_suspect: gaps.filter((g) => g.code === 'DATA_SUSPECT').length,
     },
     assumptions,
     nutrient_totals: totals,

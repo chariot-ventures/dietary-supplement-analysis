@@ -1,0 +1,152 @@
+{
+  "_fixture_note": "SYNTHETIC FIXTURE: hand-built in the DSLD v9 /label shape for offline tests. Not a real product; IDs 9000xx do not exist in DSLD.",
+  "id": 900009,
+  "fullName": "Bad Data Multi",
+  "brandName": "Fixture Labs",
+  "upcSku": "0 12345 67892 9",
+  "offMarket": 0,
+  "entryDate": "2021-03-03",
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Mineral"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 1,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Tablet(s)",
+      "notes": "",
+      "inSFB": true
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "name": "Magnesium",
+      "category": "mineral",
+      "ingredientGroup": "Magnesium",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 400,
+          "unit": "mg",
+          "servingSizeUnit": "Tablet(s)",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 10,
+              "footnote": null
+            }
+          ]
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 2,
+      "name": "Selenium",
+      "category": "mineral",
+      "ingredientGroup": "Selenium",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 200,
+          "unit": "mg",
+          "servingSizeUnit": "Tablet(s)",
+          "dailyValueTargetGroup": []
+        }
+      ],
+      "nestedRows": []
+    },
+    {
+      "order": 3,
+      "name": "Herbal Blend",
+      "category": "blend",
+      "ingredientGroup": "Blend",
+      "uniiCode": null,
+      "notes": "",
+      "alternateNames": [],
+      "forms": [],
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 100,
+          "unit": "mg",
+          "servingSizeUnit": "Tablet(s)",
+          "dailyValueTargetGroup": []
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 1,
+          "name": "Ginger",
+          "category": "botanical",
+          "ingredientGroup": "Ginger",
+          "uniiCode": null,
+          "notes": "",
+          "alternateNames": [],
+          "forms": [],
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 1,
+              "operator": "=",
+              "quantity": 80,
+              "unit": "mg",
+              "servingSizeUnit": "Tablet(s)",
+              "dailyValueTargetGroup": []
+            }
+          ],
+          "nestedRows": []
+        },
+        {
+          "order": 2,
+          "name": "Turmeric",
+          "category": "botanical",
+          "ingredientGroup": "Turmeric",
+          "uniiCode": null,
+          "notes": "",
+          "alternateNames": [],
+          "forms": [],
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 1,
+              "operator": "=",
+              "quantity": 70,
+              "unit": "mg",
+              "servingSizeUnit": "Tablet(s)",
+              "dailyValueTargetGroup": []
+            }
+          ],
+          "nestedRows": []
+        }
+      ]
+    }
+  ],
+  "statements": [],
+  "events": [
+    {
+      "date": "2021-03-03",
+      "type": "Date entered into DSLD"
+    }
+  ]
+}

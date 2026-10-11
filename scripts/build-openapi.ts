@@ -6,18 +6,27 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { GUIDE } from '../src/lib/guide.js';
 import { buildOpenApi } from '../src/openapi.js';
 
-const OUT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../openapi/openapi.json');
-const text = `${JSON.stringify(buildOpenApi(), null, 2)}\n`;
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const outputs: [string, string][] = [
+  ['openapi/openapi.json', `${JSON.stringify(buildOpenApi(), null, 2)}\n`],
+  ['llms.txt', GUIDE],
+];
 
-if (process.argv.includes('--check')) {
-  if (!existsSync(OUT) || readFileSync(OUT, 'utf8') !== text) {
-    console.error('openapi/openapi.json is out of date. Run: npm run build:openapi');
-    process.exit(1);
+const check = process.argv.includes('--check');
+let stale = false;
+for (const [rel, text] of outputs) {
+  const file = path.join(ROOT, rel);
+  if (check) {
+    if (!existsSync(file) || readFileSync(file, 'utf8') !== text) {
+      console.error(`${rel} is out of date. Run: npm run build:openapi`);
+      stale = true;
+    } else console.log(`${rel} is up to date.`);
+  } else {
+    writeFileSync(file, text);
+    console.log(`Wrote ${rel}`);
   }
-  console.log('openapi/openapi.json is up to date.');
-} else {
-  writeFileSync(OUT, text);
-  console.log('Wrote openapi/openapi.json');
 }
+if (stale) process.exit(1);

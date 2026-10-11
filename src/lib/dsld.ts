@@ -55,6 +55,7 @@ export interface DsldServingSize {
 
 export interface DsldLabel {
   id: number;
+  entryDate?: string | null;
   fullName?: string | null;
   brandName?: string | null;
   upcSku?: string | null;
@@ -67,7 +68,7 @@ export interface DsldLabel {
 
 export interface DsldSearchHit {
   _id: string;
-  _source?: { fullName?: string; brandName?: string; upcSku?: string; offMarket?: number } & Record<string, unknown>;
+  _source?: { fullName?: string; brandName?: string; upcSku?: string; offMarket?: number; entryDate?: string } & Record<string, unknown>;
 }
 
 export interface SearchParams {
@@ -78,10 +79,33 @@ export interface SearchParams {
   size: number;
 }
 
+/** What DSLD's search index returns per hit, before the full label is fetched. */
+export interface SearchHit {
+  id: number;
+  name: string | null;
+  brand: string | null;
+  upc: string | null;
+  entry_date: string | null;
+  on_market: boolean | null;
+}
+
 export interface SearchResult {
   total: number;
   ids: number[];
+  hits: SearchHit[];
   retrieved: string;
+}
+
+/** DSLD stores UPC-A codes as "0 31604 02697 4". */
+export function formatUpcForDsld(digits: string): string | null {
+  if (/^\d{12}$/.test(digits)) return `${digits[0]} ${digits.slice(1, 6)} ${digits.slice(6, 11)} ${digits[11]}`;
+  return null;
+}
+
+/** Digits only; a 13-digit EAN with a leading 0 is the same product as its 12-digit UPC-A. */
+export function normalizeUpc(raw: string): string {
+  const digits = raw.replace(/\D/g, '');
+  return digits.length === 13 && digits.startsWith('0') ? digits.slice(1) : digits;
 }
 
 /** Per-call options: `signal` carries the caller's overall request budget. */
@@ -164,7 +188,7 @@ export class DsldClient {
   private readonly deadlineMs: number;
   private readonly sem: Semaphore;
   private readonly labels: LRUCache<number, Cached<DsldLabel>>;
-  private readonly searches: LRUCache<string, Cached<{ total: number; ids: number[] }>>;
+  private readonly searches: LRUCache<string, Cached<{ total: number; ids: number[]; hits: SearchHit[] }>>;
   private readonly inflight = new Map<string, Promise<unknown>>();
 
   constructor(opts: DsldClientOptions = {}) {
@@ -293,15 +317,27 @@ function asLabel(body: unknown): DsldLabel | null {
   return { ...(b as unknown as DsldLabel), id };
 }
 
-function parseSearch(body: unknown, onMarketOnly: boolean): { total: number; ids: number[] } {
+const str = (v: unknown): string | null => (typeof v === 'string' && v.trim() ? v.trim() : null);
+
+function parseSearch(body: unknown, onMarketOnly: boolean): { total: number; ids: number[]; hits: SearchHit[] } {
   const b = (body && typeof body === 'object' ? body : {}) as Record<string, unknown>;
-  const hits = (Array.isArray(b.hits) ? b.hits : []) as DsldSearchHit[];
+  const raw = (Array.isArray(b.hits) ? b.hits : []) as DsldSearchHit[];
   const ids: number[] = [];
-  for (const h of hits) {
+  const hits: SearchHit[] = [];
+  for (const h of raw) {
     const id = Number(h?._id);
     if (!Number.isInteger(id) || id <= 0) continue;
     if (onMarketOnly && h._source && typeof h._source.offMarket === 'number' && h._source.offMarket !== 0) continue;
     ids.push(id);
+    const src = h._source ?? {};
+    hits.push({
+      id,
+      name: str(src.fullName),
+      brand: str(src.brandName),
+      upc: str(src.upcSku),
+      entry_date: str(src.entryDate),
+      on_market: typeof src.offMarket === 'number' ? src.offMarket === 0 : null,
+    });
   }
   const stats = b.stats as { count?: unknown } | undefined;
   const totalObj = b.total as { value?: unknown } | number | undefined;
@@ -313,5 +349,5 @@ function parseSearch(body: unknown, onMarketOnly: boolean): { total: number; ids
         : typeof totalObj?.value === 'number'
           ? totalObj.value
           : ids.length;
-  return { total, ids };
+  return { total, ids, hits };
 }

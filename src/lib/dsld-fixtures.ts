@@ -31,14 +31,18 @@ export function createFixtureFetch(labels: Map<number, DsldLabel>, onRequest?: (
       return label ? json(label) : json({ error: 'not found' }, 404);
     }
     if (u.pathname.endsWith('/search-filter')) {
-      const terms = (u.searchParams.get('q') ?? '').toLowerCase().split(/\s+/).filter(Boolean);
+      const q = (u.searchParams.get('q') ?? '').toLowerCase().trim();
+      // A quoted query is a phrase (DSLD matches "0 31604 02697 4" against the UPC); otherwise every term must appear.
+      const phrase = /^".*"$/.test(q) ? q.slice(1, -1) : null;
+      const terms = phrase === null ? q.split(/\s+/).filter((t) => t && t !== '*') : [];
       const brand = u.searchParams.get('brand')?.toLowerCase();
       const ingredient = u.searchParams.get('ingredient_name')?.toLowerCase();
       const status = u.searchParams.get('status');
       const size = Number(u.searchParams.get('size') ?? 10);
       const hits = [...labels.values()].filter((l) => {
         const ingredientNames = (l.ingredientRows ?? []).flatMap((r) => [r.name, ...(r.forms ?? []).map((f) => f.name)]).join(' ').toLowerCase();
-        const text = `${l.fullName ?? ''} ${l.brandName ?? ''} ${ingredientNames}`.toLowerCase();
+        const text = `${l.fullName ?? ''} ${l.brandName ?? ''} ${l.upcSku ?? ''} ${ingredientNames}`.toLowerCase();
+        if (phrase !== null && !text.includes(phrase)) return false;
         if (terms.some((t) => !text.includes(t))) return false;
         if (brand && !(l.brandName ?? '').toLowerCase().includes(brand)) return false;
         if (ingredient && !ingredientNames.includes(ingredient)) return false;
@@ -47,7 +51,7 @@ export function createFixtureFetch(labels: Map<number, DsldLabel>, onRequest?: (
         return true;
       });
       return json({
-        hits: hits.slice(0, size).map((l) => ({ _id: String(l.id), _source: { fullName: l.fullName, brandName: l.brandName, offMarket: l.offMarket } })),
+        hits: hits.slice(0, size).map((l) => ({ _id: String(l.id), _source: { fullName: l.fullName, brandName: l.brandName, upcSku: l.upcSku, offMarket: l.offMarket, entryDate: l.entryDate } })),
         stats: { count: hits.length },
       });
     }

@@ -57,7 +57,8 @@ describe('analyzeStack', () => {
     expect(f.daily_total).toEqual({ amount: 3400, unit: 'mcg DFE' });
     expect(f.amount_toward_ul).toEqual({ amount: 1000, unit: 'mcg folic acid' });
     expect(f.percent_of_ul).toBe(100);
-    expect(f.flags).toEqual([]); // equal to the UL is not above it
+    expect(f.flags).toEqual(['near_ul']); // equal to the UL is not above it, but is near it
+    expect(f.severity).toBe('low');
   });
 
   it('vitamin A with mixed forms: UL portion unknown, percent withheld, gap reported', () => {
@@ -89,11 +90,22 @@ describe('analyzeStack', () => {
     expect(total(r, 'vitamin-e')!.daily_total).toEqual({ amount: 268, unit: 'mg' });
   });
 
-  it('flags below_reference only for complete totals and explains it', () => {
+  it('reports coverage of the RDA as information, not a flag, and explains it', () => {
     const r = analyzeStack([custom('custom:1', [{ name: 'vitamin c', amount: 20, unit: 'mg' }])], female34);
-    expect(total(r, 'vitamin-c')!.flags).toEqual(['below_reference']);
-    expect(r.summary.below_reference).toBe(1);
-    expect(r.assumptions.join(' ')).toMatch(/below_reference compares supplement totals alone/);
+    const c = total(r, 'vitamin-c')!;
+    expect(c.flags).toEqual([]);
+    expect(c.severity).toBeNull();
+    expect(c.coverage).toEqual({ reference: 'rda', percent: 26.7 });
+    expect(r.assumptions.join(' ')).toMatch(/low coverage does not indicate a shortfall/);
+  });
+
+  it('near_ul from 90% of the UL; severity grows with the excess', () => {
+    const at = (mg: number) => total(analyzeStack([custom('custom:1', [{ name: 'zinc', amount: mg, unit: 'mg' }])], female34), 'zinc')!;
+    expect(at(35)).toMatchObject({ flags: [], severity: null }); // 87.5%
+    expect(at(36)).toMatchObject({ flags: ['near_ul'], severity: 'low' }); // 90%
+    expect(at(41)).toMatchObject({ flags: ['above_ul'], severity: 'moderate' });
+    expect(at(80)).toMatchObject({ flags: ['above_ul'], severity: 'high' }); // 200%
+    expect(at(41).reference!.ul_basis).toMatch(/copper/);
   });
 
   it('uses AI when there is no RDA', () => {

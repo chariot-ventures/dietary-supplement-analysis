@@ -6,6 +6,7 @@ import { registerNutrientRoutes } from './routes/nutrients.js';
 import { registerProductRoutes } from './routes/products.js';
 import { registerStackRoutes } from './routes/stack.js';
 import { registerToolRoute } from './routes/tool.js';
+import { registerToolsRoutes } from './routes/tools.js';
 import type { Deps } from './routes/deps.js';
 
 export interface AppOptions extends Deps {
@@ -67,5 +68,6 @@ export function buildApp(opts: AppOptions): FastifyInstance {
   registerProductRoutes(app, opts);
   registerStackRoutes(app, opts);
   registerToolRoute(app, opts);
+  registerToolsRoutes(app);
   return app;
 }

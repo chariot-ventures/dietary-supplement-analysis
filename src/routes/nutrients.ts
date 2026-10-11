@@ -17,7 +17,7 @@ export function nutrientReference(body: unknown) {
     {
       nutrient: { id: n.id, name: n.name, unit: n.canonical_unit },
       profile: { age: req.age, sex: req.sex },
-      reference: { ...ref, ul_unit: n.ul_unit, ul_scope: n.ul_scope, ul_note: n.ul_note },
+      reference: { ...ref, ul_unit: n.ul_unit, ul_scope: n.ul_scope, ul_note: n.ul_note, ul_basis: ref.ul !== null ? n.ul_basis : null },
       has_dri: n.dri !== null,
       factsheet_url: n.factsheet_url,
     },

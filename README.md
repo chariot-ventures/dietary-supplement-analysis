@@ -7,7 +7,7 @@ A Pocket Network service (`dietary-supplement-analysis`) for AI agents. Give it 
 - **Running a supplier or gateway:** see [OPERATORS.md](OPERATORS.md).
 - **What it is not:** medical advice, an efficacy database or an interaction checker. It reports what labels declare and how the totals compare with published reference values. For medications, see the Pocket services `med-safety` and `fda`.
 
-> **Status:** `v0.1.0`. Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
+> **Status:** `v0.2.0` (see [CHANGELOG.md](CHANGELOG.md)). Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
 
 ## For judges: try it in one minute
 
@@ -33,24 +33,43 @@ curl -s https://agents.trackmysupplement.com/v1/products/search \
   -H 'Content-Type: application/json' -d '{"query":"vitamin d3 5000","limit":3}'
 ```
 
-**3. Analyze a whole supplement stack** (three real DSLD labels plus a custom product):
+**3. Analyze a whole supplement stack in one call**, naming products the way a user would (no IDs needed), and ask what adding one more would do:
+
+```bash
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
+  "age": 62, "sex": "female",
+  "products": [
+    {"query": "Centrum Silver Women 50+"},
+    {"query": "Nature Made Ultra Fish Oil 1400"},
+    {"query": "KAL Magnesium Glycinate 400"},
+    {"query": "Thompson Zinc 50 mg", "servings_per_day": 1}
+  ],
+  "candidates": [{"query": "vitamin d3 5000 iu"}]}'
+```
+
+Read `agent_summary` first: plain sentences an agent can relay as written. Then:
+- `resolutions`: which NIH label each name was matched to, with `confidence` (high/medium/low) and alternatives.
+- `nutrient_totals`: per nutrient, the daily total, `flags` (`above_ul`, `near_ul`), `severity`, the percent of the upper limit (UL), `reference.ul_basis` (what the UL protects against) and each product's contribution.
+- `suggestions`: single-product changes that would bring an above-UL nutrient back under its UL, with the resulting amount.
+- `candidate_results`: what adding each candidate would change.
+- `data_gaps`: anything that couldn't be counted, and `DATA_SUSPECT` entries where NIH's label record looks wrong.
+
+The classic version with DSLD IDs still works. This stack (a vitamin D3 5000 IU softgel, a women's multivitamin, Natrol Magnesium Night and 250 mg of magnesium) comes back with vitamin D at 150 mcg against a 100 mcg UL and magnesium at 575 mg against the 350 mg UL for supplements:
 
 ```bash
 curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
   "age": 34, "sex": "female",
-  "products": [
-    {"dsld_id": 230932},
-    {"dsld_id": 338022},
-    {"dsld_id": 332278},
-    {"name": "Custom magnesium", "ingredients": [{"name": "magnesium", "amount": 250, "unit": "mg"}]}
-  ]}'
+  "products": [{"dsld_id": 230932}, {"dsld_id": 338022}, {"dsld_id": 332278},
+    {"name": "Custom magnesium", "ingredients": [{"name": "magnesium", "amount": 250, "unit": "mg"}]}]}'
 ```
 
-The stack is a vitamin D3 5000 IU softgel, a women's multivitamin, Natrol Magnesium Night (which contains a proprietary sleep blend) and 250 mg of magnesium. Two flags come back:
-- Vitamin D `above_ul`: 150 mcg against a 100 mcg UL.
-- Magnesium `above_ul`: 575 mg against the 350 mg UL for supplements.
+**4. Look up a bottle by its barcode:**
 
-Folate counts only the 480 mcg of folic acid toward its UL, the blend's unquantified melatonin is reported as a data gap, and every number links to its DSLD label.
+```bash
+curl -s https://agents.trackmysupplement.com/v1/products/lookup -H 'Content-Type: application/json' -d '{"upc":"031604026974"}'
+```
+
+**5. For agent frameworks:** `GET /v1/tools` returns every operation as a tool definition with a JSON Schema input, and `GET /v1/guide` returns a usage guide (also in [llms.txt](llms.txt)).
 
 ### Through Pocket Network (paid relay)
 
@@ -82,13 +101,16 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.1.0"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.2.0"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
-| POST | `/v1/products/search` | Find products in DSLD: `{"query":"vitamin d3 5000","brand":"NOW","limit":5}` |
+| GET | `/v1/tools` | Tool definitions (`name`, `description`, JSON Schema `input_schema`) for function calling |
+| GET | `/v1/guide` | Usage guide for agents, as markdown inside JSON (same text as [llms.txt](llms.txt)) |
+| POST | `/v1/stack/analyze` | One call: per-nutrient totals across 1–15 products (names, barcodes, IDs or custom), flags, fixes, what-if candidates |
+| POST | `/v1/products/search` | Find products in DSLD: `{"query":"vitamin d3 5000","brand":"NOW","limit":5}`; label versions collapsed |
+| POST | `/v1/products/lookup` | Label for a barcode: `{"upc":"031604026974"}` |
 | POST | `/v1/products/get` | Normalized labels: `{"dsld_id":12345}` or `{"dsld_ids":[...]}` (max 10) |
-| POST | `/v1/nutrients/reference` | RDA/EAR/AI/UL for one nutrient: `{"nutrient":"vitamin d","age":34,"sex":"female"}` (offline) |
-| POST | `/v1/stack/analyze` | Per-nutrient totals across 1–15 products |
+| POST | `/v1/nutrients/reference` | RDA/EAR/AI/UL and UL basis for one nutrient: `{"nutrient":"vitamin d","age":34,"sex":"female"}` (offline) |
 | POST | `/v1/tool` | MCP-style dispatcher: `{"tool":"stack_analyze","arguments":{...}}` |
 
 ### `POST /v1/stack/analyze`
@@ -98,28 +120,40 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
   "age": 34,
   "sex": "female",
   "products": [
-    { "dsld_id": 12345, "servings_per_day": 1 },
+    { "query": "Centrum Silver Women 50+" },
+    { "upc": "031604026974", "servings_per_day": 1 },
     { "dsld_id": 67890 },
     { "name": "Homemade magnesium", "ingredients": [ { "name": "magnesium glycinate", "amount": 200, "unit": "mg", "nutrient_basis": "elemental" } ] }
-  ]
+  ],
+  "candidates": [ { "query": "vitamin d3 5000 iu" } ]
 }
 ```
 
-- Each product is either a DSLD ID or a custom product with explicit ingredients. Custom ingredients may give a `form` (for example `"folic acid"` or `"d-alpha tocopherol"`) so IU and DFE conversions can be applied.
+- **Products** (1–15) can be a product name (`query`, optionally with `brand`), a barcode (`upc`), a DSLD ID, or a custom product with explicit ingredients. Custom ingredients may give a `form` (for example `"folic acid"` or `"d-alpha tocopherol"`) so IU and DFE conversions can be applied.
+- **Names and barcodes** are resolved server-side. A name is matched against DSLD search results by the share of its words found in the brand and product name; label versions of the same product are collapsed and the newest on-market one is used. `resolutions[]` records each match with `confidence` (`high`: every word matched one product; `medium`: every word matched but other products did too, or most words matched; `low`: under 60%) and up to three alternatives. A product that can't be identified is reported (`PRODUCT_NOT_RESOLVED`) and left out; the call fails with 404 only when nothing could be identified.
+- **Candidates** (up to 5) are products the user is considering. Each is evaluated as an addition to the stack in `candidate_results[]` and isn't counted in the totals.
 - `servings_per_day` defaults to the label's maximum daily servings, or 1 if the label doesn't say. Every default is listed in `assumptions`.
 - `age` and `sex` are optional. Without them you get totals and overlaps, but no reference comparisons.
-- Pregnancy and lactation aren't supported in v1. Sending them returns `422 UNSUPPORTED`.
+- Pregnancy and lactation aren't supported yet. Sending them returns `422 UNSUPPORTED`.
 
-The response contains `summary`, `assumptions`, `nutrient_totals`, `overlaps`, `unrecognized_ingredients`, `data_gaps`, `products`, `sources` and `disclaimer`. Each nutrient total includes:
+The response contains, in this order: `profile`, `summary`, `agent_summary`, `resolutions` (when names or barcodes were given), `assumptions`, `suggestions`, `candidate_results` (when candidates were given), `nutrient_totals`, `overlaps`, `unrecognized_ingredients`, `data_gaps`, `products`, `sources` and `disclaimer`.
+
+- **`agent_summary`** is two to five plain sentences, generated deterministically from the numbers below, that an agent can relay as written.
+- **`suggestions`** lists, for each above-UL nutrient, up to three single-product changes (`reduce_servings` or `remove_product`) with the resulting amount, whether that alone brings the nutrient to or under the UL (`resolves`), which other above-UL nutrients it also fixes, and which other nutrients a removal would lower. They're arithmetic, not advice.
+- **`candidate_results`** gives each candidate a `verdict` (`adds_above_ul`, `increases_above_ul`, `adds_near_ul` or `no_new_flags`), the new flags and the before and after totals.
+
+Each nutrient total includes:
 
 | Field | Meaning |
 |---|---|
 | `daily_total` | Sum across products, in the nutrient's canonical unit (mcg RAE, mcg DFE, mg, mcg) |
 | `complete` | `false` when some label rows couldn't be counted (see `data_gaps`); the total is then a lower bound |
-| `reference` | RDA, EAR, AI and UL for the profile, with `ul_scope` and `ul_note` |
+| `reference` | RDA, EAR, AI and UL for the profile, with `ul_scope`, `ul_note` and `ul_basis` (what the UL protects against, for example "Reduced copper status" for zinc) |
 | `amount_toward_ul` | The part the UL applies to: folic acid only for folate, preformed vitamin A only for vitamin A |
 | `percent_of_ul`, `percent_of_rda`, `percent_of_ai` | Percent of each reference value. `percent_of_ul` is withheld when the UL portion is only partly known and the UL isn't already exceeded |
-| `flags` | `above_ul`, `below_reference`. No flag means nothing to report, not a judgement about the stack |
+| `coverage` | Percent of the RDA (or AI) these supplements alone supply. Informational: diet normally supplies much of it, so low coverage isn't a shortfall |
+| `flags` | `above_ul` (over the UL) or `near_ul` (90–100% of the UL). No flag means nothing to report, not a judgement about the stack |
+| `severity` | `high` (twice the UL or more), `moderate` (above the UL), `low` (near the UL), or `null` |
 | `contributions` | Each product's label amount, converted amount, servings per day and daily amount |
 
 ### Errors
@@ -147,6 +181,8 @@ The response contains `summary`, `assumptions`, `nutrient_totals`, `overlaps`, `
 | `AMBIGUOUS_BASIS` | A custom ingredient named for a compound lacks `nutrient_basis` |
 | `UL_PARTIAL` | The UL applies to one form only (folic acid, preformed vitamin A) and some forms are unspecified |
 | `PROFILE_MISSING` | No age and sex, so no reference comparison |
+| `PRODUCT_NOT_RESOLVED` | A product name or barcode couldn't be matched to a DSLD label; it isn't counted |
+| `DATA_SUSPECT` | NIH's label record looks inconsistent; the amount is still counted. `check` says which test failed: `duplicate_row` (the same ingredient twice under one heading, like EPA entered as DHA), `nested_exceeds_parent` (rows add up to more than their declared total), `percent_dv_mismatch` (the printed %DV contradicts the amount under both the current and the pre-2016 Daily Value), `implausible_amount` (over 50 times the highest adult UL, typically mg typed for mcg) |
 | `INTERACTIONS_NOT_ASSESSED` | Always present: drug and supplement interactions are out of scope |
 
 ## How the numbers are produced
@@ -194,7 +230,7 @@ docker compose up --build     # container on 127.0.0.1:8080
 
 ## Limits
 
-- Up to 15 products per analyze call, 10 IDs per get call, and 10 search results.
+- Up to 15 products and 5 candidates per analyze call, 10 IDs per get call, and 10 search results.
 - DSLD calls run at most 4 at a time, with a 6 s deadline each and an 8 s budget per request. Labels are cached for 7 days and searches for 24 hours; a stale copy is served if DSLD is down. Measured against live DSLD: a cold 15-product analyze takes 1.5 s and a warm one 17 ms.
 - Text that Pocket gateways treat as an error signal ("timeout", "block not found" and others) is `\u`-escaped in responses. It decodes to the same string.
 - Ages from 1 to 120. Infant, pregnancy and lactation values aren't included in v1.
