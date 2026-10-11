@@ -58,11 +58,15 @@ async function main() {
   }
   const changed = Object.entries(current).filter(([u, d]) => d && recorded[u] && d > recorded[u]!);
   const unknown = Object.entries(current).filter(([u, d]) => d && !recorded[u]);
-  const unreadable = Object.entries(current).filter(([, d]) => !d);
+  // ODS sits behind Cloudflare, which refuses data-center addresses: those pages are checked by hand.
+  const odsBlocked = Object.entries(current).filter(([u, d]) => !d && u.includes('ods.od.nih.gov') && /HTTP 403/.test(why[u] ?? ''));
+  const unreadable = Object.entries(current).filter(([u, d]) => !d && !odsBlocked.some(([b]) => b === u));
 
   if (process.argv.includes('--write')) {
     const pages = Object.fromEntries(Object.entries(current).map(([u, d]) => [u, d ?? recorded[u] ?? 'unknown']));
-    writeFileSync(DATES, `${JSON.stringify({ _doc: 'NIH page "Updated" dates as of our last review of data/*.json against them. Checked monthly by scripts/check-factsheets.ts.', checked: new Date().toISOString().slice(0, 10), pages }, null, 1)}\n`);
+    // Keep the _doc note (ODS is recorded by hand).
+    const doc = existsSync(DATES) ? JSON.parse(readFileSync(DATES, 'utf8'))._doc : undefined;
+    writeFileSync(DATES, `${JSON.stringify({ _doc: doc ?? 'NIH page "Updated" dates as of our last review of data/*.json against them.', checked: new Date().toISOString().slice(0, 10), pages }, null, 1)}\n`);
     console.log(`Recorded ${Object.keys(pages).length} pages in ${DATES}`);
     return;
   }
@@ -70,6 +74,9 @@ async function main() {
     `Checked ${Object.keys(current).length} NIH pages cited in data/.`,
     changed.length ? `\n**Updated since our review (${changed.length}):**\n${changed.map(([u, d]) => `- ${u}: ${recorded[u]} -> ${d}`).join('\n')}` : '\nNo cited page has changed since our review.',
     unknown.length ? `\nNot yet recorded (${unknown.length}): ${unknown.map(([u, d]) => `${u} (${d})`).join(', ')}` : '',
+    odsBlocked.length
+      ? `\nODS pages (${odsBlocked.length}) refuse automated checks; their recorded review dates run to ${odsBlocked.map(([u]) => recorded[u] ?? '').sort().pop()}. Check https://ods.od.nih.gov/HealthInformation/factsheets.aspx by hand, or subscribe to ODS updates: https://ods.od.nih.gov/News/ODS_ListServ.aspx`
+      : '',
     unreadable.length ? `\nNo date found (${unreadable.length}): ${unreadable.map(([u]) => `${u} (${why[u]})`).join(', ')}` : '',
     changed.length || unknown.length ? '\nReview the data for the changed pages, then run `npx tsx scripts/check-factsheets.ts --write` and commit data/factsheet-dates.json.' : '',
   ];
