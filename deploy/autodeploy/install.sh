@@ -81,6 +81,15 @@ Persistent=true
 WantedBy=timers.target
 UNIT
 
+# Security updates already install unattended (Ubuntu default); also reboot for kernel updates
+# at a quiet hour. Every container has restart: unless-stopped, so the stack comes back by itself,
+# and the live check (.github/workflows/live-check.yml) opens an issue if it doesn't.
+cat > /etc/apt/apt.conf.d/52dsa-auto-reboot <<'APT'
+Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-WithUsers "true";
+Unattended-Upgrade::Automatic-Reboot-Time "09:00";
+APT
+
 git config --system --add safe.directory '*' 2>/dev/null || true
 systemctl daemon-reload
 systemctl enable --now dsa-autodeploy.timer dsa-dsld-mirror.timer

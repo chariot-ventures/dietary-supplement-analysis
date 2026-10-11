@@ -1,0 +1,21 @@
+# Weekly dependency update PRs; CI (npm run check) runs on each. Merge to main, then release as usual.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      dev-dependencies:
+        dependency-type: development
+      production-dependencies:
+        dependency-type: production
+    ignore:
+      # Pinned on purpose: the USDA SR28 files are verified by checksum in scripts/build-foods.ts.
+      - dependency-name: fda-nutrient-database
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

@@ -139,6 +139,9 @@ if wait_probe "$CONTAINER" "$version"; then
   # Keep the three newest release images; drop older ones.
   docker images "$IMAGE" --format '{{.CreatedAt}}\t{{.Tag}}' | sort -r | awk -F'\t' '$2 ~ /^v/ {print $2}' | tail -n +4 \
     | xargs -r -I{} docker rmi "$IMAGE:{}" >/dev/null 2>&1 || true
+  # Build cache and dangling layers from earlier builds (each release build adds some).
+  docker builder prune -f --filter until=72h >/dev/null 2>&1 || true
+  docker image prune -f >/dev/null 2>&1 || true
   exit 0
 fi
 

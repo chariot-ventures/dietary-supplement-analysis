@@ -1,6 +1,6 @@
 {
   "name": "dietary-supplement-analysis",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "description": "Pocket Network service: NIH DSLD supplement labels and per-nutrient stack totals compared with NIH reference intakes.",
   "private": true,
   "type": "module",
@@ -19,6 +19,8 @@
     "lint": "eslint . && tsc --noEmit",
     "test": "vitest run",
     "eval": "tsx eval/run.ts",
+    "bump": "tsx scripts/bump-version.ts",
+    "live-check": "tsx scripts/live-check.ts",
     "eval:llm": "tsx eval/llm-compare.ts",
     "check": "npm run build:nutrients -- --check && npm run build:foods -- --check && npm run build:openapi -- --check && npm run lint && npm test"
   },

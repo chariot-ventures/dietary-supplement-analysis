@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.2 (2026-10-11)
+
+- **Live check** every 30 minutes from GitHub: 16 end-to-end checks of the public service (`npm run live-check`). Once a day it also runs the Pocket portal audit and compares the on-chain card with `card/card.json`. Failures open an issue that closes itself on recovery.
+- **Dependabot** for npm (weekly) and GitHub Actions (monthly).
+- **`npm run bump`** sets the version in every file and opens a CHANGELOG entry.
+- **Server upkeep:** the auto-deploy prunes Docker build cache, and kernel security updates reboot at 09:00 UTC (everything restarts by itself).
+
 ## 0.12.1 (2026-10-11)
 
 - Compact answers no longer repeat the brand in product names ("Centrum Centrum Silver...").

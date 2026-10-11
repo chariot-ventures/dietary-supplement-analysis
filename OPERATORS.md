@@ -90,10 +90,25 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.12.1"}
+# {"service":"dietary-supplement-analysis","version":"0.12.2"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.
+
+### What runs by itself
+
+| What | Where | When | On failure |
+|---|---|---|---|
+| Deploy the newest release (build, smoke test, swap, roll back on failure, prune old images and build cache) | `dsa-autodeploy.timer` on the server | every 5 minutes | rolls back; logged in `autodeploy/deploy.log`; the live check notices |
+| Mirror NIH DSLD's full download into the label store | `dsa-dsld-mirror.timer` on the server | Sundays 07:30 UTC, only when NIH publishes a new download | logged in `mirror/mirror.log`; searches keep using the live API |
+| Security updates, and a reboot when the kernel needs one | unattended-upgrades on the server | daily; reboots at 09:00 UTC | containers restart themselves; the live check notices |
+| Live check of the public service (16 checks; daily also the Pocket portal audit A1-A9 and on-chain card match) | [.github/workflows/live-check.yml](.github/workflows/live-check.yml) | every 30 minutes | opens the issue "Live check failing" and closes it when a run passes |
+| NIH fact-sheet freshness (NCCIH automatically; ODS refuses servers, so it's listed for a manual check) | [.github/workflows/factsheets.yml](.github/workflows/factsheets.yml) | monthly | opens the issue "NIH fact sheets updated: review data" |
+| Tests, lint, data freshness, accuracy cases (56) | [.github/workflows/image.yml](.github/workflows/image.yml) | every push and PR | the push's check fails |
+| Multi-arch image for other suppliers | same workflow | every release | |
+| Dependency updates | [.github/dependabot.yml](.github/dependabot.yml) | weekly (npm), monthly (actions) | PRs, tested by CI |
+
+Run the live check by hand with `npm run live-check` (add `-- --audit` for the Pocket audit).
 
 ### Secrets and the NIH mirror
 

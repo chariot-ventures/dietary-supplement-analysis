@@ -1,0 +1,60 @@
+# Every 30 minutes: check the live service end to end (scripts/live-check.ts).
+# Once a day (13:07 UTC) also run the Pocket portal audit and compare the on-chain card.
+# A failure opens (or updates) one issue; the next passing run closes it.
+name: live check
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+    - cron: '7 13 * * *'
+  workflow_dispatch:
+    inputs:
+      audit:
+        description: Also run the Pocket portal audit
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: live-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - id: run
+        env:
+          AUDIT: ${{ github.event.schedule == '7 13 * * *' || inputs.audit == true }}
+        run: |
+          set +e
+          if [ "$AUDIT" = "true" ]; then npx tsx scripts/live-check.ts --audit > report.md; else npx tsx scripts/live-check.ts > report.md; fi
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
+          cat report.md
+      - name: Open, update or close the issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STATUS: ${{ steps.run.outputs.status }}
+        run: |
+          title="Live check failing"
+          num=$(gh api "repos/$GITHUB_REPOSITORY/issues?state=open&per_page=100" --jq ".[] | select(.title == \"$title\") | .number" | head -1)
+          if [ "$STATUS" != "0" ]; then
+            if [ -n "$num" ]; then gh issue comment "$num" --repo "$GITHUB_REPOSITORY" --body-file report.md
+            else gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file report.md; fi
+            exit 1
+          elif [ -n "$num" ]; then
+            gh issue comment "$num" --repo "$GITHUB_REPOSITORY" --body "Recovered. $(head -3 report.md | tail -1)"
+            gh issue close "$num" --repo "$GITHUB_REPOSITORY"
+          fi
