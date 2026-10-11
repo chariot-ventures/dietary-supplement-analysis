@@ -78,6 +78,20 @@ export interface NutrientTotal {
   severity: Severity | null;
   factsheet_url: string;
   contributions: Contribution[];
+  /** Present with "diet": "typical": the same comparisons with US average food intake added. */
+  with_typical_diet?: DietEstimate;
+}
+
+export interface DietEstimate {
+  /** Mean daily amount from food and beverages for this age and sex. */
+  food: Amount;
+  /** Supplements plus food. */
+  estimated_total: Amount;
+  /** The part of the estimated total the UL applies to; null when the food share of it isn't reported. */
+  amount_toward_ul: Amount | null;
+  percent_of_ul: number | null;
+  coverage: { reference: 'rda' | 'ai'; percent: number } | null;
+  flags: Flag[];
 }
 
 export interface ProductSummary {

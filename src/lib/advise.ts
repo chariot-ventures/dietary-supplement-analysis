@@ -211,6 +211,10 @@ export function describeProfile(p: { age: number; sex: string; life_stage?: stri
 }
 
 export interface SummaryContext {
+  /** Nutrients flagged only once typical food intake is added (diet "typical"). */
+  dietFlags?: { name: string; percent_of_ul: number | null; flag: string }[];
+  /** True when diet "typical" estimates were added. */
+  dietApplied?: boolean;
   suggestions: Suggestion[];
   unresolved: string[];
   lowConfidence: { input: string; chosen: string }[];
@@ -252,6 +256,10 @@ export function agentSummary(a: StackAnalysis, ctx: SummaryContext): string {
   if (near.length) {
     parts.push(`${near.map((t) => `${nameOf(t)} (${num(t.percent_of_ul ?? 0)}%)`).join(', ')} ${near.length === 1 ? 'is' : 'are'} within 10% of the UL.`);
   }
+  if (ctx.dietFlags?.length) {
+    const items = ctx.dietFlags.map((d) => `${d.name} would be ${d.flag === 'above_ul' ? 'above' : 'near'} its UL${d.percent_of_ul === null ? '' : ` (${num(d.percent_of_ul)}%)`}`);
+    parts.push(`With average US food and drink intake added, ${items.join('; ')}.`);
+  }
   for (const c of ctx.candidates) parts.push(c.text);
   if (ctx.unresolved.length) parts.push(`Not identified, so not counted: ${ctx.unresolved.map((u) => `"${u}"`).join(', ')}.`);
   if (ctx.lowConfidence.length) {
@@ -260,6 +268,10 @@ export function agentSummary(a: StackAnalysis, ctx: SummaryContext): string {
   if (a.summary.data_suspect) {
     parts.push(`${a.summary.data_suspect} label entr${a.summary.data_suspect === 1 ? 'y looks' : 'ies look'} inconsistent in the NIH database (DATA_SUSPECT in data_gaps); check the label before relying on ${a.summary.data_suspect === 1 ? 'it' : 'them'}.`);
   }
-  parts.push('Totals exclude food, drinks and medications. Label data, not medical advice.');
+  parts.push(
+    ctx.dietApplied
+      ? 'Supplement totals exclude medications; the food estimate is a US average, not this person\'s diet. Label data, not medical advice.'
+      : 'Totals exclude food, drinks and medications. Label data, not medical advice.',
+  );
   return parts.join(' ');
 }

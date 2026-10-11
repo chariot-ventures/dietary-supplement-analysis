@@ -93,6 +93,10 @@ export const analyzeRequest = z
     age: age.optional(),
     sex: sex.optional(),
     life_stage: lifeStage.optional(),
+    diet: z
+      .enum(['none', 'typical'])
+      .default('none')
+      .describe('"typical" adds the US average intake from food and drinks for this age and sex (NHANES) to estimate total intake; see with_typical_diet'),
     products: z
       .array(stackProduct)
       .min(1)

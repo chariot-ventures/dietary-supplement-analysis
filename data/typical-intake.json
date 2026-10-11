@@ -1,0 +1,821 @@
+{
+ "_doc": "Mean daily intake from food and beverages (supplements excluded) per person, by sex and age, from What We Eat in America, NHANES 2017-March 2020 Prepandemic, Table 1. Used for the optional \"diet\": \"typical\" estimate. Copper converted from mg to mcg; EPA (PFA 20:5) and DHA (PFA 22:6) from g to mg. \"toward_ul\" names the row whose amount counts toward the nutrient UL (null: food does not count toward that UL, or the countable part is not reported).",
+ "source": {
+  "name": "USDA ARS, What We Eat in America, NHANES 2017-March 2020 Prepandemic, Table 1: Nutrient Intakes from Food and Beverages, Mean Amounts Consumed per Individual, by Male/Female and Age",
+  "url": "https://www.ars.usda.gov/ARSUserFiles/80400530/pdf/1720/Table_1_NIN_MaleFemale_1720.pdf",
+  "retrieved": "2026-10-11"
+ },
+ "age_groups": [
+  [
+   2,
+   5
+  ],
+  [
+   6,
+   11
+  ],
+  [
+   12,
+   19
+  ],
+  [
+   20,
+   29
+  ],
+  [
+   30,
+   39
+  ],
+  [
+   40,
+   49
+  ],
+  [
+   50,
+   59
+  ],
+  [
+   60,
+   69
+  ],
+  [
+   70,
+   null
+  ]
+ ],
+ "rows": {
+  "vitamin-a": {
+   "unit": "mcg RAE",
+   "male": [
+    574,
+    612,
+    598,
+    570,
+    658,
+    683,
+    676,
+    634,
+    776
+   ],
+   "female": [
+    520,
+    583,
+    484,
+    594,
+    590,
+    577,
+    578,
+    591,
+    675
+   ]
+  },
+  "retinol": {
+   "unit": "mcg",
+   "male": [
+    466,
+    514,
+    498,
+    416,
+    435,
+    452,
+    449,
+    454,
+    526
+   ],
+   "female": [
+    391,
+    460,
+    374,
+    380,
+    360,
+    356,
+    352,
+    346,
+    409
+   ]
+  },
+  "thiamin": {
+   "unit": "mg",
+   "male": [
+    1.31,
+    1.6,
+    1.82,
+    1.8,
+    1.89,
+    1.87,
+    1.85,
+    1.89,
+    1.69
+   ],
+   "female": [
+    1.14,
+    1.5,
+    1.35,
+    1.42,
+    1.36,
+    1.29,
+    1.39,
+    1.22,
+    1.3
+   ]
+  },
+  "riboflavin": {
+   "unit": "mg",
+   "male": [
+    1.65,
+    1.86,
+    2.09,
+    2.15,
+    2.82,
+    2.53,
+    2.41,
+    2.35,
+    2.16
+   ],
+   "female": [
+    1.46,
+    1.77,
+    1.54,
+    1.71,
+    1.81,
+    1.76,
+    1.85,
+    1.71,
+    1.68
+   ]
+  },
+  "niacin": {
+   "unit": "mg",
+   "male": [
+    16.9,
+    21.1,
+    27.7,
+    31.6,
+    36.2,
+    33.2,
+    29.7,
+    30.9,
+    24.4
+   ],
+   "female": [
+    14.7,
+    20.1,
+    20.3,
+    22.3,
+    22.4,
+    20.1,
+    21.2,
+    19.0,
+    19.3
+   ]
+  },
+  "vitamin-b6": {
+   "unit": "mg",
+   "male": [
+    1.47,
+    1.65,
+    2.09,
+    2.59,
+    3.14,
+    2.67,
+    2.33,
+    2.8,
+    2.09
+   ],
+   "female": [
+    1.33,
+    1.61,
+    1.59,
+    1.79,
+    1.87,
+    1.61,
+    1.76,
+    1.54,
+    1.62
+   ]
+  },
+  "folic-acid": {
+   "unit": "mcg",
+   "male": [
+    156,
+    207,
+    225,
+    217,
+    181,
+    185,
+    178,
+    196,
+    163
+   ],
+   "female": [
+    133,
+    193,
+    167,
+    147,
+    137,
+    136,
+    127,
+    105,
+    136
+   ]
+  },
+  "folate": {
+   "unit": "mcg DFE",
+   "male": [
+    389,
+    501,
+    555,
+    582,
+    552,
+    560,
+    559,
+    554,
+    495
+   ],
+   "female": [
+    346,
+    473,
+    437,
+    435,
+    439,
+    422,
+    410,
+    381,
+    405
+   ]
+  },
+  "choline": {
+   "unit": "mg",
+   "male": [
+    227,
+    252,
+    305,
+    369,
+    414,
+    406,
+    408,
+    379,
+    363
+   ],
+   "female": [
+    211,
+    236,
+    224,
+    293,
+    290,
+    285,
+    295,
+    293,
+    267
+   ]
+  },
+  "vitamin-b12": {
+   "unit": "mcg",
+   "male": [
+    3.96,
+    4.46,
+    5.55,
+    5.46,
+    6.88,
+    6.04,
+    5.36,
+    5.99,
+    5.24
+   ],
+   "female": [
+    3.33,
+    4.16,
+    3.47,
+    3.75,
+    3.67,
+    3.56,
+    4.09,
+    3.47,
+    3.79
+   ]
+  },
+  "vitamin-c": {
+   "unit": "mg",
+   "male": [
+    84.5,
+    73.5,
+    67.1,
+    71.3,
+    82.3,
+    84.8,
+    88.2,
+    78.4,
+    86.2
+   ],
+   "female": [
+    87.1,
+    73.5,
+    59.2,
+    74.0,
+    72.4,
+    71.0,
+    75.1,
+    75.4,
+    71.3
+   ]
+  },
+  "vitamin-d": {
+   "unit": "mcg",
+   "male": [
+    5.8,
+    5.4,
+    5.2,
+    4.6,
+    4.4,
+    4.8,
+    4.8,
+    5.3,
+    6.2
+   ],
+   "female": [
+    5.0,
+    4.8,
+    3.4,
+    3.6,
+    3.6,
+    3.9,
+    3.8,
+    3.7,
+    4.1
+   ]
+  },
+  "vitamin-e": {
+   "unit": "mg",
+   "male": [
+    6.4,
+    8.4,
+    8.7,
+    9.3,
+    10.6,
+    11.2,
+    11.2,
+    9.9,
+    9.9
+   ],
+   "female": [
+    5.5,
+    7.5,
+    8.2,
+    8.9,
+    9.0,
+    8.2,
+    8.6,
+    8.3,
+    8.0
+   ]
+  },
+  "added-vitamin-e": {
+   "unit": "mg",
+   "male": [
+    0.7,
+    1.4,
+    0.6,
+    0.7,
+    1.1,
+    1.5,
+    1.2,
+    0.9,
+    1.0
+   ],
+   "female": [
+    0.5,
+    0.4,
+    0.5,
+    1.1,
+    1.1,
+    1.0,
+    0.9,
+    0.7,
+    0.9
+   ]
+  },
+  "vitamin-k": {
+   "unit": "mcg",
+   "male": [
+    50.2,
+    73.9,
+    83.0,
+    96.9,
+    119.8,
+    140.1,
+    139.5,
+    124.0,
+    132.1
+   ],
+   "female": [
+    49.9,
+    71.4,
+    81.5,
+    118.1,
+    158.6,
+    130.9,
+    124.8,
+    123.5,
+    114.5
+   ]
+  },
+  "calcium": {
+   "unit": "mg",
+   "male": [
+    1026,
+    1041,
+    1105,
+    1054,
+    1124,
+    1080,
+    1072,
+    1045,
+    933
+   ],
+   "female": [
+    879,
+    978,
+    822,
+    886,
+    870,
+    834,
+    853,
+    825,
+    771
+   ]
+  },
+  "phosphorus": {
+   "unit": "mg",
+   "male": [
+    1186,
+    1289,
+    1505,
+    1525,
+    1658,
+    1661,
+    1608,
+    1550,
+    1401
+   ],
+   "female": [
+    1016,
+    1231,
+    1129,
+    1235,
+    1219,
+    1136,
+    1201,
+    1179,
+    1097
+   ]
+  },
+  "magnesium": {
+   "unit": "mg",
+   "male": [
+    220,
+    238,
+    276,
+    312,
+    356,
+    352,
+    357,
+    335,
+    321
+   ],
+   "female": [
+    195,
+    232,
+    222,
+    263,
+    281,
+    265,
+    280,
+    273,
+    256
+   ]
+  },
+  "iron": {
+   "unit": "mg",
+   "male": [
+    11.0,
+    14.2,
+    15.8,
+    15.5,
+    16.2,
+    16.1,
+    16.3,
+    16.0,
+    15.3
+   ],
+   "female": [
+    9.7,
+    13.3,
+    12.2,
+    12.0,
+    12.3,
+    11.8,
+    12.2,
+    11.2,
+    12.2
+   ]
+  },
+  "zinc": {
+   "unit": "mg",
+   "male": [
+    7.8,
+    9.6,
+    11.8,
+    12.2,
+    13.6,
+    13.2,
+    13.0,
+    12.3,
+    10.9
+   ],
+   "female": [
+    7.0,
+    8.9,
+    8.1,
+    9.5,
+    9.3,
+    8.8,
+    9.5,
+    8.8,
+    8.5
+   ]
+  },
+  "copper": {
+   "unit": "mcg",
+   "male": [
+    800,
+    900,
+    1100,
+    1200,
+    1400,
+    1300,
+    1400,
+    1300,
+    1300
+   ],
+   "female": [
+    700,
+    900,
+    900,
+    1100,
+    1100,
+    1000,
+    1100,
+    1100,
+    1000
+   ]
+  },
+  "selenium": {
+   "unit": "mcg",
+   "male": [
+    75.1,
+    92.0,
+    122.8,
+    132.1,
+    140.8,
+    136.0,
+    135.0,
+    133.1,
+    111.4
+   ],
+   "female": [
+    64.3,
+    89.8,
+    90.6,
+    101.8,
+    94.8,
+    91.9,
+    98.1,
+    89.8,
+    87.0
+   ]
+  },
+  "potassium": {
+   "unit": "mg",
+   "male": [
+    2085,
+    2086,
+    2404,
+    2571,
+    2988,
+    3000,
+    3021,
+    2908,
+    2958
+   ],
+   "female": [
+    1886,
+    2068,
+    1875,
+    2287,
+    2340,
+    2208,
+    2402,
+    2367,
+    2261
+   ]
+  },
+  "sodium": {
+   "unit": "mg",
+   "male": [
+    2331,
+    2993,
+    3821,
+    4087,
+    4375,
+    4118,
+    4034,
+    3973,
+    3364
+   ],
+   "female": [
+    2013,
+    2850,
+    2915,
+    3259,
+    3170,
+    2824,
+    2900,
+    2791,
+    2666
+   ]
+  },
+  "caffeine": {
+   "unit": "mg",
+   "male": [
+    10.2,
+    18.5,
+    47.0,
+    107.9,
+    206.5,
+    211.6,
+    209.6,
+    220.3,
+    195.3
+   ],
+   "female": [
+    5.2,
+    13.8,
+    34.9,
+    116.7,
+    131.7,
+    171.5,
+    175.1,
+    172.4,
+    132.1
+   ]
+  },
+  "epa": {
+   "unit": "mg",
+   "male": [
+    10,
+    20,
+    20,
+    30,
+    30,
+    40,
+    50,
+    50,
+    60
+   ],
+   "female": [
+    10,
+    20,
+    30,
+    20,
+    20,
+    30,
+    30,
+    40,
+    30
+   ]
+  },
+  "dha": {
+   "unit": "mg",
+   "male": [
+    20,
+    20,
+    30,
+    50,
+    60,
+    70,
+    80,
+    80,
+    110
+   ],
+   "female": [
+    20,
+    20,
+    40,
+    40,
+    40,
+    50,
+    50,
+    60,
+    60
+   ]
+  }
+ },
+ "nutrients": {
+  "vitamin-a": {
+   "total": "vitamin-a",
+   "toward_ul": "retinol"
+  },
+  "thiamin": {
+   "total": "thiamin",
+   "toward_ul": "thiamin"
+  },
+  "riboflavin": {
+   "total": "riboflavin",
+   "toward_ul": "riboflavin"
+  },
+  "niacin": {
+   "total": "niacin",
+   "toward_ul": null
+  },
+  "vitamin-b6": {
+   "total": "vitamin-b6",
+   "toward_ul": "vitamin-b6"
+  },
+  "folate": {
+   "total": "folate",
+   "toward_ul": "folic-acid"
+  },
+  "choline": {
+   "total": "choline",
+   "toward_ul": "choline"
+  },
+  "vitamin-b12": {
+   "total": "vitamin-b12",
+   "toward_ul": "vitamin-b12"
+  },
+  "vitamin-c": {
+   "total": "vitamin-c",
+   "toward_ul": "vitamin-c"
+  },
+  "vitamin-d": {
+   "total": "vitamin-d",
+   "toward_ul": "vitamin-d"
+  },
+  "vitamin-e": {
+   "total": "vitamin-e",
+   "toward_ul": "added-vitamin-e"
+  },
+  "vitamin-k": {
+   "total": "vitamin-k",
+   "toward_ul": "vitamin-k"
+  },
+  "calcium": {
+   "total": "calcium",
+   "toward_ul": "calcium"
+  },
+  "phosphorus": {
+   "total": "phosphorus",
+   "toward_ul": "phosphorus"
+  },
+  "magnesium": {
+   "total": "magnesium",
+   "toward_ul": null
+  },
+  "iron": {
+   "total": "iron",
+   "toward_ul": "iron"
+  },
+  "zinc": {
+   "total": "zinc",
+   "toward_ul": "zinc"
+  },
+  "copper": {
+   "total": "copper",
+   "toward_ul": "copper"
+  },
+  "selenium": {
+   "total": "selenium",
+   "toward_ul": "selenium"
+  },
+  "potassium": {
+   "total": "potassium",
+   "toward_ul": "potassium"
+  },
+  "sodium": {
+   "total": "sodium",
+   "toward_ul": "sodium"
+  },
+  "caffeine": {
+   "total": "caffeine",
+   "toward_ul": "caffeine"
+  },
+  "epa": {
+   "total": "epa",
+   "toward_ul": "epa"
+  },
+  "dha": {
+   "total": "dha",
+   "toward_ul": "dha"
+  }
+ }
+}

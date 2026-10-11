@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 (2026-10-11)
+
+- **Typical diet estimate.** `"diet": "typical"` adds the US average daily intake from food and drinks for the person's age and sex (What We Eat in America, NHANES 2017–March 2020, Table 1) to the supplement totals, and repeats the UL and RDA comparisons in each nutrient's `with_typical_diet`. Food counts toward a UL only where that UL covers food (folate: food folic acid; vitamin A: retinol; vitamin E: added vitamin E; magnesium: none). `agent_summary` names nutrients that reach the UL only once food is included, for example calcium from a 1,200 mg supplement plus a typical diet at 62.
+
 ## 0.3.0 (2026-10-11)
 
 - **Pregnancy, lactation and infants.** `life_stage` (`"pregnancy"` or `"lactation"`, female, ages 14–50; `"pregnant": true` and `"breastfeeding": true` also work) switches to the Food and Nutrition Board's life-stage values. Ages under 1 (as a fraction of a year) use the 0–6 and 7–12 month values. These were `422 UNSUPPORTED` before.

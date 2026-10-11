@@ -285,3 +285,39 @@ describe('life stages and new nutrients', () => {
     expect(res.json()).toMatchObject({ profile: { life_stage: 'pregnancy' }, reference: { rda: 220 } });
   });
 });
+
+describe('diet: "typical"', () => {
+  it('adds US average food intake and flags what supplements alone did not', async () => {
+    // 1,200 mg calcium from supplements: 92% of the 1,300 mg RDA alone; with ~825 mg from food it passes the 2,000 mg UL (age 62).
+    const res = await post('/v1/stack/analyze', {
+      age: 62,
+      sex: 'female',
+      diet: 'typical',
+      products: [{ name: 'Calcium', ingredients: [{ name: 'calcium', amount: 1200, unit: 'mg' }, { name: 'magnesium', amount: 300, unit: 'mg' }] }],
+    });
+    const body = res.json();
+    const ca = body.nutrient_totals.find((t: { nutrient_id: string }) => t.nutrient_id === 'calcium');
+    expect(ca.flags).toEqual([]);
+    expect(ca.with_typical_diet).toMatchObject({ food: { amount: 825, unit: 'mg' }, estimated_total: { amount: 2025 }, flags: ['above_ul'] });
+    // Magnesium's UL covers supplements only, so food adds to the total but not to the UL comparison.
+    const mg = body.nutrient_totals.find((t: { nutrient_id: string }) => t.nutrient_id === 'magnesium');
+    expect(mg.with_typical_diet).toMatchObject({ estimated_total: { amount: 573 }, amount_toward_ul: { amount: 300 }, flags: [] });
+    expect(body.summary).toMatchObject({ diet_estimates: 2, diet_only_flags: 1 });
+    expect(body.agent_summary).toMatch(/With average US food and drink intake added, Calcium would be above its UL \(101%\)\./);
+    expect(body.agent_summary).toMatch(/the food estimate is a US average/);
+    expect(body.sources.map((s: { url: string }) => s.url)).toContain('https://www.ars.usda.gov/ARSUserFiles/80400530/pdf/1720/Table_1_NIN_MaleFemale_1720.pdf');
+  });
+
+  it('folate counts food folic acid toward the UL, not food folate', async () => {
+    const res = await post('/v1/stack/analyze', { age: 25, sex: 'male', diet: 'typical', products: [{ name: 'B', ingredients: [{ name: 'folate', amount: 1360, unit: 'mcg DFE', form: 'folic acid' }] }] });
+    const f = res.json().nutrient_totals[0];
+    expect(f.with_typical_diet).toMatchObject({ food: { amount: 582 }, amount_toward_ul: { amount: 1017 }, flags: ['above_ul'] });
+  });
+
+  it('is not applied for pregnancy or under age 2, and says why', async () => {
+    const res = await post('/v1/stack/analyze', { age: 30, sex: 'female', life_stage: 'pregnancy', diet: 'typical', products: [{ dsld_id: 900001 }] });
+    const body = res.json();
+    expect(body.nutrient_totals[0].with_typical_diet).toBeUndefined();
+    expect(body.assumptions.join(' ')).toMatch(/diet "typical" was not applied/);
+  });
+});

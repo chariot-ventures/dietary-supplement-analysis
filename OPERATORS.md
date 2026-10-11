@@ -34,7 +34,7 @@ Create `docker-compose.yaml` here:
 services:
   backend:
     build: ../backend
-    image: dietary-supplement-analysis-backend:0.3.0
+    image: dietary-supplement-analysis-backend:0.4.0
     container_name: dietary-supplement-analysis-backend
     restart: unless-stopped
     expose:
@@ -62,7 +62,7 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.3.0"}
+# {"service":"dietary-supplement-analysis","version":"0.4.0"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.

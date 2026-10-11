@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { agentSummary, compareCandidate, suggestFixes, type CandidateResult } from '../lib/advise.js';
 import { analyzeStack, type Profile, type StackAnalysis, type StackProduct } from '../lib/analyze.js';
+import { applyTypicalDiet, DIET_SOURCE, dietOnlyFlags } from '../lib/diet.js';
 import { lookupUpc, resolveQuery, type Candidate, type Confidence } from '../lib/catalog.js';
 import type { CallOptions, DsldClient, LabelResult } from '../lib/dsld.js';
 import { AppError } from '../lib/errors.js';
@@ -187,11 +188,23 @@ export async function analyze(body: unknown, deps: Deps) {
     extraSources.push(...combined.sources);
   }
 
+  // Optional food estimate, applied to the base stack only.
+  let dietApplied = 0;
+  if (req.diet === 'typical') {
+    const d = applyTypicalDiet(analysis);
+    dietApplied = d.applied;
+    if (d.note) analysis.assumptions.push(d.note);
+    if (d.applied) extraSources.push({ name: DIET_SOURCE.name, url: DIET_SOURCE.url, retrieved: DIET_SOURCE.retrieved });
+  }
+  const dietFlags = dietOnlyFlags(analysis).map(({ t, est }) => ({ name: t.name, percent_of_ul: est.percent_of_ul, flag: est.flags[0]! }));
+
   const suggestions = suggestFixes(analysis);
   const lowConfidence = resolutions
     .filter((r) => r.status === 'resolved' && r.confidence === 'low' && 'query' in r.input)
     .map((r) => ({ input: (r.input as { query: string }).query, chosen: [r.brand, r.name].filter(Boolean).join(' ') }));
   const text = agentSummary(analysis, {
+    dietFlags,
+    dietApplied: dietApplied > 0,
     suggestions,
     unresolved: resolutions.filter((r) => r.status === 'not_found').map((r) => ('query' in r.input ? r.input.query : `UPC ${r.input.upc}`)),
     lowConfidence,
@@ -203,7 +216,12 @@ export async function analyze(body: unknown, deps: Deps) {
   return envelope(
     {
       profile: prof,
-      summary: { ...summary, products_unresolved: unresolvedGaps.length, suggestions: suggestions.length },
+      summary: {
+        ...summary,
+        products_unresolved: unresolvedGaps.length,
+        suggestions: suggestions.length,
+        ...(req.diet === 'typical' ? { diet_estimates: dietApplied, diet_only_flags: dietFlags.length } : {}),
+      },
       agent_summary: text,
       ...(resolutions.length ? { resolutions } : {}),
       assumptions,
