@@ -1,0 +1,18 @@
+# Backend container, deployed by autodeploy.sh from the newest release tag.
+# BACKEND_IMAGE is set by autodeploy.sh (dietary-supplement-analysis-backend:vX.Y.Z).
+# Reached only over the pocket-supplier Docker network: by the relayer (paid relays)
+# and by Caddy for the agents.trackmysupplement.com demo route.
+services:
+  backend:
+    image: ${BACKEND_IMAGE:?set BACKEND_IMAGE}
+    container_name: dietary-supplement-analysis-backend
+    restart: unless-stopped
+    environment:
+      LOG_LEVEL: info
+    expose: ["8080"]
+    mem_limit: 512m
+    networks: [supplier]
+networks:
+  supplier:
+    external: true
+    name: pocket-supplier
