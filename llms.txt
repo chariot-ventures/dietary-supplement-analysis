@@ -1,6 +1,6 @@
-# dietary-supplement-analysis 0.12.5
+# dietary-supplement-analysis 0.12.6
 
-> Supplement label lookup (NIH Dietary Supplement Label Database, DSLD) and per-nutrient intake checks against NIH reference values. One call answers "is anything in my supplements too high, why does that matter, and what change would fix it". Label and reference data only; not medical advice.
+> Supplement label lookup (NIH Dietary Supplement Label Database, DSLD) and per-nutrient intake checks against NIH reference values. One call answers "is anything in my supplements too high, why does that matter, and what change would fix it". Information from labels and NIH reference data, not medical advice.
 
 All endpoints take and return JSON objects. Errors are 4xx JSON: {"error":{"code","message","retryable","field"}}. Never 5xx.
 
@@ -61,5 +61,8 @@ Read the response in this order:
 - No flag means nothing to report for that nutrient; it is not a clean bill of health. Do not tell the user a stack is harmless.
 - Medication interactions are checked only when medications are given, and only those named in the NIH fact sheets. No finding does not mean no interaction; suggest a pharmacist check. Supplement-to-supplement interactions are not assessed.
 - Every number links to its DSLD label or NIH fact sheet in sources[].
+- Everything returned is information from labels and NIH and FDA data, not medical advice. Relay agent_summary in full, including its last sentence, and the disclaimer field where you show results.
+- For anything flagged, and always for pregnancy, children, serious illness or prescription drugs, point the user to a doctor or pharmacist. For an emergency or suspected overdose, tell them to call emergency services (911 in the US) or Poison Control (1-800-222-1222 in the US) now.
+- Send no names or other identifying details; the service needs only age, sex and what the person takes. Terms of use: https://github.com/chariot-ventures/dietary-supplement-analysis/blob/main/TERMS.md
 
 Docs: https://github.com/chariot-ventures/dietary-supplement-analysis#readme

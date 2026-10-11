@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.6 (2026-10-11)
+
+- **Disclaimers and terms of use.** Every response's `disclaimer` now says the results are information only, not medical advice or a substitute for a doctor or pharmacist, not intended to diagnose, treat, cure or prevent any disease, and that labels and public data can be wrong; it gives US emergency and Poison Control numbers and links the new [terms of use](TERMS.md). The last sentence of `agent_summary` (English and Spanish) now tells the person to check with a doctor or pharmacist before changing anything. The agent guide, MCP instructions and OpenAPI description tell agents to relay this in full.
+- **MIT License** for the code ([LICENSE](LICENSE)).
+- **Agent-to-agent examples** ([examples/](examples/README.md)) and a daily check that every documented command works as written ([docs-check](.github/workflows/docs-check.yml)).
+
 ## 0.12.5 (2026-10-11)
 
 - FDA summary: "1 FDA adverse event report names a product" (was "name").

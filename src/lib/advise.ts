@@ -293,10 +293,10 @@ export function agentSummary(a: StackAnalysis, ctx: SummaryContext): string {
   const medNote = ctx.interactions?.medicationsGiven ? ' Medication checks cover only interactions named in NIH fact sheets; a pharmacist can check the full list.' : '';
   parts.push(
     ctx.dietApplied
-      ? `Supplement totals exclude medications; the food estimate is a US average, not this person's diet.${medNote} Label data, not medical advice.`
+      ? `Supplement totals exclude medications; the food estimate is a US average, not this person's diet.${medNote} This is information, not medical advice; check with a doctor or pharmacist before changing supplements or medications.`
       : ctx.foods?.applied
-        ? `Supplement totals exclude medications; with_foods adds only the foods listed.${medNote} Label data, not medical advice.`
-        : `Totals exclude food, drinks and medications.${medNote} Label data, not medical advice.`,
+        ? `Supplement totals exclude medications; with_foods adds only the foods listed.${medNote} This is information, not medical advice; check with a doctor or pharmacist before changing supplements or medications.`
+        : `Totals exclude food, drinks and medications.${medNote} This is information, not medical advice; check with a doctor or pharmacist before changing supplements or medications.`,
   );
   return parts.join(' ');
 }

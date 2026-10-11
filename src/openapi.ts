@@ -340,7 +340,7 @@ export function buildOpenApi(): Json {
       title: 'Dietary Supplement Label and Nutrient Intake Analysis',
       version: VERSION,
       description:
-        'Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Label and reference data only; not medical advice.',
+        'Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Information only, not medical advice; see the terms of use: https://github.com/chariot-ventures/dietary-supplement-analysis/blob/main/TERMS.md',
     },
     externalDocs: { url: DOCS_URL },
     servers: [{ url: '/' }],

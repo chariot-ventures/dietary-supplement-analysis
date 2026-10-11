@@ -149,10 +149,10 @@ export function agentSummaryEs(a: StackAnalysis, ctx: SummaryContext): string {
   const medNote = ctx.interactions?.medicationsGiven ? ' La revisión de medicamentos cubre solo las interacciones que recogen las fichas de los NIH; un farmacéutico puede revisar la lista completa.' : '';
   parts.push(
     ctx.dietApplied
-      ? `Los totales de suplementos no incluyen medicamentos; la estimación de alimentos es una media de EE. UU., no la dieta de esta persona.${medNote} Datos de etiquetas, no consejo médico.`
+      ? `Los totales de suplementos no incluyen medicamentos; la estimación de alimentos es una media de EE. UU., no la dieta de esta persona.${medNote} Es información, no consejo médico; consulte a un médico o farmacéutico antes de cambiar suplementos o medicamentos.`
       : ctx.foods?.applied
-        ? `Los totales de suplementos no incluyen medicamentos; with_foods suma solo los alimentos indicados.${medNote} Datos de etiquetas, no consejo médico.`
-        : `Los totales no incluyen alimentos, bebidas ni medicamentos.${medNote} Datos de etiquetas, no consejo médico.`,
+        ? `Los totales de suplementos no incluyen medicamentos; with_foods suma solo los alimentos indicados.${medNote} Es información, no consejo médico; consulte a un médico o farmacéutico antes de cambiar suplementos o medicamentos.`
+        : `Los totales no incluyen alimentos, bebidas ni medicamentos.${medNote} Es información, no consejo médico; consulte a un médico o farmacéutico antes de cambiar suplementos o medicamentos.`,
   );
   return parts.join(' ');
 }

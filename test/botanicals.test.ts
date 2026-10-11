@@ -150,7 +150,7 @@ describe('Spanish summaries', () => {
     expect(body.agent_summary).toMatch(/^1 nutriente supera el nivel máximo de ingesta tolerable \(UL\) para un hombre de 40 años/);
     expect(body.agent_summary).toMatch(/Zinc: 50 mg al día frente a un UL de 40 mg \(125%\)\. El UL protege frente a: menor nivel de cobre/);
     expect(body.agent_summary).toMatch(/Warfarina con vitamina K de este conjunto: La vitamina K contrarresta la warfarina/);
-    expect(body.agent_summary).toMatch(/Datos de etiquetas, no consejo médico\.$/);
+    expect(body.agent_summary).toMatch(/no consejo médico; consulte a un médico o farmacéutico antes de cambiar suplementos o medicamentos\.$/);
     expect(body.agent_summary_en).toMatch(/^1 nutrient is above the upper limit/);
     expect(body.agent_summary).not.toMatch(/\bes seguro\b|sin riesgo/i);
   });

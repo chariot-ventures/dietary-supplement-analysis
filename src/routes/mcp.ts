@@ -41,7 +41,7 @@ const rpcResult = (id: Id, result: unknown) => ({ jsonrpc: '2.0', id, result });
 
 const INSTRUCTIONS =
   'Use stack_analyze for any question about whether a set of dietary supplements is too much, overlaps, or what to change. Pass products the way the user names them ({"query": "..."}), with age and sex, plus any medications and conditions the user mentions. Relay agent_summary; do not call a stack "safe". ' +
-  'interactions_check lists NIH-documented medication interactions without a stack; products_fda_reports gives FDA recalls and adverse event reports for one product; products_lookup takes a barcode; nutrients_reference gives RDA/UL for one nutrient. Label and reference data only, not medical advice.';
+  'interactions_check lists NIH-documented medication interactions without a stack; products_fda_reports gives FDA recalls and adverse event reports for one product; products_lookup takes a barcode; nutrients_reference gives RDA/UL for one nutrient. Everything returned is information from labels and NIH/FDA data, not medical advice: relay agent_summary in full, including its last sentence, never present a result as saying a routine is safe, and point the person to a doctor or pharmacist for anything flagged. Terms: https://github.com/chariot-ventures/dietary-supplement-analysis/blob/main/TERMS.md';
 
 async function callTool(name: string, args: Record<string, unknown>, deps: Deps): Promise<unknown> {
   switch (name) {

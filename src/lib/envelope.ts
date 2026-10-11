@@ -1,7 +1,8 @@
 import { SERVICE_ID, VERSION } from '../version.js';
 import { todayIso } from './text.js';
 
-export const DISCLAIMER = 'Label and reference data only. Not medical advice. Totals exclude food and medications.';
+export const DISCLAIMER =
+  'Information only, not medical advice, and not a substitute for a doctor or pharmacist; not intended to diagnose, treat, cure or prevent any disease. Labels and public data can be wrong or out of date. Check with a health professional before changing supplements or medications. In an emergency, call 911 or Poison Control (1-800-222-1222) in the US. Terms: https://github.com/chariot-ventures/dietary-supplement-analysis/blob/main/TERMS.md';
 
 export interface Source {
   name: string;

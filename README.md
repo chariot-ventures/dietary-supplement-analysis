@@ -133,7 +133,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.12.5"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.12.6"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
 | POST | `/mcp` | Remote MCP server (Streamable HTTP, stateless): the same tools for MCP clients |
@@ -303,6 +303,10 @@ docker compose up --build     # container on 127.0.0.1:8080
   - Counters are salted hashes, kept for two days.
   - Relays through Pocket Network are never metered.
 
-## Disclaimer and licenses
+## Disclaimer, terms and licenses
 
-Information from labels and published reference data, not medical advice. Totals cover supplements only unless `diet` or `foods` is given; medications are checked for interactions, not counted. The code is under the [MIT License](LICENSE). The data it serves from DSLD, ODS, NCCIH, RxNorm, openFDA and USDA is U.S. Government work in the public domain; the curated interaction and herb files in [data/](data/) cite their NIH sources.
+**Information only, not medical advice.** The service reports what supplement labels declare and how the totals compare with reference values, interactions and safety statements published by NIH and FDA. It is not a diagnosis or treatment recommendation, is not a substitute for a doctor or pharmacist, and is not intended to diagnose, treat, cure or prevent any disease. Labels and public data can be wrong or out of date, the interaction list covers only what NIH names, and no flag is not an all-clear. Check with a health professional before starting, stopping or changing a supplement or medication; in an emergency, call 911 or Poison Control (1-800-222-1222) in the US. Every response carries this in its `disclaimer` field and in the last sentence of `agent_summary`, and apps and agents that relay results agree to pass it on.
+
+Use of the hosted service is governed by the [terms of use](TERMS.md). NIH, FDA and USDA do not endorse this service, and brand names are used only to identify products.
+
+The code is under the [MIT License](LICENSE). The data it serves from DSLD, ODS, NCCIH, RxNorm, openFDA and USDA is U.S. Government work in the public domain; the curated interaction and herb files in [data/](data/) cite their NIH sources.

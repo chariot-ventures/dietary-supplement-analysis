@@ -4,6 +4,7 @@ import { agentSummary, suggestFixes } from '../src/lib/advise.js';
 import { groupVersions, matchScore, rankCandidates, tokens } from '../src/lib/catalog.js';
 import { formatUpcForDsld, normalizeUpc, type SearchHit } from '../src/lib/dsld.js';
 import { normalizeCustomProduct } from '../src/lib/label.js';
+import { DISCLAIMER } from '../src/lib/envelope.js';
 import { normalizedFixture, testApp } from './helpers.js';
 
 const app = testApp();
@@ -345,7 +346,8 @@ describe('detail: "summary" and provenance', () => {
     expect(body.candidate_results[0]).toMatchObject({ verdict: expect.any(String), text: expect.any(String) });
     expect(body.agent_summary).toBe(full.json().agent_summary);
     expect(body.nutrient_totals).toBeUndefined();
-    expect(res.body.length).toBeLessThan(full.body.length / 4);
+    // The fixed disclaimer is in both; compare what's left.
+    expect(res.body.length - DISCLAIMER.length).toBeLessThan((full.body.length - DISCLAIMER.length) / 4);
   });
 
   it('every analysis says which code and data produced it; /v1/provenance has the detail', async () => {

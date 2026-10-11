@@ -1,6 +1,6 @@
 {
   "service": "dietary-supplement-analysis",
-  "version": "0.12.5",
+  "version": "0.12.6",
   "as_of": "<date>",
   "profile": {
     "age": 34,
@@ -17,7 +17,7 @@
     "products_unresolved": 0,
     "suggestions": 4
   },
-  "agent_summary": "2 nutrients are above the upper limit (UL) for a 34-year-old female from these supplements alone. Magnesium: 575 mg a day vs a UL of 350 mg (164%), mostly from Natrol Magnesium Night High Absorption 325 mg Naturally Flavored. The UL guards against diarrhea and other gastrointestinal upset from supplemental magnesium. Vitamin D: 150 mcg a day vs a UL of 100 mcg (150%), mostly from Natural Healthy Concepts Vitamin D3 Concepts 5000. The UL guards against high blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues. Leaving out Custom magnesium would bring magnesium to 325 mg (92.9% of the UL), still near it. Timing: Fat in the gut enhances vitamin D absorption, so taking it with a meal that contains some fat may help (some is absorbed without fat). Totals exclude food, drinks and medications. Label data, not medical advice.",
+  "agent_summary": "2 nutrients are above the upper limit (UL) for a 34-year-old female from these supplements alone. Magnesium: 575 mg a day vs a UL of 350 mg (164%), mostly from Natrol Magnesium Night High Absorption 325 mg Naturally Flavored. The UL guards against diarrhea and other gastrointestinal upset from supplemental magnesium. Vitamin D: 150 mcg a day vs a UL of 100 mcg (150%), mostly from Natural Healthy Concepts Vitamin D3 Concepts 5000. The UL guards against high blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues. Leaving out Custom magnesium would bring magnesium to 325 mg (92.9% of the UL), still near it. Timing: Fat in the gut enhances vitamin D absorption, so taking it with a meal that contains some fat may help (some is absorbed without fat). Totals exclude food, drinks and medications. This is information, not medical advice; check with a doctor or pharmacist before changing supplements or medications.",
   "assumptions": [
     "dsld:230932: servings_per_day not given; used label maximum of 1 (label: 1 Softgel(s), 1 time(s) daily)",
     "dsld:338022: servings_per_day not given; used label maximum of 1 (label: 1 Tablet(s), 1 time(s) daily)",
@@ -1240,7 +1240,7 @@
     }
   ],
   "provenance": {
-    "version": "0.12.5",
+    "version": "0.12.6",
     "commit": null,
     "reference_values_reviewed": "2026-10-11"
   },
@@ -1366,5 +1366,5 @@
       "retrieved": "<date>"
     }
   ],
-  "disclaimer": "Label and reference data only. Not medical advice. Totals exclude food and medications."
+  "disclaimer": "Information only, not medical advice, and not a substitute for a doctor or pharmacist; not intended to diagnose, treat, cure or prevent any disease. Labels and public data can be wrong or out of date. Check with a health professional before changing supplements or medications. In an emergency, call 911 or Poison Control (1-800-222-1222) in the US. Terms: https://github.com/chariot-ventures/dietary-supplement-analysis/blob/main/TERMS.md"
 }
