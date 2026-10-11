@@ -47,8 +47,8 @@ describe('medication name matching', () => {
     expect(classesForName('Lisinopril 10 mg')?.classes).toContain('ace_inhibitors');
     expect(classesForName('Coumadin')?.classes).toEqual(expect.arrayContaining(['vitamin_k_antagonists', 'anticoagulants']));
     expect(classesForName('levothyroxine sodium')?.member).toBe('levothyroxine');
-    // No substring matching: "metformina" is not metformin, "ironwood" is not anything.
-    expect(classesForName('metformina')).toBeNull();
+    // No substring matching: "metforminax" is not metformin, "ironwood" is not anything.
+    expect(classesForName('metforminax')).toBeNull();
     expect(classesForName('ironwood')).toBeNull();
   });
 
@@ -223,4 +223,12 @@ describe('POST /v1/interactions/check', () => {
 
 it('exposes every condition id in the schema enum', () => {
   expect(CONDITION_IDS).toEqual(Object.keys(data.conditions));
+});
+
+describe('Spanish and accented medication names', () => {
+  it('matches Spanish generic names and Spanish brands, ignoring accents', async () => {
+    const m = await matchMedications(['Warfarina', 'Fenitoína 100 mg', 'Sintrom', 'Eutirox 50 mcg', 'losartán'], null);
+    expect(m.map((x) => x.status)).toEqual(['matched', 'matched', 'matched', 'matched', 'matched']);
+    expect(m[2]!.classes.map((c) => c.id)).toContain('vitamin_k_antagonists');
+  });
 });

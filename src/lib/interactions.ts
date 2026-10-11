@@ -71,6 +71,8 @@ export interface InteractionFinding {
 /** Lowercase, drop doses, strengths and punctuation: "Lisinopril 10 mg tab" -> "lisinopril tab". */
 export function normalizeMedication(raw: string): string {
   return raw
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '') // "fenitoína" -> "fenitoina"
     .toLowerCase()
     .replace(/[®™]/g, '')
     .replace(/\b\d+(\.\d+)?\s*(mg|mcg|g|ml|iu|units?|%)\b/g, ' ')

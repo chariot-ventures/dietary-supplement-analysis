@@ -64,7 +64,7 @@ const lower = (s: string) => (s ? s[0]!.toLowerCase() + s.slice(1) : s);
 const nameOf = (t: NutrientTotal) => (/^[A-Z][a-z]/.test(t.name) && !/^Vitamin|^DHA|^EPA/.test(t.name) ? t.name.toLowerCase() : t.name);
 
 /** Daily amount toward the UL that each product contributes; null when a product's UL portion is unknown. */
-function towardByProduct(t: NutrientTotal): Map<string, { toward: number | null; spd: number }> {
+export function towardByProduct(t: NutrientTotal): Map<string, { toward: number | null; spd: number }> {
   const m = new Map<string, { toward: number | null; spd: number }>();
   for (const c of t.contributions) {
     const cur = m.get(c.product_ref) ?? { toward: 0, spd: c.servings_per_day };
@@ -329,7 +329,7 @@ function botanicalSentences(found: BotanicalDetection[], a: StackAnalysis, pregn
 }
 
 const SIGNAL_RANK = ['banned', 'cardiovascular', 'liver_injury', 'bleeding', 'drug_like', 'drug_interactions', 'sedation', 'allergy', 'other'];
-const botanicalRank = (b: BotanicalDetection) => Math.min(b.dose_findings.length ? 4.5 : 99, ...b.signals.filter((s) => s.relay !== false).map((s) => (SIGNAL_RANK.indexOf(s.kind) + 1 || 99) - 1));
+export const botanicalRank = (b: BotanicalDetection) => Math.min(b.dose_findings.length ? 4.5 : 99, ...b.signals.filter((s) => s.relay !== false).map((s) => (SIGNAL_RANK.indexOf(s.kind) + 1 || 99) - 1));
 
 /** First sentence, not fooled by "St. John's wort" or "e.g.". */
 export function firstSentence(s: string): string {

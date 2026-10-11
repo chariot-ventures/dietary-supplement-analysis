@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Dietary Supplement Label and Nutrient Intake Analysis",
-    "version": "0.8.0",
+    "version": "0.9.0",
     "description": "Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Label and reference data only; not medical advice."
   },
   "externalDocs": {
@@ -1009,6 +1009,15 @@
                       "full"
                     ]
                   },
+                  "lang": {
+                    "default": "en",
+                    "description": "\"es\" writes agent_summary in Spanish (the English text is kept in agent_summary_en); other fields stay in English",
+                    "type": "string",
+                    "enum": [
+                      "en",
+                      "es"
+                    ]
+                  },
                   "diet": {
                     "default": "none",
                     "description": "\"typical\" adds the US average intake from food and drinks for this age and sex (NHANES) to estimate total intake; see with_typical_diet",
@@ -1499,7 +1508,16 @@
                     },
                     "agent_summary": {
                       "type": "string",
-                      "description": "Two to five plain sentences summarizing the result, ready to relay as written"
+                      "description": "Plain sentences summarizing the result, ready to relay as written; in Spanish with \"lang\": \"es\""
+                    },
+                    "lang": {
+                      "type": "string",
+                      "const": "es",
+                      "description": "Present with \"lang\": \"es\""
+                    },
+                    "agent_summary_en": {
+                      "type": "string",
+                      "description": "With \"lang\": \"es\": the English agent_summary"
                     },
                     "flagged": {
                       "type": "array",

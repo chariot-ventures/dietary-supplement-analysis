@@ -28,6 +28,7 @@ POST /v1/stack/analyze with what the user said, as written:
      "candidates": [{"query": "vitamin d3 5000 iu"}]}
 
 - products: 1-15. Each is a product name ({"query"}), a barcode ({"upc"}), a DSLD ID ({"dsld_id"}), or a custom product with explicit ingredients. Pass "servings_per_day" whenever the user said how much they take; otherwise the label's maximum daily servings is assumed (listed in assumptions).
+- lang (optional): "es" writes agent_summary in Spanish (English kept in agent_summary_en). Medication names may be given in Spanish ("warfarina", "levotiroxina", "Sintrom").
 - detail (optional): "summary" for a compact 1-3 KB answer (recommended when the result goes into your context); "full" (default) for every field.
 - diet (optional): "typical" adds US average food and drink intake for the age and sex (NHANES) and repeats the checks in nutrient_totals[].with_typical_diet. Use it when the user asks whether their total intake is too high or too low.
 - candidates (optional, up to 5): products the user is thinking of adding. Each is evaluated as an addition in candidate_results[].

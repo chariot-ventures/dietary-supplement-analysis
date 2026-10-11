@@ -120,3 +120,44 @@ describe('interactions_check with botanicals', () => {
     expect(body.findings[0]).toMatchObject({ botanical_ids: ['ginkgo'], in_stack: false });
   });
 });
+
+describe('Spanish summaries', () => {
+  it('translates every data phrase that can reach a summary', async () => {
+    const { hasTranslation } = await import('../src/lib/summary-es.js');
+    const { firstSentence } = await import('../src/lib/advise.js');
+    const nut = (await import('../data/nutrients.json', { with: { type: 'json' } })).default as unknown as { nutrients: { name: string; ul_basis: string | null }[] };
+    const phrases = new Set<string>();
+    for (const n of nut.nutrients) [n.name, n.ul_basis].forEach((x) => x && phrases.add(x));
+    for (const c of Object.values(idata.drug_classes)) phrases.add(c.name);
+    for (const i of idata.interactions) [firstSentence(i.summary), i.timing].forEach((x) => x && phrases.add(x));
+    for (const c of Object.values(idata.conditions)) {
+      phrases.add(c.name.replace(/\s*\(.*\)$/, ''));
+      for (const k of c.checks) phrases.add(firstSentence(k.summary));
+    }
+    for (const b of Object.values(bdata.botanicals)) {
+      phrases.add(b.name);
+      for (const s of b.signals) phrases.add(firstSentence(s.summary));
+      if (b.pregnancy) phrases.add(firstSentence(b.pregnancy));
+      for (const m of b.medications) phrases.add(firstSentence(m.summary));
+      for (const d of (b as { dose_checks?: { summary: string }[] }).dose_checks ?? []) phrases.add(firstSentence(d.summary));
+    }
+    expect([...phrases].filter((p) => !hasTranslation(p))).toEqual([]);
+  });
+
+  it('writes agent_summary in Spanish and keeps the English one', async () => {
+    const body = await analyze({ age: 40, sex: 'male', lang: 'es', medications: ['warfarina'], products: [custom([{ name: 'zinc', amount: 50, unit: 'mg' }, { name: 'vitamin K', amount: 100, unit: 'mcg' }, { name: 'ginkgo biloba', amount: 120, unit: 'mg' }])] });
+    expect(body.lang).toBe('es');
+    expect(body.agent_summary).toMatch(/^1 nutriente supera el nivel máximo de ingesta tolerable \(UL\) para un hombre de 40 años/);
+    expect(body.agent_summary).toMatch(/Zinc: 50 mg al día frente a un UL de 40 mg \(125%\)\. El UL protege frente a: menor nivel de cobre/);
+    expect(body.agent_summary).toMatch(/Warfarina con vitamina K de este conjunto: La vitamina K contrarresta la warfarina/);
+    expect(body.agent_summary).toMatch(/Datos de etiquetas, no consejo médico\.$/);
+    expect(body.agent_summary_en).toMatch(/^1 nutrient is above the upper limit/);
+    expect(body.agent_summary).not.toMatch(/\bes seguro\b|sin riesgo/i);
+  });
+
+  it('is English by default with no extra fields', async () => {
+    const body = await analyze({ age: 40, sex: 'male', products: [custom([{ name: 'zinc', amount: 5, unit: 'mg' }])] });
+    expect(body).not.toHaveProperty('lang');
+    expect(body).not.toHaveProperty('agent_summary_en');
+  });
+});

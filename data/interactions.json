@@ -9,7 +9,11 @@
     "coumadin",
     "jantoven",
     "phenprocoumon",
-    "acenocoumarol"
+    "acenocoumarol",
+    "warfarina",
+    "acenocumarol",
+    "sintrom",
+    "aldocumar"
    ]
   },
   "anticoagulants": {
@@ -30,7 +34,14 @@
     "savaysa",
     "heparin",
     "enoxaparin",
-    "lovenox"
+    "lovenox",
+    "warfarina",
+    "acenocumarol",
+    "sintrom",
+    "aldocumar",
+    "heparina",
+    "enoxaparina",
+    "clexane"
    ]
   },
   "antiplatelets": {
@@ -55,7 +66,8 @@
     "colestipol",
     "colestid",
     "colesevelam",
-    "welchol"
+    "welchol",
+    "colestiramina"
    ]
   },
   "orlistat": {
@@ -77,7 +89,10 @@
     "accutane",
     "absorica",
     "claravis",
-    "amnesteem"
+    "amnesteem",
+    "isotretinoina",
+    "acitretina",
+    "bexaroteno"
    ]
   },
   "dolutegravir": {
@@ -99,7 +114,11 @@
     "unithroid",
     "euthyrox",
     "tirosint",
-    "levo-t"
+    "levo-t",
+    "levotiroxina",
+    "eutirox",
+    "levothroid",
+    "tiroxina"
    ]
   },
   "lithium": {
@@ -108,7 +127,10 @@
     "lithium",
     "eskalith",
     "lithobid",
-    "lithium carbonate"
+    "lithium carbonate",
+    "litio",
+    "carbonato de litio",
+    "plenur"
    ]
   },
   "quinolones": {
@@ -123,7 +145,11 @@
     "gemifloxacin",
     "factive",
     "ofloxacin",
-    "delafloxacin"
+    "delafloxacin",
+    "ciprofloxacino",
+    "levofloxacino",
+    "moxifloxacino",
+    "ofloxacino"
    ]
   },
   "tetracyclines": {
@@ -137,7 +163,10 @@
     "minocin",
     "solodyn",
     "demeclocycline",
-    "sarecycline"
+    "sarecycline",
+    "tetraciclina",
+    "doxiciclina",
+    "minociclina"
    ]
   },
   "levodopa": {
@@ -166,7 +195,12 @@
     "rabeprazole",
     "aciphex",
     "dexlansoprazole",
-    "dexilant"
+    "dexilant",
+    "omeprazol",
+    "esomeprazol",
+    "lansoprazol",
+    "pantoprazol",
+    "rabeprazol"
    ]
   },
   "h2_blockers": {
@@ -178,7 +212,10 @@
     "tagamet",
     "ranitidine",
     "zantac",
-    "nizatidine"
+    "nizatidine",
+    "famotidina",
+    "ranitidina",
+    "cimetidina"
    ]
   },
   "bisphosphonates": {
@@ -190,7 +227,10 @@
     "actonel",
     "atelvia",
     "ibandronate",
-    "boniva"
+    "boniva",
+    "alendronato",
+    "risedronato",
+    "ibandronato"
    ]
   },
   "loop_diuretics": {
@@ -202,7 +242,11 @@
     "bumex",
     "torsemide",
     "demadex",
-    "ethacrynic acid"
+    "ethacrynic acid",
+    "furosemida",
+    "seguril",
+    "torasemida",
+    "bumetanida"
    ]
   },
   "thiazide_diuretics": {
@@ -215,7 +259,10 @@
     "diuril",
     "metolazone",
     "zaroxolyn",
-    "indapamide"
+    "indapamide",
+    "hidroclorotiazida",
+    "clortalidona",
+    "indapamida"
    ]
   },
   "potassium_sparing_diuretics": {
@@ -228,7 +275,11 @@
     "eplerenone",
     "inspra",
     "triamterene",
-    "dyrenium"
+    "dyrenium",
+    "espironolactona",
+    "eplerenona",
+    "amilorida",
+    "triamtereno"
    ]
   },
   "ace_inhibitors": {
@@ -287,7 +338,8 @@
     "rheumatrex",
     "otrexup",
     "rasuvo",
-    "xatmep"
+    "xatmep",
+    "metotrexato"
    ]
   },
   "antiepileptics": {
@@ -308,14 +360,22 @@
     "depakene",
     "phenobarbital",
     "primidone",
-    "mysoline"
+    "mysoline",
+    "fenitoina",
+    "carbamazepina",
+    "valproato",
+    "acido valproico",
+    "depakine",
+    "fenobarbital",
+    "primidona"
    ]
   },
   "sulfasalazine": {
    "name": "Sulfasalazine",
    "members": [
     "sulfasalazine",
-    "azulfidine"
+    "azulfidine",
+    "sulfasalazina"
    ]
   },
   "metformin": {
@@ -325,7 +385,9 @@
     "glucophage",
     "glumetza",
     "fortamet",
-    "riomet"
+    "riomet",
+    "metformina",
+    "dianben"
    ]
   },
   "insulin": {
@@ -345,7 +407,8 @@
     "insulin degludec",
     "tresiba",
     "humulin",
-    "novolin"
+    "novolin",
+    "insulina"
    ]
   },
   "antidiabetics": {
@@ -380,7 +443,17 @@
     "insulin",
     "lantus",
     "humalog",
-    "novolog"
+    "novolog",
+    "metformina",
+    "dianben",
+    "glipizida",
+    "glibenclamida",
+    "glimepirida",
+    "sitagliptina",
+    "insulina",
+    "semaglutida",
+    "empagliflozina",
+    "dapagliflozina"
    ]
   },
   "cycloserine": {
@@ -396,7 +469,8 @@
     "theophylline",
     "theo-24",
     "elixophyllin",
-    "uniphyl"
+    "uniphyl",
+    "teofilina"
    ]
   },
   "tb_isoniazid_pyrazinamide": {
@@ -404,7 +478,9 @@
    "members": [
     "isoniazid",
     "pyrazinamide",
-    "rifater"
+    "rifater",
+    "isoniazida",
+    "pirazinamida"
    ]
   },
   "antithyroid": {
@@ -413,13 +489,18 @@
     "methimazole",
     "tapazole",
     "propylthiouracil",
-    "ptu"
+    "ptu",
+    "metimazol",
+    "tiamazol",
+    "propiltiouracilo",
+    "carbimazol"
    ]
   },
   "cisplatin": {
    "name": "Cisplatin",
    "members": [
-    "cisplatin"
+    "cisplatin",
+    "cisplatino"
    ]
   },
   "fluorouracil": {
@@ -430,7 +511,9 @@
     "5-fu",
     "adrucil",
     "capecitabine",
-    "xeloda"
+    "xeloda",
+    "fluorouracilo",
+    "capecitabina"
    ]
   },
   "corticosteroids": {
@@ -443,7 +526,12 @@
     "dexamethasone",
     "decadron",
     "hydrocortisone",
-    "cortef"
+    "cortef",
+    "prednisona",
+    "prednisolona",
+    "metilprednisolona",
+    "dexametasona",
+    "hidrocortisona"
    ]
   },
   "statins": {
@@ -461,7 +549,13 @@
     "pravastatin",
     "pravachol",
     "pitavastatin",
-    "livalo"
+    "livalo",
+    "atorvastatina",
+    "simvastatina",
+    "rosuvastatina",
+    "pravastatina",
+    "lovastatina",
+    "pitavastatina"
    ]
   },
   "oral_contraceptives": {
@@ -488,7 +582,12 @@
     "lo loestrin fe",
     "seasonique",
     "camila",
-    "slynd"
+    "slynd",
+    "anticonceptivo",
+    "anticonceptivos",
+    "pastilla anticonceptiva",
+    "etinilestradiol",
+    "drospirenona"
    ]
   },
   "serotonergic_antidepressants": {
@@ -536,7 +635,15 @@
     "imitrex",
     "rizatriptan",
     "maxalt",
-    "linezolid"
+    "linezolid",
+    "sertralina",
+    "fluoxetina",
+    "paroxetina",
+    "venlafaxina",
+    "duloxetina",
+    "trazodona",
+    "mirtazapina",
+    "amitriptilina"
    ]
   },
   "tricyclics_maois": {
@@ -559,7 +666,11 @@
     "isocarboxazid",
     "marplan",
     "selegiline",
-    "emsam"
+    "emsam",
+    "amitriptilina",
+    "nortriptilina",
+    "imipramina",
+    "clomipramina"
    ]
   },
   "sjw_named_drugs": {
@@ -595,7 +706,16 @@
     "coumadin",
     "jantoven",
     "simvastatin",
-    "zocor"
+    "zocor",
+    "amitriptilina",
+    "ciclosporina",
+    "fenitoina",
+    "carbamazepina",
+    "digoxina",
+    "ivabradina",
+    "nevirapina",
+    "warfarina",
+    "simvastatina"
    ]
   },
   "immunosuppressants": {
@@ -615,7 +735,10 @@
     "imuran",
     "sirolimus",
     "rapamune",
-    "everolimus"
+    "everolimus",
+    "ciclosporina",
+    "micofenolato",
+    "azatioprina"
    ]
   },
   "sedatives": {
@@ -641,7 +764,10 @@
     "zaleplon",
     "sonata",
     "phenobarbital",
-    "butalbital"
+    "butalbital",
+    "lormetazepam",
+    "orfidal",
+    "trankimazin"
    ]
   },
   "blood_pressure_medications": {
@@ -684,7 +810,12 @@
     "chlorthalidone",
     "clonidine",
     "catapres",
-    "hydralazine"
+    "hydralazine",
+    "amlodipino",
+    "nifedipino",
+    "verapamilo",
+    "hidroclorotiazida",
+    "doxazosina"
    ]
   },
   "nadolol": {
@@ -698,14 +829,16 @@
    "name": "Atorvastatin",
    "members": [
     "atorvastatin",
-    "lipitor"
+    "lipitor",
+    "atorvastatina"
    ]
   },
   "raloxifene": {
    "name": "Raloxifene",
    "members": [
     "raloxifene",
-    "evista"
+    "evista",
+    "raloxifeno"
    ]
   },
   "thyroid_hormone": {
@@ -720,7 +853,12 @@
     "liothyronine",
     "cytomel",
     "armour thyroid",
-    "np thyroid"
+    "np thyroid",
+    "levotiroxina",
+    "eutirox",
+    "levothroid",
+    "tiroxina",
+    "liotironina"
    ]
   }
  },

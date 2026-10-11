@@ -460,7 +460,9 @@ export function buildOpenApi(): Json {
             },
           },
           detail: { type: 'string', const: 'summary', description: 'Present only with "detail": "summary": the response then has profile, summary, agent_summary, resolutions, flagged, suggestions, candidate_results, data_gap_codes and provenance' },
-          agent_summary: { type: 'string', description: 'Two to five plain sentences summarizing the result, ready to relay as written' },
+          agent_summary: { type: 'string', description: 'Plain sentences summarizing the result, ready to relay as written; in Spanish with "lang": "es"' },
+          lang: { type: 'string', const: 'es', description: 'Present with "lang": "es"' },
+          agent_summary_en: { type: 'string', description: 'With "lang": "es": the English agent_summary' },
           flagged: { type: 'array', items: { type: 'object' }, description: 'detail=summary only: flagged nutrients with amount, UL, percent, severity and UL basis' },
           data_gap_codes: { type: 'array', items: { type: 'string' }, description: 'detail=summary only' },
           provenance: {

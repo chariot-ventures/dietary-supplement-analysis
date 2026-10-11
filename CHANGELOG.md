@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0 (2026-10-11)
+
+- **Spanish summaries.** `"lang": "es"` on `/v1/stack/analyze` writes `agent_summary` in Spanish (English kept in `agent_summary_en`), covering limits, fixes, candidates, interactions, conditions and botanicals. All 251 NIH data phrases that can reach a summary have Spanish translations in [data/i18n-es.json](data/i18n-es.json), and a test fails if one is missing.
+- **Spanish medication names.** Spanish generics and Spanish and Latin American brands (warfarina, acenocumarol/Sintrom, levotiroxina/Eutirox, omeprazol, metformina...) match, and accents are ignored ("fenitoína").
+- Recall matching treats "vitamin" as a category word, so a notice for "Nature Made D3 1000IU" matches the product "Vitamin D3 1000 IU".
+
 ## 0.8.0 (2026-10-11)
 
 - **Accuracy page.** [EVAL.md](EVAL.md): 53 supplement questions with answers worked out by hand from NIH tables ([eval/cases.json](eval/cases.json)); `npm run eval` scores the service (53/53, also enforced in the test suite) and `npm run eval:llm` compares a model alone against the same model with this service.

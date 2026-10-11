@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify';
-import { agentSummary, compareCandidate, suggestFixes, type CandidateResult } from '../lib/advise.js';
+import { agentSummary, compareCandidate, suggestFixes, type CandidateResult, type SummaryContext } from '../lib/advise.js';
+import { agentSummaryEs } from '../lib/summary-es.js';
 import { analyzeStack, type Profile, type StackAnalysis, type StackProduct } from '../lib/analyze.js';
 import { applyTypicalDiet, DIET_SOURCE, dietOnlyFlags } from '../lib/diet.js';
 import { lookupUpc, resolveQuery, type Candidate, type Confidence } from '../lib/catalog.js';
@@ -224,7 +225,7 @@ export async function analyze(body: unknown, deps: Deps) {
   const lowConfidence = resolutions
     .filter((r) => r.status === 'resolved' && r.confidence === 'low' && 'query' in r.input)
     .map((r) => ({ input: (r.input as { query: string }).query, chosen: [r.brand, r.name].filter(Boolean).join(' ') }));
-  const text = agentSummary(analysis, {
+  const summaryCtx: SummaryContext = {
     dietFlags,
     dietApplied: dietApplied > 0,
     suggestions,
@@ -234,7 +235,10 @@ export async function analyze(body: unknown, deps: Deps) {
     botanicals,
     pregnancyOrLactation: req.life_stage !== undefined,
     interactions: checked ? { findings: inStack, medicationsGiven: meds.length, unrecognized: meds.filter((m) => m.status === 'not_recognized').map((m) => m.input), conditionNames: (req.conditions ?? []).map(conditionName) } : undefined,
-  });
+  };
+  const textEn = agentSummary(analysis, summaryCtx);
+  const text = req.lang === 'es' ? agentSummaryEs(analysis, summaryCtx) : textEn;
+  const langFields = req.lang === 'es' ? { lang: 'es' as const, agent_summary_en: textEn } : {};
 
   const { sources, products, summary, profile: prof, assumptions, nutrient_totals, overlaps, unrecognized_ingredients, data_gaps } = analysis;
   const fullSummary = {
@@ -256,6 +260,7 @@ export async function analyze(body: unknown, deps: Deps) {
         profile: prof,
         summary: fullSummary,
         agent_summary: text,
+        ...langFields,
         ...(resolutions.length
           ? {
               resolutions: resolutions.map((r) => ({
@@ -307,6 +312,7 @@ export async function analyze(body: unknown, deps: Deps) {
       profile: prof,
       summary: fullSummary,
       agent_summary: text,
+      ...langFields,
       ...(resolutions.length ? { resolutions } : {}),
       assumptions,
       suggestions,
