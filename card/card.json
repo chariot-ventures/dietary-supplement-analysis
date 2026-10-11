@@ -16,7 +16,7 @@
     {
       "kind": "openapi",
       "api": "dietary-supplement-analysis-api",
-      "url": "https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/release/openapi/openapi.json",
+      "url": "https://raw.githubusercontent.com/chariot-ventures/dietary-supplement-analysis/release/openapi/openapi.json",
       "notes": "The release branch is what suppliers run (it deploys itself). Also served by every backend at GET /openapi.json; tool definitions at GET /v1/tools."
     }
   ],
@@ -27,7 +27,7 @@
     "implementations": [
       "dietary-supplement-analysis >= 0.3.0"
     ],
-    "docs": "https://github.com/micallb/dietary-supplement-analysis/blob/main/OPERATORS.md",
+    "docs": "https://github.com/chariot-ventures/dietary-supplement-analysis/blob/main/OPERATORS.md",
     "min_disk_gb": 2,
     "min_ram_gb": 1,
     "healthcheck": [
@@ -75,6 +75,6 @@
     ],
     "notes": "Optional DSLD_API_KEY, OPENFDA_API_KEY. Max 15 products plus 5 candidates per analyze call. Upstream calls are cached and capped at 8 s per request; typical response under 3 s. Gateway operators: type passthrough, rpc_types [\"rest\"], relay_timeout 30s."
   },
-  "docs": "https://github.com/micallb/dietary-supplement-analysis#readme",
+  "docs": "https://github.com/chariot-ventures/dietary-supplement-analysis#readme",
   "updated": "2026-10-11"
 }

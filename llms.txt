@@ -1,4 +1,4 @@
-# dietary-supplement-analysis 0.12.3
+# dietary-supplement-analysis 0.12.4
 
 > Supplement label lookup (NIH Dietary Supplement Label Database, DSLD) and per-nutrient intake checks against NIH reference values. One call answers "is anything in my supplements too high, why does that matter, and what change would fix it". Label and reference data only; not medical advice.
 
@@ -62,4 +62,4 @@ Read the response in this order:
 - Medication interactions are checked only when medications are given, and only those named in the NIH fact sheets. No finding does not mean no interaction; suggest a pharmacist check. Supplement-to-supplement interactions are not assessed.
 - Every number links to its DSLD label or NIH fact sheet in sources[].
 
-Docs: https://github.com/micallb/dietary-supplement-analysis#readme
+Docs: https://github.com/chariot-ventures/dietary-supplement-analysis#readme

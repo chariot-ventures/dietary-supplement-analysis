@@ -43,7 +43,7 @@ async function main() {
     try {
       const res = await fetch(u, {
         headers: {
-          'user-agent': 'Mozilla/5.0 (compatible; dietary-supplement-analysis fact-sheet check; +https://github.com/micallb/dietary-supplement-analysis)',
+          'user-agent': 'Mozilla/5.0 (compatible; dietary-supplement-analysis fact-sheet check; +https://github.com/chariot-ventures/dietary-supplement-analysis)',
           accept: 'text/html,application/xhtml+xml',
           'accept-language': 'en-US,en;q=0.9',
         },

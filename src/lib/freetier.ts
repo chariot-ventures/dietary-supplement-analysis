@@ -32,7 +32,7 @@ export interface FreeTierLimits {
 }
 
 export const DEFAULT_LIMITS: FreeTierLimits = { perSession: 25, perSessionMinute: 20, perIpRest: 100, perIpMcp: 1000, global: 5000 };
-export const PAID_ROUTE_URL = 'https://github.com/micallb/dietary-supplement-analysis#through-pocket-network-paid-relay';
+export const PAID_ROUTE_URL = 'https://github.com/chariot-ventures/dietary-supplement-analysis#through-pocket-network-paid-relay';
 
 type Db = {
   exec(sql: string): void;

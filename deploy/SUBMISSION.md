@@ -8,7 +8,7 @@ Fields for the Pocket Network Agentic Services Hackathon form (PLAN.md section 1
 | Testnet Service ID | `dietary-supplement-analysis` |
 | Endpoint URL | `https://pokt-beta.trackmysupplement.com` (staked supplier, REST) |
 | Test Transaction ID | `F3D81B3F797F86830CE1ACDBFBEA473EE989D4816093179A082BB423D9C788EB` (claim for the first paid relay, block 722793; settled at block 722813) |
-| Repository Link | https://github.com/micallb/dietary-supplement-analysis |
+| Repository Link | https://github.com/chariot-ventures/dietary-supplement-analysis |
 | Category | Data service |
 
 ## Service description

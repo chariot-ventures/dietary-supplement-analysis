@@ -13,7 +13,7 @@ A runbook for suppliers who serve the Pocket Network service `dietary-supplement
 
 ## Run a supplier in 5 minutes
 
-If you already run an HA RelayMiner (relayer, miner, Redis on the `pocket-supplier` Docker network) with a staked operator key, adding this service takes three steps. No build is needed: CI publishes a multi-arch image (amd64 and arm64) for every release at `ghcr.io/micallb/dietary-supplement-analysis`.
+If you already run an HA RelayMiner (relayer, miner, Redis on the `pocket-supplier` Docker network) with a staked operator key, adding this service takes three steps. No build is needed: CI publishes a multi-arch image (amd64 and arm64) for every release at `ghcr.io/chariot-ventures/dietary-supplement-analysis`.
 
 1. **Start the backend.**
 
@@ -21,7 +21,7 @@ If you already run an HA RelayMiner (relayer, miner, Redis on the `pocket-suppli
    docker volume create dsld-store
    docker run -d --name dietary-supplement-analysis-backend --restart unless-stopped \
      --network pocket-supplier --memory 512m -v dsld-store:/data \
-     ghcr.io/micallb/dietary-supplement-analysis:release
+     ghcr.io/chariot-ventures/dietary-supplement-analysis:release
    docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
    ```
 
@@ -51,7 +51,7 @@ To stay current, either pull `:release` on a timer (`docker pull` then recreate 
 On the supplier host, next to the HA RelayMiner stack (`pocket-supplier` Docker network):
 
 ```bash
-git clone --branch release https://github.com/micallb/dietary-supplement-analysis /opt/pocket/services/dietary-supplement-analysis/backend
+git clone --branch release https://github.com/chariot-ventures/dietary-supplement-analysis /opt/pocket/services/dietary-supplement-analysis/backend
 mkdir -p /opt/pocket/services/dietary-supplement-analysis/deploy
 cd /opt/pocket/services/dietary-supplement-analysis/deploy
 ```
@@ -90,7 +90,7 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.12.3"}
+# {"service":"dietary-supplement-analysis","version":"0.12.4"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.
@@ -260,7 +260,7 @@ Image versions follow the card's `serving.implementations` (`dietary-supplement-
 [deploy/autodeploy/](deploy/autodeploy/) makes a supplier follow this repository's releases with no manual step:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/main/deploy/autodeploy/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/chariot-ventures/dietary-supplement-analysis/main/deploy/autodeploy/install.sh | sudo bash
 ```
 
 It installs a systemd timer that checks GitHub every 5 minutes for the newest release: the highest `vX.Y.Z` tag, or the head of the `release` branch when its `package.json` carries a higher version (set `TRACK` in `/etc/dsa-autodeploy.env` to change this, for example `TRACK=branch:main`). A new release is built, smoke-tested in a throwaway container (`/v1/version` must report the release's version, and `/v1/health` and the card's functional probe must pass), then swapped in with the compose file from that release. If the live container fails the same checks, the previous image is restored and the release is marked failed so it isn't retried. Only the backend container changes; the RelayMiner, Redis, Caddy and on-chain state are untouched. Logs: `journalctl -u dsa-autodeploy` and `/opt/pocket/services/dietary-supplement-analysis/autodeploy/deploy.log`.

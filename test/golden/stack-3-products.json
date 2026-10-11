@@ -1,6 +1,6 @@
 {
   "service": "dietary-supplement-analysis",
-  "version": "0.12.3",
+  "version": "0.12.4",
   "as_of": "<date>",
   "profile": {
     "age": 34,
@@ -745,7 +745,7 @@
     }
   ],
   "provenance": {
-    "version": "0.12.3",
+    "version": "0.12.4",
     "commit": null,
     "reference_values_reviewed": "2026-10-11"
   },

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.4 (2026-10-11)
+
+- The repository moved to the Chariot Ventures GitHub account: [chariot-ventures/dietary-supplement-analysis](https://github.com/chariot-ventures/dietary-supplement-analysis). Every link (card, docs, provenance, free-trial message, auto-deploy, images at `ghcr.io/chariot-ventures/dietary-supplement-analysis`) points there; old links redirect. The official MCP Registry name is now `io.github.chariot-ventures/dietary-supplement-analysis`.
+
 ## 0.12.3 (2026-10-11)
 
 - Fix: a version find-and-replace in 0.12.1 turned the eslint range into `^10.12.1`, which doesn't exist, and `npm ci` looped instead of failing. That stalled CI and the server's 0.12.1 and 0.12.2 builds; the service stayed on 0.12.0 throughout.

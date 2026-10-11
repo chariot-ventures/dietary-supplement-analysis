@@ -15,7 +15,7 @@
 set -euo pipefail
 
 SERVICE_ID=dietary-supplement-analysis
-REPO=https://github.com/micallb/dietary-supplement-analysis.git
+REPO=https://github.com/chariot-ventures/dietary-supplement-analysis.git
 REF=${REF:-main}
 RELAY_HOST=pokt-beta.trackmysupplement.com
 AGENTS_HOST=agents.trackmysupplement.com

@@ -1,6 +1,6 @@
 # Checks every push and pull request; on the release branch and on v* tags,
 # also publishes a multi-arch image (amd64 + arm64) to GitHub Container Registry:
-#   ghcr.io/micallb/dietary-supplement-analysis:<version>, :release, :latest
+#   ghcr.io/chariot-ventures/dietary-supplement-analysis:<version>, :release, :latest
 name: check and image
 
 on:

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Install the release-tag auto-deploy on the supplier server (run once, as a sudo-capable user):
-#   curl -fsSL https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/main/deploy/autodeploy/install.sh | sudo bash
+#   curl -fsSL https://raw.githubusercontent.com/chariot-ventures/dietary-supplement-analysis/main/deploy/autodeploy/install.sh | sudo bash
 # or from a checkout: sudo bash deploy/autodeploy/install.sh
 set -euo pipefail
 [ "$(id -u)" = 0 ] || { echo "run as root (sudo)"; exit 1; }
 
-RAW=${RAW:-https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/main/deploy/autodeploy}
+RAW=${RAW:-https://raw.githubusercontent.com/chariot-ventures/dietary-supplement-analysis/main/deploy/autodeploy}
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || echo "")
 
 mkdir -p /usr/local/share/dsa-autodeploy

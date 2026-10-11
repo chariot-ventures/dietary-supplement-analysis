@@ -31,7 +31,7 @@ export function provenance(store?: MetaReader | null) {
     service: SERVICE_ID,
     version: VERSION,
     commit: GIT_COMMIT,
-    source_code: GIT_COMMIT ? `https://github.com/micallb/dietary-supplement-analysis/tree/${GIT_COMMIT}` : DOCS_URL,
+    source_code: GIT_COMMIT ? `https://github.com/chariot-ventures/dietary-supplement-analysis/tree/${GIT_COMMIT}` : DOCS_URL,
     data: {
       reference_values: { name: 'Food and Nutrition Board DRIs via NIH ODS fact sheets', reviewed: nutrientIndex.driReviewed },
       labels: {

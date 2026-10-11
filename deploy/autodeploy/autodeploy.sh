@@ -22,7 +22,7 @@ set -euo pipefail
 
 SERVICE_ID=dietary-supplement-analysis
 [ -f /etc/dsa-autodeploy.env ] && . /etc/dsa-autodeploy.env
-REPO=${REPO:-https://github.com/micallb/dietary-supplement-analysis.git}
+REPO=${REPO:-https://github.com/chariot-ventures/dietary-supplement-analysis.git}
 TRACK=${TRACK:-tags}
 TRACK_FALLBACK_BRANCH=${TRACK_FALLBACK_BRANCH:-}
 SVC=${SVC:-/opt/pocket/services/$SERVICE_ID}

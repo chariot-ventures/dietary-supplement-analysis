@@ -19,7 +19,7 @@ This remote endpoint is a **free trial**: 25 tool calls per connection per day (
 ```bash
 export POCKET_APP_PRIVATE_KEY=<your staked app key>          # an app staked for dietary-supplement-analysis on Beta
 pocket-ap serve --config deploy/beta-stake/pocket-ap.yaml     # listens on 127.0.0.1:8550
-curl -fsSL https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/release/mcp/dsa-mcp.mjs -o dsa-mcp.mjs
+curl -fsSL https://raw.githubusercontent.com/chariot-ventures/dietary-supplement-analysis/release/mcp/dsa-mcp.mjs -o dsa-mcp.mjs
 ```
 
 Claude Desktop (`claude_desktop_config.json`):
@@ -40,4 +40,4 @@ Without `DSA_BASE_URL` the bridge uses the public demo endpoint.
 
 ## Registries
 
-[`server.json`](server.json) is the entry for the official MCP Registry. Publish it with `mcp-publisher login github` and `mcp-publisher publish` from this folder. The `io.github.micallb/` name needs the repository owner's GitHub login. The same URL can be submitted to Smithery and mcp.so through their web forms.
+[`server.json`](server.json) is the entry for the official MCP Registry. Publish it with `mcp-publisher login github` and `mcp-publisher publish` from this folder. The `io.github.chariot-ventures/` name needs the repository owner's GitHub login (CI publishes it automatically on each release). The same URL can be submitted to Smithery and mcp.so through their web forms.

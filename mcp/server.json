@@ -1,12 +1,12 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
-  "name": "io.github.micallb/dietary-supplement-analysis",
+  "name": "io.github.chariot-ventures/dietary-supplement-analysis",
   "title": "Dietary Supplement Analysis (NIH data)",
   "description": "NIH supplement checks: upper limits, drug and herb interactions, FDA recalls, with citations.",
-  "version": "0.12.3",
-  "websiteUrl": "https://github.com/micallb/dietary-supplement-analysis",
+  "version": "0.12.4",
+  "websiteUrl": "https://github.com/chariot-ventures/dietary-supplement-analysis",
   "repository": {
-    "url": "https://github.com/micallb/dietary-supplement-analysis",
+    "url": "https://github.com/chariot-ventures/dietary-supplement-analysis",
     "source": "github"
   },
   "remotes": [
