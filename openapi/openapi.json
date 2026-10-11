@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Dietary Supplement Label and Nutrient Intake Analysis",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "description": "Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Label and reference data only; not medical advice."
   },
   "externalDocs": {

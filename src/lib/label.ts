@@ -394,7 +394,9 @@ function checkDuplicates(out: NormalizedLabel): void {
   const groups = new Map<string, NormalizedIngredient[]>();
   for (const ing of out.ingredients) {
     if (!ing.label_amount) continue;
-    const key = `${ing.blend_name ?? ''}\u0000${ing.nutrient_id}\u0000${ing.label_name.trim().toLowerCase()}`;
+    // Same parent, nutrient, name and declared forms: rows listing different forms ("Calcium (as carbonate)", "Calcium (as citrate)") are legitimate.
+    const forms = [...ing.forms].map((f) => f.trim().toLowerCase()).sort().join('|');
+    const key = `${ing.blend_name ?? ''}\u0000${ing.nutrient_id}\u0000${ing.label_name.trim().toLowerCase()}\u0000${forms}`;
     groups.set(key, [...(groups.get(key) ?? []), ing]);
   }
   for (const list of groups.values()) {

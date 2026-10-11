@@ -7,7 +7,7 @@ A Pocket Network service (`dietary-supplement-analysis`) for AI agents. Give it 
 - **Running a supplier or gateway:** see [OPERATORS.md](OPERATORS.md).
 - **What it is not:** medical advice, an efficacy database or an interaction checker. It reports what labels declare and how the totals compare with published reference values. For medications, see the Pocket services `med-safety` and `fda`.
 
-> **Status:** `v0.4.0` (see [CHANGELOG.md](CHANGELOG.md)). Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
+> **Status:** `v0.4.1` (see [CHANGELOG.md](CHANGELOG.md)). Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
 
 ## For judges: try it in one minute
 
@@ -102,7 +102,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.4.0"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.4.1"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
 | GET | `/v1/tools` | Tool definitions (`name`, `description`, JSON Schema `input_schema`) for function calling |

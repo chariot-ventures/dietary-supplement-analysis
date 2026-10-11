@@ -1,4 +1,4 @@
-# dietary-supplement-analysis 0.4.0
+# dietary-supplement-analysis 0.4.1
 
 > Supplement label lookup (NIH Dietary Supplement Label Database, DSLD) and per-nutrient intake checks against NIH reference values. One call answers "is anything in my supplements too high, why does that matter, and what change would fix it". Label and reference data only; not medical advice.
 

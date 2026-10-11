@@ -185,6 +185,16 @@ describe('DATA_SUSPECT: label records that look wrong', () => {
     expect(l.ingredients.filter((i) => i.nutrient_id === 'dha').map((i) => i.per_serving?.amount)).toEqual([683, 252]);
   });
 
+  it('the same nutrient listed twice with different forms is not suspect', async () => {
+    const { makeLabel, q } = await import('./helpers.js');
+    const { normalizeDsldLabel } = await import('../src/lib/label.js');
+    const l = makeLabel(1, [
+      { name: 'Calcium', ingredientGroup: 'Calcium', forms: [{ name: 'Calcium Carbonate' }], quantity: q(200, 'mg') },
+      { name: 'Calcium', ingredientGroup: 'Calcium', forms: [{ name: 'Calcium Citrate' }], quantity: q(100, 'mg') },
+    ]);
+    expect(normalizeDsldLabel(l).data_gaps.filter((g) => g.code === 'DATA_SUSPECT')).toEqual([]);
+  });
+
   it('%DV that contradicts the amount, implausible amounts, and nested rows larger than their total', () => {
     const checks = normalizedFixture(900009).data_gaps.map((g) => [g.check, g.nutrient_id ?? null]);
     expect(checks).toEqual([
