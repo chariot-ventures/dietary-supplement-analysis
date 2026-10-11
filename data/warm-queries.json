@@ -1,0 +1,13 @@
+{
+  "_doc": "Searches the background warmer runs against DSLD so popular products are in the local label store before anyone asks. Each query fetches up to 'per_query' on-market labels, about one label per second.",
+  "per_query": 40,
+  "queries": [
+    "multivitamin", "women multivitamin", "men multivitamin", "prenatal", "children multivitamin", "gummy vitamin",
+    "vitamin d3", "vitamin c", "vitamin b12", "b complex", "vitamin e", "vitamin a", "vitamin k2",
+    "magnesium", "magnesium glycinate", "zinc", "iron", "calcium", "calcium vitamin d", "potassium", "selenium", "iodine",
+    "fish oil", "omega 3", "melatonin", "electrolyte", "pre workout", "caffeine", "elderberry zinc",
+    "Centrum", "One A Day", "Nature Made", "Kirkland Signature", "Nature's Bounty", "vitafusion", "OLLY", "Garden of Life",
+    "Thorne", "NOW", "Pure Encapsulations", "Solgar", "Nordic Naturals", "Ritual", "SmartyPants", "MegaFood", "Rainbow Light",
+    "Emergen-C", "Airborne", "Spring Valley", "Equate", "up&up", "GNC", "Optimum Nutrition", "Natrol", "Sundown"
+  ]
+}

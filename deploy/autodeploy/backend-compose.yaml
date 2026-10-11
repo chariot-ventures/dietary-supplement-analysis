@@ -11,7 +11,11 @@ services:
       LOG_LEVEL: info
     expose: ["8080"]
     mem_limit: 512m
+    volumes:
+      - dsld-store:/data # persistent NIH label store (see src/lib/store.ts)
     networks: [supplier]
+volumes:
+  dsld-store:
 networks:
   supplier:
     external: true

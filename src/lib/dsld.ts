@@ -8,6 +8,7 @@
  */
 import { LRUCache } from 'lru-cache';
 import { AppError } from './errors.js';
+import type { LabelStore } from './store.js';
 import { todayIso } from './text.js';
 
 // ---------- raw DSLD shapes (only the fields this service reads) ----------
@@ -94,6 +95,8 @@ export interface SearchResult {
   ids: number[];
   hits: SearchHit[];
   retrieved: string;
+  /** "local" when DSLD was unreachable and the result came from the service's own label store. */
+  source: 'dsld' | 'local';
 }
 
 /** DSLD stores UPC-A codes as "0 31604 02697 4". */
@@ -130,6 +133,10 @@ export interface DsldClientOptions {
   searchTtlMs?: number;
   maxLabels?: number;
   maxSearches?: number;
+  /** Persistent label store (see store.ts); labels are written through and used when DSLD is unreachable. */
+  store?: LabelStore | null;
+  /** Stored labels younger than this are served without asking DSLD. */
+  storeFreshDays?: number;
 }
 
 export const DSLD_BASE_URL = 'https://api.ods.od.nih.gov/dsld/v9';
@@ -190,8 +197,12 @@ export class DsldClient {
   private readonly labels: LRUCache<number, Cached<DsldLabel>>;
   private readonly searches: LRUCache<string, Cached<{ total: number; ids: number[]; hits: SearchHit[] }>>;
   private readonly inflight = new Map<string, Promise<unknown>>();
+  readonly store: LabelStore | null;
+  private readonly storeFreshMs: number;
 
   constructor(opts: DsldClientOptions = {}) {
+    this.store = opts.store ?? null;
+    this.storeFreshMs = (opts.storeFreshDays ?? 30) * DAY_MS;
     this.baseUrl = (opts.baseUrl ?? DSLD_BASE_URL).replace(/\/+$/, '');
     this.apiKey = opts.apiKey || undefined;
     this.fetchImpl = opts.fetchImpl ?? ((url, init) => fetch(url, init));
@@ -205,6 +216,11 @@ export class DsldClient {
   async getLabel(id: number, opts: CallOptions = {}): Promise<LabelResult> {
     const fresh = this.labels.get(id);
     if (fresh) return { label: fresh.value, retrieved: fresh.retrieved };
+    const stored = this.storeGet(id);
+    if (stored && Date.now() - Date.parse(stored.retrieved) <= this.storeFreshMs) {
+      this.labels.set(id, { value: stored.label, retrieved: stored.retrieved });
+      return stored;
+    }
 
     return this.dedupe(`label:${id}`, async () => {
       try {
@@ -213,6 +229,7 @@ export class DsldClient {
         if (!label) throw new AppError('NOT_FOUND', `No DSLD label with id ${id}`, { field: 'dsld_id' });
         const entry = { value: label, retrieved: todayIso() };
         this.labels.set(id, entry);
+        this.storePut(label, entry.retrieved);
         return { label, retrieved: entry.retrieved };
       } catch (err) {
         if (err instanceof UpstreamHttpError && err.status === 404) {
@@ -221,9 +238,36 @@ export class DsldClient {
         if (err instanceof AppError) throw err;
         const stale = this.labels.get(id, { allowStale: true });
         if (stale) return { label: stale.value, retrieved: stale.retrieved };
+        if (stored) return stored;
         throw upstreamUnavailable(err);
       }
     });
+  }
+
+  /** Barcode matches already in the label store (no network). */
+  storedUpc(digits: string): SearchHit[] {
+    try {
+      return this.store?.findUpc(digits) ?? [];
+    } catch {
+      return [];
+    }
+  }
+
+  // The store must never take the service down: errors fall back to network-only behaviour.
+  private storeGet(id: number): LabelResult | null {
+    try {
+      return this.store?.getLabel(id) ?? null;
+    } catch {
+      return null;
+    }
+  }
+
+  private storePut(label: DsldLabel, retrieved: string): void {
+    try {
+      this.store?.putLabel(label, retrieved);
+    } catch {
+      /* ignore: disk full or locked; the in-memory cache still holds the label */
+    }
   }
 
   /** Fetch several labels with the shared concurrency limit. Rejects on the first NOT_FOUND / upstream error. */
@@ -243,7 +287,7 @@ export class DsldClient {
     const key = params.toString();
 
     const fresh = this.searches.get(key);
-    if (fresh) return { ...fresh.value, retrieved: fresh.retrieved };
+    if (fresh) return { ...fresh.value, retrieved: fresh.retrieved, source: 'dsld' };
 
     return this.dedupe(`search:${key}`, async () => {
       try {
@@ -251,13 +295,30 @@ export class DsldClient {
         const parsed = parseSearch(body, p.onMarketOnly);
         const entry = { value: parsed, retrieved: todayIso() };
         this.searches.set(key, entry);
-        return { ...parsed, retrieved: entry.retrieved };
+        return { ...parsed, retrieved: entry.retrieved, source: 'dsld' as const };
       } catch (err) {
         const stale = this.searches.get(key, { allowStale: true });
-        if (stale) return { ...stale.value, retrieved: stale.retrieved };
+        if (stale) return { ...stale.value, retrieved: stale.retrieved, source: 'dsld' as const };
+        const local = this.localSearch(p);
+        if (local) return local;
         throw upstreamUnavailable(err);
       }
     });
+  }
+
+  private localSearch(p: SearchParams): SearchResult | null {
+    if (!this.store || (!p.query && !p.brand && !p.ingredient)) return null;
+    try {
+      // A quoted query is a barcode phrase; the store answers those from its UPC index.
+      const phrase = p.query && /^".*"$/.test(p.query) ? p.query.slice(1, -1) : null;
+      const r = phrase
+        ? { hits: this.store.findUpc(normalizeUpc(phrase)), total: 0 }
+        : this.store.search({ query: p.query === '*' ? undefined : p.query, brand: p.brand, ingredient: p.ingredient, onMarketOnly: p.onMarketOnly, size: p.size });
+      if (r.hits.length === 0) return null;
+      return { total: r.total || r.hits.length, ids: r.hits.map((h) => h.id), hits: r.hits, retrieved: todayIso(), source: 'local' };
+    } catch {
+      return null;
+    }
   }
 
   /** Seed the label cache (startup pre-warm, tests). */

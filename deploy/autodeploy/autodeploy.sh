@@ -118,7 +118,7 @@ fi
 # ---- 3. smoke test in a throwaway container with no published ports ----
 cand=$SERVICE_ID-candidate
 docker rm -f "$cand" >/dev/null 2>&1 || true
-docker run -d --name "$cand" --memory 512m "$IMAGE:$tagname" >/dev/null
+docker run -d --name "$cand" --memory 512m -e DSLD_WARM=0 -e DSLD_STORE_PATH= "$IMAGE:$tagname" >/dev/null
 if ! wait_probe "$cand" "$version"; then
   log "smoke test failed for $label"; docker logs --tail 20 "$cand" 2>&1 | tee -a "$STATE/deploy.log" || true
   docker rm -f "$cand" >/dev/null; echo "$sha" >> "$STATE/failed-shas"; exit 1

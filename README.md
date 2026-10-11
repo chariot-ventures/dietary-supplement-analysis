@@ -7,7 +7,7 @@ A Pocket Network service (`dietary-supplement-analysis`) for AI agents. Give it 
 - **Running a supplier or gateway:** see [OPERATORS.md](OPERATORS.md).
 - **What it is not:** medical advice, an efficacy database or an interaction checker. It reports what labels declare and how the totals compare with published reference values. For medications, see the Pocket services `med-safety` and `fda`.
 
-> **Status:** `v0.2.0` (see [CHANGELOG.md](CHANGELOG.md)). Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
+> **Status:** `v0.3.0` (see [CHANGELOG.md](CHANGELOG.md)). Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
 
 ## For judges: try it in one minute
 
@@ -101,7 +101,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.2.0"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.3.0"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
 | GET | `/v1/tools` | Tool definitions (`name`, `description`, JSON Schema `input_schema`) for function calling |
@@ -224,6 +224,8 @@ docker compose up --build     # container on 127.0.0.1:8080
 | `DSLD_API_KEY` | none | Sent to DSLD as `X-Api-Key` if set |
 | `DSLD_BASE_URL` | `https://api.ods.od.nih.gov/dsld/v9` | DSLD API base |
 | `DSLD_PREWARM_IDS` | none | Comma-separated label IDs to cache at startup |
+| `DSLD_STORE_PATH` | `/data/dsld.sqlite` in the container, off otherwise | Persistent label store (SQLite). Every fetched label is kept; when NIH is unreachable, labels, barcodes and searches are answered from it. Empty turns it off |
+| `DSLD_WARM` | `1` | With the store on, a background job fetches popular products into it at about one request per second (queries in [data/warm-queries.json](data/warm-queries.json)). `0` turns it off |
 | `DSLD_FIXTURES_DIR` | none | Serve DSLD from local `label-<id>.json` files (dev only; `test/fixtures/dsld/real` holds 12 real labels) |
 | `UPSTREAM_BUDGET_MS` | `8000` | Total time one request may spend waiting on DSLD before answering `424` |
 | `LOG_LEVEL` | `info` | Logs record method, path, status and duration only, never request bodies |
@@ -231,7 +233,7 @@ docker compose up --build     # container on 127.0.0.1:8080
 ## Limits
 
 - Up to 15 products and 5 candidates per analyze call, 10 IDs per get call, and 10 search results.
-- DSLD calls run at most 4 at a time, with a 6 s deadline each and an 8 s budget per request. Labels are cached for 7 days and searches for 24 hours; a stale copy is served if DSLD is down. Measured against live DSLD: a cold 15-product analyze takes 1.5 s and a warm one 17 ms.
+- DSLD calls run at most 4 at a time, with a 6 s deadline each and an 8 s budget per request. Labels are cached in memory for 7 days and searches for 24 hours, and labels are also kept in the persistent label store (refreshed after 30 days). If DSLD is down, stale copies and the label store answer instead; search results from the store say `"search_source": "local"`. Measured against live DSLD: a cold 15-product analyze takes 1.5 s and a warm one 17 ms.
 - Text that Pocket gateways treat as an error signal ("timeout", "block not found" and others) is `\u`-escaped in responses. It decodes to the same string.
 - Ages from birth to 120, plus pregnancy and lactation (14–50). Caffeine is checked against FDA guidance (400 mg a day for healthy adults, under 200 mg in pregnancy) and sodium against the 2019 Chronic Disease Risk Reduction Intake (2,300 mg), neither of which is a DRI UL; the response says so in `ul_note`.
 - The public demo endpoint allows 30 requests per minute per client and 600 per minute overall. Relays through Pocket Network aren't limited this way.

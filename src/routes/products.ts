@@ -78,6 +78,7 @@ export async function searchProducts(body: unknown, deps: Deps) {
       },
       total_hits: result.total,
       returned: products.length,
+      search_source: result.source,
       products,
     },
     sources,

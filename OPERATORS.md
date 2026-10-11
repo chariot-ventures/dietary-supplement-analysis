@@ -13,7 +13,7 @@ A runbook for suppliers who serve the Pocket Network service `dietary-supplement
 
 ## Requirements
 
-- **Host:** 1 GB of RAM and 2 GB of disk for the backend alone. On a supplier host, size the box for the RelayMiner stack (relayer, miner, Redis) as Pocket's server guidance describes. The backend container is limited to 512 MB.
+- **Host:** 1 GB of RAM and 2 GB of disk for the backend alone (the label store grows to a few hundred MB). On a supplier host, size the box for the RelayMiner stack (relayer, miner, Redis) as Pocket's server guidance describes. The backend container is limited to 512 MB.
 - **Outbound HTTPS to `api.ods.od.nih.gov`.** This is the only network dependency. Nutrient reference data ships inside the image.
 - **No inbound ports.** The backend is reached only by the relayer over the supplier's private Docker network.
 - **No credentials.** The backend never reads caller headers or expects auth. Gateways drop caller headers anyway.
@@ -23,7 +23,7 @@ A runbook for suppliers who serve the Pocket Network service `dietary-supplement
 On the supplier host, next to the HA RelayMiner stack (`pocket-supplier` Docker network):
 
 ```bash
-git clone --branch v0.2.0 https://github.com/micallb/dietary-supplement-analysis /opt/pocket/services/dietary-supplement-analysis/backend
+git clone --branch release https://github.com/micallb/dietary-supplement-analysis /opt/pocket/services/dietary-supplement-analysis/backend
 mkdir -p /opt/pocket/services/dietary-supplement-analysis/deploy
 cd /opt/pocket/services/dietary-supplement-analysis/deploy
 ```
@@ -34,7 +34,7 @@ Create `docker-compose.yaml` here:
 services:
   backend:
     build: ../backend
-    image: dietary-supplement-analysis-backend:0.2.0
+    image: dietary-supplement-analysis-backend:0.3.0
     container_name: dietary-supplement-analysis-backend
     restart: unless-stopped
     expose:
@@ -44,7 +44,12 @@ services:
       # DSLD_API_KEY: ""            # optional; sent to DSLD as X-Api-Key
       # DSLD_PREWARM_IDS: "230932,338022,332278"
     mem_limit: 512m
+    volumes:
+      - dsld-store:/data # persistent label store
     networks: [supplier]
+
+volumes:
+  dsld-store:
 
 networks:
   supplier:
@@ -57,7 +62,7 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.2.0"}
+# {"service":"dietary-supplement-analysis","version":"0.3.0"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.
@@ -71,6 +76,8 @@ The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`
 | `DSLD_API_KEY` | none | Optional key sent to DSLD as `X-Api-Key` |
 | `DSLD_BASE_URL` | `https://api.ods.od.nih.gov/dsld/v9` | DSLD API base |
 | `DSLD_PREWARM_IDS` | none | Comma-separated label IDs to cache at startup |
+| `DSLD_STORE_PATH` | `/data/dsld.sqlite` in the container, off otherwise | Persistent label store (SQLite). Every fetched label is kept; when NIH is unreachable, labels, barcodes and searches are answered from it. Empty turns it off |
+| `DSLD_WARM` | `1` | With the store on, a background job fetches popular products into it at about one request per second (queries in [data/warm-queries.json](data/warm-queries.json)). `0` turns it off |
 | `UPSTREAM_BUDGET_MS` | `8000` | Total time one request may wait on DSLD before answering `424 UPSTREAM_UNAVAILABLE` |
 
 Do not set `DSLD_FIXTURES_DIR` in production; it serves test fixtures instead of live data.
@@ -159,7 +166,7 @@ These rules come from Pocket's gateway design rules, and the test suite checks e
 
 - **Gateway error phrases:** text that SAGE treats as an error signal ("timeout", "block not found", "connection refused" and others) is `\u`-escaped in response bytes, including product names and echoed queries. It decodes to the identical string.
 - **Encoding and parsing:** responses are not compressed. Request bodies may be chunked with no `Content-Length`, and are parsed as JSON whatever the `Content-Type`.
-- **Latency:** at most 4 DSLD calls run at a time, each with a 6 s deadline, inside an 8 s budget per request. Labels are cached for 7 days and searches for 24 hours. If DSLD is down, a stale cached copy is served. Measured against live DSLD: a cold 15-product analyze took 1.5 s and a warm one 17 ms.
+- **Latency:** at most 4 DSLD calls run at a time, each with a 6 s deadline, inside an 8 s budget per request. Labels are cached in memory for 7 days and searches for 24 hours, and kept in the persistent label store (mount a volume at `/data`). If DSLD is down, stale copies and the label store answer instead. Measured against live DSLD: a cold 15-product analyze took 1.5 s and a warm one 17 ms.
 
 ## Reference deployment
 
@@ -185,7 +192,7 @@ Every check should pass. Then send relays through Pocket with `pocket-ap` and co
 
 ## Upgrades
 
-Image versions follow the card's `serving.implementations` (`dietary-supplement-analysis >= 0.2.0`). To upgrade by hand, check out the new tag in `backend/` and run `docker compose -p dietary-supplement-analysis up -d --build`. The health check paths and the response contract stay stable within 0.x; fields are added, not renamed (0.2.0 replaced the `below_reference` flag with `coverage`, see [CHANGELOG.md](CHANGELOG.md)). A breaking change would ship under a new service ID or a new `apis[]` value.
+Image versions follow the card's `serving.implementations` (`dietary-supplement-analysis >= 0.3.0`). To upgrade by hand, check out the new tag in `backend/` and run `docker compose -p dietary-supplement-analysis up -d --build`. The health check paths and the response contract stay stable within 0.x; fields are added, not renamed (0.2.0 replaced the `below_reference` flag with `coverage`, see [CHANGELOG.md](CHANGELOG.md)). A breaking change would ship under a new service ID or a new `apis[]` value.
 
 ### Automatic upgrades from release tags
 

@@ -1,6 +1,6 @@
 {
   "schema": "pocket-service-card/v1",
-  "description": "Check a person's dietary supplements against NIH upper limits in one call. Give product names as the user said them, barcodes, NIH DSLD label IDs or custom ingredient lists; the service identifies each label in the NIH Dietary Supplement Label Database, totals every vitamin and mineral per day, and compares the totals with NIH upper limits (UL) and RDA/AI for the age and sex. It returns a plain-language agent_summary, above_ul/near_ul flags with severity, what each UL protects against, single-product changes that would bring a nutrient back under its UL, the effect of adding candidate products, and DATA_SUSPECT warnings when the NIH label record looks wrong. Also: product search (label versions collapsed), barcode lookup, normalized labels, reference values. GET /v1/tools gives JSON Schema tool definitions; GET /v1/guide a usage guide. Every number cites its label or NIH fact sheet. Label and reference data only; not medical advice; food, medications and drug interactions are not assessed (see Pocket services med-safety and fda).",
+  "description": "Check a person's dietary supplements against NIH upper limits in one call. Give products as names, barcodes, NIH DSLD label IDs or ingredient lists; the service finds each label in the NIH Dietary Supplement Label Database, totals every vitamin and mineral (plus caffeine) per day, and compares the totals with NIH upper limits (UL) and RDA/AI for the age and sex, including pregnancy, lactation and infants. Returns a plain-language agent_summary, above_ul/near_ul flags with severity, what each UL protects against, single-product changes that would fix an exceedance, the effect of adding candidate products, and warnings when an NIH label record looks wrong. Also: product search, barcode lookup, labels, reference values. Answers from its own label store when NIH is down. GET /v1/tools: tool definitions; GET /v1/guide: usage guide. Every number cites its source. Not medical advice; food, medications and drug interactions are not assessed (see Pocket services med-safety and fda).",
   "rpc_types": [
     {
       "type": "REST",
@@ -16,16 +16,16 @@
     {
       "kind": "openapi",
       "api": "dietary-supplement-analysis-api",
-      "url": "https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/v0.2.0/openapi/openapi.json",
-      "notes": "Pinned to tag v0.2.0. Also served by every backend at GET /openapi.json; tool definitions at GET /v1/tools."
+      "url": "https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/release/openapi/openapi.json",
+      "notes": "The release branch is what suppliers run (it deploys itself). Also served by every backend at GET /openapi.json; tool definitions at GET /v1/tools."
     }
   ],
   "access": "public",
   "results": "variable",
   "serving": {
-    "backend": "The dietary-supplement-analysis container (Node 22) behind the HA RelayMiner with the rest backend pointed at http://<backend>:8080. No auth toward the backend; callers cannot send headers. Needs outbound HTTPS to api.ods.od.nih.gov.",
+    "backend": "The dietary-supplement-analysis container (Node 22) behind the HA RelayMiner with the rest backend pointed at http://<backend>:8080. No auth toward the backend; callers cannot send headers. Needs outbound HTTPS to api.ods.od.nih.gov and a volume at /data for its label store.",
     "implementations": [
-      "dietary-supplement-analysis >= 0.2.0"
+      "dietary-supplement-analysis >= 0.3.0"
     ],
     "docs": "https://github.com/micallb/dietary-supplement-analysis/blob/main/OPERATORS.md",
     "min_disk_gb": 2,

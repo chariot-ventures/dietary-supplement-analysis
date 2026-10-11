@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 (2026-10-11)
+
+- **Pregnancy, lactation and infants.** `life_stage` (`"pregnancy"` or `"lactation"`, female, ages 14–50; `"pregnant": true` and `"breastfeeding": true` also work) switches to the Food and Nutrition Board's life-stage values. Ages under 1 (as a fraction of a year) use the 0–6 and 7–12 month values. These were `422 UNSUPPORTED` before.
+- **More nutrients:** chloride and fluoride (DRIs), sodium (AI, with the 2019 Chronic Disease Risk Reduction Intake of 2,300 mg as its limit), and caffeine (FDA's 400 mg a day for healthy adults; under 200 mg in pregnancy). For sodium and caffeine, `ul_note` says the limit isn't a DRI UL.
+- **Persistent label store.** Every NIH label the service fetches is kept in SQLite (Node's built-in `node:sqlite`), and a background job fills it with popular products at about one request per second. When NIH's API is slow or down, labels, barcodes and searches are answered from the store (`"search_source": "local"`). The container keeps it on a volume at `/data`.
+
 ## 0.2.0 (2026-10-11)
 
 One call now goes from what a user says to what they should look at.

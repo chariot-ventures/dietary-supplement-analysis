@@ -340,6 +340,7 @@ export function buildOpenApi(): Json {
           query: { type: 'object' },
           total_hits: { type: 'integer' },
           returned: { type: 'integer' },
+          search_source: { type: 'string', enum: ['dsld', 'local'], description: '"local" when NIH DSLD was unreachable and results came from the service\'s own label store' },
           products: { type: 'array', items: { $ref: '#/components/schemas/ProductSummary' } },
         }),
         { by_name: { query: 'vitamin d3 5000', limit: 3 }, by_brand_and_ingredient: { brand: 'Thorne', ingredient: 'magnesium' } },
