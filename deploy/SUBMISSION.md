@@ -13,44 +13,33 @@ Fields for the [Pocket Network Agentic Services Hackathon form](https://docs.goo
 
 ## Service description
 
-Agents answer one question for people who take supplements: is anything I take too much, does it clash with my medications, and what should I change? The agent sends the products the way the user names them (product names, barcodes or NIH label IDs) with age and sex, plus any medications, conditions or foods. The service finds each label in the NIH Dietary Supplement Label Database (214,782 labels, mirrored weekly), totals every vitamin and mineral per day, and checks the totals against NIH upper limits and recommended intakes, including pregnancy, lactation and infants. It checks medications (brand or generic, normalized with NIH RxNorm) against the interactions in the NIH fact sheets, flags herbs with NIH safety signals, and looks up FDA recalls and adverse event reports. It returns a plain-language summary an agent can relay, in English or Spanish, the single change that would fix an excess, and the effect of adding a product the user is considering, with every number traced to its label or NIH source. It is also a remote MCP server (listed in the official MCP Registry and on Smithery) whose free trial points regular users to the paid Pocket route, and its accuracy is checked against 56 hand-worked cases.
+60% of US adults take dietary supplements and 39% take two or more (CDC), and assistants are constantly asked "is my routine OK?". This service answers it with official data. The agent sends the products the way the user names them (product names, barcodes or NIH label IDs) with age and sex, plus any medications, conditions or foods. The service finds each label in the NIH Dietary Supplement Label Database (214,782 labels, mirrored weekly), totals every vitamin and mineral per day, and checks the totals against NIH upper limits and recommended intakes, including pregnancy, lactation and children. It checks medications (brand or generic, normalized with NIH RxNorm) against the interactions in the NIH fact sheets, flags herbs with NIH safety signals, and looks up FDA recalls and adverse event reports. It returns a plain-language summary the agent can relay, in English or Spanish, the one change that would fix an excess, and the effect of adding a product the user is considering, with every number traced to its label or NIH source. It complements Pocket's drug services (fda, med-safety) with the supplements those same users take, each question is a relay, and it is also a remote MCP server (official MCP Registry, Smithery) whose free trial points agents with real volume to the paid Pocket route. Accuracy is checked against 56 hand-worked cases on every release.
 
 ## How judges can test it
 
-The demo endpoint runs the same backend without the relay layer, so plain `curl` works (free trial: 30 requests a minute and 100 calls a day per client):
+As entered in the form:
 
-```bash
-# 1. One call, products named the way a user would, with a what-if candidate and typical food intake
-curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
-  "age": 62, "sex": "female", "diet": "typical",
-  "products": [
-    {"query": "Centrum Silver Women 50+"},
-    {"query": "Nature Made Ultra Fish Oil 1400"},
-    {"query": "KAL Magnesium Glycinate 400"},
-    {"query": "Thompson Zinc 50 mg", "servings_per_day": 1}],
-  "candidates": [{"query": "vitamin d3 5000 iu"}]}' | jq '.agent_summary, .suggestions[0].text'
+```text
+No setup needed. The demo endpoint https://agents.trackmysupplement.com runs the same backend as the staked supplier, without the relay layer, so plain curl works (free trial: 30 requests a minute and 100 calls a day per client). Each example is one call, the way an assistant makes it after a user describes their routine; jq -r .agent_summary prints the answer it would relay. The README section "For judges: try it in one minute" shows the live answers.
 
-# 2. Medications, a herb, and a Spanish summary
-curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
-  "age": 70, "sex": "male", "lang": "es", "detail": "summary",
-  "medications": ["warfarin", "Synthroid"],
-  "products": [{"query": "Centrum Silver Men 50+"},
-               {"name": "Herbal", "ingredients": [{"name": "Ginkgo biloba leaf extract", "amount": 120, "unit": "mg"}]}]}' | jq '.agent_summary, .interactions.findings[].trigger'
+1. "I'm 74 and on Coumadin. I take Centrum Silver, fish oil and ginkgo." (brand drug name, products by name, ginkgo + warfarin bleeding risk, vitamin K vs warfarin, fish oil and INR)
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{"age":74,"sex":"female","detail":"summary","medications":["Coumadin"],"products":[{"query":"Centrum Silver Women 50+"},{"query":"Nature Made Fish Oil 1200 mg"},{"query":"Ginkgo Biloba 120 mg"}]}' | jq -r .agent_summary
 
-# 3. FDA recalls and adverse event reports for a product
-curl -s https://agents.trackmysupplement.com/v1/products/fda -H 'Content-Type: application/json' -d '{"query":"Nature Made Vitamin D3 1000 IU"}' | jq '.agent_summary'
+2. "I'm pregnant. I take a prenatal, vitamin A 25,000 IU and ashwagandha." (vitamin A at 250% of the pregnancy limit, which guards against birth defects; NIH says avoid ashwagandha in pregnancy)
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{"age":29,"sex":"female","life_stage":"pregnancy","detail":"summary","products":[{"query":"Nature Made Prenatal Multi + DHA"},{"query":"vitamin A 25000 IU"},{"query":"ashwagandha root extract"}]}' | jq -r .agent_summary
 
-# 4. Remote MCP server (add https://agents.trackmysupplement.com/mcp as a custom connector in Claude)
-curl -s https://agents.trackmysupplement.com/mcp -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | jq '.result.tools[].name'
+3. "I'm 62: Centrum Silver, fish oil, magnesium and zinc. Should I add vitamin D 5000?" (zinc at 163% of the limit, the one change that fixes it, and the what-if for vitamin D, with typical food intake counted)
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{"age":62,"sex":"female","diet":"typical","products":[{"query":"Centrum Silver Women 50+"},{"query":"Nature Made Ultra Fish Oil 1400"},{"query":"KAL Magnesium Glycinate 400"},{"query":"Thompson Zinc 50 mg","servings_per_day":1}],"candidates":[{"query":"vitamin d3 5000 iu"}]}' | jq -r .agent_summary
 
-# 5. Barcode lookup
-curl -s https://agents.trackmysupplement.com/v1/products/lookup -H 'Content-Type: application/json' -d '{"upc":"031604026974"}' | jq '.product.name'
+4. In Spanish, with Spanish drug names (warfarina, levotiroxina):
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{"age":68,"sex":"female","lang":"es","detail":"summary","medications":["warfarina","levotiroxina"],"products":[{"query":"Centrum Silver Women 50+"},{"query":"Caltrate 600+D3"}]}' | jq -r .agent_summary
 
-# 6. Reference values (offline), including pregnancy
-curl -s https://agents.trackmysupplement.com/v1/nutrients/reference -H 'Content-Type: application/json' -d '{"nutrient":"folate","age":30,"sex":"female","life_stage":"pregnancy"}'
+5. FDA recalls and adverse event reports for a product:
+curl -s https://agents.trackmysupplement.com/v1/products/fda -H 'Content-Type: application/json' -d '{"query":"Nature Made Vitamin D3 1000 IU"}' | jq -r .agent_summary
 
-# 7. Tool definitions for agent frameworks
-curl -s https://agents.trackmysupplement.com/v1/tools | jq '.tools[].name'
+6. In Claude or any MCP client: add https://agents.trackmysupplement.com/mcp as a custom connector (no key) and ask "I take Centrum Silver and 5000 IU of vitamin D and I'm on warfarin. Anything I should know?"
+
+7. Through Pocket Network: stake an application for dietary-supplement-analysis on Beta TestNet and relay with pocket-ap using deploy/beta-stake/pocket-ap.yaml (README, "Through Pocket Network (paid relay)"). The test transaction above is the settled claim for such a relay.
+
+Every response is a JSON object, errors are 4xx (never 5xx), and GET /openapi.json and GET /v1/tools describe every operation. The README's "Why it matters for Pocket Network" section covers demand, repeat relays and the free-trial-to-paid path.
 ```
-
-Through Pocket Network: stake an application for `dietary-supplement-analysis` on Beta TestNet and relay with `pocket-ap` (README, "Through Pocket Network").
