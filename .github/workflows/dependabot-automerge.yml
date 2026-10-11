@@ -1,0 +1,48 @@
+# Merge Dependabot PRs automatically once CI ("check and image") has passed on them:
+#   - npm: patch and minor updates (majors wait for review)
+#   - GitHub Actions: any update of actions/* (CI exercises them on the PR); docker/* majors wait,
+#     because the image job only runs on release pushes, not on PRs.
+# Merged updates ship with the weekly release train (release-train.yml).
+name: dependabot auto-merge
+
+on:
+  workflow_run:
+    workflows: [check and image]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    if: github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.head_branch, 'dependabot/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          pr=$(gh api "repos/$GITHUB_REPOSITORY/pulls?state=open&head=${GITHUB_REPOSITORY_OWNER}:${BRANCH}" --jq '.[0]')
+          [ -n "$pr" ] && [ "$pr" != "null" ] || { echo "no open PR for $BRANCH"; exit 0; }
+          num=$(jq -r .number <<<"$pr"); title=$(jq -r .title <<<"$pr"); user=$(jq -r .user.login <<<"$pr"); head=$(jq -r .head.sha <<<"$pr")
+          [ "$user" = "dependabot[bot]" ] || { echo "not a Dependabot PR"; exit 0; }
+          [ "$head" = "$SHA" ] || { echo "PR moved on since this CI run"; exit 0; }
+          # "bump <dep> from A to B" (single update) or a grouped update
+          from=$(sed -nE 's/.* from v?([0-9][^ ]*) to v?([0-9][^ ]*).*/\1/p' <<<"$title"); to=$(sed -nE 's/.* from v?([0-9][^ ]*) to v?([0-9][^ ]*).*/\2/p' <<<"$title")
+          major=no
+          if [ -n "$from" ] && [ "${from%%.*}" != "${to%%.*}" ]; then major=yes; fi
+          if [ -n "$from" ] && [ "${from%%.*}" = 0 ] && [ "$(cut -d. -f2 <<<"$from")" != "$(cut -d. -f2 <<<"$to")" ]; then major=yes; fi
+          case "$BRANCH" in
+            dependabot/github_actions/actions/*) ok=yes ;;
+            dependabot/github_actions/*) [ "$major" = no ] && ok=yes || ok=no ;;
+            dependabot/npm_and_yarn/*) [ "$major" = no ] && [ -n "$from" ] && ok=yes || ok=no ;;
+            *) ok=no ;;
+          esac
+          if [ "$ok" = yes ]; then
+            gh pr merge "$num" --repo "$GITHUB_REPOSITORY" --squash --delete-branch && echo "merged #$num: $title"
+          else
+            gh pr comment "$num" --repo "$GITHUB_REPOSITORY" --body "CI passed. Not merged automatically (major update or grouped change); review and merge by hand, or leave it for the weekly maintenance run." || true
+          fi

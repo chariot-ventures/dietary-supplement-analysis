@@ -107,6 +107,8 @@ The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`
 | Tests, lint, data freshness, accuracy cases (56) | [.github/workflows/image.yml](.github/workflows/image.yml) | every push and PR | the push's check fails |
 | Multi-arch image for other suppliers | same workflow | every release | |
 | Dependency updates | [.github/dependabot.yml](.github/dependabot.yml) | weekly (npm), monthly (actions) | PRs, tested by CI |
+| Merge passing dependency PRs (npm patch/minor, actions/*) | [.github/workflows/dependabot-automerge.yml](.github/workflows/dependabot-automerge.yml) | when a PR's CI passes | majors get a comment and wait |
+| Cut a patch release when main has changes (bump, changelog, full check, push to release) | [.github/workflows/release-train.yml](.github/workflows/release-train.yml) | Mondays 14:23 UTC | the check fails and nothing is pushed; the server never sees it |
 
 Run the live check by hand with `npm run live-check` (add `-- --audit` for the Pocket audit).
 

@@ -1,0 +1,68 @@
+# Weekly: if main has changed since the last release (for example merged dependency
+# updates), cut a patch release: bump the version, list the changes in CHANGELOG.md,
+# run the full check, and push to main and release. The supplier server deploys the
+# release branch by itself (and rolls back if the new version fails its smoke test).
+name: release train
+
+on:
+  schedule:
+    - cron: '23 14 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: release-train
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - id: changes
+        run: |
+          git fetch origin release
+          # Commits on main that release doesn't have, ignoring docs-only changes.
+          files=$(git diff --name-only origin/release...origin/main | grep -vE '\.md$|^\.github/|^docs/' || true)
+          echo "files<<EOF" >> "$GITHUB_OUTPUT"; echo "$files" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
+          if [ -z "$files" ]; then echo "release=no" >> "$GITHUB_OUTPUT"; echo "Nothing to release."; else echo "release=yes" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.changes.outputs.release == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm ci
+          git config user.name "release-train"
+          git config user.email "release-train@users.noreply.github.com"
+          npm run bump -- patch
+          version=$(node -p 'require("./package.json").version')
+          notes=$(git log --format='- %s' origin/release..origin/main | grep -v '^- v[0-9]' | head -30)
+          [ -n "$notes" ] || notes="- Maintenance."
+          node -e '
+            const fs = require("fs");
+            const [v, notes] = process.argv.slice(1);
+            const s = fs.readFileSync("CHANGELOG.md", "utf8");
+            const at = s.indexOf(`## ${v} (`);
+            const blank = s.indexOf("\n\n- \n", at);
+            fs.writeFileSync("CHANGELOG.md", s.slice(0, blank) + `\n\nAutomatic release (weekly release train):\n\n${notes}\n` + s.slice(blank + 5));
+          ' "$version" "$notes"
+          npm run build:openapi
+          npx vitest run -u
+          npm run check
+          git add -A
+          git commit -m "v$version: weekly release train"
+          git push origin HEAD:main
+          git push origin HEAD:release
+          # Pushes made with GITHUB_TOKEN don't start other workflows; ask for the image build explicitly.
+          gh workflow run image.yml --ref release
+          echo "released v$version" >> "$GITHUB_STEP_SUMMARY"
