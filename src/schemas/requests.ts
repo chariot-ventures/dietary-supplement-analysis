@@ -191,10 +191,20 @@ export const fdaRequest = z
   })
   .refine((v) => v.name === undefined || v.brand !== undefined, { message: 'name needs brand', path: ['brand'] });
 
-export const toolRequest = z.object({
-  tool: z.enum(['products_search', 'products_get', 'products_lookup', 'nutrients_reference', 'stack_analyze', 'interactions_check', 'products_fda_reports']),
-  arguments: z.record(z.string(), z.unknown()).default({}),
-});
+const TOOL_NAMES = z.enum(['products_search', 'products_get', 'products_lookup', 'nutrients_reference', 'stack_analyze', 'interactions_check', 'products_fda_reports']);
+
+/**
+ * {"tool", "arguments"}. "name" is accepted for "tool" (the MCP tools/call field), and with
+ * neither the main tool, stack_analyze, runs: the Agentic Portal's relay route sends
+ * {"arguments": {...}} alone.
+ */
+export const toolRequest = z
+  .object({
+    tool: TOOL_NAMES.optional().describe('Which tool to run. Defaults to stack_analyze'),
+    name: TOOL_NAMES.optional().describe('Same as tool (the MCP tools/call field name)'),
+    arguments: z.record(z.string(), z.unknown()).default({}).describe("The tool's input, as in GET /v1/tools"),
+  })
+  .refine((v) => !(v.tool && v.name && v.tool !== v.name), { message: 'tool and name name different tools', path: ['name'] });
 
 export type SearchRequest = z.infer<typeof searchRequest>;
 export type GetRequest = z.infer<typeof getRequest>;

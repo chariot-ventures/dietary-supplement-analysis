@@ -55,7 +55,7 @@ Read the response in this order:
 - POST /v1/products/get {"dsld_id"} or {"dsld_ids": [...]}: full normalized labels.
 - POST /v1/interactions/check {"medications"?, "conditions"?, "nutrients"?}: NIH-listed nutrient interactions for medications or conditions, without a stack.
 - POST /v1/nutrients/reference {"nutrient", "age", "sex"}: RDA, EAR, AI, UL and UL basis. Offline.
-- POST /v1/tool {"tool", "arguments"}: one dispatcher for all of the above.
+- POST /v1/tool {"tool", "arguments"}: one dispatcher for all of the above. "name" works in place of "tool", and {"arguments"} alone runs stack_analyze.
 - GET /v1/tools: tool definitions with JSON Schema inputs, ready for function calling.
 - Free trial: the public demo host meters calls per day (25 tool calls per MCP connection, 100 REST calls per IP; see the X-Free-Tier-Remaining header or _meta.free_tier). Relays through Pocket Network are unmetered.
 - POST /mcp: the same tools as a remote MCP server (Streamable HTTP); stack_analyze defaults to detail "summary" there.

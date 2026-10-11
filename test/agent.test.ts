@@ -240,6 +240,19 @@ describe('discovery for agents', () => {
     const res = await post('/v1/tool', { tool: 'products_lookup', arguments: { upc: '012345678905' } });
     expect(res.json().dsld_id).toBe(900007);
   });
+
+  it('the dispatcher takes "name" for "tool", and runs stack_analyze given only arguments (the Agentic Portal relay route)', async () => {
+    const byName = await post('/v1/tool', { name: 'products_lookup', arguments: { upc: '012345678905' } });
+    expect(byName.json().dsld_id).toBe(900007);
+    const args = { age: 34, sex: 'female', products: [{ name: 'Zinc', ingredients: [{ name: 'zinc', amount: 50, unit: 'mg' }] }] };
+    const portal = await post('/v1/tool', { arguments: args });
+    const direct = await post('/v1/stack/analyze', args);
+    expect(portal.statusCode).toBe(200);
+    expect(portal.json().agent_summary).toBe(direct.json().agent_summary);
+    const clash = await post('/v1/tool', { tool: 'products_lookup', name: 'stack_analyze', arguments: {} });
+    expect(clash.statusCode).toBe(400);
+    expect(clash.json().error.code).toBe('INVALID_INPUT');
+  });
 });
 
 describe('life stages and new nutrients', () => {

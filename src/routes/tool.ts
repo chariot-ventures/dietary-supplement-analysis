@@ -7,10 +7,15 @@ import { fdaReports } from './fda.js';
 import { checkInteractions } from './interactions.js';
 import { analyze } from './stack.js';
 
-/** MCP-style dispatcher: {"tool":"stack_analyze","arguments":{...}} -> same result as the matching route. */
+/**
+ * MCP-style dispatcher: {"tool":"stack_analyze","arguments":{...}} -> same result as the matching route.
+ * "name" works in place of "tool", and {"arguments":{...}} alone runs stack_analyze.
+ */
 export function registerToolRoute(app: FastifyInstance, deps: Deps): void {
   app.post('/v1/tool', async (req) => {
-    const { tool, arguments: args } = parseBody(toolRequest, req.body);
+    const body = parseBody(toolRequest, req.body);
+    const tool = body.tool ?? body.name ?? 'stack_analyze';
+    const args = body.arguments;
     switch (tool) {
       case 'products_search':
         return searchProducts(args, deps);

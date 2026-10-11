@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.7 (2026-10-11)
+
+- **Agentic Portal relay route.** `POST /v1/tool` now runs `stack_analyze` when the body is just `{"arguments": {...}}`, the convention the Agentic Portal uses for its relay route, and accepts `"name"` (the MCP `tools/call` field) in place of `"tool"`. Existing calls are unchanged.
+
 ## 0.12.6 (2026-10-11)
 
 - **Disclaimers and terms of use.** Every response's `disclaimer` now says the results are information only, not medical advice or a substitute for a doctor or pharmacist, not intended to diagnose, treat, cure or prevent any disease, and that labels and public data can be wrong; it gives US emergency and Poison Control numbers and links the new [terms of use](TERMS.md). The last sentence of `agent_summary` (English and Spanish) now tells the person to check with a doctor or pharmacist before changing anything. The agent guide, MCP instructions and OpenAPI description tell agents to relay this in full.
