@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Dietary Supplement Label and Nutrient Intake Analysis",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "description": "Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Label and reference data only; not medical advice."
   },
   "externalDocs": {
@@ -711,6 +711,15 @@
                     ],
                     "description": "Pregnancy or lactation (breastfeeding) reference values; requires sex \"female\" and age 14-50"
                   },
+                  "detail": {
+                    "default": "full",
+                    "description": "\"summary\" returns only what an agent needs to answer (agent_summary, flagged nutrients, suggestions, resolutions, candidate verdicts), about 1-3 KB instead of 20-40 KB",
+                    "type": "string",
+                    "enum": [
+                      "summary",
+                      "full"
+                    ]
+                  },
                   "diet": {
                     "default": "none",
                     "description": "\"typical\" adds the US average intake from food and drinks for this age and sex (NHANES) to estimate total intake; see with_typical_diet",
@@ -1136,9 +1145,46 @@
                         }
                       }
                     },
+                    "detail": {
+                      "type": "string",
+                      "const": "summary",
+                      "description": "Present only with \"detail\": \"summary\": the response then has profile, summary, agent_summary, resolutions, flagged, suggestions, candidate_results, data_gap_codes and provenance"
+                    },
                     "agent_summary": {
                       "type": "string",
                       "description": "Two to five plain sentences summarizing the result, ready to relay as written"
+                    },
+                    "flagged": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      },
+                      "description": "detail=summary only: flagged nutrients with amount, UL, percent, severity and UL basis"
+                    },
+                    "data_gap_codes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "detail=summary only"
+                    },
+                    "provenance": {
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string"
+                        },
+                        "commit": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "reference_values_reviewed": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "Code version, git commit and reference-data review date behind this answer; full detail at GET /v1/provenance"
                     },
                     "resolutions": {
                       "type": "array",
@@ -1300,6 +1346,24 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/provenance": {
+      "get": {
+        "summary": "Code and data provenance",
+        "description": "Service version, git commit (link to the exact source), and the edition or review date of each data source.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 }
               }
             }

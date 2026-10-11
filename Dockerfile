@@ -9,6 +9,8 @@ COPY data/*.json ./data/
 RUN npm run build && npm prune --omit=dev
 
 FROM node:22-slim
+ARG GIT_COMMIT=
+ENV GIT_COMMIT=${GIT_COMMIT}
 ENV NODE_ENV=production PORT=8080 HOST=0.0.0.0 DSLD_STORE_PATH=/data/dsld.sqlite
 WORKDIR /app
 # Label store volume; created here so a fresh named volume is owned by the node user.

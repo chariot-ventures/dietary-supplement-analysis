@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0 (2026-10-11)
+
+- **Remote MCP server** at `POST /mcp` (Streamable HTTP, stateless): the same five tools for Claude, claude.ai connectors, Cursor and other MCP clients. `stack_analyze` defaults to the compact summary there. [mcp/dsa-mcp.mjs](mcp/dsa-mcp.mjs) is a zero-dependency stdio bridge that can send every call through Pocket Network via a local `pocket-ap` listener. [mcp/server.json](mcp/server.json) is ready for the official MCP Registry.
+- **`detail: "summary"`** on `/v1/stack/analyze`: a 1–3 KB answer with the summary, flagged nutrients, suggestions, resolutions and candidate verdicts.
+- **Provenance:** every analysis carries the code version, git commit and reference-data review date; `GET /v1/provenance` lists the edition of each data source. The auto-deploy passes the commit into the image.
+
 ## 0.4.1 (2026-10-11)
 
 - `DATA_SUSPECT` `duplicate_row` no longer fires when the repeated rows declare different forms (for example calcium as carbonate and as citrate).

@@ -1,6 +1,6 @@
 {
   "service": "dietary-supplement-analysis",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "as_of": "<date>",
   "profile": {
     "age": 34,
@@ -1221,6 +1221,11 @@
       "source_url": null
     }
   ],
+  "provenance": {
+    "version": "0.5.0",
+    "commit": null,
+    "reference_values_reviewed": "2026-10-11"
+  },
   "sources": [
     {
       "name": "NIH Dietary Supplement Label Database",

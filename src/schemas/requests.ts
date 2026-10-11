@@ -93,6 +93,10 @@ export const analyzeRequest = z
     age: age.optional(),
     sex: sex.optional(),
     life_stage: lifeStage.optional(),
+    detail: z
+      .enum(['summary', 'full'])
+      .default('full')
+      .describe('"summary" returns only what an agent needs to answer (agent_summary, flagged nutrients, suggestions, resolutions, candidate verdicts), about 1-3 KB instead of 20-40 KB'),
     diet: z
       .enum(['none', 'typical'])
       .default('none')

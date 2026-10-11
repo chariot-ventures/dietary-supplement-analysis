@@ -399,7 +399,15 @@ export function buildOpenApi(): Json {
               suggestions: { type: 'integer' },
             },
           },
+          detail: { type: 'string', const: 'summary', description: 'Present only with "detail": "summary": the response then has profile, summary, agent_summary, resolutions, flagged, suggestions, candidate_results, data_gap_codes and provenance' },
           agent_summary: { type: 'string', description: 'Two to five plain sentences summarizing the result, ready to relay as written' },
+          flagged: { type: 'array', items: { type: 'object' }, description: 'detail=summary only: flagged nutrients with amount, UL, percent, severity and UL basis' },
+          data_gap_codes: { type: 'array', items: { type: 'string' }, description: 'detail=summary only' },
+          provenance: {
+            type: 'object',
+            properties: { version: { type: 'string' }, commit: nullable('string'), reference_values_reviewed: { type: 'string' } },
+            description: 'Code version, git commit and reference-data review date behind this answer; full detail at GET /v1/provenance',
+          },
           resolutions: { type: 'array', items: { $ref: '#/components/schemas/Resolution' }, description: 'Present when any product was given as {query} or {upc}' },
           assumptions: { type: 'array', items: { type: 'string' } },
           suggestions: { type: 'array', items: { $ref: '#/components/schemas/Suggestion' } },
@@ -438,6 +446,13 @@ export function buildOpenApi(): Json {
           custom: { age: 6, sex: 'male', products: [{ name: 'Immune gummy', ingredients: [{ name: 'zinc', amount: 10, unit: 'mg' }] }] },
         },
       ),
+      '/v1/provenance': {
+        get: {
+          summary: 'Code and data provenance',
+          description: 'Service version, git commit (link to the exact source), and the edition or review date of each data source.',
+          responses: { '200': { description: 'OK', content: { 'application/json': { schema: { type: 'object' } } } } },
+        },
+      },
       '/v1/tools': {
         get: {
           summary: 'Tool definitions for function calling',

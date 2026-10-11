@@ -7,7 +7,7 @@ A Pocket Network service (`dietary-supplement-analysis`) for AI agents. Give it 
 - **Running a supplier or gateway:** see [OPERATORS.md](OPERATORS.md).
 - **What it is not:** medical advice, an efficacy database or an interaction checker. It reports what labels declare and how the totals compare with published reference values. For medications, see the Pocket services `med-safety` and `fda`.
 
-> **Status:** `v0.4.1` (see [CHANGELOG.md](CHANGELOG.md)). Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
+> **Status:** `v0.5.0` (see [CHANGELOG.md](CHANGELOG.md)). Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
 
 ## For judges: try it in one minute
 
@@ -70,7 +70,9 @@ curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: 
 curl -s https://agents.trackmysupplement.com/v1/products/lookup -H 'Content-Type: application/json' -d '{"upc":"031604026974"}'
 ```
 
-**5. For agent frameworks:** `GET /v1/tools` returns every operation as a tool definition with a JSON Schema input, and `GET /v1/guide` returns a usage guide (also in [llms.txt](llms.txt)).
+**5. As an MCP server:** add `https://agents.trackmysupplement.com/mcp` as a custom connector in Claude (or any MCP client). See [mcp/README.md](mcp/README.md), including a local bridge that pays per call through Pocket Network.
+
+**6. For agent frameworks:** `GET /v1/tools` returns every operation as a tool definition with a JSON Schema input, and `GET /v1/guide` returns a usage guide (also in [llms.txt](llms.txt)).
 
 ### Through Pocket Network (paid relay)
 
@@ -102,9 +104,11 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.4.1"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.5.0"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
+| POST | `/mcp` | Remote MCP server (Streamable HTTP, stateless): the same tools for MCP clients |
+| GET | `/v1/provenance` | Code version, git commit and the edition of each data source |
 | GET | `/v1/tools` | Tool definitions (`name`, `description`, JSON Schema `input_schema`) for function calling |
 | GET | `/v1/guide` | Usage guide for agents, as markdown inside JSON (same text as [llms.txt](llms.txt)) |
 | POST | `/v1/stack/analyze` | One call: per-nutrient totals across 1–15 products (names, barcodes, IDs or custom), flags, fixes, what-if candidates |
@@ -133,6 +137,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 - **Products** (1–15) can be a product name (`query`, optionally with `brand`), a barcode (`upc`), a DSLD ID, or a custom product with explicit ingredients. Custom ingredients may give a `form` (for example `"folic acid"` or `"d-alpha tocopherol"`) so IU and DFE conversions can be applied.
 - **Names and barcodes** are resolved server-side. A name is matched against DSLD search results by the share of its words found in the brand and product name; label versions of the same product are collapsed and the newest on-market one is used. `resolutions[]` records each match with `confidence` (`high`: every word matched one product; `medium`: every word matched but other products did too, or most words matched; `low`: under 60%) and up to three alternatives. A product that can't be identified is reported (`PRODUCT_NOT_RESOLVED`) and left out; the call fails with 404 only when nothing could be identified.
 - **`diet: "typical"`** adds the US average daily intake from food and drinks for the age and sex (What We Eat in America, NHANES 2017–March 2020) and repeats the comparisons in `with_typical_diet`. Food counts toward a UL only where the UL covers it: all of it for total-intake ULs, food folic acid for folate, retinol for vitamin A, added vitamin E for vitamin E, none for magnesium. It isn't applied under age 2 or in pregnancy and lactation.
+- **`detail: "summary"`** returns only what an agent needs to answer (`agent_summary`, `flagged` nutrients, `suggestions`, `resolutions`, candidate verdicts, `data_gap_codes`, `provenance`), typically 1–3 KB instead of 20–40 KB.
 - **Candidates** (up to 5) are products the user is considering. Each is evaluated as an addition to the stack in `candidate_results[]` and isn't counted in the totals.
 - `servings_per_day` defaults to the label's maximum daily servings, or 1 if the label doesn't say. Every default is listed in `assumptions`.
 - `age` and `sex` are optional. Without them you get totals and overlaps, but no reference comparisons.

@@ -26,6 +26,7 @@ POST /v1/stack/analyze with what the user said, as written:
      "candidates": [{"query": "vitamin d3 5000 iu"}]}
 
 - products: 1-15. Each is a product name ({"query"}), a barcode ({"upc"}), a DSLD ID ({"dsld_id"}), or a custom product with explicit ingredients. Pass "servings_per_day" whenever the user said how much they take; otherwise the label's maximum daily servings is assumed (listed in assumptions).
+- detail (optional): "summary" for a compact 1-3 KB answer (recommended when the result goes into your context); "full" (default) for every field.
 - diet (optional): "typical" adds US average food and drink intake for the age and sex (NHANES) and repeats the checks in nutrient_totals[].with_typical_diet. Use it when the user asks whether their total intake is too high or too low.
 - candidates (optional, up to 5): products the user is thinking of adding. Each is evaluated as an addition in candidate_results[].
 - age and sex together enable upper-limit checks. Add "life_stage": "pregnancy" or "lactation" (female, 14-50) for those reference values. For infants, give age as a fraction of a year (0.25 = 3 months).
@@ -45,6 +46,8 @@ Read the response in this order:
 - POST /v1/nutrients/reference {"nutrient", "age", "sex"}: RDA, EAR, AI, UL and UL basis. Offline.
 - POST /v1/tool {"tool", "arguments"}: one dispatcher for all of the above.
 - GET /v1/tools: tool definitions with JSON Schema inputs, ready for function calling.
+- POST /mcp: the same tools as a remote MCP server (Streamable HTTP); stack_analyze defaults to detail "summary" there.
+- GET /v1/provenance: code version, git commit and data editions behind every answer.
 - GET /openapi.json: OpenAPI 3.1.
 
 ## Rules for relaying results

@@ -7,6 +7,7 @@ import type { CallOptions, DsldClient, LabelResult } from '../lib/dsld.js';
 import { AppError } from '../lib/errors.js';
 import { dedupeSources, envelope, type Source } from '../lib/envelope.js';
 import { normalizeCustomProduct, normalizeDsldLabel, type DataGap } from '../lib/label.js';
+import { provenanceShort } from '../lib/provenance.js';
 import { analyzeRequest, assertSupportedProfile, parseBody, type StackProductInput } from '../schemas/requests.js';
 import { upstreamBudget, type Deps } from './deps.js';
 
@@ -212,16 +213,60 @@ export async function analyze(body: unknown, deps: Deps) {
   });
 
   const { sources, products, summary, profile: prof, assumptions, nutrient_totals, overlaps, unrecognized_ingredients, data_gaps } = analysis;
+  const fullSummary = {
+    ...summary,
+    products_unresolved: unresolvedGaps.length,
+    suggestions: suggestions.length,
+    ...(req.diet === 'typical' ? { diet_estimates: dietApplied, diet_only_flags: dietFlags.length } : {}),
+  };
+  const allSources = dedupeSources([...sources, ...extraSources]);
+
+  if (req.detail === 'summary') {
+    // Compact form: only what an agent needs to answer, typically 1-3 KB.
+    const flagged = nutrient_totals.filter((t) => t.flags.length || t.with_typical_diet?.flags.length);
+    return envelope(
+      {
+        detail: 'summary',
+        profile: prof,
+        summary: fullSummary,
+        agent_summary: text,
+        ...(resolutions.length
+          ? {
+              resolutions: resolutions.map((r) => ({
+                input_path: r.input_path,
+                status: r.status,
+                dsld_id: r.dsld_id,
+                name: [r.brand, r.name].filter(Boolean).join(' ') || null,
+                confidence: r.confidence,
+                alternatives: r.alternatives.slice(0, 2).map((a) => ({ dsld_id: a.dsld_id, name: [a.brand, a.name].filter(Boolean).join(' ') })),
+              })),
+            }
+          : {}),
+        flagged: flagged.map((t) => ({
+          nutrient_id: t.nutrient_id,
+          name: t.name,
+          amount_toward_ul: t.amount_toward_ul,
+          ul: t.reference?.ul ?? null,
+          percent_of_ul: t.percent_of_ul,
+          flags: t.flags,
+          severity: t.severity,
+          ul_basis: t.reference?.ul_basis ?? null,
+          ...(t.with_typical_diet ? { with_typical_diet: { percent_of_ul: t.with_typical_diet.percent_of_ul, flags: t.with_typical_diet.flags } } : {}),
+        })),
+        suggestions: suggestions.map((s) => ({ nutrient_id: s.nutrient_id, action: s.action, product_ref: s.product_ref, resolves: s.resolves, text: s.text })),
+        ...(req.candidates ? { candidate_results: candidateResults.map((c) => ({ product_ref: c.product_ref, verdict: c.verdict, text: c.text })) } : {}),
+        data_gap_codes: [...new Set(data_gaps.map((g) => g.code))],
+        provenance: provenanceShort(),
+      },
+      allSources.slice(0, 8),
+    );
+  }
+
   // Short fields first (gateways and agents read the start); large arrays last.
   return envelope(
     {
       profile: prof,
-      summary: {
-        ...summary,
-        products_unresolved: unresolvedGaps.length,
-        suggestions: suggestions.length,
-        ...(req.diet === 'typical' ? { diet_estimates: dietApplied, diet_only_flags: dietFlags.length } : {}),
-      },
+      summary: fullSummary,
       agent_summary: text,
       ...(resolutions.length ? { resolutions } : {}),
       assumptions,
@@ -232,8 +277,9 @@ export async function analyze(body: unknown, deps: Deps) {
       unrecognized_ingredients,
       data_gaps,
       products,
+      provenance: provenanceShort(),
     },
-    dedupeSources([...sources, ...extraSources]),
+    allSources,
   );
 }
 

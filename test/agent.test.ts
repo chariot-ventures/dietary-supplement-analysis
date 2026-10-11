@@ -331,3 +331,27 @@ describe('diet: "typical"', () => {
     expect(body.assumptions.join(' ')).toMatch(/diet "typical" was not applied/);
   });
 });
+
+describe('detail: "summary" and provenance', () => {
+  it('returns a compact answer with the flagged nutrients only', async () => {
+    const payload = { age: 62, sex: 'female', products: [{ dsld_id: 900007 }, { dsld_id: 900002, servings_per_day: 1 }], candidates: [{ dsld_id: 900001 }] };
+    const full = await post('/v1/stack/analyze', payload);
+    const res = await post('/v1/stack/analyze', { ...payload, detail: 'summary' });
+    const body = res.json();
+    expect(body.detail).toBe('summary');
+    expect(body.flagged.map((f: { nutrient_id: string }) => f.nutrient_id)).toEqual(['zinc']);
+    expect(body.flagged[0]).toMatchObject({ severity: 'high', ul: 40, ul_basis: expect.stringMatching(/copper/) });
+    expect(body.suggestions[0]).toMatchObject({ action: 'remove_product', resolves: true });
+    expect(body.candidate_results[0]).toMatchObject({ verdict: expect.any(String), text: expect.any(String) });
+    expect(body.agent_summary).toBe(full.json().agent_summary);
+    expect(body.nutrient_totals).toBeUndefined();
+    expect(res.body.length).toBeLessThan(full.body.length / 4);
+  });
+
+  it('every analysis says which code and data produced it; /v1/provenance has the detail', async () => {
+    const res = await post('/v1/stack/analyze', { products: [{ dsld_id: 900001 }] });
+    expect(res.json().provenance).toMatchObject({ version: expect.any(String), reference_values_reviewed: expect.any(String) });
+    const p = (await app.inject({ method: 'GET', url: '/v1/provenance' })).json();
+    expect(p).toMatchObject({ service: 'dietary-supplement-analysis', data: { typical_intake: { name: expect.stringMatching(/What We Eat in America/) } } });
+  });
+});

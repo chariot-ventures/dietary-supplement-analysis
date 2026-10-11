@@ -111,7 +111,7 @@ tagname=v$version-${sha:0:7}
 log "deploying $label ($sha, version $version; running: $(cat "$STATE/deployed-label" 2>/dev/null || echo none))"
 log "source $(git -C "$SRC" log -1 --format='%h %s' | cut -c1-80)"
 
-if ! docker build -q -t "$IMAGE:$tagname" "$SRC" >/dev/null; then
+if ! docker build -q --build-arg GIT_COMMIT="$sha" -t "$IMAGE:$tagname" "$SRC" >/dev/null; then
   log "build failed for $label"; echo "$sha" >> "$STATE/failed-shas"; exit 1
 fi
 
