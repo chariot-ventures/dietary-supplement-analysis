@@ -7,7 +7,7 @@ A Pocket Network service (`dietary-supplement-analysis`) for AI agents. Give it 
 - **Running a supplier or gateway:** see [OPERATORS.md](OPERATORS.md).
 - **What it is not:** medical advice, an efficacy database or an interaction checker. It reports what labels declare and how the totals compare with published reference values. For medications, see the Pocket services `med-safety` and `fda`.
 
-> **Status:** `v0.1.0`. Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Beta TestNet deployment (Phase 4) hasn't started yet; the demo endpoint and judge instructions come in Phase 6.
+> **Status:** `v0.1.0`. Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). A direct demo endpoint for judges is at `https://agents.trackmysupplement.com`. Full judge instructions come in Phase 6.
 
 ### Try it (real DSLD labels)
 

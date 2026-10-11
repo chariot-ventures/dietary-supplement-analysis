@@ -1,0 +1,7 @@
+# pocket-ap client config for relaying to dietary-supplement-analysis on Beta.
+network: beta
+listeners:
+  - addr: 127.0.0.1:8550
+    service_id: dietary-supplement-analysis
+    rpc_type: rest
+apps: []          # empty: the app key is read from POCKET_APP_PRIVATE_KEY

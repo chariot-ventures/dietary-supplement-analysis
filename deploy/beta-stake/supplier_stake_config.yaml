@@ -1,0 +1,13 @@
+# Supplier stake for dietary-supplement-analysis on Beta TestNet (public addresses only).
+# Sign with the OWNER key (dsa-owner) on this Mac; the stake is drawn from the owner wallet.
+# supplier min_stake (live, 2026-10-11): 59,500 POKT. Staking 60,000 POKT.
+owner_address: pokt1yypd76yqufdd8emv406ukjk8pu7ync57k9m3l3
+operator_address: pokt1kq7d6j7g3gq98rwsxlx9llwhnmy4qqedrqhej0
+stake_amount: 60000000000upokt
+default_rev_share_percent:
+  pokt1yypd76yqufdd8emv406ukjk8pu7ync57k9m3l3: 100
+services:
+  - service_id: dietary-supplement-analysis
+    endpoints:
+      - publicly_exposed_url: https://pokt-beta.trackmysupplement.com
+        rpc_type: REST

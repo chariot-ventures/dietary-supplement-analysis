@@ -1,0 +1,4 @@
+# Test application stake (dsa-app key). application min_stake (live): 1,000 POKT. Staking 1,100 POKT.
+stake_amount: 1100000000upokt
+service_ids:
+  - dietary-supplement-analysis
