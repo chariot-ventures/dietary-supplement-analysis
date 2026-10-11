@@ -1,0 +1,40 @@
+# Daily, and on demand: run every command the docs give judges and agent builders,
+# exactly as written, against the live demo endpoint (scripts/check-doc-commands.py),
+# plus the agent-loop example with a stand-in model. If the repository has an
+# ANTHROPIC_API_KEY secret, the agent loop also runs once with the real model.
+name: docs check
+
+on:
+  schedule:
+    - cron: '37 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install anthropic requests
+      - name: Documented commands
+        run: python3 scripts/check-doc-commands.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Agent loop with a stand-in model
+        run: python3 examples/test_agent_loop.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Agent loop with the real model
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "No ANTHROPIC_API_KEY secret; skipped." | tee -a "$GITHUB_STEP_SUMMARY"; exit 0; fi
+          out=$(python3 examples/agent_loop.py "I'm 66, on Synthroid, and take Centrum Silver Women 50+ and Caltrate 600+D3. Anything I should know?")
+          printf '### Real model answer\n\n%s\n' "$out" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "$out" | grep -qiE 'calcium|levothyroxine|synthroid'
