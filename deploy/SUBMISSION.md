@@ -45,4 +45,6 @@ curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: 
 8. Through Pocket Network: stake an application for dietary-supplement-analysis on Beta TestNet and relay with pocket-ap using deploy/beta-stake/pocket-ap.yaml (README, "Through Pocket Network (paid relay)"). The test transaction above is the settled claim for such a relay.
 
 Every response is a JSON object, errors are 4xx (never 5xx), and GET /openapi.json and GET /v1/tools describe every operation. The README's "Why it matters for Pocket Network" section covers demand, repeat relays and the free-trial-to-paid path.
+
+Tested as documented: a daily GitHub workflow runs every command in this form and the README exactly as written against the live endpoint (all 12 checks pass, including the five agent flows), and examples/agent_loop.py was tested end to end with a real Claude model. Every response says it is information, not medical advice, and links the terms of use (TERMS.md). The code is MIT licensed.
 ```
