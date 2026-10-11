@@ -32,14 +32,17 @@ client = anthropic.Anthropic()
 question = " ".join(sys.argv[1:]) or "I take Centrum Silver Women 50+ and Thompson Zinc 50 mg. I'm 62. Is that too much of anything?"
 messages = [{"role": "user", "content": question}]
 
-for _ in range(6):  # a few rounds of tool calls at most
+used = {"input": 0, "output": 0}
+for _ in range(4):  # a few rounds of tool calls at most, to bound the cost
     response = client.messages.create(
         model=MODEL,
-        max_tokens=1500,
+        max_tokens=1000,
         system="Answer supplement questions using the dietary-supplement-analysis tools. Relay agent_summary faithfully, cite the sources it gives, and never say a routine is safe.",
         tools=tools,
         messages=messages,
     )
+    used["input"] += response.usage.input_tokens
+    used["output"] += response.usage.output_tokens
     messages.append({"role": "assistant", "content": response.content})
     calls = [b for b in response.content if b.type == "tool_use"]
     if not calls:
@@ -47,7 +50,12 @@ for _ in range(6):  # a few rounds of tool calls at most
         break
     results = []
     for call in calls:
-        r = requests.post(f"{BASE}/v1/tool", json={"tool": call.name, "arguments": call.input}, timeout=60)
+        args = dict(call.input)
+        if call.name == "stack_analyze":
+            # The short form (1-3 KB instead of 20-40 KB) holds everything needed to answer, and costs far fewer tokens.
+            args.setdefault("detail", "summary")
+        r = requests.post(f"{BASE}/v1/tool", json={"tool": call.name, "arguments": args}, timeout=60)
         print(f"[tool] {call.name} -> HTTP {r.status_code}", file=sys.stderr)
         results.append({"type": "tool_result", "tool_use_id": call.id, "content": json.dumps(r.json()), "is_error": r.status_code >= 400})
     messages.append({"role": "user", "content": results})
+print(f"[usage] {used['input']} input and {used['output']} output tokens", file=sys.stderr)

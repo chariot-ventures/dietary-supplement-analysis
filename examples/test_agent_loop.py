@@ -36,7 +36,7 @@ FAKE = textwrap.dedent('''
                     assert t["input_schema"].get("type") == "object", t["name"]
                     assert t["description"].strip(), t["name"]
                 checks.append(f"{len(tools)} tool definitions accepted: " + ", ".join(t["name"] for t in tools))
-                return NS(content=[NS(type="text", text="Checking."), NS(type="tool_use", id="toolu_test_1", name="stack_analyze", input=CALL)])
+                return NS(usage=NS(input_tokens=0, output_tokens=0), content=[NS(type="text", text="Checking."), NS(type="tool_use", id="toolu_test_1", name="stack_analyze", input=CALL)])
             last = messages[-1]
             assert last["role"] == "user", last
             result = last["content"][0]
@@ -46,7 +46,7 @@ FAKE = textwrap.dedent('''
             summary = body["agent_summary"]
             assert "levothyroxine" in summary.lower() or "synthroid" in summary.lower(), summary
             checks.append("tool_result carried the service answer (" + str(len(result["content"])) + " bytes)")
-            return NS(content=[NS(type="text", text="MODEL ANSWER: " + summary)])
+            return NS(usage=NS(input_tokens=0, output_tokens=0), content=[NS(type="text", text="MODEL ANSWER: " + summary)])
 
     class Anthropic:
         def __init__(self, *a, **k):

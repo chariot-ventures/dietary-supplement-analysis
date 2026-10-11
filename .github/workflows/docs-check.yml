@@ -1,13 +1,19 @@
 # Daily, and on demand: run every command the docs give judges and agent builders,
 # exactly as written, against the live demo endpoint (scripts/check-doc-commands.py),
-# plus the agent-loop example with a stand-in model. If the repository has an
-# ANTHROPIC_API_KEY secret, the agent loop also runs once with the real model.
+# plus the agent-loop example with a stand-in model. The real model (which costs API
+# credit) runs only when someone starts the workflow by hand with "real model" ticked;
+# scheduled runs never use it.
 name: docs check
 
 on:
   schedule:
     - cron: '37 13 * * *'
   workflow_dispatch:
+    inputs:
+      real_model:
+        description: Also run the agent loop once with the real model (uses ANTHROPIC_API_KEY credit, a few cents)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -31,6 +37,7 @@ jobs:
       - name: Agent loop with a stand-in model
         run: python3 examples/test_agent_loop.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Agent loop with the real model
+        if: github.event_name == 'workflow_dispatch' && inputs.real_model
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
