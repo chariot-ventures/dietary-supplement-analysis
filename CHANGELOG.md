@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.12.5 (2026-10-11)
+
+- FDA summary: \"1 FDA adverse event report names a product\" (was \"name\").
+- README: the judges' section is now real questions with the live answers, plus why the service matters for Pocket Network; Dependabot opens minor and patch updates only.
+
 ## 0.12.4 (2026-10-11)
 
 - The repository moved to the Chariot Ventures GitHub account: [chariot-ventures/dietary-supplement-analysis](https://github.com/chariot-ventures/dietary-supplement-analysis). Every link (card, docs, provenance, free-trial message, auto-deploy, images at `ghcr.io/chariot-ventures/dietary-supplement-analysis`) points there; old links redirect. The official MCP Registry name is now `io.github.chariot-ventures/dietary-supplement-analysis`.

@@ -131,7 +131,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.12.4"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.12.5"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
 | POST | `/mcp` | Remote MCP server (Streamable HTTP, stateless): the same tools for MCP clients |
