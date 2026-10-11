@@ -31,6 +31,8 @@ It runs on Pocket Network Beta TestNet as the paid service `dietary-supplement-a
 | Relay endpoint (staked supplier) | `https://pokt-beta.trackmysupplement.com`. Accepts signed Pocket relays only. |
 | Demo endpoint (direct, free trial) | `https://agents.trackmysupplement.com`. The same backend without the relay layer, so you can use `curl`. Up to 30 requests a minute and 100 calls a day per client ([details](#limits)); over a limit it returns `429` with `"code":"RATE_LIMITED"` and a `Retry-After` header. |
 
+Paying agents call the service through Pocket Network: with an application staked for `dietary-supplement-analysis` on Beta, relay with `pocket-ap` as shown in [Through Pocket Network](#through-pocket-network-paid-relay). The paths and request bodies below are the same either way; the demo endpoint just skips the relay layer so you can use `curl` without staking.
+
 Each example is one call, made the way an assistant would make it after a user describes their routine in plain words. `jq -r .agent_summary` prints the answer the assistant relays; a trimmed copy of the live answer is shown under each one.
 
 **1. "I'm 74 and on Coumadin. I take Centrum Silver, fish oil and ginkgo."**
@@ -88,9 +90,7 @@ curl -s https://agents.trackmysupplement.com/v1/products/fda -H 'Content-Type: a
 
 For a product with recalls, try `{"query":"Nature Made Vitamin D3 1000 IU"}`: FDA lists 4 matching recalls.
 
-**6. In Claude, or any MCP client:** add `https://agents.trackmysupplement.com/mcp` as a custom connector (no key needed for the free trial) and ask in plain words, for example "I take Centrum Silver and 5000 IU of vitamin D and I'm on warfarin. Anything I should know?". The assistant calls `stack_analyze` and answers with the citations. See [mcp/README.md](mcp/README.md), including a local bridge that pays per call through Pocket Network.
-
-**7. Agent to agent:** much of the use is expected to come from other agents doing a bigger job, with no person typing: a pharmacy agent checking a new prescription against the supplements on file, a shopping agent checking a cart before checkout, a vision agent passing along a label it read from a photo, a coaching agent's weekly check, and a medication-review agent combining this service with drug-drug services. [examples/](examples/README.md) has all five as one script (`bash examples/agent-flows.sh`), plus a 50-line assistant that loads the tools from `GET /v1/tools` and lets a model call them ([agent_loop.py](examples/agent_loop.py)).
+**6. Agent to agent:** much of the use is expected to come from other agents doing a bigger job, with no person typing: a pharmacy agent checking a new prescription against the supplements on file, a shopping agent checking a cart before checkout, a vision agent passing along a label it read from a photo, a coaching agent's weekly check, and a medication-review agent combining this service with drug-drug services. [examples/](examples/README.md) has all five as one script (`bash examples/agent-flows.sh`), plus a 50-line assistant that loads the tools from `GET /v1/tools` and lets a model call them ([agent_loop.py](examples/agent_loop.py)).
 
 **More calls:** `POST /v1/nutrients/reference` (RDA and UL for one nutrient, offline), `POST /v1/products/search` (find labels), `POST /v1/interactions/check` (medications without a stack), and `GET /v1/tools`, `GET /v1/guide` and `GET /openapi.json` for agent frameworks. All are listed under [Endpoints](#endpoints).
 
