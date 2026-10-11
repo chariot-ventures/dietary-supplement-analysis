@@ -111,8 +111,14 @@ tagname=v$version-${sha:0:7}
 log "deploying $label ($sha, version $version; running: $(cat "$STATE/deployed-label" 2>/dev/null || echo none))"
 log "source $(git -C "$SRC" log -1 --format='%h %s' | cut -c1-80)"
 
-if ! docker build -q --build-arg GIT_COMMIT="$sha" -t "$IMAGE:$tagname" "$SRC" >/dev/null; then
-  log "build failed for $label"; echo "$sha" >> "$STATE/failed-shas"; exit 1
+# A build that hangs (for example npm ci looping on an impossible version range) is stopped after
+# BUILD_TIMEOUT and counts as failed, so the timer moves on to the next commit.
+if ! timeout "${BUILD_TIMEOUT:-15m}" docker build -q --build-arg GIT_COMMIT="$sha" -t "$IMAGE:$tagname" "$SRC" >/dev/null; then
+  log "build failed or timed out for $label"; echo "$sha" >> "$STATE/failed-shas"
+  # The classic builder keeps running the step's container after the client is stopped; remove build steps
+  # (the service itself runs node, never npm).
+  docker ps -a --no-trunc --format '{{.ID}} {{.Command}}' | grep -E '"/bin/sh -c npm (ci|run)' | cut -d' ' -f1 | xargs -r docker rm -f >/dev/null 2>&1 || true
+  exit 1
 fi
 
 # ---- 3. smoke test in a throwaway container with no published ports ----
