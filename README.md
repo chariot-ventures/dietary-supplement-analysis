@@ -31,80 +31,66 @@ It runs on Pocket Network Beta TestNet as the paid service `dietary-supplement-a
 | Relay endpoint (staked supplier) | `https://pokt-beta.trackmysupplement.com`. Accepts signed Pocket relays only. |
 | Demo endpoint (direct, free trial) | `https://agents.trackmysupplement.com`. The same backend without the relay layer, so you can use `curl`. Up to 30 requests a minute and 100 calls a day per client ([details](#limits)); over a limit it returns `429` with `"code":"RATE_LIMITED"` and a `Retry-After` header. |
 
-**1. Reference intakes for one nutrient** (offline data, instant):
+Each example is one call, made the way an assistant would make it after a user describes their routine in plain words. `jq -r .agent_summary` prints the answer the assistant relays; a trimmed copy of the live answer is shown under each one.
+
+**1. "I'm 74 and on Coumadin. I take Centrum Silver, fish oil and ginkgo."**
 
 ```bash
-curl -s https://agents.trackmysupplement.com/v1/nutrients/reference \
-  -H 'Content-Type: application/json' -d '{"nutrient":"vitamin d","age":34,"sex":"female"}'
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
+  "age": 74, "sex": "female", "detail": "summary", "medications": ["Coumadin"],
+  "products": [{"query": "Centrum Silver Women 50+"}, {"query": "Nature Made Fish Oil 1200 mg"}, {"query": "Ginkgo Biloba 120 mg"}]}' | jq -r .agent_summary
 ```
 
-Returns RDA 15 mcg, EAR 10 mcg and UL 100 mcg, with the NIH fact sheet link.
+> Ginkgo (in Nutricost Ginkgo Biloba 120 mg): NCCIH: ginkgo may increase the risk of bleeding in people taking anticoagulants such as warfarin. Coumadin with Vitamin K in this stack: Vitamin K counteracts warfarin; NIH describes a serious and potentially dangerous interaction. Coumadin with Vitamin E in this stack: … Coumadin with EPA/DHA in this stack: High-dose fish oil may prolong clotting time and raise INR … 1 more interaction finding in interactions.findings.
 
-**2. Search real labels in the NIH Dietary Supplement Label Database:**
+The brand name is recognized as warfarin, three products are found by name in the NIH label database, and every warning cites its NIH or NCCIH fact sheet.
+
+**2. "I'm pregnant. I take a prenatal, vitamin A 25,000 IU for my skin, and ashwagandha for stress."**
 
 ```bash
-curl -s https://agents.trackmysupplement.com/v1/products/search \
-  -H 'Content-Type: application/json' -d '{"query":"vitamin d3 5000","limit":3}'
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
+  "age": 29, "sex": "female", "life_stage": "pregnancy", "detail": "summary",
+  "products": [{"query": "Nature Made Prenatal Multi + DHA"}, {"query": "vitamin A 25000 IU"}, {"query": "ashwagandha root extract"}]}' | jq -r .agent_summary
 ```
 
-**3. Analyze a whole supplement stack in one call**, naming products the way a user would (no IDs needed), and ask what adding one more would do:
+> Vitamin A: 7500 mcg a day vs a UL of 3000 mcg (250%) … The UL guards against liver damage, and birth defects when taken in pregnancy (preformed vitamin A only). Leaving out … Vitamin A 25000 IU would bring Vitamin A to 0 mcg. Ashwagandha: … NCCIH: avoid ashwagandha during pregnancy and while breastfeeding.
+
+**3. "I'm 62: Centrum Silver, fish oil, magnesium and zinc. Should I add vitamin D 5000?"** With `"diet": "typical"`, food is counted too.
 
 ```bash
 curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
   "age": 62, "sex": "female", "diet": "typical",
-  "products": [
-    {"query": "Centrum Silver Women 50+"},
-    {"query": "Nature Made Ultra Fish Oil 1400"},
-    {"query": "KAL Magnesium Glycinate 400"},
-    {"query": "Thompson Zinc 50 mg", "servings_per_day": 1}
-  ],
-  "candidates": [{"query": "vitamin d3 5000 iu"}]}'
+  "products": [{"query": "Centrum Silver Women 50+"}, {"query": "Nature Made Ultra Fish Oil 1400"},
+               {"query": "KAL Magnesium Glycinate 400"}, {"query": "Thompson Zinc 50 mg", "servings_per_day": 1}],
+  "candidates": [{"query": "vitamin d3 5000 iu"}]}' | jq -r .agent_summary
 ```
 
-Read `agent_summary` first: plain sentences an agent can relay as written. Then:
-- `resolutions`: which NIH label each name was matched to, with `confidence` (high/medium/low) and alternatives.
-- `nutrient_totals`: per nutrient, the daily total, `flags` (`above_ul`, `near_ul`), `severity`, the percent of the upper limit (UL), `reference.ul_basis` (what the UL protects against) and each product's contribution.
-- `suggestions`: single-product changes that would bring an above-UL nutrient back under its UL, with the resulting amount.
-- `candidate_results`: what adding each candidate would change.
-- `with_typical_diet` (because of `"diet": "typical"`): each nutrient again with US average food and drink intake for her age added, so the UL check reflects total intake.
-- `data_gaps`: anything that couldn't be counted, and `DATA_SUSPECT` entries where NIH's label record looks wrong.
+> Zinc: 65 mg a day vs a UL of 40 mg (163%), mostly from Thompson Zinc 50 mg. The UL guards against reduced copper status … Magnesium: 500 mg a day vs a UL of 350 mg (143%) … Leaving out Thompson Zinc 50 mg would bring zinc to 15 mg (37.5% of the UL). … Adding … Vitamin D3 5000 IU would put Vitamin D (150% of the UL) above the upper limit.
 
-The classic version with DSLD IDs still works. This stack (a vitamin D3 5000 IU softgel, a women's multivitamin, Natrol Magnesium Night and 250 mg of magnesium) comes back with vitamin D at 150 mcg against a 100 mcg UL and magnesium at 575 mg against the 350 mg UL for supplements:
+The answer gives the one change that fixes it, and the what-if answers the question the user actually asked.
+
+**4. In Spanish: "Tomo Centrum Silver y Caltrate; tomo warfarina y levotiroxina."**
 
 ```bash
 curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
-  "age": 34, "sex": "female",
-  "products": [{"dsld_id": 230932}, {"dsld_id": 338022}, {"dsld_id": 332278},
-    {"name": "Custom magnesium", "ingredients": [{"name": "magnesium", "amount": 250, "unit": "mg"}]}]}'
+  "age": 68, "sex": "female", "lang": "es", "detail": "summary", "medications": ["warfarina", "levotiroxina"],
+  "products": [{"query": "Centrum Silver Women 50+"}, {"query": "Caltrate 600+D3"}]}' | jq -r .agent_summary
 ```
 
-**4. Medications, an herb and a Spanish summary:**
+> Warfarina con vitamina K de este conjunto: La vitamina K contrarresta la warfarina … Levotiroxina con calcio de este conjunto: … No tome la levotiroxina dentro de las 4 horas del carbonato de calcio. Levotiroxina con hierro de este conjunto: …
+
+**5. Scan a bottle:** a barcode finds the label, and the same barcode finds FDA recalls and adverse event reports.
 
 ```bash
-curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
-  "age": 70, "sex": "male", "lang": "es", "detail": "summary",
-  "medications": ["warfarin", "Synthroid"],
-  "products": [{"query": "Centrum Silver Men 50+"},
-    {"name": "Herbal", "ingredients": [{"name": "Ginkgo biloba leaf extract", "amount": 120, "unit": "mg"}]}]}'
+curl -s https://agents.trackmysupplement.com/v1/products/lookup -H 'Content-Type: application/json' -d '{"upc":"031604026974"}' | jq -r '.product.brand + " " + .product.name'
+curl -s https://agents.trackmysupplement.com/v1/products/fda -H 'Content-Type: application/json' -d '{"upc":"031604026974"}' | jq -r .agent_summary
 ```
 
-The summary, in Spanish, names the bleeding risk of ginkgo with warfarin, the multivitamin's vitamin K against warfarin, and its calcium against Synthroid with NIH's 4-hour spacing, each from the NIH or NCCIH fact sheets. `agent_summary_en` has the English text.
+For a product with recalls, try `{"query":"Nature Made Vitamin D3 1000 IU"}`: FDA lists 4 matching recalls.
 
-**5. FDA recalls and adverse event reports for one product:**
+**6. In Claude, or any MCP client:** add `https://agents.trackmysupplement.com/mcp` as a custom connector (no key needed for the free trial) and ask in plain words, for example "I take Centrum Silver and 5000 IU of vitamin D and I'm on warfarin. Anything I should know?". The assistant calls `stack_analyze` and answers with the citations. See [mcp/README.md](mcp/README.md), including a local bridge that pays per call through Pocket Network.
 
-```bash
-curl -s https://agents.trackmysupplement.com/v1/products/fda -H 'Content-Type: application/json' -d '{"query":"Nature Made Vitamin D3 1000 IU"}'
-```
-
-**6. Look up a bottle by its barcode:**
-
-```bash
-curl -s https://agents.trackmysupplement.com/v1/products/lookup -H 'Content-Type: application/json' -d '{"upc":"031604026974"}'
-```
-
-**7. As an MCP server:** add `https://agents.trackmysupplement.com/mcp` as a custom connector in Claude (or any MCP client); no key is needed for the free trial. See [mcp/README.md](mcp/README.md), including a local bridge that pays per call through Pocket Network.
-
-**8. For agent frameworks:** `GET /v1/tools` returns every operation as a tool definition with a JSON Schema input, and `GET /v1/guide` returns a usage guide (also in [llms.txt](llms.txt)).
+**More calls:** `POST /v1/nutrients/reference` (RDA and UL for one nutrient, offline), `POST /v1/products/search` (find labels), `POST /v1/interactions/check` (medications without a stack), and `GET /v1/tools`, `GET /v1/guide` and `GET /openapi.json` for agent frameworks. All are listed under [Endpoints](#endpoints).
 
 ### Through Pocket Network (paid relay)
 
@@ -128,6 +114,15 @@ pocket-ap call --config deploy/beta-stake/pocket-ap.yaml \
 | Claim for the first paid relay (settled at block 722813) | [`F3D81B3F…88EB`](https://sauron-api.beta.infra.pocket.network/cosmos/tx/v1beta1/txs/F3D81B3F797F86830CE1ACDBFBEA473EE989D4816093179A082BB423D9C788EB) | 722793 |
 
 Details and the server setup are in [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md).
+
+## Why it matters for Pocket Network
+
+- **A question millions of people have.** 60.2% of US adults took a dietary supplement in the past 30 days, 38.7% took two or more, and 75.9% of adults 60 and older took at least one ([CDC NCHS, 2021–2023](https://www.cdc.gov/nchs/products/databriefs/db561.htm)). Health, pharmacy, grocery and fitness assistants all get asked whether a routine is OK, and a good answer needs the exact amounts on each label and the NIH limits for that person, which a model alone doesn't have.
+- **Repeat calls.** Each question is one relay (500 compute units). A conversation usually brings more: the product the user is considering, a scanned barcode, an FDA check, a new prescription.
+- **Fills a gap next to Pocket's own health services.** Pocket's catalog has drug services (`fda`, `med-safety`, `clinical-trials`) but nothing for supplements, which most of those users also take. An agent that already calls those services for prescriptions can call this one for everything else in the cabinet.
+- **A free trial that leads to paid relays.** The MCP server is listed in the official MCP Registry, on Smithery and on mcpservers.org. Its free trial (25 checks a day per connection) is enough for a person to try it, and every limit message points agents with real volume to the Pocket route, which is never metered.
+- **Ready for more suppliers.** A multi-arch image is published for every release, [OPERATORS.md](OPERATORS.md) sets up a supplier in about 5 minutes, and responses never use 5xx, so gateways don't mistake a bad input for a faulty supplier.
+- **Checked.** 56 hand-worked cases pass on every release ([EVAL.md](EVAL.md)), and the live service is tested every 30 minutes against the public endpoint and the Pocket portal audit.
 
 ## Endpoints
 

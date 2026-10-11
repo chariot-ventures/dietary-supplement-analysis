@@ -25,7 +25,7 @@ export function fdaSummary(p: ProductKey, r: FdaReport): string {
   }
   const ae = r.adverse_events;
   if (r.unavailable.includes('adverse_events')) parts.push('FDA adverse event data could not be reached.');
-  else if (ae.scope === 'product') parts.push(`${num(ae.total)} FDA adverse event report${ae.total === 1 ? '' : 's'} name a product matching it${ae.top_reactions.length ? ` (most often: ${ae.top_reactions.slice(0, 3).map((t) => t.term).join(', ')})` : ''}.`);
+  else if (ae.scope === 'product') parts.push(`${num(ae.total)} FDA adverse event report${ae.total === 1 ? ' names' : 's name'} a product matching it${ae.top_reactions.length ? ` (most often: ${ae.top_reactions.slice(0, 3).map((t) => t.term).join(', ')})` : ''}.`);
   else if (ae.scope === 'brand') parts.push(`No FDA adverse event report names this product; ${num(ae.total)} name ${p.brand} products.`);
   else parts.push('No FDA adverse event report names this brand.');
   if (ae.total) parts.push(CAERS_DISCLAIMER);
