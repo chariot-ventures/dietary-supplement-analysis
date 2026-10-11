@@ -305,4 +305,4 @@ docker compose up --build     # container on 127.0.0.1:8080
 
 ## Disclaimer and licenses
 
-Information from labels and published reference data, not medical advice. Totals cover supplements only unless `diet` or `foods` is given; medications are checked for interactions, not counted. DSLD, ODS, NCCIH, RxNorm, openFDA and USDA content are U.S. Government works. No license has been chosen for the code yet.
+Information from labels and published reference data, not medical advice. Totals cover supplements only unless `diet` or `foods` is given; medications are checked for interactions, not counted. The code is under the [MIT License](LICENSE). The data it serves from DSLD, ODS, NCCIH, RxNorm, openFDA and USDA is U.S. Government work in the public domain; the curated interaction and herb files in [data/](data/) cite their NIH sources.
