@@ -7,12 +7,36 @@ A Pocket Network service (`dietary-supplement-analysis`) for AI agents. Give it 
 - **Running a supplier or gateway:** see [OPERATORS.md](OPERATORS.md).
 - **What it is not:** medical advice, an efficacy database or an interaction checker. It reports what labels declare and how the totals compare with published reference values. For medications, see the Pocket services `med-safety` and `fda`.
 
-> **Status:** `v0.1.0`. Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). A direct demo endpoint for judges is at `https://agents.trackmysupplement.com`. Full judge instructions come in Phase 6.
+> **Status:** `v0.1.0`. Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Phase 4 is done: the service is registered and staked on Beta TestNet at `https://pokt-beta.trackmysupplement.com`, and a paid relay has been claimed and settled on-chain (see [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md)). To try it, see [For judges](#for-judges-try-it-in-one-minute).
 
-### Try it (real DSLD labels)
+## For judges: try it in one minute
+
+| | |
+|---|---|
+| Service ID | `dietary-supplement-analysis` (Pocket Network Beta TestNet, `rpc_type: REST`, 500 compute units per relay) |
+| Relay endpoint (staked supplier) | `https://pokt-beta.trackmysupplement.com`. Accepts signed Pocket relays only. |
+| Demo endpoint (direct, free) | `https://agents.trackmysupplement.com`. The same backend without the relay layer, so you can use `curl`. Limited to 30 requests per minute per client; over the limit it returns `429` with `"code":"RATE_LIMITED"` and a `Retry-After` header. |
+
+**1. Reference intakes for one nutrient** (offline data, instant):
 
 ```bash
-curl -s http://localhost:8080/v1/stack/analyze -H 'Content-Type: application/json' -d '{
+curl -s https://agents.trackmysupplement.com/v1/nutrients/reference \
+  -H 'Content-Type: application/json' -d '{"nutrient":"vitamin d","age":34,"sex":"female"}'
+```
+
+Returns RDA 15 mcg, EAR 10 mcg and UL 100 mcg, with the NIH fact sheet link.
+
+**2. Search real labels in the NIH Dietary Supplement Label Database:**
+
+```bash
+curl -s https://agents.trackmysupplement.com/v1/products/search \
+  -H 'Content-Type: application/json' -d '{"query":"vitamin d3 5000","limit":3}'
+```
+
+**3. Analyze a whole supplement stack** (three real DSLD labels plus a custom product):
+
+```bash
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
   "age": 34, "sex": "female",
   "products": [
     {"dsld_id": 230932},
@@ -27,6 +51,29 @@ The stack is a vitamin D3 5000 IU softgel, a women's multivitamin, Natrol Magnes
 - Magnesium `above_ul`: 575 mg against the 350 mg UL for supplements.
 
 Folate counts only the 480 mcg of folic acid toward its UL, the blend's unquantified melatonin is reported as a data gap, and every number links to its DSLD label.
+
+### Through Pocket Network (paid relay)
+
+You need an application staked for `dietary-supplement-analysis` on Beta TestNet. Fund an address from the [Beta faucet](https://faucet.beta.pocket.network/) and stake it as an application with at least 1,000 POKT. Then install [pocket-ap](https://github.com/pokt-network/pocket-ap) and relay with this repo's [client config](deploy/beta-stake/pocket-ap.yaml):
+
+```bash
+export POCKET_APP_PRIVATE_KEY=<your app key, 64 hex>   # pocketd keys export <name> --unarmored-hex --unsafe
+pocket-ap call --config deploy/beta-stake/pocket-ap.yaml \
+  --service dietary-supplement-analysis --rpc-type rest \
+  -X POST --path /v1/stack/analyze \
+  -d '{"age":34,"sex":"female","products":[{"name":"Custom magnesium","ingredients":[{"name":"magnesium","amount":250,"unit":"mg"}]}]}' -v
+```
+
+### On-chain record (Beta TestNet)
+
+| Step | Tx hash | Block |
+|---|---|---|
+| Service registered, with the card from [card/card.json](card/card.json) | [`BC01B11F…7DD5`](https://sauron-api.beta.infra.pocket.network/cosmos/tx/v1beta1/txs/BC01B11FFF4100473B84D483026F266111CF73CE9B07584E3083EDCF19B47DD5) | 722359 |
+| Supplier staked, 60,000 POKT | [`9CBCBAAF…51FA`](https://sauron-api.beta.infra.pocket.network/cosmos/tx/v1beta1/txs/9CBCBAAF6BCF9DA0A32CBCF818D3D2B410539DFA3DAC4FC97B78E914FAB351FA) | 722747 |
+| Test application staked, 1,100 POKT | [`6734D5F4…05EE`](https://sauron-api.beta.infra.pocket.network/cosmos/tx/v1beta1/txs/6734D5F40BE1E94F5A3434E0EE8A677F00CA52A24863BA22873F1956678005EE) | 722744 |
+| Claim for the first paid relay (settled at block 722813) | [`F3D81B3F…88EB`](https://sauron-api.beta.infra.pocket.network/cosmos/tx/v1beta1/txs/F3D81B3F797F86830CE1ACDBFBEA473EE989D4816093179A082BB423D9C788EB) | 722793 |
+
+Details and the server setup are in [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md).
 
 ## Endpoints
 
@@ -151,6 +198,7 @@ docker compose up --build     # container on 127.0.0.1:8080
 - DSLD calls run at most 4 at a time, with a 6 s deadline each and an 8 s budget per request. Labels are cached for 7 days and searches for 24 hours; a stale copy is served if DSLD is down. Measured against live DSLD: a cold 15-product analyze takes 1.5 s and a warm one 17 ms.
 - Text that Pocket gateways treat as an error signal ("timeout", "block not found" and others) is `\u`-escaped in responses. It decodes to the same string.
 - Ages from 1 to 120. Infant, pregnancy and lactation values aren't included in v1.
+- The public demo endpoint allows 30 requests per minute per client and 600 per minute overall. Relays through Pocket Network aren't limited this way.
 
 ## Disclaimer and licenses
 

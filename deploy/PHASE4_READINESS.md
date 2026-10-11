@@ -70,7 +70,9 @@ The Mac operator `pokt1mj9574ugmp9ujm5qre8h7fyclmaequ0jxttfw5` is unused.
 | `dietary-supplement-analysis-backend` | built from this repo at `main` | Backend on the private `pocket-supplier` network, port 8080 |
 | `pocket-beta-redis` | `redis:8.10.1-alpine` | `noeviction`, appendonly |
 | `pocket-beta-miner`, `pocket-beta-relayer` | `ghcr.io/pokt-network/pocket-relay-miner:v0.1.0` | HA RelayMiner, chain `pocket-lego-testnet` |
-| `pocket-caddy` | `caddy:2` | TLS: `pokt-beta.` → relayer, `agents.` → backend |
+| `pocket-caddy` | `pocket-caddy-ratelimit:local` (`caddy:2` + `mholt/caddy-ratelimit`, built on the server) | TLS: `pokt-beta.` → relayer; `agents.` → backend, 30 req/min per client and 600/min overall, JSON `429 RATE_LIMITED` |
 
 Two differences from the skill's HA templates for relay-miner v0.1.0: the relayer config rejects
 `pocket_node.chain_id`, and miner `logging` accepts `format` but not `output`. Both are fixed in `provision-beta.sh`.
+
+Budget guard: Oracle budget `free-tier-guard` ($1/month, root compartment) emails an alert at 1% of actual spend.

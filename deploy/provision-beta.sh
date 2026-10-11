@@ -6,7 +6,7 @@
 #   ./provision.sh backend    clone the repo at $REF and start the backend container
 #   ./provision.sh operator   install pocketd, create the operator key ON THIS SERVER
 #   ./provision.sh stack      HA RelayMiner (redis + miner + relayer), pinned versions
-#   ./provision.sh caddy      TLS for the relay and agents hostnames (needs DNS first)
+#   ./provision.sh caddy      TLS for the relay and agents hostnames, demo route rate-limited (needs DNS first)
 #   ./provision.sh pubkey     1 uPOKT self-transfer so the operator's public key is on-chain
 #   ./provision.sh status     what is running, health, memory, operator address
 #
@@ -22,6 +22,7 @@ AGENTS_HOST=agents.trackmysupplement.com
 RM_IMAGE=ghcr.io/pokt-network/pocket-relay-miner:v0.1.0
 REDIS_IMAGE=redis:8.10.1-alpine
 CADDY_IMAGE=caddy:2
+CADDY_LOCAL_IMAGE=pocket-caddy-ratelimit:local
 POCKETD_VERSION=v0.1.35
 POCKETD_SHA_ARM64=9a13cbf008a3e20a5cbb1daef588b253ec027c07d9c7252e5854c44d8d11abc9
 POCKETD_SHA_AMD64=99b88aa839a19d6b89b4923cadbc5848ba161a828e514ea9751dffd569066a3b
@@ -271,7 +272,19 @@ phase_caddy(){
     [ "$R" = "$IP" ] || { log "$h resolves to '${R:-nothing}', not $IP; add the DNS A record first"; return 1; }
   done
   mkdir -p $ROOT/caddy
+  # Stock Caddy has no rate limiter; build one with github.com/mholt/caddy-ratelimit.
+  cat > $ROOT/caddy/Dockerfile <<DF
+FROM $CADDY_IMAGE-builder AS builder
+RUN xcaddy build --with github.com/mholt/caddy-ratelimit
+FROM $CADDY_IMAGE
+COPY --from=builder /usr/bin/caddy /usr/bin/caddy
+DF
+  (cd $ROOT/caddy && $D build -q -t $CADDY_LOCAL_IMAGE . >/dev/null) && log "built $CADDY_LOCAL_IMAGE"
   cat > $ROOT/caddy/Caddyfile <<CADDY
+{
+	order rate_limit before reverse_proxy
+}
+
 # Paid relays: the staked supplier endpoint. Every relay is signed; no auth here.
 $RELAY_HOST {
 	reverse_proxy pocket-beta-relayer:8080
@@ -281,10 +294,27 @@ $RELAY_HOST {
 }
 
 # Direct demo route for judges and humans (not a Pocket relay, not paid).
+# Rate-limited so the free route can't hammer the NIH DSLD API.
 $AGENTS_HOST {
-	reverse_proxy $SERVICE_ID-backend:8080
 	request_body {
 		max_size 1MB
+	}
+	rate_limit {
+		zone per_client {
+			key {remote_host}
+			events 30
+			window 1m
+		}
+		zone all_clients {
+			key demo
+			events 600
+			window 1m
+		}
+	}
+	reverse_proxy $SERVICE_ID-backend:8080
+	handle_errors 429 {
+		header Content-Type application/json
+		respond \`{"error":{"code":"RATE_LIMITED","message":"Demo endpoint limit reached (30 requests per minute per client). Retry shortly, or use the service through Pocket Network.","retryable":true,"field":null}}\` 429
 	}
 }
 CADDY
@@ -292,7 +322,7 @@ CADDY
 name: pocket-caddy
 services:
   caddy:
-    image: $CADDY_IMAGE
+    image: $CADDY_LOCAL_IMAGE
     container_name: pocket-caddy
     restart: unless-stopped
     ports: ["80:80", "443:443", "443:443/udp"]

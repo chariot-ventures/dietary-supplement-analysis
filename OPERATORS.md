@@ -161,6 +161,15 @@ These rules come from Pocket's gateway design rules, and the test suite checks e
 - **Encoding and parsing:** responses are not compressed. Request bodies may be chunked with no `Content-Length`, and are parsed as JSON whatever the `Content-Type`.
 - **Latency:** at most 4 DSLD calls run at a time, each with a 6 s deadline, inside an 8 s budget per request. Labels are cached for 7 days and searches for 24 hours. If DSLD is down, a stale cached copy is served. Measured against live DSLD: a cold 15-product analyze took 1.5 s and a warm one 17 ms.
 
+## Reference deployment
+
+The first supplier runs on one Oracle Cloud Always Free ARM VM (1 OCPU, 4 GB RAM), set up by
+[deploy/provision-beta.sh](deploy/provision-beta.sh). That script covers Docker, swap and firewall, this backend, an operator key
+created on the server, the HA RelayMiner stack (`pocket-relay-miner:v0.1.0`, Redis `8.10.1-alpine`) and Caddy for TLS.
+The staking configs are in [deploy/beta-stake/](deploy/beta-stake/), and the transactions, including a settled claim, are
+in [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md). For relay-miner v0.1.0, leave `pocket_node.chain_id` out of the
+relayer config and use `logging.format` without `logging.output` in the miner config. Validation rejects both.
+
 ## Check a deployment
 
 From a machine that can reach the backend (for example on the host, port-forwarded), run Pocket's linter from the Service Builder skill:
