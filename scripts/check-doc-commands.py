@@ -17,6 +17,7 @@ limits, and uses roughly 25 of the 100 calls a day the demo allows one address.
 import re
 import subprocess
 import sys
+import textwrap
 import time
 from pathlib import Path
 
@@ -64,6 +65,11 @@ def problem(code: int, out: str, err: str) -> "str | None":
         return "printed null (a field the docs name is missing)"
     if '"error"' in out and '"code"' in out:
         return f"service error: {out.strip()[:200]}"
+    # Scripts with numbered sections (examples/agent-flows.sh): every section must print a result line.
+    sections = re.split(r"\n(?=(?:\x1b\[1m)?\d+\. )", "\n" + out)
+    empty = [sec.strip().splitlines()[0] for sec in sections if re.match(r"(?:\x1b\[1m)?\d+\. ", sec.strip()) and not re.search(r"^- ", sec, re.M)]
+    if empty:
+        return "no result in: " + "; ".join(re.sub(r"\x1b\[[0-9;]*m", "", e) for e in empty)
     return None
 
 
@@ -86,6 +92,8 @@ def main() -> int:
             print(f"- FAIL {where}: {p}")
         else:
             print(f"- ok   {where}: {first}")
+            if where.endswith(".sh"):
+                print(textwrap.indent(re.sub(r"\x1b\[[0-9;]*m", "", r.stdout).strip(), "      "))
     print(f"\n{len(cmds) - failed} of {len(cmds)} commands work as written.")
     return 1 if failed else 0
 
