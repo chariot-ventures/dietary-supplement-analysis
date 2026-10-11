@@ -8,6 +8,7 @@
  */
 import type { Amount } from './label.js';
 import type { NutrientTotal, ProductSummary, StackAnalysis } from './analyze.js';
+import { BOTANICALS, type BotanicalDetection } from './botanicals.js';
 import type { InteractionFinding } from './interactions.js';
 import { round } from './text.js';
 
@@ -221,6 +222,10 @@ export interface SummaryContext {
   unresolved: string[];
   lowConfidence: { input: string; chosen: string }[];
   candidates: CandidateResult[];
+  /** Botanicals in the stack with NIH safety signals. */
+  botanicals?: BotanicalDetection[];
+  /** True with life_stage pregnancy or lactation: botanical pregnancy statements are relayed. */
+  pregnancyOrLactation?: boolean;
   /** Present when medications or conditions were given. findings: those involving a nutrient the stack supplies. */
   interactions?: { findings: InteractionFinding[]; medicationsGiven: number; unrecognized: string[]; conditionNames: string[] } | undefined;
 }
@@ -264,6 +269,7 @@ export function agentSummary(a: StackAnalysis, ctx: SummaryContext): string {
     const items = ctx.dietFlags.map((d) => `${d.name} would be ${d.flag === 'above_ul' ? 'above' : 'near'} its UL${d.percent_of_ul === null ? '' : ` (${num(d.percent_of_ul)}%)`}`);
     parts.push(`With average US food and drink intake added, ${items.join('; ')}.`);
   }
+  if (ctx.botanicals?.length) parts.push(...botanicalSentences(ctx.botanicals, a, ctx.pregnancyOrLactation ?? false));
   if (ctx.interactions) parts.push(...interactionSentences(ctx.interactions, a));
   for (const c of ctx.candidates) parts.push(c.text);
   if (ctx.unresolved.length) parts.push(`Not identified, so not counted: ${ctx.unresolved.map((u) => `"${u}"`).join(', ')}.`);
@@ -293,8 +299,8 @@ function interactionSentences(ix: NonNullable<SummaryContext['interactions']>, a
   }
   // Findings arrive sorted (supplement acts on the drug first); one short sentence each.
   for (const f of ix.findings.slice(0, MAX_INTERACTION_SENTENCES)) {
-    const what = f.nutrient_ids.map((id) => nutrientName.get(id) ?? id).join('/');
-    const first = f.summary.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? f.summary;
+    const what = [...f.nutrient_ids.map((id) => nutrientName.get(id) ?? id), ...f.botanical_ids.map((id) => BOTANICAL_NAMES.get(id) ?? id)].join('/');
+    const first = firstSentence(f.summary);
     const lead = f.type === 'medication' ? `${cap(f.trigger)} with ${what} in this stack` : `${what} in this stack (${lower(f.trigger_name.replace(/\s*\(.*\)$/, ''))})`;
     out.push(`${lead}: ${first}${f.timing ? ` ${f.timing}` : ''}`);
   }
@@ -302,4 +308,30 @@ function interactionSentences(ix: NonNullable<SummaryContext['interactions']>, a
   if (more > 0) out.push(`${more} more interaction finding${more === 1 ? '' : 's'} in interactions.findings.`);
   if (ix.unrecognized.length) out.push(`Not recognized, so not checked: ${ix.unrecognized.map((u) => `"${u}"`).join(', ')}.`);
   return out;
+}
+
+const BOTANICAL_NAMES = new Map(Object.entries(BOTANICALS).map(([id, b]) => [id, b.name]));
+const MAX_BOTANICAL_SENTENCES = 3;
+
+/** One sentence per botanical: its strongest signal (or dose statement), and the pregnancy note when relevant. */
+function botanicalSentences(found: BotanicalDetection[], a: StackAnalysis, pregnancyOrLactation: boolean): string[] {
+  const names = new Map(a.products.map((p) => [p.product_ref, productName(p)]));
+  const out: string[] = [];
+  const ranked = [...found].sort((x, y) => botanicalRank(x) - botanicalRank(y));
+  for (const b of ranked.slice(0, MAX_BOTANICAL_SENTENCES)) {
+    const where = b.product_refs.map((r) => names.get(r) ?? r).join(', ');
+    const notes = [b.dose_findings[0]?.summary, b.signals.find((s) => s.relay !== false)?.summary, pregnancyOrLactation ? b.pregnancy : null].filter((x): x is string => Boolean(x));
+    if (!notes.length) continue;
+    out.push(`${b.name} (in ${where}): ${notes.map(firstSentence).join(' ')}`);
+  }
+  if (found.length > MAX_BOTANICAL_SENTENCES) out.push(`${found.length - MAX_BOTANICAL_SENTENCES} more botanicals are listed in botanicals.`);
+  return out;
+}
+
+const SIGNAL_RANK = ['banned', 'cardiovascular', 'liver_injury', 'bleeding', 'drug_like', 'drug_interactions', 'sedation', 'allergy', 'other'];
+const botanicalRank = (b: BotanicalDetection) => Math.min(b.dose_findings.length ? 4.5 : 99, ...b.signals.filter((s) => s.relay !== false).map((s) => (SIGNAL_RANK.indexOf(s.kind) + 1 || 99) - 1));
+
+/** First sentence, not fooled by "St. John's wort" or "e.g.". */
+export function firstSentence(s: string): string {
+  return s.match(/^.*?(?<!\bSt|\be\.g|\bi\.e|\bvs)[.!?](?=\s+[A-Z(]|$)/)?.[0] ?? s;
 }

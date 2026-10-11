@@ -1,6 +1,6 @@
 {
   "service": "dietary-supplement-analysis",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "as_of": "<date>",
   "profile": {
     "age": 34,
@@ -15,7 +15,8 @@
     "data_gaps": 3,
     "data_suspect": 0,
     "products_unresolved": 0,
-    "suggestions": 5
+    "suggestions": 5,
+    "botanicals_with_signals": 1
   },
   "agent_summary": "2 nutrients are above the upper limit (UL) for a 34-year-old female from these supplements alone. Vitamin D: 175 mcg a day vs a UL of 100 mcg (175%), mostly from Fixture Labs Vitamin D3 5000 IU. The UL guards against high blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues. Magnesium: 400 mg a day vs a UL of 350 mg (114%), mostly from Fixture Labs Daily Multivitamin. The UL guards against diarrhea and other gastrointestinal upset from supplemental magnesium. Leaving out Fixture Labs Vitamin D3 5000 IU would bring Vitamin D to 50 mcg (50% of the UL). Totals exclude food, drinks and medications. Label data, not medical advice.",
   "assumptions": [
@@ -132,6 +133,31 @@
         "zinc"
       ],
       "text": "Leaving out Fixture Labs Daily Multivitamin would bring magnesium to 200 mg (57.1% of the UL)."
+    }
+  ],
+  "botanicals": [
+    {
+      "id": "green-tea-extract",
+      "name": "Green tea extract",
+      "product_refs": [
+        "dsld:900002"
+      ],
+      "label_names": [
+        "Green Tea leaf extract"
+      ],
+      "signals": [
+        {
+          "kind": "liver_injury",
+          "summary": "NCCIH: liver injury has been reported, mainly with green tea extract in tablets or capsules, not with green tea as a drink. NIH ODS: USP advises taking extracts with food, because problems are more likely on an empty stomach.",
+          "relay": false
+        }
+      ],
+      "pregnancy": null,
+      "dose_findings": [],
+      "source": {
+        "name": "NIH NCCIH: Green Tea",
+        "url": "https://www.nccih.nih.gov/health/green-tea"
+      }
     }
   ],
   "nutrient_totals": [
@@ -687,7 +713,7 @@
     }
   ],
   "provenance": {
-    "version": "0.6.0",
+    "version": "0.7.0",
     "commit": null,
     "reference_values_reviewed": "2026-10-11"
   },
@@ -750,6 +776,11 @@
     {
       "name": "NIH Office of Dietary Supplements: Zinc fact sheet",
       "url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH NCCIH: Green Tea",
+      "url": "https://www.nccih.nih.gov/health/green-tea",
       "retrieved": "<date>"
     }
   ],

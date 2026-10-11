@@ -2,13 +2,14 @@ import type { FastifyInstance } from 'fastify';
 import { dedupeSources, envelope } from '../lib/envelope.js';
 import { AppError } from '../lib/errors.js';
 import { INTERACTIONS_REVIEWED, listInteractions, matchMedications } from '../lib/interactions.js';
+import { matchBotanical } from '../lib/botanicals.js';
 import { nutrientIndex } from '../lib/nutrients.js';
 import { provenanceShort } from '../lib/provenance.js';
 import { interactionsRequest, parseBody } from '../schemas/requests.js';
 import { upstreamBudget, type Deps } from './deps.js';
 
 export const INTERACTIONS_SCOPE =
-  'Only interactions named in the NIH Office of Dietary Supplements health-professional fact sheets are checked. The list is not exhaustive: a medication with no findings may still interact. A pharmacist can check the full list.';
+  'Only interactions named in NIH fact sheets (Office of Dietary Supplements and NCCIH) are checked. The list is not exhaustive: a medication with no findings may still interact. A pharmacist can check the full list.';
 
 /** Medication and condition interactions without a stack: what NIH lists, per nutrient. */
 export async function checkInteractions(body: unknown, deps: Deps) {
@@ -16,9 +17,9 @@ export async function checkInteractions(body: unknown, deps: Deps) {
   let nutrientIds: string[] | null = null;
   if (req.nutrients) {
     nutrientIds = req.nutrients.map((q, i) => {
-      const n = nutrientIndex.resolve(q);
-      if (!n) throw new AppError('NOT_FOUND', `Unknown nutrient "${q}"`, { field: `nutrients.${i}` });
-      return n.id;
+      const id = nutrientIndex.resolve(q)?.id ?? matchBotanical([q])?.id;
+      if (!id) throw new AppError('NOT_FOUND', `Unknown nutrient or botanical "${q}"`, { field: `nutrients.${i}` });
+      return id;
     });
   }
   const meds = await matchMedications(req.medications ?? [], deps.rxnorm ?? null, upstreamBudget(deps));

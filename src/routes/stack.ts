@@ -7,6 +7,7 @@ import type { CallOptions, DsldClient, LabelResult } from '../lib/dsld.js';
 import { AppError } from '../lib/errors.js';
 import { dedupeSources, envelope, type Source } from '../lib/envelope.js';
 import { normalizeCustomProduct, normalizeDsldLabel, type DataGap } from '../lib/label.js';
+import { BOTANICALS_REVIEWED, detectBotanicals, type BotanicalDetection } from '../lib/botanicals.js';
 import { conditionName, evaluateInteractions, INTERACTIONS_REVIEWED, matchMedications, type InteractionFinding, type MedicationMatch } from '../lib/interactions.js';
 import { provenanceShort } from '../lib/provenance.js';
 import { analyzeRequest, assertSupportedProfile, parseBody, type StackProductInput } from '../schemas/requests.js';
@@ -204,8 +205,10 @@ export async function analyze(body: unknown, deps: Deps) {
 
   // Medication and condition interactions (NIH ODS fact sheets only).
   const meds = await medsPromise;
+  const botanicals: BotanicalDetection[] = detectBotanicals(baseProducts, new Map(analysis.products.map((p) => [p.product_ref, p.servings_per_day_used])));
+  for (const b of botanicals) extraSources.push({ name: b.source.name, url: b.source.url, retrieved: BOTANICALS_REVIEWED }, ...b.dose_findings.map((d) => ({ ...d.source, retrieved: BOTANICALS_REVIEWED })));
   const checked = Boolean(req.medications || req.conditions);
-  const findings: InteractionFinding[] = checked ? evaluateInteractions(analysis, baseProducts, meds, req.conditions ?? []) : [];
+  const findings: InteractionFinding[] = checked ? evaluateInteractions(analysis, baseProducts, meds, req.conditions ?? [], botanicals) : [];
   if (req.medications) {
     const i = analysis.data_gaps.findIndex((g) => g.code === 'INTERACTIONS_NOT_ASSESSED');
     const unrec: DataGap[] = meds
@@ -228,6 +231,8 @@ export async function analyze(body: unknown, deps: Deps) {
     unresolved: resolutions.filter((r) => r.status === 'not_found').map((r) => ('query' in r.input ? r.input.query : `UPC ${r.input.upc}`)),
     lowConfidence,
     candidates: candidateResults,
+    botanicals,
+    pregnancyOrLactation: req.life_stage !== undefined,
     interactions: checked ? { findings: inStack, medicationsGiven: meds.length, unrecognized: meds.filter((m) => m.status === 'not_recognized').map((m) => m.input), conditionNames: (req.conditions ?? []).map(conditionName) } : undefined,
   });
 
@@ -238,6 +243,7 @@ export async function analyze(body: unknown, deps: Deps) {
     suggestions: suggestions.length,
     ...(req.diet === 'typical' ? { diet_estimates: dietApplied, diet_only_flags: dietFlags.length } : {}),
     ...(checked ? { interaction_findings: findings.length, interaction_findings_in_stack: inStack.length } : {}),
+    ...(botanicals.length ? { botanicals_with_signals: botanicals.length } : {}),
   };
   const allSources = dedupeSources([...sources, ...extraSources]);
 
@@ -275,12 +281,15 @@ export async function analyze(body: unknown, deps: Deps) {
         })),
         suggestions: suggestions.map((s) => ({ nutrient_id: s.nutrient_id, action: s.action, product_ref: s.product_ref, resolves: s.resolves, text: s.text })),
         ...(req.candidates ? { candidate_results: candidateResults.map((c) => ({ product_ref: c.product_ref, verdict: c.verdict, text: c.text })) } : {}),
+        ...(botanicals.length
+          ? { botanicals: botanicals.map((b) => ({ id: b.id, name: b.name, product_refs: b.product_refs, signal: (b.signals.find((s) => s.relay !== false) ?? b.signals[0])?.summary ?? null, ...(b.dose_findings.length ? { dose: b.dose_findings[0]!.summary } : {}) })) }
+          : {}),
         ...(checked
           ? {
               interactions: {
                 medications: meds.map((m) => ({ input: m.input, status: m.status, matched_name: m.matched_name })),
                 // In-stack findings in full; the rest (nutrients the stack does not supply) as a count.
-                findings: inStack.map((f) => ({ trigger: f.trigger, trigger_name: f.trigger_name, nutrient_ids: f.nutrient_ids, product_refs: f.product_refs, kind: f.kind, summary: f.summary, timing: f.timing })),
+                findings: inStack.map((f) => ({ trigger: f.trigger, trigger_name: f.trigger_name, nutrient_ids: f.nutrient_ids, botanical_ids: f.botanical_ids, product_refs: f.product_refs, kind: f.kind, summary: f.summary, timing: f.timing })),
                 not_in_stack: findings.length - inStack.length,
               },
             }
@@ -302,6 +311,7 @@ export async function analyze(body: unknown, deps: Deps) {
       assumptions,
       suggestions,
       ...(req.candidates ? { candidate_results: candidateResults } : {}),
+      ...(botanicals.length ? { botanicals } : {}),
       ...(checked ? { interactions: { scope: INTERACTIONS_SCOPE, reviewed: INTERACTIONS_REVIEWED, medications: meds, findings } } : {}),
       nutrient_totals,
       overlaps,

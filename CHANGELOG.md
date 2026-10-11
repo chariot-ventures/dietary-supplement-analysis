@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0 (2026-10-11)
+
+- **Botanicals.** 16 herbs and other non-nutrients with NIH NCCIH/ODS safety signals are reported in `botanicals[]`: liver injury (ashwagandha, kava, black cohosh, garcinia, green tea extract, bioavailable curcumin), bleeding (ginkgo), drug interactions (St. John's wort, goldenseal), statin-like effects (red yeast rice), heart risks (yohimbe), the 2004 ephedra ban, sedation (kava, valerian) and allergies (echinacea), each with its pregnancy statement. Matching is exact on the DSLD ingredient group or the name without plant-part words.
+- **Dose checks** where NIH cites doses: creatine (3–5 g a day maintenance; 25 g the highest studied), EGCG (843 mg a day raised liver enzymes in the Minnesota Green Tea Trial), valerian (300–600 mg a day short-term).
+- **Botanical-drug interactions** NIH names (St. John's wort with birth control, warfarin, SSRIs and others; ginkgo with anticoagulants; kava and valerian with sedatives; red yeast rice with statins; goldenseal with metformin; ashwagandha with thyroid, diabetes and blood pressure drugs) join `interactions.findings` with `botanical_ids`; `/v1/interactions/check` lists them too and its `nutrients` filter accepts botanical names.
+
 ## 0.6.0 (2026-10-11)
 
 - **Medication interactions.** `/v1/stack/analyze` takes `medications` (generic or brand names, as the user says them, up to 30). Each is matched to a drug class (35 classes; NIH RxNorm normalizes names the list doesn't know) and checked against the 55 interactions listed in the NIH ODS fact sheets, with timing advice where NIH gives it. Findings involving a nutrient the stack supplies come first, cite their fact sheet, and lead the `agent_summary`. Never logged.

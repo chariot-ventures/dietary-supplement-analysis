@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Dietary Supplement Label and Nutrient Intake Analysis",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "description": "Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Label and reference data only; not medical advice."
   },
   "externalDocs": {
@@ -1270,6 +1270,13 @@
                       },
                       "description": "Present when candidates were given"
                     },
+                    "botanicals": {
+                      "type": "array",
+                      "description": "Present when the stack contains a botanical or other non-nutrient ingredient with an NIH NCCIH/ODS safety signal (ashwagandha, kava, St. John's wort, ginkgo, green tea extract, turmeric, black cohosh, garcinia, red yeast rice, goldenseal, berberine, yohimbe, ephedra, valerian, echinacea, creatine). Matched exactly on the DSLD ingredient group or name. Each has signals (kind, summary), the pregnancy statement, dose_findings (creatine, EGCG, valerian amounts against cited doses) and the source. Summary form: id, name, product_refs, signal, dose.",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
                     "interactions": {
                       "type": "object",
                       "description": "Present when medications or conditions were given. Full form: scope, reviewed, medications (how each name was matched) and findings (all NIH-listed interactions, those involving nutrients in the stack first). Summary form: medications, in-stack findings, and a not_in_stack count.",
@@ -1477,7 +1484,7 @@
                     "description": "Conditions that change how NIH reads a dose: smoker (current or former, or asbestos exposure: beta-carotene), kidney_disease (potassium, magnesium, phosphorus), hemochromatosis (iron, vitamin C), lab_test_soon (biotin interferes with lab tests), cancer_treatment (antioxidant doses)"
                   },
                   "nutrients": {
-                    "description": "Optional: only report interactions involving these nutrients (IDs or names, e.g. \"vitamin-k\", \"magnesium\")",
+                    "description": "Optional: only report interactions involving these nutrients or botanicals (IDs or names, e.g. \"vitamin-k\", \"magnesium\", \"St. John's wort\")",
                     "minItems": 1,
                     "maxItems": 40,
                     "type": "array",
@@ -1915,6 +1922,13 @@
             "items": {
               "type": "string"
             }
+          },
+          "botanical_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Botanicals involved, for botanical-medication interactions (St. John's wort, ginkgo, kava...)"
           },
           "in_stack": {
             "type": "boolean",

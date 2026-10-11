@@ -1,0 +1,554 @@
+{
+ "_doc": "Botanicals and other non-nutrient ingredients with safety signals in NIH NCCIH fact sheets (\"Herbs at a Glance\") and NIH ODS fact sheets. An ingredient is matched when its DSLD ingredient group or name equals one of \"match\" after normalization and removal of trailing plant-part/preparation words (root, leaf, extract, powder...); never by substring. Signals summarize the cited page; the list is not exhaustive. A signal with \"relay\": false is listed in botanicals[] but kept out of agent_summary, because the ingredient is common in small amounts (multivitamins) and the signal concerns concentrated or high-dose products; a dose check surfaces it when one applies.",
+ "reviewed": "2026-10-11",
+ "descriptor_words": [
+  "root",
+  "roots",
+  "leaf",
+  "leaves",
+  "extract",
+  "extracts",
+  "powder",
+  "standardized",
+  "herb",
+  "aerial",
+  "parts",
+  "part",
+  "flower",
+  "flowers",
+  "seed",
+  "seeds",
+  "fruit",
+  "rhizome",
+  "bark",
+  "whole",
+  "organic",
+  "dried",
+  "dry",
+  "juice",
+  "concentrate"
+ ],
+ "botanicals": {
+  "ashwagandha": {
+   "name": "Ashwagandha",
+   "match": [
+    "ashwagandha",
+    "withania somnifera",
+    "ksm 66 ashwagandha",
+    "sensoril ashwagandha"
+   ],
+   "signals": [
+    {
+     "kind": "liver_injury",
+     "summary": "NCCIH: although rare, a number of cases link liver injury to ashwagandha supplements."
+    },
+    {
+     "kind": "other",
+     "summary": "NCCIH: not recommended for people with thyroid disorders or autoimmune conditions, before surgery, or with hormone-sensitive prostate cancer; long-term safety (beyond about 3 months) is not well established."
+    }
+   ],
+   "pregnancy": "NCCIH: avoid ashwagandha during pregnancy and while breastfeeding.",
+   "medications": [
+    {
+     "class": "antidiabetics",
+     "summary": "NCCIH lists possible interactions between ashwagandha and diabetes medications."
+    },
+    {
+     "class": "blood_pressure_medications",
+     "summary": "NCCIH lists possible interactions between ashwagandha and blood pressure medications."
+    },
+    {
+     "class": "immunosuppressants",
+     "summary": "NCCIH lists possible interactions between ashwagandha and immunosuppressants."
+    },
+    {
+     "class": "sedatives",
+     "summary": "NCCIH lists possible interactions between ashwagandha and sedatives."
+    },
+    {
+     "class": "antiepileptics",
+     "summary": "NCCIH lists possible interactions between ashwagandha and anti-seizure medications."
+    },
+    {
+     "class": "thyroid_hormone",
+     "summary": "NCCIH lists possible interactions between ashwagandha and thyroid hormone medications."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Ashwagandha",
+    "url": "https://www.nccih.nih.gov/health/ashwagandha"
+   }
+  },
+  "green-tea-extract": {
+   "name": "Green tea extract",
+   "match": [
+    "green tea",
+    "camellia sinensis",
+    "green tea polyphenols",
+    "green tea catechins",
+    "egcg",
+    "epigallocatechin gallate",
+    "epigallocatechin 3 gallate"
+   ],
+   "signals": [
+    {
+     "kind": "liver_injury",
+     "summary": "NCCIH: liver injury has been reported, mainly with green tea extract in tablets or capsules, not with green tea as a drink. NIH ODS: USP advises taking extracts with food, because problems are more likely on an empty stomach.",
+     "relay": false
+    }
+   ],
+   "pregnancy": null,
+   "medications": [
+    {
+     "class": "nadolol",
+     "summary": "NCCIH: high-dose green tea may lower blood levels of nadolol and reduce its effect."
+    },
+    {
+     "class": "atorvastatin",
+     "summary": "NCCIH: green tea extract can reduce blood levels of atorvastatin."
+    },
+    {
+     "class": "raloxifene",
+     "summary": "NCCIH: an NCCIH-funded study found an interaction between green tea and raloxifene."
+    }
+   ],
+   "dose_checks": [
+    {
+     "match": [
+      "egcg",
+      "epigallocatechin gallate",
+      "epigallocatechin 3 gallate"
+     ],
+     "min_daily": {
+      "amount": 843,
+      "unit": "mg"
+     },
+     "summary": "In the Minnesota Green Tea Trial, extract with 843 mg EGCG a day for 12 months significantly raised liver enzymes, with moderate or worse abnormalities in some women (NIH ODS).",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Dietary Supplements for Weight Loss",
+      "url": "https://ods.od.nih.gov/factsheets/WeightLoss-HealthProfessional/"
+     }
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Green Tea",
+    "url": "https://www.nccih.nih.gov/health/green-tea"
+   }
+  },
+  "turmeric": {
+   "name": "Turmeric / curcumin",
+   "match": [
+    "turmeric",
+    "curcumin",
+    "curcuma longa",
+    "curcuminoids",
+    "meriva",
+    "theracurmin",
+    "bcm 95",
+    "longvida"
+   ],
+   "signals": [
+    {
+     "kind": "liver_injury",
+     "summary": "NCCIH: liver damage has been reported with highly bioavailable curcumin products (often combined with piperine from black pepper); stop and see a health care provider with fatigue, nausea, dark urine or jaundice.",
+     "relay": false
+    }
+   ],
+   "pregnancy": "NCCIH: turmeric supplements may be unsafe during pregnancy; little is known about amounts above food levels while breastfeeding.",
+   "medications": [],
+   "source": {
+    "name": "NIH NCCIH: Turmeric",
+    "url": "https://www.nccih.nih.gov/health/turmeric"
+   }
+  },
+  "st-johns-wort": {
+   "name": "St. John's wort",
+   "match": [
+    "st johns wort",
+    "st john s wort",
+    "st. john's wort",
+    "st. johns wort",
+    "saint johns wort",
+    "hypericum perforatum"
+   ],
+   "signals": [
+    {
+     "kind": "drug_interactions",
+     "summary": "NCCIH: St. John's wort can weaken the effects of many medicines, including life-saving ones, and with serotonin-affecting drugs may cause serious serotonin-related side effects."
+    },
+    {
+     "kind": "other",
+     "summary": "NCCIH: large oral doses may cause severe skin reactions after sun exposure."
+    }
+   ],
+   "pregnancy": "NCCIH: may be unsafe in pregnancy (possible birth defects); breastfed infants may develop colic, drowsiness and lethargy.",
+   "medications": [
+    {
+     "class": "sjw_named_drugs",
+     "kind": "supplement_changes_drug",
+     "summary": "NCCIH: St. John's wort can weaken the effect of this medicine (NIH names it among the drugs affected)."
+    },
+    {
+     "class": "oral_contraceptives",
+     "kind": "supplement_changes_drug",
+     "summary": "NCCIH: St. John's wort can weaken the effect of birth control pills."
+    },
+    {
+     "class": "serotonergic_antidepressants",
+     "kind": "additive_risk",
+     "summary": "NCCIH: combined with antidepressants or other serotonin-affecting drugs, St. John's wort may cause serious serotonin-related side effects."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: St. John's Wort",
+    "url": "https://www.nccih.nih.gov/health/st-johns-wort"
+   }
+  },
+  "ginkgo": {
+   "name": "Ginkgo",
+   "match": [
+    "ginkgo",
+    "ginkgo biloba",
+    "gingko",
+    "gingko biloba",
+    "egb 761"
+   ],
+   "signals": [
+    {
+     "kind": "bleeding",
+     "summary": "NCCIH: ginkgo may increase the risk of bleeding in people taking anticoagulants such as warfarin."
+    }
+   ],
+   "pregnancy": "NCCIH: ginkgo may be unsafe in pregnancy and might cause extra bleeding during delivery; little is known about breastfeeding.",
+   "medications": [
+    {
+     "class": "anticoagulants",
+     "kind": "additive_risk",
+     "summary": "NCCIH: ginkgo may increase the risk of bleeding in people taking anticoagulants such as warfarin."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Ginkgo",
+    "url": "https://www.nccih.nih.gov/health/ginkgo"
+   }
+  },
+  "kava": {
+   "name": "Kava",
+   "match": [
+    "kava",
+    "kava kava",
+    "piper methysticum",
+    "kavalactones"
+   ],
+   "signals": [
+    {
+     "kind": "liver_injury",
+     "summary": "NCCIH: kava products have been linked to rare cases of liver injury, some serious or fatal."
+    },
+    {
+     "kind": "sedation",
+     "summary": "NCCIH: kava should not be used with alcohol or other sedating substances such as benzodiazepines."
+    }
+   ],
+   "pregnancy": "NCCIH: kava may carry special risks during pregnancy or breastfeeding.",
+   "medications": [
+    {
+     "class": "sedatives",
+     "kind": "additive_risk",
+     "summary": "NCCIH: kava should not be used together with sedatives such as benzodiazepines."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Kava",
+    "url": "https://www.nccih.nih.gov/health/kava"
+   }
+  },
+  "black-cohosh": {
+   "name": "Black cohosh",
+   "match": [
+    "black cohosh",
+    "actaea racemosa",
+    "cimicifuga racemosa"
+   ],
+   "signals": [
+    {
+     "kind": "liver_injury",
+     "summary": "NCCIH: rare cases of liver damage, some very serious, have been reported with products labeled as black cohosh (causation uncertain; some products contained the wrong herb). See a provider with dark urine or fatigue."
+    }
+   ],
+   "pregnancy": "NCCIH: black cohosh may be unsafe during pregnancy or while breastfeeding.",
+   "medications": [],
+   "source": {
+    "name": "NIH NCCIH: Black Cohosh",
+    "url": "https://www.nccih.nih.gov/health/black-cohosh"
+   }
+  },
+  "garcinia-cambogia": {
+   "name": "Garcinia cambogia",
+   "match": [
+    "garcinia cambogia",
+    "garcinia gummi gutta",
+    "hydroxycitric acid"
+   ],
+   "signals": [
+    {
+     "kind": "liver_injury",
+     "summary": "NCCIH: it may be unsafe to consume garcinia cambogia products; several cases of liver damage have been reported, some severe. NIH ODS: 10 reported liver toxicity cases included one death and two transplants (most products also had other ingredients)."
+    }
+   ],
+   "pregnancy": "NCCIH: little is known about safety in pregnancy or breastfeeding.",
+   "medications": [
+    {
+     "class": "serotonergic_antidepressants",
+     "kind": "two_way",
+     "summary": "NCCIH: interactions have been reported between garcinia cambogia and drugs that affect serotonin."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Garcinia Cambogia",
+    "url": "https://www.nccih.nih.gov/health/garcinia-cambogia"
+   }
+  },
+  "red-yeast-rice": {
+   "name": "Red yeast rice",
+   "match": [
+    "red yeast rice",
+    "monascus purpureus",
+    "monacolin k",
+    "monacolins"
+   ],
+   "signals": [
+    {
+     "kind": "drug_like",
+     "summary": "NCCIH: monacolin K in red yeast rice is chemically the same as lovastatin, so products can have statin side effects (muscle, kidney and liver damage) and statin drug interactions; content varies widely and isn't on the label. Some products contain citrinin, a kidney toxin."
+    }
+   ],
+   "pregnancy": "NCCIH: not recommended during pregnancy or lactation.",
+   "medications": [
+    {
+     "class": "statins",
+     "kind": "additive_risk",
+     "summary": "NCCIH: red yeast rice contains monacolin K (identical to lovastatin) and can have the same interactions and side effects as statins; taking it with a statin doubles up."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Red Yeast Rice",
+    "url": "https://www.nccih.nih.gov/health/red-yeast-rice"
+   }
+  },
+  "goldenseal": {
+   "name": "Goldenseal",
+   "match": [
+    "goldenseal",
+    "golden seal",
+    "hydrastis canadensis"
+   ],
+   "signals": [
+    {
+     "kind": "drug_interactions",
+     "summary": "NCCIH: goldenseal may change how the body processes many medications."
+    }
+   ],
+   "pregnancy": "NCCIH: do not use goldenseal when pregnant or breastfeeding or give it to infants; its berberine can be harmful to newborns.",
+   "medications": [
+    {
+     "class": "metformin",
+     "kind": "supplement_changes_drug",
+     "summary": "NCCIH: in an NCCIH-funded study, goldenseal lowered metformin levels by about 25%, which could hinder glucose control."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Goldenseal",
+    "url": "https://www.nccih.nih.gov/health/goldenseal"
+   }
+  },
+  "berberine": {
+   "name": "Berberine",
+   "match": [
+    "berberine",
+    "berberine hcl",
+    "berberine hydrochloride"
+   ],
+   "signals": [],
+   "pregnancy": "NCCIH (goldenseal fact sheet): berberine can be harmful to newborns; goldenseal, its main source, should not be used in pregnancy or breastfeeding or given to infants.",
+   "medications": [],
+   "source": {
+    "name": "NIH NCCIH: Goldenseal",
+    "url": "https://www.nccih.nih.gov/health/goldenseal"
+   }
+  },
+  "yohimbe": {
+   "name": "Yohimbe",
+   "match": [
+    "yohimbe",
+    "yohimbine",
+    "yohimbine hcl",
+    "pausinystalia johimbe"
+   ],
+   "signals": [
+    {
+     "kind": "cardiovascular",
+     "summary": "NCCIH: yohimbine has been associated with irregular heartbeat, blood pressure problems, heart attacks and seizures; yohimbe is restricted or banned in many countries, and labels rarely state the yohimbine content."
+    }
+   ],
+   "pregnancy": "NCCIH: oral yohimbe might be unsafe in pregnancy or while breastfeeding.",
+   "medications": [
+    {
+     "class": "tricyclics_maois",
+     "kind": "two_way",
+     "summary": "NCCIH: avoid yohimbe with MAO inhibitors or tricyclic antidepressants."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Yohimbe",
+    "url": "https://www.nccih.nih.gov/health/yohimbe"
+   }
+  },
+  "ephedra": {
+   "name": "Ephedra (ma huang)",
+   "match": [
+    "ephedra",
+    "ma huang",
+    "ephedra sinica",
+    "ephedrine",
+    "ephedrine alkaloids"
+   ],
+   "signals": [
+    {
+     "kind": "banned",
+     "summary": "NCCIH: FDA banned dietary supplements containing ephedrine alkaloids in 2004; ephedra can be life-threatening or disabling (high blood pressure, heart attack, seizure, stroke, psychosis), even at low doses."
+    }
+   ],
+   "pregnancy": "NCCIH: unsafe during pregnancy, breastfeeding and for children.",
+   "medications": [],
+   "source": {
+    "name": "NIH NCCIH: Ephedra",
+    "url": "https://www.nccih.nih.gov/health/ephedra"
+   }
+  },
+  "valerian": {
+   "name": "Valerian",
+   "match": [
+    "valerian",
+    "valeriana officinalis"
+   ],
+   "signals": [
+    {
+     "kind": "sedation",
+     "summary": "NCCIH: valerian should not be taken with alcohol or sedatives; rare liver injury has been reported, mostly with combination products. Studied at 300-600 mg a day for up to 6 weeks; long-term safety is unknown."
+    }
+   ],
+   "pregnancy": "NCCIH: little is known about safety in pregnancy or breastfeeding.",
+   "medications": [
+    {
+     "class": "sedatives",
+     "kind": "additive_risk",
+     "summary": "NCCIH: valerian should not be taken along with sedatives."
+    }
+   ],
+   "dose_checks": [
+    {
+     "match": [
+      "valerian",
+      "valeriana officinalis"
+     ],
+     "min_daily": {
+      "amount": 601,
+      "unit": "mg"
+     },
+     "summary": "Above the 300-600 mg a day NCCIH describes for short-term use (up to 6 weeks); long-term safety is unknown.",
+     "source": {
+      "name": "NIH NCCIH: Valerian",
+      "url": "https://www.nccih.nih.gov/health/valerian"
+     }
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Valerian",
+    "url": "https://www.nccih.nih.gov/health/valerian"
+   }
+  },
+  "echinacea": {
+   "name": "Echinacea",
+   "match": [
+    "echinacea",
+    "echinacea purpurea",
+    "echinacea angustifolia",
+    "echinacea pallida"
+   ],
+   "signals": [
+    {
+     "kind": "allergy",
+     "summary": "NCCIH: some people have allergic reactions to echinacea, which may be severe; check with a pediatrician before giving it to a child."
+    }
+   ],
+   "pregnancy": null,
+   "medications": [
+    {
+     "class": "immunosuppressants",
+     "kind": "two_way",
+     "summary": "NCCIH: researchers have theoretical concerns about echinacea with immunosuppressants."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Echinacea",
+    "url": "https://www.nccih.nih.gov/health/echinacea"
+   }
+  },
+  "creatine": {
+   "name": "Creatine",
+   "match": [
+    "creatine",
+    "creatine monohydrate",
+    "creatine hcl",
+    "creatine hydrochloride",
+    "creapure"
+   ],
+   "signals": [],
+   "pregnancy": null,
+   "medications": [],
+   "dose_checks": [
+    {
+     "match": [
+      "creatine",
+      "creatine monohydrate",
+      "creatine hcl",
+      "creatine hydrochloride",
+      "creapure"
+     ],
+     "min_daily": {
+      "amount": 5001,
+      "unit": "mg"
+     },
+     "summary": "Above the usual 3-5 g a day maintenance dose; NIH ODS describes 20 g a day only as a 5-7 day loading phase. Weight gain (water retention) is the consistent effect.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Dietary Supplements for Exercise and Athletic Performance",
+      "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/"
+     }
+    },
+    {
+     "match": [
+      "creatine",
+      "creatine monohydrate",
+      "creatine hcl",
+      "creatine hydrochloride",
+      "creapure"
+     ],
+     "min_daily": {
+      "amount": 25001,
+      "unit": "mg"
+     },
+     "summary": "Above the highest daily dose in the studies NIH ODS cites (25 g a day for 6-7 days).",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Dietary Supplements for Exercise and Athletic Performance",
+      "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/"
+     }
+    }
+   ],
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Dietary Supplements for Exercise and Athletic Performance",
+    "url": "https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/"
+   }
+  }
+ }
+}

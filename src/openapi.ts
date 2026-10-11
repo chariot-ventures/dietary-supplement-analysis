@@ -69,6 +69,7 @@ const components: Json = {
       trigger: { type: 'string', description: 'The medication as given, or the condition id' },
       trigger_name: { type: 'string' },
       nutrient_ids: { type: 'array', items: { type: 'string' } },
+      botanical_ids: { type: 'array', items: { type: 'string' }, description: 'Botanicals involved, for botanical-medication interactions (St. John\'s wort, ginkgo, kava...)' },
       in_stack: { type: 'boolean', description: 'True when the stack supplies one of the nutrients (condition findings: at or above the checked dose)' },
       product_refs: { type: 'array', items: { type: 'string' } },
       kind: { type: 'string', enum: ['supplement_changes_drug', 'drug_lowers_nutrient', 'drug_raises_nutrient', 'additive_risk', 'two_way', 'condition'] },
@@ -439,6 +440,12 @@ export function buildOpenApi(): Json {
           assumptions: { type: 'array', items: { type: 'string' } },
           suggestions: { type: 'array', items: { $ref: '#/components/schemas/Suggestion' } },
           candidate_results: { type: 'array', items: { $ref: '#/components/schemas/CandidateResult' }, description: 'Present when candidates were given' },
+          botanicals: {
+            type: 'array',
+            description:
+              'Present when the stack contains a botanical or other non-nutrient ingredient with an NIH NCCIH/ODS safety signal (ashwagandha, kava, St. John\'s wort, ginkgo, green tea extract, turmeric, black cohosh, garcinia, red yeast rice, goldenseal, berberine, yohimbe, ephedra, valerian, echinacea, creatine). Matched exactly on the DSLD ingredient group or name. Each has signals (kind, summary), the pregnancy statement, dose_findings (creatine, EGCG, valerian amounts against cited doses) and the source. Summary form: id, name, product_refs, signal, dose.',
+            items: { type: 'object' },
+          },
           interactions: {
             type: 'object',
             description:

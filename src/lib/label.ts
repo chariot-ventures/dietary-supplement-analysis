@@ -49,6 +49,8 @@ export interface FormBreakdownEntry {
 
 export interface UnrecognizedIngredient {
   label_name: string;
+  /** DSLD ingredient group ("Ashwagandha"), when the label row has one. */
+  ingredient_group: string | null;
   category: string | null;
   per_serving: Amount | null;
   in_blend: boolean;
@@ -281,6 +283,7 @@ function addRow(row: RowInput, ctx: RowContext): { nutrient: Nutrient | null; qu
   if (!match) {
     out.unrecognized_ingredients.push({
       label_name: row.name,
+      ingredient_group: row.ingredientGroup?.trim() || null,
       category: row.category ?? null,
       per_serving: row.amount,
       in_blend: row.inBlend,
@@ -490,7 +493,7 @@ function walkDsldRows(rows: DsldIngredientRow[], servingOrder: number, ctx: RowC
     const match = nested.length ? matchIngredient(input) : null;
     // A row with nested rows that is not itself a nutrient is a blend container.
     if (nested.length && !match) {
-      ctx.out.unrecognized_ingredients.push({ label_name: row.name, category: row.category ?? null, per_serving: amount, in_blend: inBlend, is_blend: true });
+      ctx.out.unrecognized_ingredients.push({ label_name: row.name, ingredient_group: row.ingredientGroup?.trim() || null, category: row.category ?? null, per_serving: amount, in_blend: inBlend, is_blend: true });
       checkNestedSum(row, amount, servingOrder, ctx);
       const inner = { name: row.name, unquantified: [] as string[] };
       walkDsldRows(nested, servingOrder, ctx, inner);

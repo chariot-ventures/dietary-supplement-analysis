@@ -144,7 +144,7 @@ export const interactionsRequest = z
       .min(1)
       .max(40)
       .optional()
-      .describe('Optional: only report interactions involving these nutrients (IDs or names, e.g. "vitamin-k", "magnesium")'),
+      .describe('Optional: only report interactions involving these nutrients or botanicals (IDs or names, e.g. "vitamin-k", "magnesium", "St. John\'s wort")'),
   })
   .strict()
   .refine((v) => v.medications || v.conditions, { message: 'Give medications, conditions or both', path: ['medications'] });

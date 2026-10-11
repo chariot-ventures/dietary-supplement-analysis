@@ -26,9 +26,7 @@ describe('interaction data file', () => {
         expect(check.source.url).toMatch(/^https:\/\/ods\.od\.nih\.gov\/factsheets\//);
       }
     }
-    // Every class is used by at least one interaction.
-    const used = new Set(data.interactions.map((i) => i.class));
-    expect([...classes].filter((c) => !used.has(c))).toEqual([]);
+    // Classes unused by any interaction are caught in botanicals.test.ts (which sees both files).
   });
 
   it('keeps member names lowercase and unique within a class', () => {

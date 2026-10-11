@@ -10,6 +10,7 @@
 import data from '../../data/interactions.json' with { type: 'json' };
 import type { StackAnalysis, StackProduct } from './analyze.js';
 import { LRUCache } from 'lru-cache';
+import { BOTANICALS, botanicalMedicationPairs, type BotanicalDetection } from './botanicals.js';
 import { round } from './text.js';
 
 interface DrugClass {
@@ -56,7 +57,9 @@ export interface InteractionFinding {
   trigger: string;
   trigger_name: string;
   nutrient_ids: string[];
-  /** True when the stack supplies one of the nutrients. */
+  /** Botanicals involved (data/botanicals.json ids), for botanical-medication interactions. */
+  botanical_ids: string[];
+  /** True when the stack supplies one of the nutrients or botanicals. */
   in_stack: boolean;
   product_refs: string[];
   kind: string;
@@ -174,6 +177,7 @@ export function evaluateInteractions(
   products: StackProduct[],
   meds: MedicationMatch[],
   conditions: string[],
+  botanicals: BotanicalDetection[] = [],
 ): InteractionFinding[] {
   const totals = new Map((a?.nutrient_totals ?? []).map((t) => [t.nutrient_id, t]));
   const refsFor = (ids: string[]) => [...new Set(ids.flatMap((id) => totals.get(id)?.contributions.map((c) => c.product_ref) ?? []))];
@@ -189,6 +193,7 @@ export function evaluateInteractions(
         trigger: m.input,
         trigger_name: file.drug_classes[it.class]!.name,
         nutrient_ids: it.nutrients,
+        botanical_ids: [],
         in_stack: refs.length > 0,
         product_refs: refs,
         kind: it.kind,
@@ -196,6 +201,13 @@ export function evaluateInteractions(
         timing: it.timing,
         source: it.source,
       });
+    }
+  }
+
+  for (const m of meds) {
+    const classIds = new Set(m.classes.map((c) => c.id));
+    for (const pair of botanicalMedicationPairs(botanicals.map((b) => b.id), classIds)) {
+      out.push(botanicalFinding(m.input, pair, botanicals.find((b) => b.id === pair.id)!.product_refs));
     }
   }
 
@@ -214,6 +226,7 @@ export function evaluateInteractions(
         trigger: c,
         trigger_name: cond.name,
         nutrient_ids: [check.nutrient],
+        botanical_ids: [],
         in_stack: true,
         product_refs: refs,
         kind: 'condition',
@@ -246,6 +259,10 @@ export function listInteractions(meds: MedicationMatch[], conditions: string[], 
   const wanted = nutrientIds ? new Set(nutrientIds) : null;
   const keep = (ids: string[]) => !wanted || ids.some((id) => wanted.has(id));
   const out: InteractionFinding[] = evaluateInteractions(null, [], meds, []).filter((f) => keep(f.nutrient_ids));
+  for (const m of meds) {
+    const pairs = botanicalMedicationPairs(Object.keys(BOTANICALS), new Set(m.classes.map((c) => c.id)));
+    out.push(...pairs.map((pair) => botanicalFinding(m.input, pair, [])).filter((f) => keep(f.botanical_ids)));
+  }
   for (const c of conditions) {
     const cond = file.conditions[c];
     if (!cond) continue;
@@ -256,6 +273,7 @@ export function listInteractions(meds: MedicationMatch[], conditions: string[], 
         trigger: c,
         trigger_name: cond.name,
         nutrient_ids: [check.nutrient],
+        botanical_ids: [],
         in_stack: false,
         product_refs: [],
         kind: 'condition',
@@ -266,6 +284,22 @@ export function listInteractions(meds: MedicationMatch[], conditions: string[], 
     }
   }
   return sortFindings(out);
+}
+
+function botanicalFinding(trigger: string, pair: ReturnType<typeof botanicalMedicationPairs>[number], refs: string[]): InteractionFinding {
+  return {
+    type: 'medication',
+    trigger,
+    trigger_name: file.drug_classes[pair.med.class]!.name,
+    nutrient_ids: [],
+    botanical_ids: [pair.id],
+    in_stack: refs.length > 0,
+    product_refs: refs,
+    kind: pair.med.kind ?? 'two_way',
+    summary: pair.med.summary,
+    timing: null,
+    source: pair.source,
+  };
 }
 
 export function conditionName(id: string): string {
