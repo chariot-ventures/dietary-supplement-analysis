@@ -44,6 +44,7 @@ Chain values are governance parameters: re-run `live_params.py` before acting on
 | Register `dietary-supplement-analysis`, 500 CU/relay, card from `card/card.json` (owner `dsa-owner`) | `BC01B11FFF4100473B84D483026F266111CF73CE9B07584E3083EDCF19B47DD5` | 722359 | code 0; on-chain card is byte-identical to `card/card.json` (3,474 bytes, SHA-256 `e9dde0dd…25eae79a`). Fee 1,000 POKT + ~0.33 POKT gas. |
 | Republish card (v0.8 features: interactions, botanicals, FDA, MCP) | `B6B588DEB7DB4EA9EA1E1BE470A8AF67CD217FF56A460AE1E56B946A17CADC8C` | 723817 | code 0; gas only. Portal audit then warned on A2 (description didn't mention JSON). |
 | Republish card (adds "Every response is a JSON object") | `C7808CD1F23443E210C97ED30C426989743350A0755F0BD061C9D9ED96CFE412` | 723827 | code 0; gas only. Portal audit at 15:22 UTC on 2026-10-11: PASS on A1-A9, no warnings, card 4,058 bytes. |
+| Republish card (links moved to github.com/chariot-ventures) | `CB7B56AA4041541F413D77FE1BE3F2CCDF98009E007CE445B1DDD36B6AE596AB` | 724169 | code 0; gas only. On-chain card sha256 35d15170… matches `card/card.json` (4,085 bytes). |
 
 ## Order followed (skill workflow steps 6-9)
 
