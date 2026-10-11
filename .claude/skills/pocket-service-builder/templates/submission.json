@@ -1,0 +1,17 @@
+{
+  "schema": "pocket-service-submission/v1",
+  "submitted": "{{SUBMITTED_DATE}}",
+  "submitter": {
+    "name": "{{SUBMITTER_NAME}}",
+    "contact": "{{SUBMITTER_CONTACT}}",
+    "repository": "{{SUBMITTER_REPO_URL}}"
+  },
+  "network": "{{NETWORK}}",
+  "operator_address": "{{OPERATOR_ADDRESS}}",
+  "services": [
+    {
+      "id": "{{SERVICE_ID}}",
+      "notes": "One line on what it does. Add operator_address here when a service is supplied by a different operator than the one above."
+    }
+  ]
+}

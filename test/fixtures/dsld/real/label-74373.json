@@ -1,0 +1,247 @@
+{
+  "src": "01-raw/2025-06-25/data/label_438.json",
+  "id": 74373,
+  "nhanesId": "",
+  "bundleName": "",
+  "fullName": "Vitamin A 10000 IU",
+  "brandName": "GNC",
+  "brandIpSymbol": "none",
+  "upcSku": "0 48107 12166 2",
+  "productVersionCode": "CODE 004212 CRG",
+  "pdf": "",
+  "thumbnail": "",
+  "servingsPerContainer": null,
+  "hasOuterCarton": false,
+  "percentDvFootnote": "Not Present",
+  "labelRelationships": [
+    {
+      "type": "Image difference, same product",
+      "labelId": 1365
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 28555
+    },
+    {
+      "type": "Package size difference, same product",
+      "labelId": 1365
+    },
+    {
+      "type": "Package size difference, same product",
+      "labelId": 28555
+    },
+    {
+      "type": "Package size difference, same product",
+      "labelId": 214477
+    }
+  ],
+  "contacts": [
+    {
+      "contactId": 9074,
+      "text": "Distributed by:",
+      "types": [
+        "Distributor"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_3.json",
+        "id": 9074,
+        "name": "General Nutrition Corporation",
+        "streetAddress": "",
+        "city": "Pittsburgh",
+        "state": "PA",
+        "country": "",
+        "zipCode": "15222",
+        "phoneNumber": "1-888-462-2548",
+        "email": "",
+        "webAddress": "www.gnc.com"
+      }
+    }
+  ],
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 100,
+      "unit": "Softgel(s)",
+      "display": "100 Softgel(s)"
+    }
+  ],
+  "physicalState": {
+    "langualCode": "E0161",
+    "langualCodeDescription": "Softgel Capsule"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 1,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Softgel Capsule(s)",
+      "inSFB": true
+    }
+  ],
+  "targetGroups": [
+    "Adult (18 - 50 Years)",
+    "Gluten Free",
+    "Dairy Free",
+    "Sugar Free"
+  ],
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Vitamin"
+  },
+  "statements": [
+    {
+      "type": "Precautions re: Children",
+      "notes": "Keep out of reach of children."
+    },
+    {
+      "type": "Storage",
+      "notes": "Store in a cool, dry place."
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Essential for normal vision & healthy skin"
+    },
+    {
+      "type": "FDA Statement of Identity",
+      "notes": "Dietary Supplement"
+    },
+    {
+      "type": "General: Product/Version Code",
+      "notes": "CODE 004212 CRG"
+    },
+    {
+      "type": "Suggested/Recommended/Usage/Directions",
+      "notes": "Directions: As a dietary supplement, take one softgel capsule daily. For maximum benefits, take as directed every day."
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Warning: Childbearing-age women should limit daily Vitamin A supplement intake to 10,000 IU (excludes beta-carotene)."
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Potency verified by GNC procedure #5121. Conforms to USP <2091> for weight. Meets USP <2040> disintegration."
+    },
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "No sugar, no artificial colors, no artificial Flavors, no preservatives, sodium free, no wheat, no gluten, no corn, no dairy, yeast free."
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Actual size"
+    },
+    {
+      "type": "FDA Disclaimer Statement",
+      "notes": "This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease."
+    }
+  ],
+  "claims": [
+    {
+      "langualCode": "P0115",
+      "langualCodeDescription": "All Other"
+    },
+    {
+      "langualCode": "P0265",
+      "langualCodeDescription": "Structure/Function"
+    }
+  ],
+  "events": [
+    {
+      "date": "2022-12-13",
+      "type": "Off Market"
+    },
+    {
+      "date": "2017-05-24",
+      "type": "Date entered into DSLD"
+    }
+  ],
+  "userGroups": [
+    {
+      "dailyValueTargetGroupName": "Adults and children 4 or more years of age",
+      "langualCode": "P0250",
+      "langualCodeDescription": "Adults and Children 4 years and above"
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "ingredientId": 94577,
+      "description": null,
+      "notes": "Vitamin A (Form: as Fish Liver Oil) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 10000,
+          "unit": "IU",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 200,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Softgel Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin A",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin A (unspecified)",
+      "uniiCode": null,
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 3711,
+          "prefix": "as",
+          "percent": null,
+          "name": "Fish Liver Oil",
+          "category": "fat",
+          "ingredientGroup": "Fish Liver oil",
+          "uniiCode": null
+        }
+      ]
+    }
+  ],
+  "otheringredients": {
+    "text": null,
+    "ingredients": [
+      {
+        "order": 1,
+        "ingredientId": 3793,
+        "name": "Soybean Oil",
+        "category": "fat",
+        "ingredientGroup": "Soybean Oil",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 2,
+        "ingredientId": 3715,
+        "name": "Gelatin",
+        "category": "protein",
+        "ingredientGroup": "Gelatin",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 3,
+        "ingredientId": 9165,
+        "name": "Glycerin",
+        "category": "other",
+        "ingredientGroup": "Glycerol",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      }
+    ]
+  },
+  "offMarket": 1,
+  "entryDate": "2017-05-24"
+}

@@ -9,10 +9,10 @@
  */
 import type { DsldIngredientRow, DsldLabel, DsldQuantity } from './dsld.js';
 import { dsldLabelUrl } from './dsld.js';
-import { matchIngredient, type IngredientInput, type MatchedBy } from './match.js';
+import { formKindsOf, groupQualifier, matchIngredient, type IngredientInput, type MatchedBy } from './match.js';
 import { round } from './text.js';
 import type { Nutrient } from './types.js';
-import { toCanonical } from './units.js';
+import { convertMass, parseUnit, toCanonical, ulPortion, type ConversionResult } from './units.js';
 
 export interface Amount {
   amount: number;
@@ -33,8 +33,18 @@ export interface NormalizedIngredient {
   label_amount: Amount | null;
   conversion_note: string | null;
   percent_dv: number | null;
+  /** Per serving, the part the UL applies to, in the nutrient's ul_unit (e.g. folic acid only); null when unknown or no UL unit. */
+  toward_ul_per_serving: number | null;
   in_blend: boolean;
   blend_name?: string;
+  /** Nested label rows that break this nutrient down by form (e.g. folate 800 mcg DFE = folic acid 480 mcg). */
+  form_breakdown?: FormBreakdownEntry[];
+}
+
+export interface FormBreakdownEntry {
+  label_name: string;
+  form_kind: string | null;
+  label_amount: Amount | null;
 }
 
 export interface UnrecognizedIngredient {
@@ -105,7 +115,8 @@ function pickQuantity(row: DsldIngredientRow, servingOrder: number): DsldQuantit
 }
 
 function percentDv(q: DsldQuantity | undefined): number | null {
-  const p = q?.dailyValueTargetGroup?.find((g) => typeof g.percent === 'number')?.percent;
+  const groups = (q?.dailyValueTargetGroup ?? []).filter((g) => typeof g.percent === 'number');
+  const p = (groups.find((g) => /adults and children 4/i.test(g.name ?? '')) ?? groups[0])?.percent;
   return typeof p === 'number' ? p : null;
 }
 
@@ -123,6 +134,52 @@ interface RowInput extends IngredientInput {
   inBlend: boolean;
   blendName?: string;
   isCustom: boolean;
+  breakdown?: FormBreakdownEntry[];
+}
+
+/**
+ * Current labels declare vitamin A in mcg RAE, but DSLD often stores the unit
+ * as plain "mcg" or "mg". When the label's %DV matches the Daily Value in the
+ * canonical basis, read the amount in that basis.
+ */
+function convertWithDvCheck(n: Nutrient, amount: Amount, formKind: string | null, pctDv: number | null): ConversionResult {
+  const conv = toCanonical(n, amount.amount, amount.unit, formKind);
+  if (conv.ok || !n.label_dv || pctDv === null) return conv;
+  const src = parseUnit(amount.unit);
+  const dv = parseUnit(n.label_dv.unit);
+  if (src.kind !== 'mass' || src.basis !== null || dv.kind !== 'mass') return conv;
+  const inDvUnit = convertMass(amount.amount, src.unit, dv.unit);
+  const expected = (inDvUnit / n.label_dv.amount) * 100;
+  if (Math.abs(expected - pctDv) > Math.max(1.5, pctDv * 0.05)) return conv;
+  const retry = toCanonical(n, inDvUnit, n.label_dv.unit, formKind);
+  if (!retry.ok) return conv;
+  return {
+    ...retry,
+    converted: true,
+    note: `Label unit "${amount.unit}" read as ${n.label_dv.unit}: the label's ${pctDv}% DV matches the ${n.label_dv.amount} ${n.label_dv.unit} Daily Value`,
+  };
+}
+
+/** UL portion from a form breakdown, when every entry has a known form and amount. */
+function ulFromBreakdown(n: Nutrient, breakdown: FormBreakdownEntry[]): number | null {
+  const ul = n.ul_unit ? parseUnit(n.ul_unit) : null;
+  if (!ul || ul.kind !== 'mass' || breakdown.length === 0) return null;
+  let sum = 0;
+  for (const b of breakdown) {
+    if (!b.form_kind || !b.label_amount) return null;
+    if (ulPortion(n, 1, b.form_kind) === 0) continue; // a form the UL does not apply to
+    const src = parseUnit(b.label_amount.unit);
+    if (src.kind === 'mass' && src.basis === null) {
+      // Plain mass of the form itself: mcg folic acid, mcg retinol (= mcg RAE).
+      sum += convertMass(b.label_amount.amount, src.unit, ul.unit);
+      continue;
+    }
+    const c = toCanonical(n, b.label_amount.amount, b.label_amount.unit, b.form_kind);
+    const part = c.ok ? ulPortion(n, c.amount, b.form_kind) : null;
+    if (part === null) return null;
+    sum += part;
+  }
+  return round(sum, 4);
 }
 
 /** Shared by DSLD rows and custom ingredients: match, convert, and record gaps. */
@@ -141,20 +198,25 @@ function addRow(row: RowInput, ctx: RowContext): { nutrient: Nutrient | null; qu
   }
 
   const n = match.nutrient;
+  const breakdown = row.breakdown ?? [];
+  const kinds = new Set([...match.form_kinds, ...breakdown.flatMap((b) => (b.form_kind ? [b.form_kind] : []))]);
+  const formKind = kinds.size === 1 ? [...kinds][0]! : null;
   const ing: NormalizedIngredient = {
     label_name: row.name,
     nutrient_id: n.id,
     nutrient_name: n.name,
     matched_by: match.matched_by,
     forms: (row.forms ?? []).map((f) => f.name),
-    form_kind: match.form_kind,
+    form_kind: formKind,
     per_serving: null,
     label_amount: row.amount,
     conversion_note: null,
     percent_dv: row.percentDv,
+    toward_ul_per_serving: null,
     in_blend: row.inBlend,
   };
   if (row.blendName) ing.blend_name = row.blendName;
+  if (breakdown.length) ing.form_breakdown = breakdown;
 
   const gap = (code: DataGapCode, detail: string) => out.data_gaps.push({ code, product_ref: productRef, nutrient_id: n.id, detail });
 
@@ -170,10 +232,11 @@ function addRow(row: RowInput, ctx: RowContext): { nutrient: Nutrient | null; qu
         : `Label row "${row.name}" names a compound; its amount may be compound weight, not elemental ${n.name}`,
     );
   } else {
-    const conv = toCanonical(n, row.amount.amount, row.amount.unit, match.form_kind);
+    const conv = convertWithDvCheck(n, row.amount, formKind, row.percentDv);
     if (conv.ok) {
       ing.per_serving = { amount: conv.amount, unit: conv.unit };
       ing.conversion_note = conv.note;
+      ing.toward_ul_per_serving = (n.ul_component === 'all' ? null : ulFromBreakdown(n, breakdown)) ?? ulPortion(n, conv.amount, formKind);
     } else {
       gap('UNIT_NOT_CONVERTIBLE', conv.reason);
     }
@@ -182,29 +245,57 @@ function addRow(row: RowInput, ctx: RowContext): { nutrient: Nutrient | null; qu
   return { nutrient: n, quantified: row.amount !== null };
 }
 
-function walkDsldRows(rows: DsldIngredientRow[], servingOrder: number, ctx: RowContext, blend?: { name: string; unquantified: string[] }, parentNutrientId?: string): void {
+function rowInput(row: DsldIngredientRow, servingOrder: number): RowInput {
+  const q = pickQuantity(row, servingOrder);
+  return {
+    name: row.name,
+    ingredientGroup: row.ingredientGroup,
+    uniiCode: row.uniiCode,
+    alternateNames: row.alternateNames ?? [],
+    forms: (row.forms ?? []).filter((f) => f?.name),
+    category: row.category,
+    amount: labelAmount(q),
+    percentDv: percentDv(q),
+    inBlend: false,
+    isCustom: false,
+  };
+}
+
+/**
+ * Rows nested under a quantified nutrient row describe that nutrient's forms
+ * (Thorne: Vitamin A 1050 mcg = Beta-Carotene 450 mcg + Vitamin A Palmitate
+ * 600 mcg). They are never counted again; they feed form detection and the UL
+ * portion. Nested ingredients unrelated to the parent are handled normally.
+ */
+function collectBreakdown(rows: DsldIngredientRow[], parent: Nutrient, servingOrder: number, ctx: RowContext, sink: FormBreakdownEntry[]): void {
   for (const row of rows) {
     if (!row?.name) continue;
-    const q = pickQuantity(row, servingOrder);
-    const amount = labelAmount(q);
+    const input = rowInput(row, servingOrder);
+    const m = matchIngredient(input);
+    const names = [row.name, ...(row.alternateNames ?? []), ...(input.forms ?? []).map((f) => f.name), groupQualifier(row.ingredientGroup)];
+    const kinds = m?.nutrient.id === parent.id ? new Set(m.form_kinds) : formKindsOf(parent, names);
+    if (m?.nutrient.id === parent.id || (!m && kinds.size > 0)) {
+      sink.push({ label_name: row.name, form_kind: kinds.size === 1 ? [...kinds][0]! : null, label_amount: input.amount });
+    } else if (!m && row.nestedRows?.length) {
+      collectBreakdown(row.nestedRows, parent, servingOrder, ctx, sink); // a blend of the parent's forms
+    } else {
+      walkDsldRows([row], servingOrder, ctx);
+    }
+  }
+}
+
+function walkDsldRows(rows: DsldIngredientRow[], servingOrder: number, ctx: RowContext, blend?: { name: string; unquantified: string[] }): void {
+  for (const row of rows) {
+    if (!row?.name) continue;
+    const input = rowInput(row, servingOrder);
+    const { amount } = input;
     const nested = row.nestedRows ?? [];
     const inBlend = blend !== undefined;
-    const input: RowInput = {
-      name: row.name,
-      ingredientGroup: row.ingredientGroup,
-      uniiCode: row.uniiCode,
-      alternateNames: row.alternateNames ?? [],
-      forms: (row.forms ?? []).filter((f) => f?.name),
-      category: row.category,
-      amount,
-      percentDv: percentDv(q),
-      inBlend,
-      isCustom: false,
-    };
+    input.inBlend = inBlend;
     if (blend) input.blendName = blend.name;
 
-    // A row with nested rows that is not itself a nutrient is a blend container.
     const match = nested.length ? matchIngredient(input) : null;
+    // A row with nested rows that is not itself a nutrient is a blend container.
     if (nested.length && !match) {
       ctx.out.unrecognized_ingredients.push({ label_name: row.name, category: row.category ?? null, per_serving: amount, in_blend: inBlend, is_blend: true });
       const inner = { name: row.name, unquantified: [] as string[] };
@@ -219,12 +310,18 @@ function walkDsldRows(rows: DsldIngredientRow[], servingOrder: number, ctx: RowC
       continue;
     }
 
-    // Nested row restating the parent nutrient (a form breakdown): do not count twice.
-    if (parentNutrientId && (match ?? matchIngredient(input))?.nutrient.id === parentNutrientId) continue;
+    if (match && amount && nested.length) {
+      const breakdown: FormBreakdownEntry[] = [];
+      collectBreakdown(nested, match.nutrient, servingOrder, ctx, breakdown);
+      input.breakdown = breakdown;
+      addRow(input, ctx);
+      continue;
+    }
 
-    const { nutrient, quantified } = addRow(input, ctx);
+    const { quantified } = addRow(input, ctx);
     if (blend && !quantified) blend.unquantified.push(row.name);
-    if (nested.length && nutrient) walkDsldRows(nested, servingOrder, ctx, blend, quantified ? nutrient.id : undefined);
+    // A nutrient row without its own amount: count whatever its nested rows declare.
+    if (nested.length) walkDsldRows(nested, servingOrder, ctx, blend);
   }
 }
 

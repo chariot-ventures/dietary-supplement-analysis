@@ -7,7 +7,9 @@ import { normalizeDsldLabel } from '../src/lib/label.js';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const FIXTURE_DIR = path.join(ROOT, 'test/fixtures/dsld');
-export const fixtureLabels = loadFixtureLabels(FIXTURE_DIR);
+export const REAL_FIXTURE_DIR = path.join(FIXTURE_DIR, 'real');
+/** Synthetic labels (9000xx) plus real labels recorded from DSLD. */
+export const fixtureLabels = new Map([...loadFixtureLabels(FIXTURE_DIR), ...loadFixtureLabels(REAL_FIXTURE_DIR)]);
 
 export function fixtureLabel(id: number): DsldLabel {
   const l = fixtureLabels.get(id);

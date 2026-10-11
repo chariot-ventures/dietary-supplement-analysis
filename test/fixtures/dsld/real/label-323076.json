@@ -1,0 +1,1418 @@
+{
+  "src": "01-raw/2025-09-25/data/label_52.json",
+  "id": 323076,
+  "nhanesId": "",
+  "bundleName": "",
+  "fullName": "Basic Nutrients 2/Day",
+  "brandName": "Thorne",
+  "brandIpSymbol": "®",
+  "upcSku": "6 93749 00287 1",
+  "productVersionCode": "VM2 LVM210",
+  "pdf": "323076_document.pdf",
+  "thumbnail": "323076_thumbnail.jpg",
+  "servingsPerContainer": "30",
+  "hasOuterCarton": null,
+  "percentDvFootnote": "Not Present",
+  "labelRelationships": [
+    {
+      "type": "Image difference, same product",
+      "labelId": 291771
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 201563
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 260356
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 260346
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 242355
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 233508
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 232846
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 201578
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 323077
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 328819
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 28427
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 182801
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 65729
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 64418
+    }
+  ],
+  "contacts": [
+    {
+      "contactId": 24218,
+      "text": "Manufactured in the USA using US & imported ingredients by",
+      "types": [
+        "Manufacturer"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_5.json",
+        "id": 24218,
+        "name": "Thorne Research, Inc.",
+        "streetAddress": "",
+        "city": "",
+        "state": "",
+        "country": "",
+        "zipCode": "",
+        "phoneNumber": "1-800-228-1966",
+        "email": "",
+        "webAddress": ""
+      }
+    }
+  ],
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 60,
+      "unit": "Capsule(s)",
+      "display": "60 Capsule(s)"
+    }
+  ],
+  "physicalState": {
+    "langualCode": "E0159",
+    "langualCodeDescription": "Capsule"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 2,
+      "maxQuantity": 2,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Capsule(s)",
+      "notes": "",
+      "inSFB": true
+    }
+  ],
+  "targetGroups": [
+    "Adult (18 - 50 Years)",
+    "Gluten Free"
+  ],
+  "productType": {
+    "langualCode": "A1325",
+    "langualCodeDescription": "Other Combinations"
+  },
+  "statements": [
+    {
+      "type": "Formulation re: Other",
+      "notes": "Foundational"
+    },
+    {
+      "type": "Suggested/Recommended/Usage/Directions",
+      "notes": "Suggested Use: Take 2 capsules daily or as recommended by your health-care practitioner."
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Tamper evident: Use only if bottle is sealed."
+    },
+    {
+      "type": "Storage",
+      "notes": "Store tightly sealed in a cool, dry place."
+    },
+    {
+      "type": "Precautions re: Pregnant or Nursing or Prescription Medications",
+      "notes": "If pregnant, consult your health-care practitioner before using this product."
+    },
+    {
+      "type": "Seals/Symbols",
+      "notes": "NSF\r\nCertified Sport"
+    },
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "Gluten free"
+    },
+    {
+      "type": "FDA Statement of Identity",
+      "notes": "Dietary Supplement"
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Gamma tocopherol does not have a recognized IU equivalent."
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "This product uses Gnosis S.p.A.'s L-5-Methyltetrahydrofolic Acid, Glucosamine Salt (Quatrefolic).\r\nThis product uses Albion's TRAACS Calcium Bisglycinate Chelate, Chromium Nicotinate Glycinate Chelate, Copper Bisglycinate Chelate, Manganese Bisglycinate Chelate, Magnesium Bisglycinate Chelate, and Zinc Bisglycinate Chelate.\r\nThis product uses Albion's Bororganic Boron Glycinate Complex."
+    },
+    {
+      "type": "Brand IP Statement(s) re: (c), (TM), (SM)",
+      "notes": "Quatrefolic is a registered trademark of Gnosis S.p.A.\r\nTRAACS is a registered trademark of Albion International, Inc.\r\nBororganic is a trademark of Albion International, Inc.\r\n"
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Peel back for additional supplement facts\r\nPeel here"
+    }
+  ],
+  "claims": [
+    {
+      "langualCode": "P0115",
+      "langualCodeDescription": "All Other"
+    },
+    {
+      "langualCode": "P0265",
+      "langualCodeDescription": "Structure/Function"
+    }
+  ],
+  "events": [
+    {
+      "date": "2025-02-23",
+      "type": "Date entered into DSLD"
+    }
+  ],
+  "userGroups": [
+    {
+      "dailyValueTargetGroupName": "Adults and children 4 or more years of age",
+      "langualCode": "P0250",
+      "langualCodeDescription": "Adults and Children 4 years and above"
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "ingredientId": 279031,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 1.05,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 117,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 2,
+          "ingredientId": 280109,
+          "description": "",
+          "notes": "",
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 2,
+              "operator": "=",
+              "quantity": 450,
+              "unit": "mcg",
+              "dailyValueTargetGroup": [],
+              "servingSizeUnit": "Capsule(s)"
+            }
+          ],
+          "nestedRows": [],
+          "name": "Beta-Carotene",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin A",
+          "uniiCode": "01YAE03M7J",
+          "alternateNames": [],
+          "forms": []
+        },
+        {
+          "order": 3,
+          "ingredientId": 278585,
+          "description": "",
+          "notes": "",
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 2,
+              "operator": "=",
+              "quantity": 600,
+              "unit": "mcg",
+              "dailyValueTargetGroup": [],
+              "servingSizeUnit": "Capsule(s)"
+            }
+          ],
+          "nestedRows": [],
+          "name": "Vitamin A Palmitate",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin A",
+          "uniiCode": "1D1K0N0VVC",
+          "alternateNames": [],
+          "forms": []
+        }
+      ],
+      "name": "Vitamin A",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin A",
+      "uniiCode": "81G40H8B0T",
+      "alternateNames": [],
+      "forms": []
+    },
+    {
+      "order": 4,
+      "ingredientId": 278603,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 250,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 278,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin C",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin C",
+      "uniiCode": "PQ6CK8PD0R",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 278604,
+          "prefix": null,
+          "percent": null,
+          "name": "Ascorbic Acid",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin C",
+          "uniiCode": "PQ6CK8PD0R"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "ingredientId": 281607,
+      "description": "",
+      "notes": "2,000 IU",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 50,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 250,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin D",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin D",
+      "uniiCode": "9VU1KI44GP",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 279014,
+          "prefix": null,
+          "percent": null,
+          "name": "Vitamin D3",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin D",
+          "uniiCode": "1C6V77QF41"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "ingredientId": 281947,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 16.5,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 110,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin E",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin E",
+      "uniiCode": "H4N855PNZ1",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 281940,
+          "prefix": null,
+          "percent": null,
+          "name": "D-Alpha-Tocopheryl Acid Succinate",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin E",
+          "uniiCode": "LU4B53JYVE"
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "ingredientId": 279021,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 400,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 333,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 8,
+          "ingredientId": 279025,
+          "description": "",
+          "notes": "",
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 2,
+              "operator": "=",
+              "quantity": 200,
+              "unit": "mcg",
+              "dailyValueTargetGroup": [],
+              "servingSizeUnit": "Capsule(s)"
+            }
+          ],
+          "nestedRows": [],
+          "name": "Vitamin K1",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin K",
+          "uniiCode": "A034SE7857",
+          "alternateNames": [],
+          "forms": []
+        },
+        {
+          "order": 9,
+          "ingredientId": 297037,
+          "description": "",
+          "notes": "",
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 2,
+              "operator": "=",
+              "quantity": 200,
+              "unit": "mcg",
+              "dailyValueTargetGroup": [],
+              "servingSizeUnit": "Capsule(s)"
+            }
+          ],
+          "nestedRows": [],
+          "name": "Vitamin K2",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin K (menaquinone)",
+          "uniiCode": "71ANL51TLA",
+          "alternateNames": [],
+          "forms": [
+            {
+              "order": 1,
+              "ingredientId": 282213,
+              "prefix": null,
+              "percent": null,
+              "name": "Menaquinone-4",
+              "category": "vitamin",
+              "ingredientGroup": "Vitamin K",
+              "uniiCode": "27Y876D139"
+            }
+          ]
+        }
+      ],
+      "name": "Vitamin K",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin K",
+      "uniiCode": "A034SE7857",
+      "alternateNames": [],
+      "forms": []
+    },
+    {
+      "order": 10,
+      "ingredientId": 281548,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 50,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 4167,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Thiamine",
+      "category": "vitamin",
+      "ingredientGroup": "Thiamin",
+      "uniiCode": "X66NSO3N35",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 279229,
+          "prefix": null,
+          "percent": null,
+          "name": "Thiamine Hydrochloride",
+          "category": "vitamin",
+          "ingredientGroup": "Thiamin",
+          "uniiCode": "M572600E5P"
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "ingredientId": 303948,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 12,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 923,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Riboflavin",
+      "category": "vitamin",
+      "ingredientGroup": "Riboflavin",
+      "uniiCode": "TLM2976OFR",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 303949,
+          "prefix": null,
+          "percent": null,
+          "name": "Riboflavin 5-Phosphate Sodium",
+          "category": "vitamin",
+          "ingredientGroup": "Riboflavin",
+          "uniiCode": "20RD1DZH99"
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "ingredientId": 280746,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 80,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 500,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Niacin",
+      "category": "vitamin",
+      "ingredientGroup": "Niacin",
+      "uniiCode": "2679MF687A",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280445,
+          "prefix": null,
+          "percent": null,
+          "name": "Niacinamide",
+          "category": "vitamin",
+          "ingredientGroup": "Niacin",
+          "uniiCode": "25X51I8RD4"
+        }
+      ]
+    },
+    {
+      "order": 13,
+      "ingredientId": 296067,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 20,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 1176,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin B6",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B6",
+      "uniiCode": "KV2JZ1BI6Z",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280470,
+          "prefix": null,
+          "percent": null,
+          "name": "Pyridoxal 5-Phosphate",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B6",
+          "uniiCode": "F06SGE49M6"
+        }
+      ]
+    },
+    {
+      "order": 14,
+      "ingredientId": 278757,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 667,
+          "unit": "mcg DFE",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 167,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 15,
+          "ingredientId": 204651,
+          "description": "",
+          "notes": "",
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 2,
+              "operator": "=",
+              "quantity": 400,
+              "unit": "mcg",
+              "dailyValueTargetGroup": [],
+              "servingSizeUnit": "Capsule(s)"
+            }
+          ],
+          "nestedRows": [],
+          "name": "L-5-Methyltetrahydrofolate",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B9 (methyltetrahydrofolate)",
+          "uniiCode": null,
+          "alternateNames": [
+            "Quatrefolic"
+          ],
+          "forms": [
+            {
+              "order": 1,
+              "ingredientId": 57378,
+              "prefix": null,
+              "percent": null,
+              "name": "Glucosamine Salt",
+              "category": "non-nutrient/non-botanical",
+              "ingredientGroup": "Glucosamine (unspecified)",
+              "uniiCode": null
+            },
+            {
+              "order": 2,
+              "ingredientId": 57376,
+              "prefix": "from",
+              "percent": null,
+              "name": "L-5-Methyltetrahydrofolic Acid",
+              "category": "vitamin",
+              "ingredientGroup": "Folate",
+              "uniiCode": null
+            }
+          ]
+        }
+      ],
+      "name": "Folate",
+      "category": "vitamin",
+      "ingredientGroup": "Folate",
+      "uniiCode": "935E97BOY8",
+      "alternateNames": [],
+      "forms": []
+    },
+    {
+      "order": 16,
+      "ingredientId": 281388,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 600,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 25000,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin B12",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B12",
+      "uniiCode": "8406EY2OQA",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280220,
+          "prefix": null,
+          "percent": null,
+          "name": "Methylcobalamin",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B12",
+          "uniiCode": "BR1SN1JS2W"
+        }
+      ]
+    },
+    {
+      "order": 17,
+      "ingredientId": 280218,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 500,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 1667,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Biotin",
+      "category": "vitamin",
+      "ingredientGroup": "Biotin",
+      "uniiCode": "6SO6U10H04",
+      "alternateNames": [],
+      "forms": []
+    },
+    {
+      "order": 18,
+      "ingredientId": 280941,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 45,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 900,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Pantothenic Acid",
+      "category": "vitamin",
+      "ingredientGroup": "Pantothenic Acid",
+      "uniiCode": "19F5HK2737",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280184,
+          "prefix": null,
+          "percent": null,
+          "name": "Calcium Pantothenate",
+          "category": "mineral",
+          "ingredientGroup": "Calcium",
+          "uniiCode": "568ET80C3D"
+        }
+      ]
+    },
+    {
+      "order": 19,
+      "ingredientId": 324003,
+      "description": "",
+      "notes": "TRAACS calcium bisglycinate chelate",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 52,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 4,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Calcium",
+      "category": "mineral",
+      "ingredientGroup": "Calcium",
+      "uniiCode": null,
+      "alternateNames": [
+        "Ca"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 324004,
+          "prefix": null,
+          "percent": null,
+          "name": "Albion Calcium Bisglycinate Chelate",
+          "category": "mineral",
+          "ingredientGroup": "Calcium",
+          "uniiCode": null
+        },
+        {
+          "order": 2,
+          "ingredientId": 60907,
+          "prefix": null,
+          "percent": null,
+          "name": "Calcium Laurate",
+          "category": "mineral",
+          "ingredientGroup": "Calcium",
+          "uniiCode": null
+        },
+        {
+          "order": 3,
+          "ingredientId": 280184,
+          "prefix": null,
+          "percent": null,
+          "name": "Calcium Pantothenate",
+          "category": "mineral",
+          "ingredientGroup": "Calcium",
+          "uniiCode": "568ET80C3D"
+        },
+        {
+          "order": 4,
+          "ingredientId": 200071,
+          "prefix": null,
+          "percent": null,
+          "name": "Dicalcium Phosphate",
+          "category": "mineral",
+          "ingredientGroup": "Calcium",
+          "uniiCode": null
+        }
+      ]
+    },
+    {
+      "order": 20,
+      "ingredientId": 294802,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 75,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 50,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Iodine",
+      "category": "mineral",
+      "ingredientGroup": "Iodine",
+      "uniiCode": "9679TC07X4",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 294760,
+          "prefix": null,
+          "percent": null,
+          "name": "Potassium Iodide",
+          "category": "mineral",
+          "ingredientGroup": "Potassium",
+          "uniiCode": "1C4QK22F9J"
+        }
+      ]
+    },
+    {
+      "order": 21,
+      "ingredientId": 353082,
+      "description": "",
+      "notes": "TRAACS",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 20,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 5,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Magnesium",
+      "category": "mineral",
+      "ingredientGroup": "Magnesium",
+      "uniiCode": "I38ZP9992A",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 351547,
+          "prefix": null,
+          "percent": null,
+          "name": "Albion Magnesium Bisglycinate Chelate",
+          "category": "mineral",
+          "ingredientGroup": "Magnesium",
+          "uniiCode": "IFN18A4Y6B"
+        }
+      ]
+    },
+    {
+      "order": 22,
+      "ingredientId": 334404,
+      "description": "",
+      "notes": "TRAACS",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 15,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 136,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Zinc",
+      "category": "mineral",
+      "ingredientGroup": "Zinc",
+      "uniiCode": null,
+      "alternateNames": [
+        "Zn"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 334405,
+          "prefix": null,
+          "percent": null,
+          "name": "Albion Zinc Bisglycinate Chelate",
+          "category": "mineral",
+          "ingredientGroup": "Zinc",
+          "uniiCode": null
+        }
+      ]
+    },
+    {
+      "order": 23,
+      "ingredientId": 293393,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 200,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 364,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Selenium",
+      "category": "mineral",
+      "ingredientGroup": "Selenium",
+      "uniiCode": "H6241UJ22B",
+      "alternateNames": [
+        "Se"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 286929,
+          "prefix": null,
+          "percent": null,
+          "name": "L-Selenomethionine",
+          "category": "amino acid",
+          "ingredientGroup": "Selenomethionine",
+          "uniiCode": "964MRK2PEL"
+        }
+      ]
+    },
+    {
+      "order": 24,
+      "ingredientId": 349869,
+      "description": "",
+      "notes": "TRAACS",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 750,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 83,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Copper",
+      "category": "mineral",
+      "ingredientGroup": "Copper",
+      "uniiCode": "789U1901C5",
+      "alternateNames": [
+        "Cu"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 349868,
+          "prefix": null,
+          "percent": null,
+          "name": "Albion Copper Bisglycinate Chelate",
+          "category": "mineral",
+          "ingredientGroup": "Copper",
+          "uniiCode": null
+        }
+      ]
+    },
+    {
+      "order": 25,
+      "ingredientId": 348157,
+      "description": "",
+      "notes": "TRAACS",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 3,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 130,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Manganese",
+      "category": "mineral",
+      "ingredientGroup": "Manganese",
+      "uniiCode": "42Z2K6ZL8P",
+      "alternateNames": [
+        "Mn"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 348158,
+          "prefix": null,
+          "percent": null,
+          "name": "Albion Manganese Bisglycinate Chelate",
+          "category": "mineral",
+          "ingredientGroup": "Manganese",
+          "uniiCode": "0"
+        }
+      ]
+    },
+    {
+      "order": 26,
+      "ingredientId": 325049,
+      "description": "",
+      "notes": "TRAACS",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 400,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 1143,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Chromium",
+      "category": "mineral",
+      "ingredientGroup": "Chromium",
+      "uniiCode": null,
+      "alternateNames": [
+        "Cr"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 325048,
+          "prefix": null,
+          "percent": null,
+          "name": "Albion Chromium Nicotinate Glycinate Chelate",
+          "category": "non-nutrient/non-botanical",
+          "ingredientGroup": "Chromium",
+          "uniiCode": null
+        }
+      ]
+    },
+    {
+      "order": 27,
+      "ingredientId": 316092,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 24,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": null,
+              "percent": null,
+              "footnote": "Daily Value (DV) Not Established"
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "D-Gamma-Tocopherol",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin E",
+      "uniiCode": "8EF1Z1238F",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280625,
+          "prefix": null,
+          "percent": null,
+          "name": "Mixed Tocopherols",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin E",
+          "uniiCode": "R0ZB2556P8"
+        }
+      ]
+    },
+    {
+      "order": 28,
+      "ingredientId": 323729,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 2,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": null,
+              "percent": null,
+              "footnote": "Daily Value (DV) Not Established"
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Boron",
+      "category": "mineral",
+      "ingredientGroup": "Boron",
+      "uniiCode": null,
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 323728,
+          "prefix": null,
+          "percent": null,
+          "name": "Albion Bororganic",
+          "category": "non-nutrient/non-botanical",
+          "ingredientGroup": "Boron",
+          "uniiCode": null
+        }
+      ]
+    },
+    {
+      "order": 29,
+      "ingredientId": 328849,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 140,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": null,
+              "percent": null,
+              "footnote": "Daily Value (DV) Not Established"
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Lutein",
+      "category": "non-nutrient/non-botanical",
+      "ingredientGroup": "Lutein",
+      "uniiCode": null,
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 173823,
+          "prefix": null,
+          "percent": null,
+          "name": "Aztec Marigold Flower Extract",
+          "category": "botanical",
+          "ingredientGroup": "Tagetes",
+          "uniiCode": null
+        }
+      ]
+    }
+  ],
+  "otheringredients": {
+    "text": null,
+    "ingredients": [
+      {
+        "order": 1,
+        "ingredientId": 299627,
+        "name": "Hypromellose",
+        "category": "other",
+        "ingredientGroup": "Hypromellose",
+        "uniiCode": "3NXW29V3WO",
+        "alternateNames": [],
+        "forms": [
+          {
+            "order": 1,
+            "ingredientId": 284496,
+            "prefix": null,
+            "percent": null,
+            "name": "Cellulose",
+            "category": "fiber",
+            "ingredientGroup": "Cellulose",
+            "uniiCode": "SMD1X3XO9M"
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "ingredientId": 281031,
+        "name": "Dicalcium Phosphate",
+        "category": "mineral",
+        "ingredientGroup": "Calcium",
+        "uniiCode": "L11K75P92J",
+        "alternateNames": [
+          "DCP"
+        ],
+        "forms": []
+      },
+      {
+        "order": 3,
+        "ingredientId": 294008,
+        "name": "Calcium Laurate",
+        "category": "mineral",
+        "ingredientGroup": "Calcium",
+        "uniiCode": "4FM1N296CM",
+        "alternateNames": [
+          "Ca Laurate"
+        ],
+        "forms": []
+      }
+    ]
+  },
+  "offMarket": 0,
+  "entryDate": "2025-02-23"
+}

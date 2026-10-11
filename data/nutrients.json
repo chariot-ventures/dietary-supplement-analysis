@@ -20,6 +20,8 @@
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
       "dri": null,
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -39,9 +41,12 @@
         "vitamin h"
       ],
       "dsld_ingredient_groups": [
-        "Biotin"
+        "Biotin",
+        "Vitamin B7 (biotin)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "6SO6U10H04"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
@@ -136,12 +141,153 @@
         },
         "ul": null
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "not_established",
       "ul_note": "No UL has been established. High-dose biotin can interfere with some laboratory tests.",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/"
+    },
+    {
+      "id": "boron",
+      "name": "Boron",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "boron"
+      ],
+      "dsld_ingredient_groups": [
+        "Boron",
+        "Boron (various)"
+      ],
+      "unii_codes": [
+        "N9E3X5056Q",
+        "YV58Q9ER5F"
+      ],
+      "forms": [
+        {
+          "name": "boron glycinate",
+          "kind": "compound"
+        },
+        {
+          "name": "boron citrate",
+          "kind": "compound"
+        },
+        {
+          "name": "calcium fructoborate",
+          "kind": "compound"
+        },
+        {
+          "name": "sodium borate",
+          "kind": "compound"
+        },
+        {
+          "name": "boron amino acid chelate",
+          "kind": "compound"
+        }
+      ],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": {
+        "rda": null,
+        "ear": null,
+        "ai": null,
+        "ul": {
+          "male": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 3
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 11
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 17
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 20
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 20
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 20
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 20
+            }
+          ],
+          "female": [
+            {
+              "lower": 1,
+              "upper": 3,
+              "amount": 3
+            },
+            {
+              "lower": 4,
+              "upper": 8,
+              "amount": 6
+            },
+            {
+              "lower": 9,
+              "upper": 13,
+              "amount": 11
+            },
+            {
+              "lower": 14,
+              "upper": 18,
+              "amount": 17
+            },
+            {
+              "lower": 19,
+              "upper": 30,
+              "amount": 20
+            },
+            {
+              "lower": 31,
+              "upper": 50,
+              "amount": 20
+            },
+            {
+              "lower": 51,
+              "upper": 70,
+              "amount": 20
+            },
+            {
+              "lower": 71,
+              "upper": null,
+              "amount": 20
+            }
+          ]
+        }
+      },
+      "label_dv": null,
+      "name_overrides_groups": [],
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": "No RDA or AI has been established; only a UL.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Boron-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/Boron-HealthProfessional/"
     },
     {
       "id": "calcium",
@@ -153,7 +299,9 @@
       "dsld_ingredient_groups": [
         "Calcium"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "SY7Q814VUP"
+      ],
       "forms": [
         {
           "name": "calcium carbonate",
@@ -451,6 +599,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -470,7 +620,10 @@
       "dsld_ingredient_groups": [
         "Choline"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "6K2W7T9V6Y",
+        "N91BDP6H0X"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
@@ -650,6 +803,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -667,7 +822,9 @@
       "dsld_ingredient_groups": [
         "Chromium"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "0R0008Q3JB"
+      ],
       "forms": [
         {
           "name": "chromium picolinate",
@@ -779,6 +936,8 @@
         },
         "ul": null
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -800,13 +959,16 @@
       ],
       "dsld_ingredient_groups": [
         "Coenzyme Q10",
-        "CoQ10"
+        "CoQ10",
+        "Coenzyme Q-10"
       ],
       "unii_codes": [],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
       "dri": null,
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -824,7 +986,9 @@
       "dsld_ingredient_groups": [
         "Copper"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "789U1901C5"
+      ],
       "forms": [
         {
           "name": "copper gluconate",
@@ -1114,6 +1278,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -1132,13 +1298,19 @@
       ],
       "dsld_ingredient_groups": [
         "DHA",
-        "Docosahexaenoic Acid"
+        "Docosahexaenoic Acid",
+        "DHA (Docosahexaenoic Acid)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "7PO7G8PA8M",
+        "ZAD9OKH9JC"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
       "dri": null,
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -1157,13 +1329,18 @@
       ],
       "dsld_ingredient_groups": [
         "EPA",
-        "Eicosapentaenoic Acid"
+        "Eicosapentaenoic Acid",
+        "EPA (Eicosapentaenoic Acid)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "AAN7QOV9EA"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
       "dri": null,
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -1184,9 +1361,23 @@
       ],
       "dsld_ingredient_groups": [
         "Folate",
-        "Folic Acid"
+        "Folic Acid",
+        "Vitamin B9",
+        "Vitamin B9 (5-Methyltetrahydrofolate)",
+        "Vitamin B9 (Folate)",
+        "Vitamin B9 (Mixed)",
+        "Vitamin B9 (calcium methylfolate)",
+        "Vitamin B9 (calcium methyltetrahydrofolate)",
+        "Vitamin B9 (folic acid)",
+        "Vitamin B9 (folic acid/folate)",
+        "Vitamin B9 (folinic acid)",
+        "Vitamin B9 (methylfolate)",
+        "Vitamin B9 (methyltetrahydrofolate)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "935E97BOY8",
+        "TYK22LML8F"
+      ],
       "forms": [
         {
           "name": "folic acid",
@@ -1234,6 +1425,38 @@
         },
         {
           "name": "food folate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "methyltetrahydrofolate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "calcium methyltetrahydrofolate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "calcium methylfolate",
+          "kind": "other_folate"
+        },
+        {
+          "name": "l 5 methyltetrahydrofolic acid",
+          "kind": "other_folate"
+        },
+        {
+          "name": "6s 5 methyltetrahydrofolic acid",
+          "kind": "other_folate"
+        },
+        {
+          "name": "l methylfolate glucosamine salt",
+          "kind": "other_folate"
+        },
+        {
+          "name": "metafolin",
+          "kind": "other_folate"
+        },
+        {
+          "name": "quatrefolic",
           "kind": "other_folate"
         }
       ],
@@ -1509,6 +1732,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "folic_acid",
       "ul_scope": "supplements_and_fortified_foods",
@@ -1527,7 +1752,9 @@
       "dsld_ingredient_groups": [
         "Iodine"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "9679TC07X4"
+      ],
       "forms": [
         {
           "name": "potassium iodide",
@@ -1809,6 +2036,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -1826,7 +2055,9 @@
       "dsld_ingredient_groups": [
         "Iron"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "E1UOL152H7"
+      ],
       "forms": [
         {
           "name": "ferrous sulfate",
@@ -2124,6 +2355,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -2141,7 +2374,9 @@
       "dsld_ingredient_groups": [
         "Magnesium"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "I38ZP9992A"
+      ],
       "forms": [
         {
           "name": "magnesium glycinate",
@@ -2459,6 +2694,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "supplements_and_medications",
@@ -2476,7 +2713,9 @@
       "dsld_ingredient_groups": [
         "Manganese"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "42Z2K6ZL8P"
+      ],
       "forms": [
         {
           "name": "manganese gluconate",
@@ -2673,6 +2912,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -2695,6 +2936,8 @@
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
       "dri": null,
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": null,
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -2712,7 +2955,9 @@
       "dsld_ingredient_groups": [
         "Molybdenum"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "81AH48963U"
+      ],
       "forms": [
         {
           "name": "sodium molybdate",
@@ -2986,6 +3231,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -3009,9 +3256,16 @@
       ],
       "dsld_ingredient_groups": [
         "Niacin",
-        "Vitamin B3"
+        "Vitamin B3",
+        "Vitamin B3 (Niacin)",
+        "Vitamin B3 (Niacinamide)",
+        "Vitamin B3 (mixed)",
+        "Niacin (Vitamin B3)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "25X51I8RD4",
+        "2679MF687A"
+      ],
       "forms": [
         {
           "name": "nicotinic acid",
@@ -3297,12 +3551,95 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "supplements_and_fortified_foods",
       "ul_note": "RDA is in mg niacin equivalents (NE); supplement niacin is counted as mg niacin. The UL applies to niacin from supplements and fortified foods.",
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
       "source_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/"
+    },
+    {
+      "id": "other-tocopherols",
+      "name": "Other Tocopherols and Tocotrienols",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "gamma tocopherol",
+        "d gamma tocopherol",
+        "delta tocopherol",
+        "d delta tocopherol",
+        "beta tocopherol",
+        "d beta tocopherol",
+        "mixed tocopherols",
+        "natural mixed tocopherols",
+        "d mixed tocopherols",
+        "tocotrienols",
+        "mixed tocotrienols",
+        "tocotrienol complex",
+        "delta tocotrienol",
+        "gamma tocotrienol",
+        "alpha tocotrienol"
+      ],
+      "dsld_ingredient_groups": [],
+      "unii_codes": [
+        "R0ZB2556P8"
+      ],
+      "forms": [],
+      "unit_conversions": [],
+      "plain_mass_is_canonical": false,
+      "dri": null,
+      "label_dv": null,
+      "name_overrides_groups": [
+        "Vitamin E",
+        "Vitamin E (Alpha-Tocomonoenol)",
+        "Vitamin E (Gamma Tocotrienol)",
+        "Vitamin E (Mixed Tocopherols and Tocotrienols)",
+        "Vitamin E (alpha tocopherol)",
+        "Vitamin E (alpha tocopheryl acetate)",
+        "Vitamin E (alpha tocopheryl succinate)",
+        "Vitamin E (alpha tocopheryl)",
+        "Vitamin E (alpha tocotrienol)",
+        "Vitamin E (alpha-tocopherol acetate)",
+        "Vitamin E (alpha-tocopherol succinate)",
+        "Vitamin E (alpha-tocopherol)",
+        "Vitamin E (alpha-tocopheryl acetate)",
+        "Vitamin E (alpha-tocopheryl succinate)",
+        "Vitamin E (beta tocopherol)",
+        "Vitamin E (beta tocotrienol)",
+        "Vitamin E (beta-tocopherol)",
+        "Vitamin E (beta-tocotrienol)",
+        "Vitamin E (delta tocopherol)",
+        "Vitamin E (delta tocotrienol)",
+        "Vitamin E (delta-tocopherol)",
+        "Vitamin E (delta-tocotrienol)",
+        "Vitamin E (gamma tocopherol)",
+        "Vitamin E (gamma unspecified)",
+        "Vitamin E (mixed alpha-tocopherol)",
+        "Vitamin E (mixed tocopherols",
+        "Vitamin E (mixed tocopherols)",
+        "Vitamin E (mixed tocopherols/tocotrienols)",
+        "Vitamin E (mixed tocotrienols)",
+        "Vitamin E (mixed)",
+        "Vitamin E (natural tocopherols)",
+        "Vitamin E (not specified)",
+        "Vitamin E (tocofersolan)",
+        "Vitamin E (tocopherol ascorbyl palmitate)",
+        "Vitamin E (tocopherol not specified)",
+        "Vitamin E (tocopheryl acetate)",
+        "Vitamin E (tocopheryl succinate)",
+        "Vitamin E (tocotrienol unspecified)",
+        "Vitamin E (tocotrienols)",
+        "Vitamin E (unspecified tocopheryl acetate)",
+        "Vitamin E (unspecified)",
+        "Vitamin E (vitamin E acetate)"
+      ],
+      "ul_unit": null,
+      "ul_component": "all",
+      "ul_scope": "not_established",
+      "ul_note": "Non-alpha tocopherols and tocotrienols do not count toward vitamin E (alpha-tocopherol) requirements or its UL. Totaled for overlap detection only.",
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/"
     },
     {
       "id": "pantothenic-acid",
@@ -3317,9 +3654,17 @@
         "pantethine"
       ],
       "dsld_ingredient_groups": [
-        "Pantothenic Acid"
+        "Pantothenic Acid",
+        "Vitamin B5",
+        "Vitamin B5 (Pantothenic Acid)",
+        "Vitamin B5 (calcium pantothenate)",
+        "Vitamin B5 (mixed)",
+        "Vitamin B5 (unspecified)",
+        "Pantothenic Acid (Vitamin B5)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "19F5HK2737"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
@@ -3414,6 +3759,8 @@
         },
         "ul": null
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -3432,7 +3779,9 @@
       "dsld_ingredient_groups": [
         "Phosphorus"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "27YLU75U4W"
+      ],
       "forms": [
         {
           "name": "dicalcium phosphate",
@@ -3710,6 +4059,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -3727,7 +4078,9 @@
       "dsld_ingredient_groups": [
         "Potassium"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "RWP5GA015D"
+      ],
       "forms": [
         {
           "name": "potassium chloride",
@@ -3839,6 +4192,8 @@
         },
         "ul": null
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -3859,9 +4214,17 @@
       ],
       "dsld_ingredient_groups": [
         "Riboflavin",
-        "Vitamin B2"
+        "Vitamin B2",
+        "Vitamin B2 (Riboflavin Phosphate)",
+        "Vitamin B2 (Riboflavin)",
+        "Vitamin B2 (mixed)",
+        "Vitamin B2 (riboflavin 5-phosphate)",
+        "Vitamin B2 (riboflavin selenite)",
+        "Riboflavin (B2)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "TLM2976OFR"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
@@ -4041,6 +4404,8 @@
         "ai": null,
         "ul": null
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -4058,7 +4423,9 @@
       "dsld_ingredient_groups": [
         "Selenium"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "H6241UJ22B"
+      ],
       "forms": [
         {
           "name": "l selenomethionine",
@@ -4344,6 +4711,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -4367,9 +4736,20 @@
       "dsld_ingredient_groups": [
         "Thiamin",
         "Thiamine",
-        "Vitamin B1"
+        "Vitamin B1",
+        "Vitamin B1 (Thiamine)",
+        "Vitamin B1 (mixed)",
+        "Vitamin B1 (thiamin disulfide)",
+        "Vitamin B1 (thiamin pyrophosphate)",
+        "Vitamin B1 (thiamine HCl)",
+        "Vitamin B1 (thiamine hydrochloride)",
+        "Vitamin B1 (thiamine monohydrate)",
+        "Vitamin B1 (thiamine mononitrate)",
+        "Vitamin B1 (thiamine pyrophosphate)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "X66NSO3N35"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
@@ -4549,6 +4929,8 @@
         "ai": null,
         "ul": null
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -4566,9 +4948,22 @@
         "vitamin a rae"
       ],
       "dsld_ingredient_groups": [
-        "Vitamin A"
+        "Vitamin A",
+        "Vitamin A (mixed)",
+        "Vitamin A (not specified)",
+        "Vitamin A (retinol acetate)",
+        "Vitamin A (retinol)",
+        "Vitamin A (retinyl acetate)",
+        "Vitamin A (retinyl not specified)",
+        "Vitamin A (retinyl palmitate)",
+        "Vitamin A (unspecified)",
+        "Vitamin A (vitamin A Palmitate)",
+        "Vitamin A (vitamin A acetate)",
+        "Vitamin A (vitamin A cetate)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "81G40H8B0T"
+      ],
       "forms": [
         {
           "name": "retinol",
@@ -4617,6 +5012,34 @@
         {
           "name": "beta cryptoxanthin",
           "kind": "other_carotenoid"
+        },
+        {
+          "name": "beta carotene natural",
+          "kind": "beta_carotene"
+        },
+        {
+          "name": "retinol acetate",
+          "kind": "preformed"
+        },
+        {
+          "name": "retinyl not specified",
+          "kind": "preformed"
+        },
+        {
+          "name": "fish liver oil",
+          "kind": "preformed"
+        },
+        {
+          "name": "cod liver oil",
+          "kind": "preformed"
+        },
+        {
+          "name": "halibut liver oil",
+          "kind": "preformed"
+        },
+        {
+          "name": "shark liver oil",
+          "kind": "preformed"
         }
       ],
       "unit_conversions": [
@@ -4907,6 +5330,11 @@
           ]
         }
       },
+      "label_dv": {
+        "amount": 900,
+        "unit": "mcg RAE"
+      },
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "preformed",
       "ul_scope": "preformed_vitamin_a",
@@ -4928,9 +5356,22 @@
         "hydroxocobalamin"
       ],
       "dsld_ingredient_groups": [
-        "Vitamin B12"
+        "Vitamin B12",
+        "Vitamin B12 (5-deoxyadenosylcobalamin)",
+        "Vitamin B12 (Hydroxycobalamin)",
+        "Vitamin B12 (adenosylcobalamin)",
+        "Vitamin B12 (cyanacobalamin)",
+        "Vitamin B12 (cyanocobalamin)",
+        "Vitamin B12 (deoxyadenosylcobalamin)",
+        "Vitamin B12 (methylcobalamin)",
+        "Vitamin B12 (mixed)",
+        "Vitamin B12 (unspecified)",
+        "Vitamin B12 (various)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "8406EY2OQA",
+        "BR1SN1JS2W"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
@@ -5110,6 +5551,8 @@
         "ai": null,
         "ul": null
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -5133,9 +5576,27 @@
         "p5p"
       ],
       "dsld_ingredient_groups": [
-        "Vitamin B6"
+        "Vitamin B6",
+        "Vitamin B6 (Mixed)",
+        "Vitamin B6 (Pyridoxine HCl)",
+        "Vitamin B6 (not specified)",
+        "Vitamin B6 (pridoxal 5-phosphate)",
+        "Vitamin B6 (pyridoxal 5 phosphate)",
+        "Vitamin B6 (pyridoxal 5-phosphate)",
+        "Vitamin B6 (pyridoxal)",
+        "Vitamin B6 (pyridoxamine HCl)",
+        "Vitamin B6 (pyridoxamine)",
+        "Vitamin B6 (pyridoxine 5-phosphate)",
+        "Vitamin B6 (pyridoxine hydrochloride)",
+        "Vitamin B6 (pyridoxine phosphate)",
+        "Vitamin B6 (pyridoxine)",
+        "Vitamin B6 (unspecified)",
+        "Vitamin B6 (various)",
+        "Pyridoxine (Vitamin B6)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "KV2JZ1BI6Z"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
@@ -5400,6 +5861,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -5418,9 +5881,21 @@
         "l ascorbic acid"
       ],
       "dsld_ingredient_groups": [
-        "Vitamin C"
+        "Vitamin C",
+        "Vitamin C (Ascorbate)",
+        "Vitamin C (ascorbic acid)",
+        "Vitamin C (ascorbic palmitate)",
+        "Vitamin C (ascorbyl palmitate)",
+        "Vitamin C (calcium ascorbate)",
+        "Vitamin C (mixed ascorbates)",
+        "Vitamin C (mixed)",
+        "Vitamin C (not specified)",
+        "Vitamin C (sodium ascorbate)",
+        "Vitamin C (unspecified)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "PQ6CK8PD0R"
+      ],
       "forms": [
         {
           "name": "ascorbic acid",
@@ -5702,6 +6177,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -5722,9 +6199,17 @@
         "ergocalciferol"
       ],
       "dsld_ingredient_groups": [
-        "Vitamin D"
+        "Vitamin D",
+        "Vitamin D (cholecalciferol)",
+        "Vitamin D (ergocalciferol)",
+        "Vitamin D (mixed)",
+        "Vitamin D (unspecified)",
+        "Vitamin D3"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "1C6V77QF41",
+        "9VU1KI44GP"
+      ],
       "forms": [
         {
           "name": "cholecalciferol",
@@ -6015,6 +6500,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "total_intake",
@@ -6032,9 +6519,53 @@
         "alpha tocopherol"
       ],
       "dsld_ingredient_groups": [
-        "Vitamin E"
+        "Vitamin E",
+        "Vitamin E (Alpha-Tocomonoenol)",
+        "Vitamin E (Gamma Tocotrienol)",
+        "Vitamin E (Mixed Tocopherols and Tocotrienols)",
+        "Vitamin E (alpha tocopherol)",
+        "Vitamin E (alpha tocopheryl acetate)",
+        "Vitamin E (alpha tocopheryl succinate)",
+        "Vitamin E (alpha tocopheryl)",
+        "Vitamin E (alpha tocotrienol)",
+        "Vitamin E (alpha-tocopherol acetate)",
+        "Vitamin E (alpha-tocopherol succinate)",
+        "Vitamin E (alpha-tocopherol)",
+        "Vitamin E (alpha-tocopheryl acetate)",
+        "Vitamin E (alpha-tocopheryl succinate)",
+        "Vitamin E (beta tocopherol)",
+        "Vitamin E (beta tocotrienol)",
+        "Vitamin E (beta-tocopherol)",
+        "Vitamin E (beta-tocotrienol)",
+        "Vitamin E (delta tocopherol)",
+        "Vitamin E (delta tocotrienol)",
+        "Vitamin E (delta-tocopherol)",
+        "Vitamin E (delta-tocotrienol)",
+        "Vitamin E (gamma tocopherol)",
+        "Vitamin E (gamma unspecified)",
+        "Vitamin E (mixed alpha-tocopherol)",
+        "Vitamin E (mixed tocopherols",
+        "Vitamin E (mixed tocopherols)",
+        "Vitamin E (mixed tocopherols/tocotrienols)",
+        "Vitamin E (mixed tocotrienols)",
+        "Vitamin E (mixed)",
+        "Vitamin E (natural tocopherols)",
+        "Vitamin E (not specified)",
+        "Vitamin E (tocofersolan)",
+        "Vitamin E (tocopherol ascorbyl palmitate)",
+        "Vitamin E (tocopherol not specified)",
+        "Vitamin E (tocopheryl acetate)",
+        "Vitamin E (tocopheryl succinate)",
+        "Vitamin E (tocotrienol unspecified)",
+        "Vitamin E (tocotrienols)",
+        "Vitamin E (unspecified tocopheryl acetate)",
+        "Vitamin E (unspecified)",
+        "Vitamin E (vitamin E acetate)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "A7E6112E4N",
+        "H4N855PNZ1"
+      ],
       "forms": [
         {
           "name": "d alpha tocopherol",
@@ -6078,6 +6609,14 @@
         },
         {
           "name": "synthetic vitamin e",
+          "kind": "synthetic"
+        },
+        {
+          "name": "d alpha tocopheryl",
+          "kind": "natural"
+        },
+        {
+          "name": "dl alpha tocopheryl",
           "kind": "synthetic"
         }
       ],
@@ -6361,6 +6900,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "supplemental_alpha_tocopherol",
@@ -6386,9 +6927,19 @@
         "mk 4"
       ],
       "dsld_ingredient_groups": [
-        "Vitamin K"
+        "Vitamin K",
+        "Vitamin K (Mixed)",
+        "Vitamin K (Phylloquinone)",
+        "Vitamin K (menadione)",
+        "Vitamin K (menaquinone)",
+        "Vitamin K (unspecified)",
+        "Vitamin K mixed)"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "71ANL51TLA",
+        "8427BML8NY",
+        "A034SE7857"
+      ],
       "forms": [],
       "unit_conversions": [],
       "plain_mass_is_canonical": false,
@@ -6483,6 +7034,8 @@
         },
         "ul": null
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mcg",
       "ul_component": "all",
       "ul_scope": "not_established",
@@ -6500,7 +7053,9 @@
       "dsld_ingredient_groups": [
         "Zinc"
       ],
-      "unii_codes": [],
+      "unii_codes": [
+        "J41CSQ7QDS"
+      ],
       "forms": [
         {
           "name": "zinc gluconate",
@@ -6794,6 +7349,8 @@
           ]
         }
       },
+      "label_dv": null,
+      "name_overrides_groups": [],
       "ul_unit": "mg",
       "ul_component": "all",
       "ul_scope": "total_intake",

@@ -1,0 +1,305 @@
+{
+  "src": "01-raw/2025-03-25/data/label_4.json",
+  "id": 284181,
+  "nhanesId": "",
+  "bundleName": "",
+  "fullName": "5-MTHF 1 mg",
+  "brandName": "Thorne",
+  "brandIpSymbol": "®",
+  "upcSku": "6 93749 12901 1",
+  "productVersionCode": "B129 LB12912",
+  "pdf": "284181_document.pdf",
+  "thumbnail": "284181_thumbnail.jpg",
+  "servingsPerContainer": "60",
+  "hasOuterCarton": null,
+  "percentDvFootnote": "Not Present",
+  "labelRelationships": [
+    {
+      "type": "Image difference, same product",
+      "labelId": 204219
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 15707
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 181733
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 181732
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 157297
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 63783
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 35431
+    }
+  ],
+  "contacts": [
+    {
+      "contactId": 15585,
+      "text": "Manufactured by",
+      "types": [
+        "Manufacturer"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_3.json",
+        "id": 15585,
+        "name": "Thorne Research, Inc.",
+        "streetAddress": "",
+        "city": "",
+        "state": "",
+        "country": "",
+        "zipCode": "",
+        "phoneNumber": "1-800-228-1966",
+        "email": "",
+        "webAddress": ""
+      }
+    }
+  ],
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 60,
+      "unit": "Capsule(s)",
+      "display": "60 Capsule(s)"
+    }
+  ],
+  "physicalState": {
+    "langualCode": "E0159",
+    "langualCodeDescription": "Capsule"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 1,
+      "minDailyServings": 1,
+      "maxDailyServings": 3,
+      "unit": "Capsule(s)",
+      "inSFB": true
+    }
+  ],
+  "targetGroups": [
+    "Adult (18 - 50 Years)",
+    "Gluten Free"
+  ],
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Vitamin"
+  },
+  "statements": [
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Foundational\nMood\nHeart/Vessels"
+    },
+    {
+      "type": "Suggested/Recommended/Usage/Directions",
+      "notes": "Suggested use: Take 1 capsule one to three times daily or as recommended by your healthcare practitioner."
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Tamper evident: Use only if bottle is sealed."
+    },
+    {
+      "type": "Storage",
+      "notes": "Store tightly sealed in a cool, dry place."
+    },
+    {
+      "type": "Precautions re: Pregnant or Nursing or Prescription Medications",
+      "notes": "If pregnant, consult your health-care practitioner before using this product."
+    },
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "Gluten free"
+    },
+    {
+      "type": "Seals/Symbols",
+      "notes": "Manufactured in the USA using US & imported ingredients"
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "Methylfolate"
+    },
+    {
+      "type": "FDA Statement of Identity",
+      "notes": "Dietary Supplement"
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "This product uses Gnosis S.p.A.’s L-5-Methyltetrahydrofolate (Extra-folate-S)."
+    },
+    {
+      "type": "Brand IP Statement(s) re: (c), (TM), (SM)",
+      "notes": "Extrafolate-S is a registered trademark of Gnosis S.p.A."
+    },
+    {
+      "type": "FDA Disclaimer Statement",
+      "notes": "This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease."
+    }
+  ],
+  "claims": [
+    {
+      "langualCode": "P0065",
+      "langualCodeDescription": "Nutrient "
+    },
+    {
+      "langualCode": "P0115",
+      "langualCodeDescription": "All Other"
+    },
+    {
+      "langualCode": "P0265",
+      "langualCodeDescription": "Structure/Function"
+    }
+  ],
+  "events": [
+    {
+      "date": "2023-02-21",
+      "type": "Date entered into DSLD"
+    }
+  ],
+  "userGroups": [
+    {
+      "dailyValueTargetGroupName": "Adults and children 4 or more years of age",
+      "langualCode": "P0250",
+      "langualCodeDescription": "Adults and Children 4 years and above"
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "ingredientId": 278757,
+      "description": null,
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 1.7,
+          "unit": "mg DFE",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 425,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 2,
+          "ingredientId": 318168,
+          "description": "",
+          "notes": "",
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 1,
+              "operator": "=",
+              "quantity": 1,
+              "unit": "mg",
+              "dailyValueTargetGroup": [],
+              "servingSizeUnit": "Capsule(s)"
+            }
+          ],
+          "nestedRows": [],
+          "name": "Extrafolate-S",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B9",
+          "uniiCode": null,
+          "alternateNames": [],
+          "forms": [
+            {
+              "order": 1,
+              "ingredientId": 59706,
+              "prefix": null,
+              "percent": null,
+              "name": "L-5-Methyltetrahydrofolate",
+              "category": "vitamin",
+              "ingredientGroup": "Vitamin B9 (5-Methyltetrahydrofolate)",
+              "uniiCode": null
+            }
+          ]
+        }
+      ],
+      "name": "Folate",
+      "category": "vitamin",
+      "ingredientGroup": "Folate",
+      "uniiCode": "935E97BOY8",
+      "alternateNames": [],
+      "forms": []
+    }
+  ],
+  "otheringredients": {
+    "text": null,
+    "ingredients": [
+      {
+        "order": 1,
+        "ingredientId": 4734,
+        "name": "Microcrystalline Cellulose",
+        "category": "other",
+        "ingredientGroup": "Cellulose",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 2,
+        "ingredientId": 57390,
+        "name": "Hypromellose",
+        "category": "other",
+        "ingredientGroup": "Hypromellose",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": [
+          {
+            "order": 1,
+            "ingredientId": 15291,
+            "prefix": "derived from",
+            "percent": null,
+            "name": "Cellulose",
+            "category": "fiber",
+            "ingredientGroup": "Cellulose",
+            "uniiCode": null
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "ingredientId": 285978,
+        "name": "Leucine",
+        "category": "amino acid",
+        "ingredientGroup": "Leucine",
+        "uniiCode": "GMW67QNF9C",
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 4,
+        "ingredientId": 280319,
+        "name": "Silicon Dioxide",
+        "category": "mineral",
+        "ingredientGroup": "Silicon",
+        "uniiCode": "ETJ7Z6XBU4",
+        "alternateNames": [
+          "SiO2"
+        ],
+        "forms": []
+      }
+    ]
+  },
+  "offMarket": 0,
+  "entryDate": "2023-02-21"
+}

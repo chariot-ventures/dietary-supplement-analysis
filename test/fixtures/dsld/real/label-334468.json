@@ -1,0 +1,614 @@
+{
+  "src": "01-raw/2025-09-25/data/label_254.json",
+  "id": 334468,
+  "nhanesId": "",
+  "bundleName": "",
+  "fullName": "Magnesium Breakthrough",
+  "brandName": "BiOptimizers",
+  "brandIpSymbol": "™",
+  "upcSku": "0 750363 800754",
+  "productVersionCode": "VERSION 4.0 v60v4.4",
+  "pdf": "334468_document.pdf",
+  "thumbnail": "334468_thumbnail.jpg",
+  "servingsPerContainer": "30",
+  "hasOuterCarton": null,
+  "percentDvFootnote": "Not Present",
+  "labelRelationships": [
+    {
+      "type": "Image difference, same product",
+      "labelId": 284047
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 309949
+    },
+    {
+      "type": "Package size difference, same product",
+      "labelId": 320987
+    },
+    {
+      "type": "Package size difference, same product",
+      "labelId": 284047
+    },
+    {
+      "type": "Package size difference, same product",
+      "labelId": 309949
+    }
+  ],
+  "contacts": [
+    {
+      "contactId": 22952,
+      "text": "Manufactured for",
+      "types": [
+        "Distributor"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_4.json",
+        "id": 22952,
+        "name": "BiOptimizers USA Inc.",
+        "streetAddress": "5470 Kietzke Lane, Suite 300",
+        "city": "Reno",
+        "state": "NV",
+        "country": "",
+        "zipCode": "89511",
+        "phoneNumber": "",
+        "email": "",
+        "webAddress": "Bioptimizers.com"
+      }
+    }
+  ],
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 60,
+      "unit": "Veggie Cap(s)",
+      "display": "60 Veggie Cap(s)"
+    }
+  ],
+  "physicalState": {
+    "langualCode": "E0159",
+    "langualCodeDescription": "Capsule"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 2,
+      "maxQuantity": 2,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Capsule(s)",
+      "notes": "",
+      "inSFB": true
+    }
+  ],
+  "targetGroups": [
+    "Vegan",
+    "Vegetarian",
+    "Adult (18 - 50 Years)",
+    "Gluten Free",
+    "Dairy Free"
+  ],
+  "productType": {
+    "langualCode": "A1325",
+    "langualCodeDescription": "Other Combinations"
+  },
+  "statements": [
+    {
+      "type": "Formula re: Contains",
+      "notes": "Magnesium Breakthrough combines 7 types of magnesium in a humic/fulvic monoatomic blend, to optimize absorption. And to our knowledge, it's the most complete magnesium supplement blend available."
+    },
+    {
+      "type": "Formulation re: Other",
+      "notes": "May support digestion and promote more restful sleep."
+    },
+    {
+      "type": "Suggested/Recommended/Usage/Directions",
+      "notes": "Directions: Take 2 capsules with your evening meal."
+    },
+    {
+      "type": "Storage",
+      "notes": "Store in a cool/dry location away from direct light."
+    },
+    {
+      "type": "Precautions re: Children",
+      "notes": "Caution: Keep out of reach of children."
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "As with any product, discontinue immediately if adverse effects occur. Please consult a physician before beginning any new supplement, diet, training program, or if you are undergoing treatment of a medical condition."
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "To reorder or contact us, please visit: BiOptimizers.com"
+    },
+    {
+      "type": "FDA Disclaimer Statement",
+      "notes": "These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease."
+    },
+    {
+      "type": "Formulation re: Vegetarian/Vegan",
+      "notes": "Vegan"
+    },
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "Gluten-free\r\nSoy-free"
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "Premium magnesium complex"
+    },
+    {
+      "type": "FDA Statement of Identity",
+      "notes": "Dietary Supplement"
+    },
+    {
+      "type": "Brand IP Statement(s) re: (c), (TM), (SM)",
+      "notes": "Sucrosomial is a registered trademark of Alesco S.r.l"
+    },
+    {
+      "type": "Brand IP Statement(s) re: (c), (TM), (SM)",
+      "notes": "Nu-FLOW and Nu-MAG are registered trademarks of RIBUS, Inc."
+    },
+    {
+      "type": "Formulation re: Other",
+      "notes": "Optimized nutrition solutions"
+    }
+  ],
+  "claims": [
+    {
+      "langualCode": "P0065",
+      "langualCodeDescription": "Nutrient "
+    },
+    {
+      "langualCode": "P0115",
+      "langualCodeDescription": "All Other"
+    },
+    {
+      "langualCode": "P0265",
+      "langualCodeDescription": "Structure/Function"
+    }
+  ],
+  "events": [
+    {
+      "date": "2025-09-25",
+      "type": "Date entered into DSLD"
+    }
+  ],
+  "userGroups": [
+    {
+      "dailyValueTargetGroupName": "Adults and children 4 or more years of age",
+      "langualCode": "P0250",
+      "langualCodeDescription": "Adults and Children 4 years and above"
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "ingredientId": 280455,
+      "description": null,
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 2,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 118,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin B6",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B6",
+      "uniiCode": "KV2JZ1BI6Z",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280215,
+          "prefix": null,
+          "percent": null,
+          "name": "Pyridoxine Hydrochloride",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B6",
+          "uniiCode": "68Y4CF58BV"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "ingredientId": 286056,
+      "description": "",
+      "notes": "Elemental, from",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 500,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 120,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 3,
+          "ingredientId": 319975,
+          "description": null,
+          "notes": "",
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 2,
+              "operator": "=",
+              "quantity": 1711,
+              "unit": "mg",
+              "dailyValueTargetGroup": [],
+              "servingSizeUnit": "Capsule(s)"
+            }
+          ],
+          "nestedRows": [
+            {
+              "order": 4,
+              "ingredientId": 295521,
+              "description": null,
+              "notes": "",
+              "quantity": [
+                {
+                  "servingSizeOrder": 1,
+                  "servingSizeQuantity": 2,
+                  "operator": "=",
+                  "quantity": 0,
+                  "unit": "NP",
+                  "dailyValueTargetGroup": [],
+                  "servingSizeUnit": "Capsule(s)"
+                }
+              ],
+              "nestedRows": [],
+              "name": "Magnesium Chelate",
+              "category": "mineral",
+              "ingredientGroup": "Magnesium",
+              "uniiCode": "7NJ9VFY9VY",
+              "alternateNames": [
+                "Mg Chelate"
+              ],
+              "forms": []
+            },
+            {
+              "order": 5,
+              "ingredientId": 286344,
+              "description": null,
+              "notes": "",
+              "quantity": [
+                {
+                  "servingSizeOrder": 1,
+                  "servingSizeQuantity": 2,
+                  "operator": "=",
+                  "quantity": 0,
+                  "unit": "NP",
+                  "dailyValueTargetGroup": [],
+                  "servingSizeUnit": "Capsule(s)"
+                }
+              ],
+              "nestedRows": [],
+              "name": "Magnesium Bisglycinate",
+              "category": "mineral",
+              "ingredientGroup": "Magnesium",
+              "uniiCode": "IFN18A4Y6B",
+              "alternateNames": [
+                "Mg Bisglycinate"
+              ],
+              "forms": []
+            },
+            {
+              "order": 6,
+              "ingredientId": 340426,
+              "description": null,
+              "notes": "",
+              "quantity": [
+                {
+                  "servingSizeOrder": 1,
+                  "servingSizeQuantity": 2,
+                  "operator": "=",
+                  "quantity": 0,
+                  "unit": "NP",
+                  "dailyValueTargetGroup": [],
+                  "servingSizeUnit": "Capsule(s)"
+                }
+              ],
+              "nestedRows": [],
+              "name": "Sucrosomial",
+              "category": "mineral",
+              "ingredientGroup": "Magnesium",
+              "uniiCode": null,
+              "alternateNames": [],
+              "forms": [
+                {
+                  "order": 1,
+                  "ingredientId": 295197,
+                  "prefix": null,
+                  "percent": null,
+                  "name": "Magnesium",
+                  "category": "mineral",
+                  "ingredientGroup": "Magnesium",
+                  "uniiCode": "I38ZP9992A"
+                }
+              ]
+            },
+            {
+              "order": 7,
+              "ingredientId": 295194,
+              "description": null,
+              "notes": "",
+              "quantity": [
+                {
+                  "servingSizeOrder": 1,
+                  "servingSizeQuantity": 2,
+                  "operator": "=",
+                  "quantity": 0,
+                  "unit": "NP",
+                  "dailyValueTargetGroup": [],
+                  "servingSizeUnit": "Capsule(s)"
+                }
+              ],
+              "nestedRows": [],
+              "name": "Magnesium Malate",
+              "category": "mineral",
+              "ingredientGroup": "Magnesium",
+              "uniiCode": "LA9X9UJA2Z",
+              "alternateNames": [
+                "Mg Malate"
+              ],
+              "forms": []
+            },
+            {
+              "order": 8,
+              "ingredientId": 295656,
+              "description": null,
+              "notes": "",
+              "quantity": [
+                {
+                  "servingSizeOrder": 1,
+                  "servingSizeQuantity": 2,
+                  "operator": "=",
+                  "quantity": 0,
+                  "unit": "NP",
+                  "dailyValueTargetGroup": [],
+                  "servingSizeUnit": "Capsule(s)"
+                }
+              ],
+              "nestedRows": [],
+              "name": "Magnesium Orotate",
+              "category": "mineral",
+              "ingredientGroup": "Magnesium",
+              "uniiCode": "GI96W46M5A",
+              "alternateNames": [
+                "Mg Orotate"
+              ],
+              "forms": []
+            },
+            {
+              "order": 9,
+              "ingredientId": 306090,
+              "description": null,
+              "notes": "",
+              "quantity": [
+                {
+                  "servingSizeOrder": 1,
+                  "servingSizeQuantity": 2,
+                  "operator": "=",
+                  "quantity": 0,
+                  "unit": "NP",
+                  "dailyValueTargetGroup": [],
+                  "servingSizeUnit": "Capsule(s)"
+                }
+              ],
+              "nestedRows": [],
+              "name": "Magnesium Taurate",
+              "category": "mineral",
+              "ingredientGroup": "Magnesiium",
+              "uniiCode": "RCM1N3D968",
+              "alternateNames": [
+                "Mg Taurate"
+              ],
+              "forms": []
+            },
+            {
+              "order": 10,
+              "ingredientId": 291432,
+              "description": null,
+              "notes": "",
+              "quantity": [
+                {
+                  "servingSizeOrder": 1,
+                  "servingSizeQuantity": 2,
+                  "operator": "=",
+                  "quantity": 0,
+                  "unit": "NP",
+                  "dailyValueTargetGroup": [],
+                  "servingSizeUnit": "Capsule(s)"
+                }
+              ],
+              "nestedRows": [],
+              "name": "Magnesium Citrate",
+              "category": "mineral",
+              "ingredientGroup": "Magnesium",
+              "uniiCode": "RHO26O1T9V",
+              "alternateNames": [
+                "Mg Citrate"
+              ],
+              "forms": []
+            },
+            {
+              "order": 11,
+              "ingredientId": 340440,
+              "description": null,
+              "notes": "",
+              "quantity": [
+                {
+                  "servingSizeOrder": 1,
+                  "servingSizeQuantity": 2,
+                  "operator": "=",
+                  "quantity": 0,
+                  "unit": "NP",
+                  "dailyValueTargetGroup": [],
+                  "servingSizeUnit": "Capsule(s)"
+                }
+              ],
+              "nestedRows": [],
+              "name": "Humic/Fulvic Monoatomic Blend",
+              "category": "blend",
+              "ingredientGroup": "Blend",
+              "uniiCode": null,
+              "alternateNames": [],
+              "forms": [
+                {
+                  "order": 1,
+                  "ingredientId": 181024,
+                  "prefix": null,
+                  "percent": null,
+                  "name": "Fulvic",
+                  "category": "non-nutrient/non-botanical",
+                  "ingredientGroup": "Fulvic Acid",
+                  "uniiCode": null
+                },
+                {
+                  "order": 2,
+                  "ingredientId": 237475,
+                  "prefix": null,
+                  "percent": null,
+                  "name": "Humic",
+                  "category": "non-nutrient/non-botanical",
+                  "ingredientGroup": "Humic Acid",
+                  "uniiCode": null
+                }
+              ]
+            }
+          ],
+          "name": "Magnesium Proprietary Blend",
+          "category": "blend",
+          "ingredientGroup": "Proprietary Blend",
+          "uniiCode": null,
+          "alternateNames": [],
+          "forms": []
+        }
+      ],
+      "name": "Magnesium",
+      "category": "mineral",
+      "ingredientGroup": "Magnesium",
+      "uniiCode": "I38ZP9992A",
+      "alternateNames": [
+        "Mg"
+      ],
+      "forms": []
+    },
+    {
+      "order": 12,
+      "ingredientId": 295952,
+      "description": null,
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 1,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 43,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Capsule(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Manganese",
+      "category": "mineral",
+      "ingredientGroup": "Manganese",
+      "uniiCode": "42Z2K6ZL8P",
+      "alternateNames": [
+        "Mn"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 295951,
+          "prefix": null,
+          "percent": null,
+          "name": "Manganese Citrate",
+          "category": "mineral",
+          "ingredientGroup": "Manganese",
+          "uniiCode": "9ZV57512ZM"
+        }
+      ]
+    }
+  ],
+  "otheringredients": {
+    "text": null,
+    "ingredients": [
+      {
+        "order": 1,
+        "ingredientId": 284496,
+        "name": "Cellulose",
+        "category": "fiber",
+        "ingredientGroup": "Cellulose",
+        "uniiCode": "SMD1X3XO9M",
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 2,
+        "ingredientId": 332516,
+        "name": "Nu-MAG",
+        "category": "blend",
+        "ingredientGroup": "Proprietary Blend",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 3,
+        "ingredientId": 273419,
+        "name": "Nu-Flow",
+        "category": "other",
+        "ingredientGroup": "Flow agent",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 4,
+        "ingredientId": 293311,
+        "name": "Silica",
+        "category": "mineral",
+        "ingredientGroup": "Silicon",
+        "uniiCode": "ETJ7Z6XBU4",
+        "alternateNames": [],
+        "forms": []
+      }
+    ]
+  },
+  "offMarket": 0,
+  "entryDate": "2025-09-25"
+}

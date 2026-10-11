@@ -1,0 +1,271 @@
+{
+  "src": "01-raw/2025-07-24/data/label_378.json",
+  "id": 230932,
+  "nhanesId": "",
+  "bundleName": "",
+  "fullName": "Vitamin D3 Concepts 5000",
+  "brandName": "Natural Healthy Concepts",
+  "brandIpSymbol": "none",
+  "upcSku": "6 47732 92464 0",
+  "productVersionCode": "Rev. 120518 070719-04",
+  "pdf": "",
+  "thumbnail": "",
+  "servingsPerContainer": "90",
+  "hasOuterCarton": false,
+  "percentDvFootnote": "Not Present",
+  "labelRelationships": [
+    {
+      "type": "Image difference, same product",
+      "labelId": 179742
+    }
+  ],
+  "contacts": [
+    {
+      "contactId": 20547,
+      "text": "Distributed by",
+      "types": [
+        "Distributor"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_4.json",
+        "id": 20547,
+        "name": "NHC",
+        "streetAddress": "310 N Westhill Blvd.",
+        "city": "Appleton",
+        "state": "WI",
+        "country": "",
+        "zipCode": "54914",
+        "phoneNumber": "",
+        "email": "",
+        "webAddress": ""
+      }
+    }
+  ],
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 90,
+      "unit": "Softgel(s)",
+      "display": "90 Softgel(s)"
+    }
+  ],
+  "physicalState": {
+    "langualCode": "E0161",
+    "langualCodeDescription": "Softgel Capsule"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 1,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Softgel(s)",
+      "inSFB": true
+    }
+  ],
+  "targetGroups": [
+    "Adult (18 - 50 Years)",
+    "Gluten Free",
+    "Dairy Free"
+  ],
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Vitamin"
+  },
+  "statements": [
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Professional use only"
+    },
+    {
+      "type": "Suggested/Recommended/Usage/Directions",
+      "notes": "Directions: Take one softgel daily, or as directed by your healthcare practitioner."
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Consult your healthcare practitioner prior to use."
+    },
+    {
+      "type": "Precautions re: Pregnant or Nursing or Prescription Medications",
+      "notes": "Individuals taking medication should discuss potential interactions with their healthcare practitioner."
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Do not use if tamper seal is damaged."
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "Vitamin D3 Concepts 5000 contains vitamin D3 (cholecalciferol) in convenient softgels."
+    },
+    {
+      "type": "Formulation re: Other",
+      "notes": "Vitamin D3 is the bioidentical form of vitamin D synthesized in the body from cholesterol, following activation by the UV rays in sunlight. This form is excellent for maintaining healthy levels of vitamin D in the body. Mounting evidence suggests roles for vitamin D not only in bone health, but also in supporting immune, neurological, musculeskeletal cellular and cardiovascular health."
+    },
+    {
+      "type": "FDA Disclaimer Statement",
+      "notes": "These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease."
+    },
+    {
+      "type": "Storage",
+      "notes": "Storage: Keep closed in a cool, dry place out of reach of children."
+    },
+    {
+      "type": "Precautions re: Children",
+      "notes": "Storage: Keep closed in a cool, dry place out of reach of children."
+    },
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "Does not contain: Wheat, gluten, yeast, soy, dairy products, fish, shellfish, peanuts, tree nuts, egg, ingredients derived from genetically modified organisms (GMOs), artificial colors, artificial sweeteners, or artificial preservatives."
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "Conveniet supra-dose vitamin D3"
+    },
+    {
+      "type": "FDA Statement of Identity",
+      "notes": "Dietary Supplement"
+    },
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "Gluten free\nDairy free\nSoy free\nNut free"
+    },
+    {
+      "type": "Formulation re: Other",
+      "notes": "Manufactured in a GMP Compliant facility."
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "This package is completely recyclable"
+    }
+  ],
+  "claims": [
+    {
+      "langualCode": "P0065",
+      "langualCodeDescription": "Nutrient "
+    },
+    {
+      "langualCode": "P0115",
+      "langualCodeDescription": "All Other"
+    },
+    {
+      "langualCode": "P0265",
+      "langualCodeDescription": "Structure/Function"
+    }
+  ],
+  "events": [
+    {
+      "date": "2020-07-23",
+      "type": "Date entered into DSLD"
+    }
+  ],
+  "userGroups": [
+    {
+      "dailyValueTargetGroupName": "Adults and children 4 or more years of age",
+      "langualCode": "P0250",
+      "langualCodeDescription": "Adults and Children 4 years and above"
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "ingredientId": 280374,
+      "description": "",
+      "notes": "Vitamin D3 (Alt. Name: Cholecalciferol) Note: 5000 IU ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 125,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 625,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Softgel(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin D3",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin D",
+      "uniiCode": "1C6V77QF41",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280176,
+          "prefix": null,
+          "percent": null,
+          "name": "Cholecalciferol",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin D",
+          "uniiCode": "1C6V77QF41"
+        }
+      ]
+    }
+  ],
+  "otheringredients": {
+    "text": null,
+    "ingredients": [
+      {
+        "order": 1,
+        "ingredientId": 164532,
+        "name": "organic, extra virgin Olive Oil",
+        "category": "fat",
+        "ingredientGroup": "Olive Oil",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 2,
+        "ingredientId": 159104,
+        "name": "Softgel",
+        "category": "other",
+        "ingredientGroup": "capsule",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": [
+          {
+            "order": 1,
+            "ingredientId": 4851,
+            "prefix": null,
+            "percent": null,
+            "name": "Bovine Gelatin",
+            "category": "protein",
+            "ingredientGroup": "Gelatin",
+            "uniiCode": null
+          },
+          {
+            "order": 2,
+            "ingredientId": 3777,
+            "prefix": "and",
+            "percent": null,
+            "name": "purified Water",
+            "category": "other",
+            "ingredientGroup": "Water",
+            "uniiCode": null
+          },
+          {
+            "order": 3,
+            "ingredientId": 3812,
+            "prefix": null,
+            "percent": null,
+            "name": "Vegetable Glycerin",
+            "category": "other",
+            "ingredientGroup": "Glycerol",
+            "uniiCode": null
+          }
+        ]
+      }
+    ]
+  },
+  "offMarket": 0,
+  "entryDate": "2020-07-23"
+}

@@ -15,7 +15,7 @@ export interface IngredientInput {
   ingredientGroup?: string | null;
   uniiCode?: string | null;
   alternateNames?: string[];
-  forms?: { name: string; uniiCode?: string | null }[];
+  forms?: { name: string; uniiCode?: string | null; ingredientGroup?: string | null }[];
 }
 
 export type MatchedBy = 'ingredient_group' | 'unii' | 'name' | 'form';
@@ -25,6 +25,8 @@ export interface IngredientMatch {
   matched_by: MatchedBy;
   /** The single form kind declared, or null when none or several were declared. */
   form_kind: string | null;
+  /** Every form kind declared. */
+  form_kinds: string[];
   mixed_forms: boolean;
   /** The row's own name is a compound (e.g. "Magnesium Citrate"), so its amount may be compound weight. */
   name_is_compound: boolean;
@@ -38,6 +40,13 @@ export function matchIngredient(input: IngredientInput, index: NutrientIndex = n
   if (input.ingredientGroup) {
     nutrient = index.byIngredientGroup(input.ingredientGroup);
     if (nutrient) matchedBy = 'ingredient_group';
+    // A more specific entry may claim rows by exact name inside a broad DSLD group,
+    // e.g. "D-Gamma-Tocopherol" is filed under "Vitamin E" but is not alpha-tocopherol.
+    const byName = names.map((s) => index.bySynonymName(s)).find((n) => n !== undefined);
+    if (byName && byName.id !== nutrient?.id && byName.name_overrides_groups.some((g) => normalizeName(g) === normalizeName(input.ingredientGroup!))) {
+      nutrient = byName;
+      matchedBy = 'name';
+    }
   }
   if (!nutrient) {
     for (const code of [input.uniiCode, ...(input.forms ?? []).map((f) => f.uniiCode)]) {
@@ -68,14 +77,13 @@ export function matchIngredient(input: IngredientInput, index: NutrientIndex = n
   }
   if (!nutrient || !matchedBy) return null;
 
-  const formNames = new Set(
-    [input.name, ...(input.alternateNames ?? []), ...(input.forms ?? []).map((f) => f.name)].map(normalizeName),
-  );
-  const kinds = new Set<string>();
-  for (const f of nutrient.forms) {
-    if (f.kind === 'compound' || f.kind === 'food_source') continue;
-    if (formNames.has(normalizeName(f.name))) kinds.add(f.kind);
-  }
+  const kinds = formKindsOf(nutrient, [
+    input.name,
+    ...(input.alternateNames ?? []),
+    ...(input.forms ?? []).map((f) => f.name),
+    // DSLD group names often carry the form: "Vitamin B9 (methylfolate)", "Vitamin A (retinyl palmitate)".
+    ...[input.ingredientGroup, ...(input.forms ?? []).map((f) => f.ingredientGroup)].map(groupQualifier),
+  ]);
   const nameKey = normalizeName(input.name);
   const nameIsCompound = nutrient.forms.some((f) => f.kind === 'compound' && normalizeName(f.name) === nameKey);
 
@@ -83,7 +91,24 @@ export function matchIngredient(input: IngredientInput, index: NutrientIndex = n
     nutrient,
     matched_by: matchedBy,
     form_kind: kinds.size === 1 ? [...kinds][0]! : null,
+    form_kinds: [...kinds],
     mixed_forms: kinds.size > 1,
     name_is_compound: nameIsCompound,
   };
+}
+
+/** Form kinds of `nutrient` named by any of `names` (compound salts and food sources excluded). */
+export function formKindsOf(nutrient: Nutrient, names: string[]): Set<string> {
+  const keys = new Set(names.map(normalizeName));
+  const kinds = new Set<string>();
+  for (const f of nutrient.forms) {
+    if (f.kind === 'compound' || f.kind === 'food_source') continue;
+    if (keys.has(normalizeName(f.name))) kinds.add(f.kind);
+  }
+  return kinds;
+}
+
+/** "Vitamin B9 (methylfolate)" -> "methylfolate"; "" when there is no qualifier. */
+export function groupQualifier(group: string | null | undefined): string {
+  return /\(([^()]+)\)\s*$/.exec(group ?? '')?.[1] ?? '';
 }

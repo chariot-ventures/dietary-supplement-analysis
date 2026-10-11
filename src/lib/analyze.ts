@@ -12,7 +12,7 @@ import type { Amount, DataGap, NormalizedLabel } from './label.js';
 import { nutrientIndex } from './nutrients.js';
 import { round } from './text.js';
 import type { Nutrient, Sex } from './types.js';
-import { formatAmount, ulPortion } from './units.js';
+import { formatAmount } from './units.js';
 
 export interface Profile {
   age: number;
@@ -161,8 +161,7 @@ export function analyzeStack(products: StackProduct[], profile: Profile | null):
       if (!ing.per_serving) continue; // gap already recorded by label normalization
 
       const daily = round(ing.per_serving.amount * spd, 4);
-      const ulPerServing = ulPortion(n, ing.per_serving.amount, ing.form_kind);
-      const dailyUl = ulPerServing === null ? null : round(ulPerServing * spd, 4);
+      const dailyUl = ing.toward_ul_per_serving === null ? null : round(ing.toward_ul_per_serving * spd, 4);
       b.total += daily;
       if (dailyUl === null) b.ulUnknown.push(label.product_ref);
       else b.towardUl += dailyUl;

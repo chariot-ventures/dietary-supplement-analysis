@@ -1,0 +1,1129 @@
+{
+  "service": "dietary-supplement-analysis",
+  "version": "0.1.0",
+  "as_of": "<date>",
+  "profile": {
+    "age": 34,
+    "sex": "female"
+  },
+  "summary": {
+    "products_matched": 4,
+    "nutrients_totaled": 21,
+    "above_ul": 2,
+    "below_reference": 4,
+    "data_gaps": 2
+  },
+  "assumptions": [
+    "dsld:230932: servings_per_day not given; used label maximum of 1 (label: 1 Softgel(s), 1 time(s) daily)",
+    "dsld:338022: servings_per_day not given; used label maximum of 1 (label: 1 Tablet(s), 1 time(s) daily)",
+    "dsld:332278: servings_per_day not given; used label maximum of 1 (label: 7.7 Gram(s), 1 time(s) daily)",
+    "custom:1: servings_per_day not given; amounts treated as one serving per day",
+    "Totals cover the listed supplements only; food, beverages and medications are not included.",
+    "The UL for Calcium, Copper, Iodine, Iron, Phosphorus, Selenium, Vitamin B6, Vitamin C, Vitamin D and Zinc applies to total intake from food and supplements; a supplement total under the UL does not show that total intake is under it.",
+    "below_reference compares supplement totals alone with the RDA (or AI); diet normally supplies much of the reference amount."
+  ],
+  "nutrient_totals": [
+    {
+      "nutrient_id": "magnesium",
+      "name": "Magnesium",
+      "daily_total": {
+        "amount": 575,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 320,
+        "ear": 265,
+        "ai": null,
+        "ul": 350,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "supplements_and_medications",
+        "ul_note": "The UL applies to magnesium from supplements and medications only, not to magnesium naturally present in food and water."
+      },
+      "amount_toward_ul": {
+        "amount": 575,
+        "unit": "mg"
+      },
+      "percent_of_ul": 164.3,
+      "percent_of_rda": 179.7,
+      "percent_of_ai": null,
+      "flags": [
+        "above_ul"
+      ],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:332278",
+          "label_name": "Magnesium",
+          "label_amount": "325 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 325,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 325
+        },
+        {
+          "product_ref": "custom:1",
+          "label_name": "magnesium",
+          "label_amount": "250 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 250,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 250
+        }
+      ]
+    },
+    {
+      "nutrient_id": "vitamin-d",
+      "name": "Vitamin D",
+      "daily_total": {
+        "amount": 150,
+        "unit": "mcg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 15,
+        "ear": 10,
+        "ai": null,
+        "ul": 100,
+        "unit": "mcg",
+        "ul_unit": "mcg",
+        "ul_scope": "total_intake",
+        "ul_note": null
+      },
+      "amount_toward_ul": {
+        "amount": 150,
+        "unit": "mcg"
+      },
+      "percent_of_ul": 150,
+      "percent_of_rda": 1000,
+      "percent_of_ai": null,
+      "flags": [
+        "above_ul"
+      ],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:230932",
+          "label_name": "Vitamin D3",
+          "label_amount": "125 mcg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 125,
+            "unit": "mcg"
+          },
+          "daily_toward_ul": 125
+        },
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Vitashine",
+          "label_amount": "25 mcg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 25,
+            "unit": "mcg"
+          },
+          "daily_toward_ul": 25
+        }
+      ]
+    },
+    {
+      "nutrient_id": "biotin",
+      "name": "Biotin",
+      "daily_total": {
+        "amount": 40,
+        "unit": "mcg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": null,
+        "ear": null,
+        "ai": 30,
+        "ul": null,
+        "unit": "mcg",
+        "ul_unit": "mcg",
+        "ul_scope": "not_established",
+        "ul_note": "No UL has been established. High-dose biotin can interfere with some laboratory tests."
+      },
+      "amount_toward_ul": null,
+      "percent_of_ul": null,
+      "percent_of_rda": null,
+      "percent_of_ai": 133.3,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Biotin",
+          "label_amount": "40 mcg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 40,
+            "unit": "mcg"
+          },
+          "daily_toward_ul": 40
+        }
+      ]
+    },
+    {
+      "nutrient_id": "calcium",
+      "name": "Calcium",
+      "daily_total": {
+        "amount": 200,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 1000,
+        "ear": 800,
+        "ai": null,
+        "ul": 2500,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "total_intake",
+        "ul_note": null
+      },
+      "amount_toward_ul": {
+        "amount": 200,
+        "unit": "mg"
+      },
+      "percent_of_ul": 8,
+      "percent_of_rda": 20,
+      "percent_of_ai": null,
+      "flags": [
+        "below_reference"
+      ],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Calcium",
+          "label_amount": "200 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 200,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 200
+        }
+      ]
+    },
+    {
+      "nutrient_id": "copper",
+      "name": "Copper",
+      "daily_total": {
+        "amount": 900,
+        "unit": "mcg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 900,
+        "ear": 700,
+        "ai": null,
+        "ul": 10000,
+        "unit": "mcg",
+        "ul_unit": "mcg",
+        "ul_scope": "total_intake",
+        "ul_note": null
+      },
+      "amount_toward_ul": {
+        "amount": 900,
+        "unit": "mcg"
+      },
+      "percent_of_ul": 9,
+      "percent_of_rda": 100,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Copper",
+          "label_amount": "0.9 mg",
+          "converted": {
+            "amount": 900,
+            "unit": "mcg"
+          },
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 900,
+            "unit": "mcg"
+          },
+          "daily_toward_ul": 900
+        }
+      ]
+    },
+    {
+      "nutrient_id": "folate",
+      "name": "Folate",
+      "daily_total": {
+        "amount": 800,
+        "unit": "mcg DFE"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 400,
+        "ear": 320,
+        "ai": null,
+        "ul": 1000,
+        "unit": "mcg DFE",
+        "ul_unit": "mcg",
+        "ul_scope": "supplements_and_fortified_foods",
+        "ul_note": "The UL is in mcg of folic acid and applies to folic acid from supplements and fortified foods, not to food folate or other supplemental forms. Folic acid mcg = mcg DFE / 1.7."
+      },
+      "amount_toward_ul": {
+        "amount": 480,
+        "unit": "mcg folic acid"
+      },
+      "percent_of_ul": 48,
+      "percent_of_rda": 200,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Folate",
+          "label_amount": "800 mcg DFE",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 800,
+            "unit": "mcg DFE"
+          },
+          "daily_toward_ul": 480
+        }
+      ]
+    },
+    {
+      "nutrient_id": "iodine",
+      "name": "Iodine",
+      "daily_total": {
+        "amount": 250,
+        "unit": "mcg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 150,
+        "ear": 95,
+        "ai": null,
+        "ul": 1100,
+        "unit": "mcg",
+        "ul_unit": "mcg",
+        "ul_scope": "total_intake",
+        "ul_note": null
+      },
+      "amount_toward_ul": {
+        "amount": 250,
+        "unit": "mcg"
+      },
+      "percent_of_ul": 22.7,
+      "percent_of_rda": 166.7,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Iodine",
+          "label_amount": "250 mcg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 250,
+            "unit": "mcg"
+          },
+          "daily_toward_ul": 250
+        }
+      ]
+    },
+    {
+      "nutrient_id": "iron",
+      "name": "Iron",
+      "daily_total": {
+        "amount": 27,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 18,
+        "ear": 8.1,
+        "ai": null,
+        "ul": 45,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "total_intake",
+        "ul_note": null
+      },
+      "amount_toward_ul": {
+        "amount": 27,
+        "unit": "mg"
+      },
+      "percent_of_ul": 60,
+      "percent_of_rda": 150,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Iron",
+          "label_amount": "27 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 27,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 27
+        }
+      ]
+    },
+    {
+      "nutrient_id": "niacin",
+      "name": "Niacin",
+      "daily_total": {
+        "amount": 16,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 14,
+        "ear": 11,
+        "ai": null,
+        "ul": 35,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "supplements_and_fortified_foods",
+        "ul_note": "RDA is in mg niacin equivalents (NE); supplement niacin is counted as mg niacin. The UL applies to niacin from supplements and fortified foods."
+      },
+      "amount_toward_ul": {
+        "amount": 16,
+        "unit": "mg"
+      },
+      "percent_of_ul": 45.7,
+      "percent_of_rda": 114.3,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Niacin",
+          "label_amount": "16 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 16,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 16
+        }
+      ]
+    },
+    {
+      "nutrient_id": "pantothenic-acid",
+      "name": "Pantothenic Acid",
+      "daily_total": {
+        "amount": 7,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": null,
+        "ear": null,
+        "ai": 5,
+        "ul": null,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "not_established",
+        "ul_note": "No UL has been established."
+      },
+      "amount_toward_ul": null,
+      "percent_of_ul": null,
+      "percent_of_rda": null,
+      "percent_of_ai": 140,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Pantothenic Acid",
+          "label_amount": "7 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 7,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 7
+        }
+      ]
+    },
+    {
+      "nutrient_id": "phosphorus",
+      "name": "Phosphorus",
+      "daily_total": {
+        "amount": 150,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 700,
+        "ear": 580,
+        "ai": null,
+        "ul": 4000,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "total_intake",
+        "ul_note": null
+      },
+      "amount_toward_ul": {
+        "amount": 150,
+        "unit": "mg"
+      },
+      "percent_of_ul": 3.8,
+      "percent_of_rda": 21.4,
+      "percent_of_ai": null,
+      "flags": [
+        "below_reference"
+      ],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Phosphorus",
+          "label_amount": "150 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 150,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 150
+        }
+      ]
+    },
+    {
+      "nutrient_id": "potassium",
+      "name": "Potassium",
+      "daily_total": {
+        "amount": 232,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": null,
+        "ear": null,
+        "ai": 2600,
+        "ul": null,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "not_established",
+        "ul_note": "No UL has been established (2019 DRI report)."
+      },
+      "amount_toward_ul": null,
+      "percent_of_ul": null,
+      "percent_of_rda": null,
+      "percent_of_ai": 8.9,
+      "flags": [
+        "below_reference"
+      ],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:332278",
+          "label_name": "Potassium",
+          "label_amount": "232 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 232,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 232
+        }
+      ]
+    },
+    {
+      "nutrient_id": "riboflavin",
+      "name": "Riboflavin",
+      "daily_total": {
+        "amount": 1.3,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 1.1,
+        "ear": 0.9,
+        "ai": null,
+        "ul": null,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "not_established",
+        "ul_note": "No UL has been established."
+      },
+      "amount_toward_ul": null,
+      "percent_of_ul": null,
+      "percent_of_rda": 118.2,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Riboflavin",
+          "label_amount": "1.3 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 1.3,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 1.3
+        }
+      ]
+    },
+    {
+      "nutrient_id": "selenium",
+      "name": "Selenium",
+      "daily_total": {
+        "amount": 30,
+        "unit": "mcg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 55,
+        "ear": 45,
+        "ai": null,
+        "ul": 400,
+        "unit": "mcg",
+        "ul_unit": "mcg",
+        "ul_scope": "total_intake",
+        "ul_note": null
+      },
+      "amount_toward_ul": {
+        "amount": 30,
+        "unit": "mcg"
+      },
+      "percent_of_ul": 7.5,
+      "percent_of_rda": 54.5,
+      "percent_of_ai": null,
+      "flags": [
+        "below_reference"
+      ],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Selenium",
+          "label_amount": "30 mcg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 30,
+            "unit": "mcg"
+          },
+          "daily_toward_ul": 30
+        }
+      ]
+    },
+    {
+      "nutrient_id": "thiamin",
+      "name": "Thiamin",
+      "daily_total": {
+        "amount": 1.2,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 1.1,
+        "ear": 0.9,
+        "ai": null,
+        "ul": null,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "not_established",
+        "ul_note": "No UL has been established."
+      },
+      "amount_toward_ul": null,
+      "percent_of_ul": null,
+      "percent_of_rda": 109.1,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Thiamine",
+          "label_amount": "1.2 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 1.2,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 1.2
+        }
+      ]
+    },
+    {
+      "nutrient_id": "vitamin-a",
+      "name": "Vitamin A",
+      "daily_total": {
+        "amount": 1050,
+        "unit": "mcg RAE"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 700,
+        "ear": 500,
+        "ai": null,
+        "ul": 3000,
+        "unit": "mcg RAE",
+        "ul_unit": "mcg",
+        "ul_scope": "preformed_vitamin_a",
+        "ul_note": "The UL applies to preformed vitamin A (retinol and retinyl esters) only, not to beta-carotene or other carotenoids."
+      },
+      "amount_toward_ul": {
+        "amount": 0,
+        "unit": "mcg"
+      },
+      "percent_of_ul": 0,
+      "percent_of_rda": 150,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Vitamin A",
+          "label_amount": "1050 mcg",
+          "converted": {
+            "amount": 1050,
+            "unit": "mcg RAE"
+          },
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 1050,
+            "unit": "mcg RAE"
+          },
+          "daily_toward_ul": 0
+        }
+      ]
+    },
+    {
+      "nutrient_id": "vitamin-b12",
+      "name": "Vitamin B12",
+      "daily_total": {
+        "amount": 6,
+        "unit": "mcg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 2.4,
+        "ear": 2,
+        "ai": null,
+        "ul": null,
+        "unit": "mcg",
+        "ul_unit": "mcg",
+        "ul_scope": "not_established",
+        "ul_note": "No UL has been established."
+      },
+      "amount_toward_ul": null,
+      "percent_of_ul": null,
+      "percent_of_rda": 250,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Vitamin B12",
+          "label_amount": "6 mcg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 6,
+            "unit": "mcg"
+          },
+          "daily_toward_ul": 6
+        }
+      ]
+    },
+    {
+      "nutrient_id": "vitamin-b6",
+      "name": "Vitamin B6",
+      "daily_total": {
+        "amount": 2,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 1.3,
+        "ear": 1.1,
+        "ai": null,
+        "ul": 100,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "total_intake",
+        "ul_note": null
+      },
+      "amount_toward_ul": {
+        "amount": 2,
+        "unit": "mg"
+      },
+      "percent_of_ul": 2,
+      "percent_of_rda": 153.8,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Vitamin B6",
+          "label_amount": "2 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 2,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 2
+        }
+      ]
+    },
+    {
+      "nutrient_id": "vitamin-c",
+      "name": "Vitamin C",
+      "daily_total": {
+        "amount": 90,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 75,
+        "ear": 60,
+        "ai": null,
+        "ul": 2000,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "total_intake",
+        "ul_note": "Smokers need 35 mg/day more than the RDA shown."
+      },
+      "amount_toward_ul": {
+        "amount": 90,
+        "unit": "mg"
+      },
+      "percent_of_ul": 4.5,
+      "percent_of_rda": 120,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Vitamin C",
+          "label_amount": "90 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 90,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 90
+        }
+      ]
+    },
+    {
+      "nutrient_id": "vitamin-e",
+      "name": "Vitamin E",
+      "daily_total": {
+        "amount": 15,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 15,
+        "ear": 12,
+        "ai": null,
+        "ul": 1000,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "supplemental_alpha_tocopherol",
+        "ul_note": "The UL applies to any form of supplemental alpha-tocopherol."
+      },
+      "amount_toward_ul": {
+        "amount": 15,
+        "unit": "mg"
+      },
+      "percent_of_ul": 1.5,
+      "percent_of_rda": 100,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Vitamin E",
+          "label_amount": "15 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 15,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 15
+        }
+      ]
+    },
+    {
+      "nutrient_id": "zinc",
+      "name": "Zinc",
+      "daily_total": {
+        "amount": 11,
+        "unit": "mg"
+      },
+      "complete": true,
+      "reference": {
+        "rda": 8,
+        "ear": 6.8,
+        "ai": null,
+        "ul": 40,
+        "unit": "mg",
+        "ul_unit": "mg",
+        "ul_scope": "total_intake",
+        "ul_note": null
+      },
+      "amount_toward_ul": {
+        "amount": 11,
+        "unit": "mg"
+      },
+      "percent_of_ul": 27.5,
+      "percent_of_rda": 137.5,
+      "percent_of_ai": null,
+      "flags": [],
+      "factsheet_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
+      "contributions": [
+        {
+          "product_ref": "dsld:338022",
+          "label_name": "Zinc",
+          "label_amount": "11 mg",
+          "servings_per_day": 1,
+          "daily": {
+            "amount": 11,
+            "unit": "mg"
+          },
+          "daily_toward_ul": 11
+        }
+      ]
+    }
+  ],
+  "overlaps": [
+    {
+      "nutrient_id": "magnesium",
+      "product_refs": [
+        "dsld:332278",
+        "custom:1"
+      ]
+    },
+    {
+      "nutrient_id": "vitamin-d",
+      "product_refs": [
+        "dsld:230932",
+        "dsld:338022"
+      ]
+    }
+  ],
+  "unrecognized_ingredients": [
+    {
+      "product_ref": "dsld:332278",
+      "label_name": "Proprietary Sleep Blend",
+      "per_serving": {
+        "amount": 2.4,
+        "unit": "Gram(s)"
+      },
+      "in_blend": false
+    },
+    {
+      "product_ref": "dsld:332278",
+      "label_name": "Glycine",
+      "per_serving": null,
+      "in_blend": true
+    },
+    {
+      "product_ref": "dsld:332278",
+      "label_name": "Gamma-Aminobutyric Acid",
+      "per_serving": null,
+      "in_blend": true
+    },
+    {
+      "product_ref": "dsld:332278",
+      "label_name": "Lemon Balm leaf Complex",
+      "per_serving": null,
+      "in_blend": true
+    }
+  ],
+  "data_gaps": [
+    {
+      "code": "BLEND_UNQUANTIFIED",
+      "product_ref": "dsld:332278",
+      "detail": "\"Proprietary Sleep Blend\" (2.4 Gram(s) total) lists 4 ingredient(s) without individual amounts: Glycine, Gamma-Aminobutyric Acid, Lemon Balm leaf Complex, Melatonin"
+    },
+    {
+      "code": "INTERACTIONS_NOT_ASSESSED",
+      "detail": "Drug and supplement interactions are not evaluated. For medications, see Pocket services med-safety and fda."
+    }
+  ],
+  "products": [
+    {
+      "product_ref": "dsld:230932",
+      "dsld_id": 230932,
+      "brand": "Natural Healthy Concepts",
+      "name": "Vitamin D3 Concepts 5000",
+      "servings_per_day_used": 1,
+      "servings_source": "label_maximum",
+      "source_url": "https://dsld.od.nih.gov/label/230932"
+    },
+    {
+      "product_ref": "dsld:338022",
+      "dsld_id": 338022,
+      "brand": "Noor Vitamins",
+      "name": "Women's Complete Multivitamin",
+      "servings_per_day_used": 1,
+      "servings_source": "label_maximum",
+      "source_url": "https://dsld.od.nih.gov/label/338022"
+    },
+    {
+      "product_ref": "dsld:332278",
+      "dsld_id": 332278,
+      "brand": "Natrol",
+      "name": "Magnesium Night High Absorption 325 mg Naturally Flavored",
+      "servings_per_day_used": 1,
+      "servings_source": "label_maximum",
+      "source_url": "https://dsld.od.nih.gov/label/332278"
+    },
+    {
+      "product_ref": "custom:1",
+      "dsld_id": null,
+      "brand": null,
+      "name": "Custom magnesium",
+      "servings_per_day_used": 1,
+      "servings_source": "default",
+      "source_url": null
+    }
+  ],
+  "sources": [
+    {
+      "name": "NIH Dietary Supplement Label Database",
+      "url": "https://dsld.od.nih.gov/label/230932",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Dietary Supplement Label Database",
+      "url": "https://dsld.od.nih.gov/label/338022",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Dietary Supplement Label Database",
+      "url": "https://dsld.od.nih.gov/label/332278",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Vitamin D fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Vitamin A fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Vitamin C fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Vitamin E fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Thiamin fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Riboflavin fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Niacin fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Vitamin B6 fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Folate fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Vitamin B12 fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Biotin fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Pantothenic Acid fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Calcium fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Iron fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Phosphorus fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Iodine fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Zinc fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Selenium fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Copper fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Magnesium fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
+      "retrieved": "<date>"
+    },
+    {
+      "name": "NIH Office of Dietary Supplements: Potassium fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/",
+      "retrieved": "<date>"
+    }
+  ],
+  "disclaimer": "Label and reference data only. Not medical advice. Totals exclude food and medications."
+}

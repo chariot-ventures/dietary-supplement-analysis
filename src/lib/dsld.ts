@@ -187,7 +187,8 @@ export class DsldClient {
 
   async search(p: SearchParams): Promise<SearchResult> {
     const params = new URLSearchParams();
-    if (p.query) params.set('q', p.query);
+    // DSLD requires q; "*" is its term-less search, and brand / ingredient_name only filter alongside it.
+    params.set('q', p.query || '*');
     if (p.brand) params.set('brand', p.brand);
     if (p.ingredient) params.set('ingredient_name', p.ingredient);
     params.set('status', p.onMarketOnly ? '1' : '2');

@@ -1,0 +1,53 @@
+{
+  "settings": [
+    {
+      "env": "MYSVC_{NETWORK}_ALERT_WEBHOOK",
+      "scope": "network",
+      "label": "Discord webhook",
+      "help": "Where alerts are posted. Copy it from the Discord channel's Integrations page.",
+      "type": "url",
+      "secret": true,
+      "hosts": ["discord.com", "discordapp.com"]
+    },
+    {
+      "env": "MYSVC_ALERT_INTERVAL_MIN",
+      "label": "Report every (minutes)",
+      "help": "How often the report is sent.",
+      "type": "number",
+      "min": 15,
+      "max": 1440,
+      "default": 60
+    },
+    {
+      "env": "MYSVC_ALERT_MODE",
+      "label": "What to send",
+      "type": "choice",
+      "choices": [
+        { "value": "report", "label": "A full report every time" },
+        { "value": "problems", "label": "Only when something is wrong" }
+      ],
+      "default": "report"
+    },
+    {
+      "env": "MYSVC_API_KEY",
+      "label": "Upstream API key",
+      "help": "The key for the data provider this service calls.",
+      "type": "text",
+      "secret": true,
+      "pattern": "^[A-Za-z0-9_-]{16,128}$",
+      "required": true
+    },
+    {
+      "env": "MYSVC_DEBUG",
+      "label": "Detailed logs",
+      "type": "boolean",
+      "default": false
+    }
+  ],
+  "check": {
+    "label": "Send a test alert",
+    "command": ["node", "src/check.js", "{network}"],
+    "scope": "network",
+    "timeout_s": 30
+  }
+}

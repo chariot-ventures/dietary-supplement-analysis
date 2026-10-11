@@ -1,0 +1,279 @@
+{
+  "src": "01-raw/2025-02-23/data/label_459.json",
+  "id": 67231,
+  "nhanesId": "",
+  "bundleName": "",
+  "fullName": "Vitamin E 400 IU",
+  "brandName": "Vitamer Laboratories",
+  "brandIpSymbol": "none",
+  "upcSku": "7 19985 12025 1",
+  "productVersionCode": "VVL 120-30J",
+  "pdf": "",
+  "thumbnail": "",
+  "servingsPerContainer": "30",
+  "hasOuterCarton": false,
+  "percentDvFootnote": "Not Present",
+  "labelRelationships": [
+    {
+      "type": "Image difference, same product",
+      "labelId": 53375
+    },
+    {
+      "type": "Image difference, same product",
+      "labelId": 23041
+    }
+  ],
+  "contacts": [
+    {
+      "contactId": 2475,
+      "text": "To report a serious adverse event, call",
+      "types": [
+        "Other"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_1.json",
+        "id": 2475,
+        "name": "",
+        "streetAddress": "",
+        "city": "",
+        "state": "",
+        "country": "",
+        "zipCode": "",
+        "phoneNumber": "1-888-710-0006",
+        "email": "",
+        "webAddress": ""
+      }
+    },
+    {
+      "contactId": 4677,
+      "text": "Not Present",
+      "types": [
+        "Manufacturer"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_2.json",
+        "id": 4677,
+        "name": "Vitamer Laboratories",
+        "streetAddress": "",
+        "city": "",
+        "state": "",
+        "country": "",
+        "zipCode": "",
+        "phoneNumber": "",
+        "email": "",
+        "webAddress": ""
+      }
+    }
+  ],
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 30,
+      "unit": "Softgel(s)",
+      "display": "30 Softgel(s)"
+    }
+  ],
+  "physicalState": {
+    "langualCode": "E0161",
+    "langualCodeDescription": "Softgel Capsule"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 1,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Softgel(s)",
+      "inSFB": true
+    }
+  ],
+  "targetGroups": [
+    "Adult (18 - 50 Years)",
+    "Gluten Free",
+    "Dairy Free"
+  ],
+  "productType": {
+    "langualCode": "A1302",
+    "langualCodeDescription": "Vitamin"
+  },
+  "statements": [
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "Most soy allergies are actually allergies to soy protein. Our vitamin E is derived from soybean oil that does not contain soy protein."
+    },
+    {
+      "type": "Precautions re: Children",
+      "notes": "Keep out of reach of children."
+    },
+    {
+      "type": "General: Product/Version Code",
+      "notes": "VVL 120-30J"
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "A powerful fat-soluble antioxidant, Vitamin E scavenges free radicals protecting cells from oxidative damage. When combined with a healthy diet and lifestyle, vitamin E supplements can help neutralize excess free radicals to promote heart health."
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Our vitamin E is natural. Research indicates natural vitamin E to be more potent than synthetic forms."
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "We guarantee our supplements for potency and purity"
+    },
+    {
+      "type": "FDA Disclaimer Statement",
+      "notes": "These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease."
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "~ Natural ~\nVitamin E 400 IU"
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Promotes heart health"
+    },
+    {
+      "type": "FDA Statement of Identity",
+      "notes": "Dietary Supplement"
+    },
+    {
+      "type": "Seals/Symbols",
+      "notes": "Double Verified Gluten Free"
+    },
+    {
+      "type": "Suggested/Recommended/Usage/Directions",
+      "notes": "Suggested Use: Take one softgel daily with food."
+    },
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "Contains no artificial colors, flavors or preservatives; no wheat, gluten, milk, eggs, peanuts, tree nuts, crustacean shellfish or fish."
+    }
+  ],
+  "claims": [
+    {
+      "langualCode": "P0115",
+      "langualCodeDescription": "All Other"
+    },
+    {
+      "langualCode": "P0265",
+      "langualCodeDescription": "Structure/Function"
+    }
+  ],
+  "events": [
+    {
+      "date": "2016-11-21",
+      "type": "Date entered into DSLD"
+    }
+  ],
+  "userGroups": [
+    {
+      "dailyValueTargetGroupName": "Adults and children 4 or more years of age",
+      "langualCode": "P0250",
+      "langualCodeDescription": "Adults and Children 4 years and above"
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "ingredientId": 283834,
+      "description": null,
+      "notes": "Vitamin E (Form: as D-Alpha Tocopherol, from Soy) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 400,
+          "unit": "IU",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 1333,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Softgel(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin E",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin E",
+      "uniiCode": "H4N855PNZ1",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 283833,
+          "prefix": null,
+          "percent": null,
+          "name": "D-Alpha-Tocopherol",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin E",
+          "uniiCode": "N9PR3490H9"
+        }
+      ]
+    }
+  ],
+  "otheringredients": {
+    "text": null,
+    "ingredients": [
+      {
+        "order": 1,
+        "ingredientId": 72901,
+        "name": "Capsule",
+        "category": "other",
+        "ingredientGroup": "capsule",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": [
+          {
+            "order": 1,
+            "ingredientId": 27352,
+            "prefix": null,
+            "percent": null,
+            "name": "Gelatin",
+            "category": "protein",
+            "ingredientGroup": "Gelatin",
+            "uniiCode": null
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "ingredientId": 3985,
+        "name": "Glycerin",
+        "category": "other",
+        "ingredientGroup": "Glycerol",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 3,
+        "ingredientId": 14029,
+        "name": "Vegetable Oil",
+        "category": "fat",
+        "ingredientGroup": "vegetable oil",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 4,
+        "ingredientId": 12165,
+        "name": "purified Water",
+        "category": "other",
+        "ingredientGroup": "Water",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      }
+    ]
+  },
+  "offMarket": 0,
+  "entryDate": "2016-11-21"
+}

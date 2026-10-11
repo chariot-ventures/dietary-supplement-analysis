@@ -48,6 +48,10 @@ export interface Nutrient {
   /** True when a plain mass label unit (e.g. "mg") already equals the canonical basis (mg NE, mg alpha-tocopherol). */
   plain_mass_is_canonical: boolean;
   dri: DriTables | null;
+  /** FDA Daily Value used on current labels; lets a plain-mass amount be read in the canonical basis when the label's %DV matches it. */
+  label_dv: { amount: number; unit: string } | null;
+  /** DSLD ingredient groups in which an exact name match to this nutrient wins over the group's nutrient. */
+  name_overrides_groups: string[];
   ul_unit: string | null;
   ul_component: UlComponent;
   ul_scope: string;

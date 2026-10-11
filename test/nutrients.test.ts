@@ -75,29 +75,29 @@ describe('build validation', () => {
     const exportRows = [
       {
         id: 1,
-        name: 'Boron',
-        akas: ['boric acid'],
-        ods_factsheets: ['https://ods.od.nih.gov/factsheets/Boron-HealthProfessional/'],
+        name: 'Vanadium',
+        akas: ['vanadyl sulfate'],
+        ods_factsheets: ['https://ods.od.nih.gov/factsheets/Vanadium-HealthProfessional/'],
         dri_data: { unit: 'mg', type: { ul: { male: { years: [{ lower: 19, upper: null, amount: 20 }] }, female: { years: [{ lower: 19, upper: null, amount: 20 }] } } } },
       },
       { id: 2, name: 'Vitamin D', akas: [], ods_factsheets: [], dri_data: null },
     ];
     const built = buildNutrients(manual, exportRows);
-    const boron = built.nutrients.find((n) => n.id === 'boron')!;
-    expect(boron.dri?.ul?.male).toEqual([{ lower: 19, upper: null, amount: 20 }]);
-    expect(boron.source_url).toBe('https://ods.od.nih.gov/factsheets/Boron-HealthProfessional/');
+    const vanadium = built.nutrients.find((n) => n.id === 'vanadium')!;
+    expect(vanadium.dri?.ul?.male).toEqual([{ lower: 19, upper: null, amount: 20 }]);
+    expect(vanadium.source_url).toBe('https://ods.od.nih.gov/factsheets/Vanadium-HealthProfessional/');
     expect(built.nutrients.find((n) => n.id === 'vitamin-d')!.dri).not.toBeNull();
   });
 
   it('rejects export rows with overlapping ranges or no source', () => {
     const overlapping = [
       {
-        name: 'Boron',
-        ods_factsheets: 'https://ods.od.nih.gov/factsheets/Boron-HealthProfessional/',
+        name: 'Vanadium',
+        ods_factsheets: 'https://ods.od.nih.gov/factsheets/Vanadium-HealthProfessional/',
         dri_data: { unit: 'mg', type: { ul: { male: { years: [{ lower: 14, upper: 30, amount: 17 }, { lower: 19, upper: null, amount: 20 }] }, female: { years: [] } } } },
       },
     ];
     expect(() => buildNutrients(manual, overlapping)).toThrow(/overlap/);
-    expect(() => buildNutrients(manual, [{ name: 'Boron', dri_data: { unit: 'mg', type: { ul: { male: { years: [{ lower: 1, upper: null, amount: 1 }] } } } } }])).toThrow(/https/);
+    expect(() => buildNutrients(manual, [{ name: 'Vanadium', dri_data: { unit: 'mg', type: { ul: { male: { years: [{ lower: 1, upper: null, amount: 1 }] } } } } }])).toThrow(/https/);
   });
 });

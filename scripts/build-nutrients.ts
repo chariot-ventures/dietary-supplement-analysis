@@ -55,6 +55,8 @@ const manualNutrient = z
       )
       .default([]),
     plain_mass_is_canonical: z.boolean().default(false),
+    label_dv: z.object({ amount: z.number().positive(), unit: z.string() }).strict().nullable().default(null),
+    name_overrides_groups: z.array(z.string()).default([]),
     dri_bands: z.object({ rda: bandTable, ear: bandTable, ai: bandTable, ul: bandTable }).strict().nullable(),
     ul_unit: z.string().nullable(),
     ul_component: z.enum(['all', 'preformed', 'folic_acid']),
@@ -114,6 +116,8 @@ export const builtNutrientSchema = z
     ),
     plain_mass_is_canonical: z.boolean(),
     dri: z.object({ rda: sexTable, ear: sexTable, ai: sexTable, ul: sexTable }).strict().nullable(),
+    label_dv: z.object({ amount: z.number().positive(), unit: z.string() }).strict().nullable(),
+    name_overrides_groups: z.array(z.string()),
     ul_unit: z.string().nullable(),
     ul_component: z.enum(['all', 'preformed', 'folic_acid']),
     ul_scope: z.string(),
@@ -162,6 +166,8 @@ function fromManual(n: ManualNutrient, bands: ManualFile['age_bands']): Nutrient
     unit_conversions: n.unit_conversions,
     plain_mass_is_canonical: n.plain_mass_is_canonical,
     dri,
+    label_dv: n.label_dv,
+    name_overrides_groups: n.name_overrides_groups,
     ul_unit: n.ul_unit,
     ul_component: n.ul_component,
     ul_scope: n.ul_scope,
@@ -215,6 +221,8 @@ function fromExport(row: z.infer<typeof exportRow>): Nutrient {
     unit_conversions: [],
     plain_mass_is_canonical: false,
     dri,
+    label_dv: null,
+    name_overrides_groups: [],
     ul_unit: dri?.ul ? unit : null,
     ul_component: 'all',
     ul_scope: dri?.ul ? 'total_intake' : 'not_established',
@@ -250,6 +258,10 @@ export function validateNutrients(list: Nutrient[]): string[] {
 
     const canonical = parseUnit(n.canonical_unit);
     if (canonical.kind !== 'mass') errors.push(`${n.id}: canonical_unit "${n.canonical_unit}" is not a known mass unit`);
+    if (n.label_dv) {
+      const dv = parseUnit(n.label_dv.unit);
+      if (dv.kind !== 'mass' || canonical.kind !== 'mass' || dv.basis !== canonical.basis) errors.push(`${n.id}: label_dv unit "${n.label_dv.unit}" must be a mass unit in the canonical basis`);
+    }
     if (n.ul_unit !== null && parseUnit(n.ul_unit).kind !== 'mass') errors.push(`${n.id}: ul_unit "${n.ul_unit}" is not a known mass unit`);
     for (const c of n.unit_conversions) {
       if (parseUnit(c.from).kind === 'unknown') errors.push(`${n.id}: unit_conversions.from "${c.from}" is not a known unit`);
