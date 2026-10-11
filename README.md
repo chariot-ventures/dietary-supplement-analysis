@@ -90,6 +90,8 @@ For a product with recalls, try `{"query":"Nature Made Vitamin D3 1000 IU"}`: FD
 
 **6. In Claude, or any MCP client:** add `https://agents.trackmysupplement.com/mcp` as a custom connector (no key needed for the free trial) and ask in plain words, for example "I take Centrum Silver and 5000 IU of vitamin D and I'm on warfarin. Anything I should know?". The assistant calls `stack_analyze` and answers with the citations. See [mcp/README.md](mcp/README.md), including a local bridge that pays per call through Pocket Network.
 
+**7. Agent to agent:** much of the use is expected to come from other agents doing a bigger job, with no person typing: a pharmacy agent checking a new prescription against the supplements on file, a shopping agent checking a cart before checkout, a vision agent passing along a label it read from a photo, a coaching agent's weekly check, and a medication-review agent combining this service with drug-drug services. [examples/](examples/README.md) has all five as one script (`bash examples/agent-flows.sh`), plus a 50-line assistant that loads the tools from `GET /v1/tools` and lets a model call them ([agent_loop.py](examples/agent_loop.py)).
+
 **More calls:** `POST /v1/nutrients/reference` (RDA and UL for one nutrient, offline), `POST /v1/products/search` (find labels), `POST /v1/interactions/check` (medications without a stack), and `GET /v1/tools`, `GET /v1/guide` and `GET /openapi.json` for agent frameworks. All are listed under [Endpoints](#endpoints).
 
 ### Through Pocket Network (paid relay)
@@ -118,7 +120,7 @@ Details and the server setup are in [deploy/PHASE4_READINESS.md](deploy/PHASE4_R
 ## Why it matters for Pocket Network
 
 - **A question millions of people have.** 60.2% of US adults took a dietary supplement in the past 30 days, 38.7% took two or more, and 75.9% of adults 60 and older took at least one ([CDC NCHS, 2021–2023](https://www.cdc.gov/nchs/products/databriefs/db561.htm)). Health, pharmacy, grocery and fitness assistants all get asked whether a routine is OK, and a good answer needs the exact amounts on each label and the NIH limits for that person, which a model alone doesn't have.
-- **Repeat calls.** Each question is one relay (500 compute units). A conversation usually brings more: the product the user is considering, a scanned barcode, an FDA check, a new prescription.
+- **Repeat calls, many from other agents.** Each call is one relay (500 compute units). Pharmacy, shopping, coaching and medication-review agents call it on every new prescription, cart, photo or weekly check, with no person in the loop ([examples](examples/README.md)).
 - **Fills a gap next to Pocket's own health services.** Pocket's catalog has drug services (`fda`, `med-safety`, `clinical-trials`) but nothing for supplements, which most of those users also take. An agent that already calls those services for prescriptions can call this one for everything else in the cabinet.
 - **A free trial that leads to paid relays.** The MCP server is listed in the official MCP Registry, on Smithery and on mcpservers.org. Its free trial (25 checks a day per connection) is enough for a person to try it, and every limit message points agents with real volume to the Pocket route, which is never metered.
 - **Ready for more suppliers.** A multi-arch image is published for every release, [OPERATORS.md](OPERATORS.md) sets up a supplier in about 5 minutes, and responses never use 5xx, so gateways don't mistake a bad input for a faulty supplier.
