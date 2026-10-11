@@ -15,6 +15,12 @@ for f in autodeploy.sh backend-compose.yaml; do
 done
 install -m 755 /usr/local/share/dsa-autodeploy/autodeploy.sh /usr/local/bin/dsa-autodeploy
 
+# Weekly mirror of NIH's DSLD full-database download into the label store (deploy/mirror/dsld-mirror.sh).
+MIRROR_RAW=${MIRROR_RAW:-${RAW%/autodeploy}/mirror}
+if [ -n "$HERE" ] && [ -f "$HERE/../mirror/dsld-mirror.sh" ]; then cp "$HERE/../mirror/dsld-mirror.sh" /usr/local/share/dsa-autodeploy/dsld-mirror.sh
+else curl -fsSL "$MIRROR_RAW/dsld-mirror.sh" -o /usr/local/share/dsa-autodeploy/dsld-mirror.sh; fi
+install -m 755 /usr/local/share/dsa-autodeploy/dsld-mirror.sh /usr/local/bin/dsa-dsld-mirror
+
 # What to follow: the highest vX.Y.Z tag, or the release branch when it carries a newer version.
 [ -f /etc/dsa-autodeploy.env ] || cat > /etc/dsa-autodeploy.env <<'ENV'
 # Read by /usr/local/bin/dsa-autodeploy. See deploy/autodeploy/autodeploy.sh.
@@ -48,8 +54,35 @@ RandomizedDelaySec=30s
 WantedBy=timers.target
 UNIT
 
+cat > /etc/systemd/system/dsa-dsld-mirror.service <<'UNIT'
+[Unit]
+Description=Mirror the NIH DSLD full-database download into the label store
+After=docker.service network-online.target
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/dsa-dsld-mirror
+TimeoutStartSec=3h
+Nice=10
+UNIT
+
+cat > /etc/systemd/system/dsa-dsld-mirror.timer <<'UNIT'
+[Unit]
+Description=Check NIH for a new DSLD full-database download weekly
+
+[Timer]
+OnCalendar=Sun 07:30 UTC
+RandomizedDelaySec=30min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+UNIT
+
 git config --system --add safe.directory '*' 2>/dev/null || true
 systemctl daemon-reload
-systemctl enable --now dsa-autodeploy.timer
+systemctl enable --now dsa-autodeploy.timer dsa-dsld-mirror.timer
 echo "installed: $(systemctl list-timers dsa-autodeploy.timer --no-pager | sed -n 2p)"
 echo "logs: journalctl -u dsa-autodeploy -n 50   or   /opt/pocket/services/dietary-supplement-analysis/autodeploy/deploy.log"

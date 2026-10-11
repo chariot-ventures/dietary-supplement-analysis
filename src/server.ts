@@ -23,6 +23,7 @@ const freeTier = await openFreeTier(
   (process.env.FREE_TIER_HOSTS ?? '').split(','),
   {
     perSession: envInt('FREE_TIER_PER_SESSION', DEFAULT_LIMITS.perSession),
+    perSessionMinute: envInt('FREE_TIER_PER_SESSION_MINUTE', DEFAULT_LIMITS.perSessionMinute!),
     perIpRest: envInt('FREE_TIER_PER_IP', DEFAULT_LIMITS.perIpRest),
     perIpMcp: envInt('FREE_TIER_PER_IP_MCP', DEFAULT_LIMITS.perIpMcp),
     global: envInt('FREE_TIER_GLOBAL', DEFAULT_LIMITS.global),

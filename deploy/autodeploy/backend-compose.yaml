@@ -7,6 +7,10 @@ services:
     image: ${BACKEND_IMAGE:?set BACKEND_IMAGE}
     container_name: dietary-supplement-analysis-backend
     restart: unless-stopped
+    # Secrets (DSLD_API_KEY, OPENFDA_API_KEY), mode 600, root-owned; optional so a fresh host still starts.
+    env_file:
+      - path: /opt/pocket/services/dietary-supplement-analysis/settings.env
+        required: false
     environment:
       LOG_LEVEL: info
       # Free trial on the public demo route only (see src/lib/freetier.ts); paid relays are never metered.

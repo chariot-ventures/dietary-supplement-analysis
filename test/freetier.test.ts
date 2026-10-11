@@ -79,6 +79,17 @@ describe('free trial on the demo hostname', () => {
     await a.close();
   });
 
+  it('limits bursts to N tool calls a minute per connection, with its own message', async () => {
+    let t0 = new Date('2026-10-11T12:00:05Z');
+    const ft = new FreeTier([DEMO], { perSession: 100, perSessionMinute: 3, perIpRest: 100, perIpMcp: 100, global: 100 }, null, () => t0);
+    for (let i = 0; i < 3; i++) expect(ft.take('mcp', '1.2.3.4', 'conn').ok).toBe(true);
+    const v = ft.take('mcp', '1.2.3.4', 'conn');
+    expect(v).toMatchObject({ ok: false, scope: 'minute', limit: 3, resets_at: '2026-10-11T12:01:00Z' });
+    expect(ft.take('mcp', '1.2.3.4', 'other').ok).toBe(true); // another connection on the same IP is unaffected
+    t0 = new Date('2026-10-11T12:01:00Z');
+    expect(ft.take('mcp', '1.2.3.4', 'conn').ok).toBe(true);
+  });
+
   it('groups IPv6 by /64 and reads IPv4-mapped addresses', () => {
     expect(ipKey('2001:db8:1:2:aaaa::1')).toBe('2001:db8:1:2::/64');
     expect(ipKey('::ffff:10.0.0.1')).toBe('10.0.0.1');

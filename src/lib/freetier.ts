@@ -9,6 +9,8 @@
  *   - per client IP, MCP tool calls:      1000 calls        (claude.ai and other hosted
  *                                                           clients share a few egress IPs)
  *   - all free traffic:                   5000 calls        (caps the cost of IP rotation)
+ * Plus a burst limit of 20 tool calls a minute per MCP connection (per IP when
+ * a client sends no session id). Caddy separately limits REST to 30 a minute per IP.
  * Discovery (GET routes, initialize, tools/list) is free and unmetered.
  *
  * Counters are kept in SQLite next to the label store, so redeploys don't
@@ -22,12 +24,14 @@ import type { FastifyRequest } from 'fastify';
 
 export interface FreeTierLimits {
   perSession: number;
+  /** Tool calls per minute per MCP connection. */
+  perSessionMinute?: number;
   perIpRest: number;
   perIpMcp: number;
   global: number;
 }
 
-export const DEFAULT_LIMITS: FreeTierLimits = { perSession: 25, perIpRest: 100, perIpMcp: 1000, global: 5000 };
+export const DEFAULT_LIMITS: FreeTierLimits = { perSession: 25, perSessionMinute: 20, perIpRest: 100, perIpMcp: 1000, global: 5000 };
 export const PAID_ROUTE_URL = 'https://github.com/micallb/dietary-supplement-analysis#through-pocket-network-paid-relay';
 
 type Db = {
@@ -36,7 +40,7 @@ type Db = {
   close(): void;
 };
 
-export type Scope = 'session' | 'ip' | 'global';
+export type Scope = 'minute' | 'session' | 'ip' | 'global';
 export type Verdict =
   | { ok: true; remaining: number; limit: number; resets_at: string }
   | { ok: false; scope: Scope; limit: number; resets_at: string };
@@ -55,6 +59,8 @@ export function ipKey(ip: string): string {
 export class FreeTier {
   private readonly hosts: Set<string>;
   private readonly mem = new Map<string, number>();
+  /** Burst window per connection: current minute and calls in it (memory only; a restart just resets it). */
+  private readonly minute = new Map<string, { m: number; n: number }>();
   private salt: string;
   private lastPrune = '';
 
@@ -128,6 +134,16 @@ export class FreeTier {
     const day = today(now);
     const resets_at = nextMidnight(now);
     this.prune(day);
+    // Burst limit for MCP: per connection, or per address when the client sends no session id.
+    const perMin = this.limits.perSessionMinute;
+    let burstKey: string | null = null;
+    if (kind === 'mcp' && perMin) {
+      burstKey = session ? `s:${session}` : `ip:${ipKey(ip)}`;
+      const m = Math.floor(now.getTime() / 60_000);
+      const w = this.minute.get(burstKey);
+      if (w && w.m === m && w.n >= perMin) return { ok: false, scope: 'minute', limit: perMin, resets_at: new Date((m + 1) * 60_000).toISOString().replace('.000Z', 'Z') };
+      if (this.minute.size > 50_000) this.minute.clear();
+    }
     const checks: { scope: Scope; key: string; limit: number }[] = [{ scope: 'global', key: 'global', limit: this.limits.global }];
     checks.push(kind === 'mcp' ? { scope: 'ip', key: `ipm:${this.hash(ipKey(ip))}`, limit: this.limits.perIpMcp } : { scope: 'ip', key: `ipr:${this.hash(ipKey(ip))}`, limit: this.limits.perIpRest });
     if (kind === 'mcp' && session) checks.push({ scope: 'session', key: `s:${this.hash(session)}`, limit: this.limits.perSession });
@@ -137,6 +153,11 @@ export class FreeTier {
     const full = checks.findIndex((c, i) => used[i]! >= c.limit);
     if (full >= 0) return { ok: false, scope: checks[full]!.scope, limit: checks[full]!.limit, resets_at };
     for (const c of checks) this.bump(day, c.key);
+    if (burstKey) {
+      const m = Math.floor(now.getTime() / 60_000);
+      const w = this.minute.get(burstKey);
+      this.minute.set(burstKey, w && w.m === m ? { m, n: w.n + 1 } : { m, n: 1 });
+    }
     const remaining = Math.min(...checks.map((c, i) => c.limit - used[i]! - 1));
     return { ok: true, remaining, limit: checks[0]!.limit, resets_at };
   }
@@ -148,6 +169,9 @@ export class FreeTier {
 
 /** Plain words an agent can relay when a free quota is used up. */
 export function limitMessage(v: Extract<Verdict, { ok: false }>): string {
+  if (v.scope === 'minute') {
+    return `This connection is calling faster than the free trial allows (${v.limit} checks a minute); it can continue in under a minute. For unlimited use, call the same service through Pocket Network: ${PAID_ROUTE_URL}`;
+  }
   const what =
     v.scope === 'session'
       ? `This connection has used its ${v.limit} free checks for today`

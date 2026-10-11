@@ -199,6 +199,10 @@ export class DsldClient {
   private readonly inflight = new Map<string, Promise<unknown>>();
   readonly store: LabelStore | null;
   private readonly storeFreshMs: number;
+  /** Set after DSLD answers 429: until then searches go to the label store first. */
+  private localFirstUntil = 0;
+  private mirrorCheckedAt = 0;
+  private mirror = false;
 
   constructor(opts: DsldClientOptions = {}) {
     this.store = opts.store ?? null;
@@ -217,7 +221,8 @@ export class DsldClient {
     const fresh = this.labels.get(id);
     if (fresh) return { label: fresh.value, retrieved: fresh.retrieved };
     const stored = this.storeGet(id);
-    if (stored && Date.now() - Date.parse(stored.retrieved) <= this.storeFreshMs) {
+    // A label ID's content doesn't change (new label versions get new IDs), so the NIH dump's copy is current.
+    if (stored && (this.hasMirror() || Date.now() - Date.parse(stored.retrieved) <= this.storeFreshMs)) {
       this.labels.set(id, { value: stored.label, retrieved: stored.retrieved });
       return stored;
     }
@@ -242,6 +247,20 @@ export class DsldClient {
         throw upstreamUnavailable(err);
       }
     });
+  }
+
+  /** True when the full NIH DSLD dump has been imported into the label store (checked at most once a minute). */
+  hasMirror(): boolean {
+    if (!this.store) return false;
+    if (Date.now() - this.mirrorCheckedAt > 60_000) {
+      this.mirrorCheckedAt = Date.now();
+      try {
+        this.mirror = this.store.getMeta('mirror_version') !== null;
+      } catch {
+        this.mirror = false;
+      }
+    }
+    return this.mirror;
   }
 
   /** Barcode matches already in the label store (no network). */
@@ -289,6 +308,11 @@ export class DsldClient {
     const fresh = this.searches.get(key);
     if (fresh) return { ...fresh.value, retrieved: fresh.retrieved, source: 'dsld' };
 
+    if (Date.now() < this.localFirstUntil) {
+      const local = this.localSearch(p);
+      if (local) return local;
+    }
+
     return this.dedupe(`search:${key}`, async () => {
       try {
         const body = await this.getJson(`/search-filter?${key}`, opts.signal);
@@ -297,6 +321,7 @@ export class DsldClient {
         this.searches.set(key, entry);
         return { ...parsed, retrieved: entry.retrieved, source: 'dsld' as const };
       } catch (err) {
+        if (err instanceof UpstreamHttpError && err.status === 429) this.localFirstUntil = Date.now() + 10 * 60 * 1000;
         const stale = this.searches.get(key, { allowStale: true });
         if (stale) return { ...stale.value, retrieved: stale.retrieved, source: 'dsld' as const };
         const local = this.localSearch(p);

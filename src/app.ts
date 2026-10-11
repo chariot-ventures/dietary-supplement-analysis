@@ -82,7 +82,7 @@ export function buildApp(opts: AppOptions): FastifyInstance {
     reply.code(404).send(new AppError('NOT_FOUND', `No route for ${req.method} ${req.url.split('?')[0]}. See GET /openapi.json`).toBody()),
   );
 
-  registerMetaRoutes(app);
+  registerMetaRoutes(app, opts);
   registerNutrientRoutes(app);
   registerProductRoutes(app, opts);
   registerStackRoutes(app, opts);

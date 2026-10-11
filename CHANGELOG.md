@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.12.0 (2026-10-11)
+
+- **NIH DSLD mirrored.** The full DSLD download (214,782 labels, NIH's January 2026 edition) is imported into the label store and refreshed weekly when NIH publishes a new one (`deploy/mirror/dsld-mirror.sh`, `src/tools/import-dsld.ts`).
+  - Labels and barcodes in the mirror are answered without calling NIH.
+  - Name searches stay live and fall back to the mirror. After a 429 from NIH, they use the mirror first for 10 minutes.
+  - `/v1/provenance` reports the mirrored version.
+- **The background warmer no longer reruns on every deploy.** It runs at most once a day, and not at all once the mirror is present. It was the cause of today's NIH rate limiting.
+- **api.data.gov key** support: the deployed compose file reads `settings.env` (DSLD and openFDA keys).
+- **Free-trial burst limit:** at most 20 tool calls a minute per MCP connection, with its own readable message.
+- **Monthly NIH fact-sheet check** ([.github/workflows/factsheets.yml](.github/workflows/factsheets.yml)): opens an issue when a cited ODS or NCCIH page is updated after our last review.
+
 ## 0.11.1 (2026-10-11)
 
 - The free trial reads the client address from the last X-Forwarded-For entry (the one the proxy adds), so a caller-supplied header cannot reset a quota.

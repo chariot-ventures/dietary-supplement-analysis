@@ -104,7 +104,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.11.1"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.12.0"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
 | POST | `/mcp` | Remote MCP server (Streamable HTTP, stateless): the same tools for MCP clients |
@@ -259,11 +259,12 @@ docker compose up --build     # container on 127.0.0.1:8080
 ## Limits
 
 - Up to 15 products and 5 candidates per analyze call, 10 IDs per get call, and 10 search results.
+- **NIH's full DSLD download (214,782 labels) is mirrored** into the label store and refreshed weekly when NIH publishes a new one. Labels and barcodes in the mirror are answered without calling NIH. Name searches use the live API (with an api.data.gov key) and fall back to the mirror, switching to it automatically for 10 minutes whenever NIH rate-limits. `GET /v1/provenance` shows the mirrored version.
 - DSLD calls run at most 4 at a time, with a 6 s deadline each and an 8 s budget per request. Labels are cached in memory for 7 days and searches for 24 hours, and labels are also kept in the persistent label store (refreshed after 30 days). If DSLD is down, stale copies and the label store answer instead; search results from the store say `"search_source": "local"`. Measured against live DSLD: a cold 15-product analyze takes 1.5 s and a warm one 17 ms.
 - Text that Pocket gateways treat as an error signal ("timeout", "block not found" and others) is `\u`-escaped in responses. It decodes to the same string.
 - Ages from birth to 120, plus pregnancy and lactation (14–50). Caffeine is checked against FDA guidance (400 mg a day for healthy adults, under 200 mg in pregnancy) and sodium against the 2019 Chronic Disease Risk Reduction Intake (2,300 mg), neither of which is a DRI UL; the response says so in `ul_note`.
 - **The public demo endpoint is a free trial.** It allows 30 requests per minute per client, plus daily quotas that reset at 00:00 UTC:
-  - 25 tool calls per MCP connection (each connection gets its own `Mcp-Session-Id`);
+  - 25 tool calls per MCP connection (each connection gets its own `Mcp-Session-Id`), at most 20 a minute;
   - 100 REST calls per IP;
   - 1,000 MCP calls per IP (hosted clients such as claude.ai share egress addresses);
   - 5,000 free calls in total.

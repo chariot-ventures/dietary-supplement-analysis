@@ -90,10 +90,21 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.11.1"}
+# {"service":"dietary-supplement-analysis","version":"0.12.0"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.
+
+### Secrets and the NIH mirror
+
+Get a free key at [api.data.gov/signup](https://api.data.gov/signup/). One key raises the limits for NIH DSLD (1,000 to 10,000 requests an hour), openFDA (to 120,000 a day) and USDA. Keep it in `/opt/pocket/services/dietary-supplement-analysis/settings.env` (root-owned, mode 600) as `DSLD_API_KEY=...` and `OPENFDA_API_KEY=...`. The backend compose file reads it as an optional `env_file`.
+
+`deploy/autodeploy/install.sh` also installs `dsa-dsld-mirror.timer`, which runs [deploy/mirror/dsld-mirror.sh](deploy/mirror/dsld-mirror.sh) weekly:
+- It checks the ETag of NIH's full-database download, using one request.
+- When NIH has published a new download, it fetches it (about 0.6 GB; needs 6 GB free) and streams the 214,782 labels into the running backend's label store, about 2.5–3 GB on disk. Nothing is unpacked to disk.
+- It deletes the zip afterwards.
+- `FORCE=1 dsa-dsld-mirror` re-imports the current download.
+- Progress goes to `mirror/mirror.log`.
 
 ### Settings
 
@@ -109,6 +120,7 @@ The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`
 | `RXNORM` / `RXNORM_BASE_URL` | on / `https://rxnav.nlm.nih.gov/REST` | `off` keeps medication matching to the names in data/interactions.json |
 | `OPENFDA` / `OPENFDA_API_KEY` / `OPENFDA_BASE_URL` | on / none / `https://api.fda.gov` | `off` disables `/v1/products/fda`. Without a key openFDA allows about 1,000 requests a day per IP; answers are cached for a day |
 | `FREE_TIER_HOSTS` | none | Comma-separated host names that get the free-trial quotas (the reference supplier sets its demo host). Requests on any other host, including relays, are never metered |
+| `FREE_TIER_PER_SESSION_MINUTE` | 20 | Burst limit: MCP tool calls per minute per connection |
 | `FREE_TIER_PER_SESSION` / `FREE_TIER_PER_IP` / `FREE_TIER_PER_IP_MCP` / `FREE_TIER_GLOBAL` | 25 / 100 / 1000 / 5000 | Daily quotas: MCP tool calls per connection, REST calls per IP, MCP tool calls per IP, and all free calls. Counters persist in `FREE_TIER_DB` (default `free-tier.sqlite` beside the label store) as salted hashes |
 | `UPSTREAM_BUDGET_MS` | `8000` | Total time one request may wait on DSLD before answering `424 UPSTREAM_UNAVAILABLE` |
 

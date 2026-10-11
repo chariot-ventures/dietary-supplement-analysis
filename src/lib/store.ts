@@ -45,6 +45,7 @@ const SCHEMA = `
     off_market INTEGER
   );
   CREATE INDEX IF NOT EXISTS labels_upc ON labels(upc_digits);
+  CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT NOT NULL);
   CREATE VIRTUAL TABLE IF NOT EXISTS labels_fts USING fts5(brand, name, ingredients, tokenize = 'unicode61 remove_diacritics 2');
 `;
 
@@ -79,7 +80,7 @@ export class LabelStore {
   private readonly byUpc: ReturnType<Db['prepare']>;
 
   constructor(private readonly db: Db) {
-    db.exec('PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;');
+    db.exec('PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL; PRAGMA busy_timeout = 5000;');
     db.exec(SCHEMA);
     this.put = db.prepare(
       'INSERT INTO labels (id, json, retrieved, brand, name, upc, upc_digits, entry_date, off_market) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ' +
@@ -112,6 +113,26 @@ export class LabelStore {
     );
     this.putFtsDelete.run(label.id);
     this.putFts.run(label.id, label.brandName ?? '', label.fullName ?? '', ingredientText(label));
+  }
+
+  getMeta(k: string): string | null {
+    return (this.db.prepare('SELECT v FROM meta WHERE k = ?').get(k) as { v: string } | undefined)?.v ?? null;
+  }
+
+  setMeta(k: string, v: string): void {
+    this.db.prepare('INSERT INTO meta (k, v) VALUES (?, ?) ON CONFLICT (k) DO UPDATE SET v = excluded.v').run(k, v);
+  }
+
+  /** Several writes in one transaction (bulk import). */
+  transaction(fn: () => void): void {
+    this.db.exec('BEGIN');
+    try {
+      fn();
+      this.db.exec('COMMIT');
+    } catch (err) {
+      this.db.exec('ROLLBACK');
+      throw err;
+    }
   }
 
   findUpc(digits: string): SearchHit[] {

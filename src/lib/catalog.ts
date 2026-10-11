@@ -139,6 +139,11 @@ export async function lookupUpc(dsld: DsldClient, raw: string, opts: CallOptions
   if (digits.length < 8 || digits.length > 14) {
     throw new AppError('INVALID_INPUT', `${field}: a UPC/EAN barcode has 8-14 digits; got ${digits.length}`, { field });
   }
+  // With the NIH dump mirrored, barcodes already in it are answered locally; newer products still go to DSLD.
+  if (dsld.hasMirror()) {
+    const local = dsld.storedUpc(digits).sort(newerFirst);
+    if (local.length) return { upc: digits, versions: local };
+  }
   const phrase = formatUpcForDsld(digits) ?? digits;
   const result = await dsld.search({ query: `"${phrase}"`, onMarketOnly: false, size: 10 }, opts);
   let hits = result.hits;

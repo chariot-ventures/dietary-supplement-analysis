@@ -59,11 +59,30 @@ export async function warmOnce(client: DsldClient, o: WarmOptions): Promise<{ fe
 
 export function startWarmer(client: DsldClient, o: WarmOptions): () => void {
   const ctrl = new AbortController();
+  const interval = o.intervalMs ?? 24 * 60 * 60 * 1000;
   const run = async () => {
+    // Restarts (every deploy) must not repeat a recent pass: each pass costs DSLD API calls.
+    const last = Number(client.store?.getMeta('warm_last_pass') ?? 0);
+    const wait = last + interval - Date.now();
+    if (wait > 0) {
+      o.log?.('label store warm pass skipped (recent)', { next_in_minutes: Math.round(wait / 60000) });
+      await sleep(wait, ctrl.signal);
+    }
     while (!ctrl.signal.aborted) {
+      // With the full NIH dump imported, the warmer has nothing to add.
+      if (client.store?.getMeta('mirror_version')) {
+        o.log?.('label store warm pass skipped (mirror present)');
+        await sleep(interval, ctrl.signal);
+        continue;
+      }
       const started = Date.now();
       const r = await warmOnce(client, { ...o, signal: ctrl.signal }).catch(() => ({ fetched: 0, skipped: 0, failed: -1 }));
       o.log?.('label store warm pass done', { ...r, stored: safeCount(client), seconds: Math.round((Date.now() - started) / 1000) });
+      try {
+        client.store?.setMeta('warm_last_pass', String(Date.now()));
+      } catch {
+        /* read-only store: the pass simply repeats next start */
+      }
       await sleep(o.intervalMs ?? 24 * 60 * 60 * 1000, ctrl.signal);
     }
   };

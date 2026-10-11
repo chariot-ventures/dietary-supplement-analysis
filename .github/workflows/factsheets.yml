@@ -1,0 +1,37 @@
+# Monthly: have any NIH fact sheets our data relies on been updated since we reviewed them?
+# Opens (or updates) an issue listing the changed pages.
+name: NIH fact sheet check
+
+on:
+  schedule:
+    - cron: '17 13 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - id: run
+        run: |
+          set +e
+          npx tsx scripts/check-factsheets.ts > report.md
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          cat report.md
+      - name: Open or update the issue
+        if: steps.run.outputs.status != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          title="NIH fact sheets updated: review data"
+          num=$(gh issue list --state open --search "in:title \"$title\"" --json number -q '.[0].number')
+          if [ -n "$num" ]; then gh issue comment "$num" --body-file report.md; else gh issue create --title "$title" --body-file report.md; fi
