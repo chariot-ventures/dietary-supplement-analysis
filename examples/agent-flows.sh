@@ -27,7 +27,7 @@ post /v1/stack/analyze "{\"age\":66,\"sex\":\"female\",\"detail\":\"summary\",\"
 say "3. Vision agent: a label read from a photo" \
 "A camera or OCR agent reads a bottle that isn't in the NIH database and passes the ingredients through as a custom product."
 post /v1/stack/analyze '{"age":58,"sex":"male","detail":"summary","products":[{"query":"Centrum Silver Men 50+"},{"name":"Immune gummy (read from a photo)","servings_per_day":2,"ingredients":[{"name":"zinc","amount":15,"unit":"mg"},{"name":"vitamin C","amount":500,"unit":"mg"}]}]}' |
-  jq -r '(.flagged[] | "- \(.name): \(.percent_of_ul)% of the upper limit (\(.ul_basis))"), (.suggestions[] | select(.resolves) | "- Fix: \(.text)")'
+  jq -r '(.flagged[] | "- \(.name): \(.percent_of_ul)% of the upper limit; the limit guards against \(.ul_basis | ascii_downcase)"), (.suggestions[] | select(.resolves) | "- Fix: \(.text)")'
 
 say "4. Health-coach agent: the weekly check" \
 "A coaching or wearable agent reruns the full routine each week with typical food intake counted, and only messages the user when something is flagged."
