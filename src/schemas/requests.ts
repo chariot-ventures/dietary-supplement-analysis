@@ -8,7 +8,10 @@ export const MAX_CANDIDATES = 5;
 
 const dsldId = z.number().int().positive().max(10_000_000).describe('DSLD label ID, e.g. from /v1/products/search');
 const sex = z.enum(['male', 'female']);
-const age = z.number().min(0).max(120).describe('Age in years. Ages under 1 are not supported in v1.');
+const age = z.number().min(0).max(120).describe('Age in years. For infants use a fraction: 0.25 = 3 months; 0-5 and 6-11 month values apply under 1.');
+const lifeStage = z
+  .enum(['pregnancy', 'lactation'])
+  .describe('Pregnancy or lactation (breastfeeding) reference values; requires sex "female" and age 14-50');
 const servingsPerDay = z
   .number()
   .positive()
@@ -52,6 +55,7 @@ export const referenceRequest = z.object({
   nutrient: z.string().trim().min(1).max(100).describe('Nutrient ID ("vitamin-d") or any synonym ("cholecalciferol")'),
   age,
   sex,
+  life_stage: lifeStage.optional(),
 });
 
 export const customIngredient = z.object({
@@ -88,6 +92,7 @@ export const analyzeRequest = z
   .object({
     age: age.optional(),
     sex: sex.optional(),
+    life_stage: lifeStage.optional(),
     products: z
       .array(stackProduct)
       .min(1)
@@ -116,19 +121,26 @@ export type AnalyzeRequest = z.infer<typeof analyzeRequest>;
 export type StackProductInput = z.infer<typeof stackProduct>;
 export type LookupRequest = z.infer<typeof lookupRequest>;
 
-const UNSUPPORTED_PROFILE_FIELDS = ['pregnant', 'pregnancy', 'lactating', 'lactation', 'breastfeeding', 'life_stage'];
+/** Booleans some callers send instead of life_stage. */
+const LIFE_STAGE_ALIASES: Record<string, 'pregnancy' | 'lactation'> = {
+  pregnant: 'pregnancy',
+  pregnancy: 'pregnancy',
+  lactating: 'lactation',
+  lactation: 'lactation',
+  breastfeeding: 'lactation',
+};
 
 /** Parse a request body or throw a 400 INVALID_INPUT naming the first offending field. */
 export function parseBody<S extends z.ZodType>(schema: S, body: unknown): z.infer<S> {
   if (body === undefined || body === null || typeof body !== 'object' || Array.isArray(body)) {
     throw new AppError('INVALID_INPUT', 'Request body must be a JSON object', { field: 'body' });
   }
-  for (const key of UNSUPPORTED_PROFILE_FIELDS) {
-    if (key in body && (body as Record<string, unknown>)[key] !== undefined && (body as Record<string, unknown>)[key] !== false) {
-      throw new AppError('UNSUPPORTED', 'Pregnancy and lactation reference values are not supported in v1', { field: key });
-    }
+  const input = { ...(body as Record<string, unknown>) };
+  for (const [key, stage] of Object.entries(LIFE_STAGE_ALIASES)) {
+    if (input[key] === true && input.life_stage === undefined) input.life_stage = stage;
+    if (typeof input[key] === 'boolean') delete input[key];
   }
-  const result = schema.safeParse(body);
+  const result = schema.safeParse(input);
   if (!result.success) {
     const issue = result.error.issues[0]!;
     const field = issue.path.length ? issue.path.join('.') : 'body';
@@ -137,9 +149,11 @@ export function parseBody<S extends z.ZodType>(schema: S, body: unknown): z.infe
   return result.data;
 }
 
-/** Infant reference values are out of scope; give agents a stable code for it. */
-export function assertSupportedAge(age: number | undefined): void {
-  if (age !== undefined && age < 1) {
-    throw new AppError('UNSUPPORTED', 'Reference values for infants under 1 year are not supported in v1', { field: 'age' });
+/** Pregnancy and lactation values exist for females aged 14-50 only. */
+export function assertSupportedProfile(p: { age?: number | undefined; sex?: string | undefined; life_stage?: string | undefined }): void {
+  if (!p.life_stage) return;
+  if (p.sex !== 'female') throw new AppError('INVALID_INPUT', `life_stage "${p.life_stage}" requires sex "female"`, { field: 'life_stage' });
+  if (p.age === undefined || p.age < 14 || p.age >= 51) {
+    throw new AppError('UNSUPPORTED', `${p.life_stage === 'pregnancy' ? 'Pregnancy' : 'Lactation'} reference values are published for ages 14-50 only`, { field: 'age' });
   }
 }

@@ -213,7 +213,7 @@
             }
           },
           "422": {
-            "description": "UNSUPPORTED (e.g. pregnancy, infants)",
+            "description": "UNSUPPORTED (pregnancy or lactation outside ages 14-50)",
             "content": {
               "application/json": {
                 "schema": {
@@ -354,7 +354,7 @@
             }
           },
           "422": {
-            "description": "UNSUPPORTED (e.g. pregnancy, infants)",
+            "description": "UNSUPPORTED (pregnancy or lactation outside ages 14-50)",
             "content": {
               "application/json": {
                 "schema": {
@@ -475,7 +475,7 @@
             }
           },
           "422": {
-            "description": "UNSUPPORTED (e.g. pregnancy, infants)",
+            "description": "UNSUPPORTED (pregnancy or lactation outside ages 14-50)",
             "content": {
               "application/json": {
                 "schema": {
@@ -518,7 +518,7 @@
                     "type": "number",
                     "minimum": 0,
                     "maximum": 120,
-                    "description": "Age in years. Ages under 1 are not supported in v1."
+                    "description": "Age in years. For infants use a fraction: 0.25 = 3 months; 0-5 and 6-11 month values apply under 1."
                   },
                   "sex": {
                     "type": "string",
@@ -526,6 +526,14 @@
                       "male",
                       "female"
                     ]
+                  },
+                  "life_stage": {
+                    "type": "string",
+                    "enum": [
+                      "pregnancy",
+                      "lactation"
+                    ],
+                    "description": "Pregnancy or lactation (breastfeeding) reference values; requires sex \"female\" and age 14-50"
                   }
                 },
                 "required": [
@@ -641,7 +649,7 @@
             }
           },
           "422": {
-            "description": "UNSUPPORTED (e.g. pregnancy, infants)",
+            "description": "UNSUPPORTED (pregnancy or lactation outside ages 14-50)",
             "content": {
               "application/json": {
                 "schema": {
@@ -678,7 +686,7 @@
                     "type": "number",
                     "minimum": 0,
                     "maximum": 120,
-                    "description": "Age in years. Ages under 1 are not supported in v1."
+                    "description": "Age in years. For infants use a fraction: 0.25 = 3 months; 0-5 and 6-11 month values apply under 1."
                   },
                   "sex": {
                     "type": "string",
@@ -686,6 +694,14 @@
                       "male",
                       "female"
                     ]
+                  },
+                  "life_stage": {
+                    "type": "string",
+                    "enum": [
+                      "pregnancy",
+                      "lactation"
+                    ],
+                    "description": "Pregnancy or lactation (breastfeeding) reference values; requires sex \"female\" and age 14-50"
                   },
                   "products": {
                     "minItems": 1,
@@ -1252,7 +1268,7 @@
             }
           },
           "422": {
-            "description": "UNSUPPORTED (e.g. pregnancy, infants)",
+            "description": "UNSUPPORTED (pregnancy or lactation outside ages 14-50)",
             "content": {
               "application/json": {
                 "schema": {
@@ -1384,7 +1400,7 @@
             }
           },
           "422": {
-            "description": "UNSUPPORTED (e.g. pregnancy, infants)",
+            "description": "UNSUPPORTED (pregnancy or lactation outside ages 14-50)",
             "content": {
               "application/json": {
                 "schema": {

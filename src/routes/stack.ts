@@ -6,7 +6,7 @@ import type { CallOptions, DsldClient, LabelResult } from '../lib/dsld.js';
 import { AppError } from '../lib/errors.js';
 import { dedupeSources, envelope, type Source } from '../lib/envelope.js';
 import { normalizeCustomProduct, normalizeDsldLabel, type DataGap } from '../lib/label.js';
-import { analyzeRequest, assertSupportedAge, parseBody, type StackProductInput } from '../schemas/requests.js';
+import { analyzeRequest, assertSupportedProfile, parseBody, type StackProductInput } from '../schemas/requests.js';
 import { upstreamBudget, type Deps } from './deps.js';
 
 export interface Resolution {
@@ -99,7 +99,7 @@ async function resolveItem(item: StackProductInput, path: string, dsld: DsldClie
 
 export async function analyze(body: unknown, deps: Deps) {
   const req = parseBody(analyzeRequest, body);
-  assertSupportedAge(req.age);
+  assertSupportedProfile(req);
   const signal = upstreamBudget(deps);
   const opts = { signal };
 
@@ -169,7 +169,7 @@ export async function analyze(body: unknown, deps: Deps) {
   }
 
   // 4. Analyze the stack, then each candidate added to it.
-  const profile: Profile | null = req.age !== undefined && req.sex !== undefined ? { age: req.age, sex: req.sex } : null;
+  const profile: Profile | null = req.age !== undefined && req.sex !== undefined ? { age: req.age, sex: req.sex, life_stage: req.life_stage ?? null } : null;
   const analysis = analyzeStack(baseProducts, profile);
   const unresolvedGaps: DataGap[] = resolutions
     .filter((r) => r.status === 'not_found')

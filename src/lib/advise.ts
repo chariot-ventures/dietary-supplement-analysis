@@ -202,6 +202,14 @@ export function compareCandidate(base: StackAnalysis, combined: StackAnalysis, c
   return { product_ref: candidate.product_ref, product_name: name, verdict, new_flags: newFlags, changes, text };
 }
 
+/** "a 34-year-old female", "a pregnant 30-year-old", "a 6-month-old infant". */
+export function describeProfile(p: { age: number; sex: string; life_stage?: string | null }): string {
+  if (p.age < 1) return `a ${Math.floor(p.age * 12)}-month-old infant`;
+  if (p.life_stage === 'pregnancy') return `a pregnant ${num(p.age)}-year-old`;
+  if (p.life_stage === 'lactation') return `a breastfeeding ${num(p.age)}-year-old`;
+  return `a ${num(p.age)}-year-old ${p.sex}`;
+}
+
 export interface SummaryContext {
   suggestions: Suggestion[];
   unresolved: string[];
@@ -215,7 +223,7 @@ export interface SummaryContext {
  */
 export function agentSummary(a: StackAnalysis, ctx: SummaryContext): string {
   const parts: string[] = [];
-  const who = a.profile ? `for a ${num(a.profile.age)}-year-old ${a.profile.sex}` : '';
+  const who = a.profile ? `for ${describeProfile(a.profile)}` : '';
   const above = a.nutrient_totals.filter((t) => t.flags.includes('above_ul'));
   const near = a.nutrient_totals.filter((t) => t.flags.includes('near_ul'));
   const names = new Map(a.products.map((p) => [p.product_ref, productName(p)]));

@@ -230,3 +230,58 @@ describe('discovery for agents', () => {
     expect(res.json().dsld_id).toBe(900007);
   });
 });
+
+describe('life stages and new nutrients', () => {
+  const ref = async (nutrient: string, age: number, sex: string, life_stage?: string) =>
+    (await post('/v1/nutrients/reference', { nutrient, age, sex, ...(life_stage ? { life_stage } : {}) })).json().reference;
+
+  it('pregnancy and lactation tables', async () => {
+    expect(await ref('folate', 30, 'female', 'pregnancy')).toMatchObject({ rda: 600, ul: 1000 });
+    expect(await ref('iron', 17, 'female', 'pregnancy')).toMatchObject({ rda: 27, ul: 45 });
+    expect(await ref('vitamin-a', 35, 'female', 'lactation')).toMatchObject({ rda: 1300, ul: 3000 });
+    expect(await ref('phosphorus', 25, 'female', 'pregnancy')).toMatchObject({ rda: 700, ul: 3500 }); // the one pregnancy UL that differs
+    expect(await ref('potassium', 30, 'female', 'pregnancy')).toMatchObject({ ai: 2900, ul: null });
+  });
+
+  it('infant tables by month', async () => {
+    expect(await ref('vitamin-d', 0.25, 'male')).toMatchObject({ ai: 10, ul: 25 });
+    expect(await ref('vitamin-d', 0.75, 'female')).toMatchObject({ ai: 10, ul: 38 });
+    expect(await ref('iron', 2 / 12, 'female')).toMatchObject({ ai: 0.27, rda: null, ul: 40 });
+    expect(await ref('iron', 9 / 12, 'female')).toMatchObject({ ai: null, rda: 11, ear: 6.9 });
+  });
+
+  it('caffeine guidance for adults and in pregnancy; none set under 19', async () => {
+    expect(await ref('caffeine', 30, 'male')).toMatchObject({ ul: 400, ul_scope: 'guidance_healthy_adults' });
+    expect(await ref('caffeine', 30, 'female', 'pregnancy')).toMatchObject({ ul: 200 });
+    expect(await ref('caffeine', 16, 'female')).toMatchObject({ ul: null });
+  });
+
+  it('sodium uses the CDRR and says so; chloride and fluoride have DRIs', async () => {
+    const na = await ref('sodium', 40, 'male');
+    expect(na).toMatchObject({ ai: 1500, ul: 2300, ul_scope: 'chronic_disease_risk_reduction' });
+    expect(na.ul_note).toMatch(/no UL/);
+    expect(await ref('chloride', 40, 'female')).toMatchObject({ ai: 2300, ul: 3600 });
+    expect(await ref('fluoride', 40, 'male')).toMatchObject({ ai: 4, ul: 10 });
+  });
+
+  it('a prenatal stack is checked against pregnancy values and described that way', async () => {
+    const res = await post('/v1/stack/analyze', {
+      age: 30,
+      sex: 'female',
+      life_stage: 'pregnancy',
+      products: [{ name: 'Prenatal', ingredients: [{ name: 'folate', amount: 1360, unit: 'mcg DFE', form: 'folic acid' }, { name: 'iron', amount: 27, unit: 'mg' }] }, { name: 'Pre-workout', ingredients: [{ name: 'caffeine anhydrous', amount: 300, unit: 'mg' }] }],
+    });
+    const body = res.json();
+    expect(body.profile).toEqual({ age: 30, sex: 'female', life_stage: 'pregnancy' });
+    const t = (id: string) => body.nutrient_totals.find((x: { nutrient_id: string }) => x.nutrient_id === id);
+    expect(t('iron')).toMatchObject({ coverage: { reference: 'rda', percent: 100 }, flags: [] });
+    expect(t('folate')).toMatchObject({ amount_toward_ul: { amount: 800 }, percent_of_ul: 80, flags: [] });
+    expect(t('caffeine')).toMatchObject({ flags: ['above_ul'], percent_of_ul: 150 });
+    expect(body.agent_summary).toMatch(/for a pregnant 30-year-old/);
+  });
+
+  it('pregnant: true is accepted as an alias for life_stage', async () => {
+    const res = await post('/v1/nutrients/reference', { nutrient: 'iodine', age: 28, sex: 'female', pregnant: true });
+    expect(res.json()).toMatchObject({ profile: { life_stage: 'pregnancy' }, reference: { rda: 220 } });
+  });
+});

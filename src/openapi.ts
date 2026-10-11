@@ -283,7 +283,7 @@ function ok(description: string, properties: Json): Json {
 const errorResponses = {
   '400': { description: 'INVALID_INPUT', content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } } },
   '404': { description: 'NOT_FOUND (unknown DSLD ID or nutrient)', content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } } },
-  '422': { description: 'UNSUPPORTED (e.g. pregnancy, infants)', content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } } },
+  '422': { description: 'UNSUPPORTED (pregnancy or lactation outside ages 14-50)', content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } } },
   '424': {
     description: 'UPSTREAM_UNAVAILABLE: NIH DSLD unreachable and nothing cached (retryable)',
     content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },

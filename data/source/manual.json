@@ -1,5 +1,5 @@
 {
-  "_doc": "Hand-maintained nutrient source data. scripts/build-nutrients.ts expands dri_bands against age_bands into data/nutrients.json. Values follow the Food and Nutrition Board DRI tables as reproduced on each nutrient's NIH ODS health-professional fact sheet (source_url). A null in a band array means no value is established for that band. 'both' applies one array to male and female. Ages are whole years; infants (<1 year) are out of scope in v1.",
+  "_doc": "Hand-maintained nutrient source data. scripts/build-nutrients.ts expands dri_bands against age_bands into data/nutrients.json. Values follow the Food and Nutrition Board DRI tables as reproduced on each nutrient's NIH ODS health-professional fact sheet (source_url). A null in a band array means no value is established for that band. 'both' applies one array to male and female. Ages are whole years; infants (<1 year) are out of scope in v1. life_stages gives pregnancy and lactation values for ages [14-18, 19-30, 31-50] (female only) and infant values for [0-6 months, 7-12 months]; a pregnancy or lactation UL that is not given equals the female UL for the same age. Infant and life-stage values follow the Food and Nutrition Board DRI summary tables (National Academies, Appendix J of the 2019 sodium and potassium report; potassium and sodium per that 2019 report).",
   "dri_reviewed": "2026-10-11",
   "age_bands": [
     [
@@ -234,7 +234,33 @@
       },
       "unii_codes": [
         "81G40H8B0T"
-      ]
+      ],
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            750,
+            770,
+            770
+          ]
+        },
+        "lactation": {
+          "rda": [
+            1200,
+            1300,
+            1300
+          ]
+        },
+        "infants": {
+          "ai": [
+            400,
+            500
+          ],
+          "ul": [
+            600,
+            600
+          ]
+        }
+      }
     },
     {
       "id": "vitamin-c",
@@ -353,6 +379,28 @@
       "label_dv_legacy": {
         "amount": 60,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            80,
+            85,
+            85
+          ]
+        },
+        "lactation": {
+          "rda": [
+            115,
+            120,
+            120
+          ]
+        },
+        "infants": {
+          "ai": [
+            40,
+            50
+          ]
+        }
       }
     },
     {
@@ -459,6 +507,32 @@
       "label_dv_legacy": {
         "amount": 10,
         "unit": "mcg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            15,
+            15,
+            15
+          ]
+        },
+        "lactation": {
+          "rda": [
+            15,
+            15,
+            15
+          ]
+        },
+        "infants": {
+          "ai": [
+            10,
+            10
+          ],
+          "ul": [
+            25,
+            38
+          ]
+        }
       }
     },
     {
@@ -639,6 +713,28 @@
       "label_dv": {
         "amount": 15,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            15,
+            15,
+            15
+          ]
+        },
+        "lactation": {
+          "rda": [
+            19,
+            19,
+            19
+          ]
+        },
+        "infants": {
+          "ai": [
+            4,
+            5
+          ]
+        }
       }
     },
     {
@@ -793,6 +889,28 @@
       "label_dv_legacy": {
         "amount": 80,
         "unit": "mcg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            75,
+            90,
+            90
+          ]
+        },
+        "lactation": {
+          "ai": [
+            75,
+            90,
+            90
+          ]
+        },
+        "infants": {
+          "ai": [
+            2.0,
+            2.5
+          ]
+        }
       }
     },
     {
@@ -888,6 +1006,28 @@
       "label_dv_legacy": {
         "amount": 1.5,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            1.4,
+            1.4,
+            1.4
+          ]
+        },
+        "lactation": {
+          "rda": [
+            1.4,
+            1.4,
+            1.4
+          ]
+        },
+        "infants": {
+          "ai": [
+            0.2,
+            0.3
+          ]
+        }
       }
     },
     {
@@ -977,6 +1117,28 @@
       "label_dv_legacy": {
         "amount": 1.7,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            1.4,
+            1.4,
+            1.4
+          ]
+        },
+        "lactation": {
+          "rda": [
+            1.6,
+            1.6,
+            1.6
+          ]
+        },
+        "infants": {
+          "ai": [
+            0.3,
+            0.4
+          ]
+        }
       }
     },
     {
@@ -1101,6 +1263,28 @@
       "label_dv_legacy": {
         "amount": 20,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            18,
+            18,
+            18
+          ]
+        },
+        "lactation": {
+          "rda": [
+            17,
+            17,
+            17
+          ]
+        },
+        "infants": {
+          "ai": [
+            2,
+            4
+          ]
+        }
       }
     },
     {
@@ -1214,6 +1398,28 @@
       "label_dv_legacy": {
         "amount": 2,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            1.9,
+            1.9,
+            1.9
+          ]
+        },
+        "lactation": {
+          "rda": [
+            2.0,
+            2.0,
+            2.0
+          ]
+        },
+        "infants": {
+          "ai": [
+            0.1,
+            0.3
+          ]
+        }
       }
     },
     {
@@ -1382,7 +1588,29 @@
       "unii_codes": [
         "935E97BOY8",
         "TYK22LML8F"
-      ]
+      ],
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            600,
+            600,
+            600
+          ]
+        },
+        "lactation": {
+          "rda": [
+            500,
+            500,
+            500
+          ]
+        },
+        "infants": {
+          "ai": [
+            65,
+            80
+          ]
+        }
+      }
     },
     {
       "id": "vitamin-b12",
@@ -1457,6 +1685,28 @@
       "label_dv_legacy": {
         "amount": 6,
         "unit": "mcg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            2.6,
+            2.6,
+            2.6
+          ]
+        },
+        "lactation": {
+          "rda": [
+            2.8,
+            2.8,
+            2.8
+          ]
+        },
+        "infants": {
+          "ai": [
+            0.4,
+            0.5
+          ]
+        }
       }
     },
     {
@@ -1509,6 +1759,28 @@
       "label_dv_legacy": {
         "amount": 300,
         "unit": "mcg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            30,
+            30,
+            30
+          ]
+        },
+        "lactation": {
+          "ai": [
+            35,
+            35,
+            35
+          ]
+        },
+        "infants": {
+          "ai": [
+            5,
+            6
+          ]
+        }
       }
     },
     {
@@ -1567,6 +1839,28 @@
       "label_dv_legacy": {
         "amount": 10,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            6,
+            6,
+            6
+          ]
+        },
+        "lactation": {
+          "ai": [
+            7,
+            7,
+            7
+          ]
+        },
+        "infants": {
+          "ai": [
+            1.7,
+            1.8
+          ]
+        }
       }
     },
     {
@@ -1634,6 +1928,28 @@
       "label_dv": {
         "amount": 550,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            450,
+            450,
+            450
+          ]
+        },
+        "lactation": {
+          "ai": [
+            550,
+            550,
+            550
+          ]
+        },
+        "infants": {
+          "ai": [
+            125,
+            150
+          ]
+        }
       }
     },
     {
@@ -1756,6 +2072,32 @@
       "label_dv_legacy": {
         "amount": 1000,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            1300,
+            1000,
+            1000
+          ]
+        },
+        "lactation": {
+          "rda": [
+            1300,
+            1000,
+            1000
+          ]
+        },
+        "infants": {
+          "ai": [
+            200,
+            260
+          ],
+          "ul": [
+            1000,
+            1500
+          ]
+        }
       }
     },
     {
@@ -1830,6 +2172,28 @@
       "label_dv_legacy": {
         "amount": 120,
         "unit": "mcg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            29,
+            30,
+            30
+          ]
+        },
+        "lactation": {
+          "ai": [
+            44,
+            45,
+            45
+          ]
+        },
+        "infants": {
+          "ai": [
+            0.2,
+            5.5
+          ]
+        }
       }
     },
     {
@@ -1924,6 +2288,28 @@
       "label_dv_legacy": {
         "amount": 2,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            1000,
+            1000,
+            1000
+          ]
+        },
+        "lactation": {
+          "rda": [
+            1300,
+            1300,
+            1300
+          ]
+        },
+        "infants": {
+          "ai": [
+            200,
+            220
+          ]
+        }
       }
     },
     {
@@ -2011,6 +2397,28 @@
       "label_dv_legacy": {
         "amount": 150,
         "unit": "mcg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            220,
+            220,
+            220
+          ]
+        },
+        "lactation": {
+          "rda": [
+            290,
+            290,
+            290
+          ]
+        },
+        "infants": {
+          "ai": [
+            110,
+            130
+          ]
+        }
       }
     },
     {
@@ -2133,6 +2541,40 @@
       "label_dv_legacy": {
         "amount": 18,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            27,
+            27,
+            27
+          ]
+        },
+        "lactation": {
+          "rda": [
+            10,
+            9,
+            9
+          ]
+        },
+        "infants": {
+          "ai": [
+            0.27,
+            null
+          ],
+          "rda": [
+            null,
+            11
+          ],
+          "ear": [
+            null,
+            6.9
+          ],
+          "ul": [
+            40,
+            40
+          ]
+        }
       }
     },
     {
@@ -2275,6 +2717,28 @@
       "label_dv_legacy": {
         "amount": 400,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            400,
+            350,
+            360
+          ]
+        },
+        "lactation": {
+          "rda": [
+            360,
+            310,
+            320
+          ]
+        },
+        "infants": {
+          "ai": [
+            30,
+            75
+          ]
+        }
       }
     },
     {
@@ -2360,6 +2824,28 @@
       "label_dv_legacy": {
         "amount": 2,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            2.0,
+            2.0,
+            2.0
+          ]
+        },
+        "lactation": {
+          "ai": [
+            2.6,
+            2.6,
+            2.6
+          ]
+        },
+        "infants": {
+          "ai": [
+            0.003,
+            0.6
+          ]
+        }
       }
     },
     {
@@ -2438,6 +2924,28 @@
       "label_dv_legacy": {
         "amount": 75,
         "unit": "mcg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            50,
+            50,
+            50
+          ]
+        },
+        "lactation": {
+          "rda": [
+            50,
+            50,
+            50
+          ]
+        },
+        "infants": {
+          "ai": [
+            2,
+            3
+          ]
+        }
       }
     },
     {
@@ -2521,6 +3029,33 @@
       "label_dv_legacy": {
         "amount": 1000,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            1250,
+            700,
+            700
+          ],
+          "ul": [
+            3500,
+            3500,
+            3500
+          ]
+        },
+        "lactation": {
+          "rda": [
+            1250,
+            700,
+            700
+          ]
+        },
+        "infants": {
+          "ai": [
+            100,
+            275
+          ]
+        }
       }
     },
     {
@@ -2595,6 +3130,28 @@
       "label_dv_legacy": {
         "amount": 3500,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            2600,
+            2900,
+            2900
+          ]
+        },
+        "lactation": {
+          "ai": [
+            2500,
+            2800,
+            2800
+          ]
+        },
+        "infants": {
+          "ai": [
+            400,
+            860
+          ]
+        }
       }
     },
     {
@@ -2685,6 +3242,32 @@
       "label_dv_legacy": {
         "amount": 70,
         "unit": "mcg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            60,
+            60,
+            60
+          ]
+        },
+        "lactation": {
+          "rda": [
+            70,
+            70,
+            70
+          ]
+        },
+        "infants": {
+          "ai": [
+            15,
+            20
+          ],
+          "ul": [
+            45,
+            60
+          ]
+        }
       }
     },
     {
@@ -2803,6 +3386,40 @@
       "label_dv_legacy": {
         "amount": 15,
         "unit": "mg"
+      },
+      "life_stages": {
+        "pregnancy": {
+          "rda": [
+            12,
+            11,
+            11
+          ]
+        },
+        "lactation": {
+          "rda": [
+            13,
+            12,
+            12
+          ]
+        },
+        "infants": {
+          "ai": [
+            2,
+            null
+          ],
+          "rda": [
+            null,
+            3
+          ],
+          "ear": [
+            null,
+            2.5
+          ],
+          "ul": [
+            4,
+            5
+          ]
+        }
       }
     },
     {
@@ -2865,7 +3482,12 @@
       "unii_codes": [
         "N9E3X5056Q",
         "YV58Q9ER5F"
-      ]
+      ],
+      "life_stages": {
+        "pregnancy": {},
+        "lactation": {},
+        "infants": {}
+      }
     },
     {
       "id": "beta-carotene",
@@ -2994,6 +3616,295 @@
       "ul_basis": null,
       "factsheet_url": "https://www.nccih.nih.gov/health/coenzyme-q10",
       "unii_codes": []
+    },
+    {
+      "id": "chloride",
+      "name": "Chloride",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "chloride"
+      ],
+      "dsld_ingredient_groups": [
+        "Chloride"
+      ],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "both": [
+            1500,
+            1900,
+            2300,
+            2300,
+            2300,
+            2300,
+            2000,
+            1800
+          ]
+        },
+        "ul": {
+          "both": [
+            2300,
+            2900,
+            3400,
+            3600,
+            3600,
+            3600,
+            3600,
+            3600
+          ]
+        }
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            2300,
+            2300,
+            2300
+          ]
+        },
+        "lactation": {
+          "ai": [
+            2300,
+            2300,
+            2300
+          ]
+        },
+        "infants": {
+          "ai": [
+            180,
+            570
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "ul_basis": "Raised blood pressure (chloride is consumed mostly as sodium chloride, and its UL is set to match)",
+      "factsheet_url": "https://www.ncbi.nlm.nih.gov/books/NBK56068/table/summarytables.t3/",
+      "label_dv": {
+        "amount": 2300,
+        "unit": "mg"
+      }
+    },
+    {
+      "id": "sodium",
+      "name": "Sodium",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "sodium"
+      ],
+      "dsld_ingredient_groups": [
+        "Sodium"
+      ],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "both": [
+            800,
+            1000,
+            1200,
+            1500,
+            1500,
+            1500,
+            1500,
+            1500
+          ]
+        },
+        "ul": {
+          "both": [
+            1200,
+            1500,
+            1800,
+            2300,
+            2300,
+            2300,
+            2300,
+            2300
+          ]
+        }
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            1500,
+            1500,
+            1500
+          ]
+        },
+        "lactation": {
+          "ai": [
+            1500,
+            1500,
+            1500
+          ]
+        },
+        "infants": {
+          "ai": [
+            110,
+            370
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "chronic_disease_risk_reduction",
+      "ul_note": "Sodium has no UL. The limit used is the Chronic Disease Risk Reduction Intake (CDRR, 2019): intake above it from all sources is advised to be reduced.",
+      "ul_basis": "Raised blood pressure and cardiovascular disease risk",
+      "factsheet_url": "https://nap.nationalacademies.org/catalog/25353/dietary-reference-intakes-for-sodium-and-potassium",
+      "label_dv": {
+        "amount": 2300,
+        "unit": "mg"
+      }
+    },
+    {
+      "id": "fluoride",
+      "name": "Fluoride",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "fluoride",
+        "sodium fluoride"
+      ],
+      "dsld_ingredient_groups": [
+        "Fluoride"
+      ],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": {
+          "male": [
+            0.7,
+            1,
+            2,
+            3,
+            4,
+            4,
+            4,
+            4
+          ],
+          "female": [
+            0.7,
+            1,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        "ul": {
+          "both": [
+            1.3,
+            2.2,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ]
+        }
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ai": [
+            3,
+            3,
+            3
+          ]
+        },
+        "lactation": {
+          "ai": [
+            3,
+            3,
+            3
+          ]
+        },
+        "infants": {
+          "ai": [
+            0.01,
+            0.5
+          ],
+          "ul": [
+            0.7,
+            0.9
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "total_intake",
+      "ul_note": null,
+      "ul_basis": "Dental fluorosis in children; skeletal fluorosis in adults",
+      "factsheet_url": "https://www.ncbi.nlm.nih.gov/books/NBK56068/table/summarytables.t3/",
+      "label_dv": null
+    },
+    {
+      "id": "caffeine",
+      "name": "Caffeine",
+      "canonical_unit": "mg",
+      "synonyms": [
+        "caffeine",
+        "caffeine anhydrous",
+        "natural caffeine",
+        "anhydrous caffeine"
+      ],
+      "dsld_ingredient_groups": [
+        "Caffeine"
+      ],
+      "forms": [
+        {
+          "name": "dicaffeine malate",
+          "kind": "compound"
+        },
+        {
+          "name": "caffeine citrate",
+          "kind": "compound"
+        }
+      ],
+      "dri_bands": {
+        "rda": null,
+        "ear": null,
+        "ai": null,
+        "ul": {
+          "both": [
+            null,
+            null,
+            null,
+            null,
+            400,
+            400,
+            400,
+            400
+          ]
+        }
+      },
+      "life_stages": {
+        "pregnancy": {
+          "ul": [
+            null,
+            200,
+            200
+          ]
+        },
+        "lactation": {
+          "ul": [
+            null,
+            300,
+            300
+          ]
+        }
+      },
+      "ul_unit": "mg",
+      "ul_component": "all",
+      "ul_scope": "guidance_healthy_adults",
+      "ul_note": "Not a DRI UL: FDA guidance that up to 400 mg a day is not generally associated with negative effects in healthy adults. Pregnancy: under 200 mg a day (ACOG); lactation: up to about 300 mg a day (CDC). No figure is set for people under 19. Coffee, tea and energy drinks are not counted.",
+      "ul_basis": "Restlessness, insomnia, anxiety and a rapid heartbeat",
+      "factsheet_url": "https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much",
+      "label_dv": null
     }
   ],
   "label_dv_source": "FDA Daily Values for adults and children 4 years and older, 21 CFR 101.9(c)(8)(iv) and 101.36 (2016 Nutrition and Supplement Facts rule). Used only to read a label amount whose unit DSLD omits or gives without its basis, and only when the label %DV matches.",

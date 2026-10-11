@@ -3,7 +3,7 @@
  * Differences from the app: returns every reference type (RDA, EAR, AI, UL),
  * not just the first one found, and uses whole-year age matching.
  */
-import type { AgeRange, DriType, Nutrient, Sex } from './types.js';
+import type { AgeRange, DriType, LifeStage, Nutrient, Sex, StageTable } from './types.js';
 
 export interface ReferenceValues {
   rda: number | null;
@@ -26,7 +26,25 @@ export function lookupValue(n: Nutrient, type: DriType, age: number, sex: Sex): 
   return table[sex].find((r) => rangeMatches(r, age))?.amount ?? null;
 }
 
-export function lookupReference(n: Nutrient, age: number, sex: Sex): ReferenceValues {
+function stageValue(table: StageTable | null | undefined, type: DriType, unit: number): number | null {
+  return table?.[type]?.find((r) => rangeMatches(r, unit))?.amount ?? null;
+}
+
+/**
+ * Reference values for a profile. Under 1 year, the infant tables (by month:
+ * 0-5, 6-11) apply. Pregnancy and lactation use their own tables (ages 14-50);
+ * callers validate that combination first (assertSupportedProfile).
+ */
+export function lookupReference(n: Nutrient, age: number, sex: Sex, lifeStage?: LifeStage | null): ReferenceValues {
+  if (age < 1) {
+    const months = Math.floor(age * 12);
+    const t = n.life_stages?.infants;
+    return { rda: stageValue(t, 'rda', months), ear: stageValue(t, 'ear', months), ai: stageValue(t, 'ai', months), ul: stageValue(t, 'ul', months) };
+  }
+  if (lifeStage) {
+    const t = n.life_stages?.[lifeStage];
+    return { rda: stageValue(t, 'rda', age), ear: stageValue(t, 'ear', age), ai: stageValue(t, 'ai', age), ul: stageValue(t, 'ul', age) };
+  }
   return {
     rda: lookupValue(n, 'rda', age, sex),
     ear: lookupValue(n, 'ear', age, sex),

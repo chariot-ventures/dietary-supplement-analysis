@@ -153,7 +153,7 @@ These rules come from Pocket's gateway design rules, and the test suite checks e
   |---|---|---|
   | `INVALID_INPUT` | 400 | Malformed or out-of-range input |
   | `NOT_FOUND` | 404 | Unknown DSLD ID, nutrient or route |
-  | `UNSUPPORTED` | 422 | Pregnancy or lactation, or age under 1 |
+  | `UNSUPPORTED` | 422 | Pregnancy or lactation outside ages 14-50 |
   | `UPSTREAM_UNAVAILABLE` | 424, `retryable: true` | DSLD can't be reached and nothing is cached |
   | `INTERNAL_ERROR` | 422 | Unexpected failure |
 

@@ -15,7 +15,7 @@ import path from 'node:path';
 import { z } from 'zod';
 import { normalizeName } from '../src/lib/text.js';
 import { parseUnit } from '../src/lib/units.js';
-import type { AgeRange, DriTables, DriType, Nutrient, NutrientsFile, Sex, SexTable } from '../src/lib/types.js';
+import type { AgeRange, DriTables, DriType, LifeStageTables, Nutrient, NutrientsFile, Sex, SexTable, StageTable } from '../src/lib/types.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MANUAL = path.join(ROOT, 'data/source/manual.json');
@@ -32,6 +32,13 @@ const bandTable = z
   .object({ male: bandValues.optional(), female: bandValues.optional(), both: bandValues.optional() })
   .strict()
   .nullable();
+
+const stageValues = (n: number) => z.array(z.number().positive().nullable()).length(n);
+const stageTable = (n: number) =>
+  z.object({ rda: stageValues(n).optional(), ear: stageValues(n).optional(), ai: stageValues(n).optional(), ul: stageValues(n).optional() }).strict();
+const manualLifeStages = z
+  .object({ pregnancy: stageTable(3).optional(), lactation: stageTable(3).optional(), infants: stageTable(2).optional() })
+  .strict();
 
 const manualNutrient = z
   .object({
@@ -59,6 +66,7 @@ const manualNutrient = z
     label_dv_legacy: z.object({ amount: z.number().positive(), unit: z.string() }).strict().nullable().default(null),
     name_overrides_groups: z.array(z.string()).default([]),
     dri_bands: z.object({ rda: bandTable, ear: bandTable, ai: bandTable, ul: bandTable }).strict().nullable(),
+    life_stages: manualLifeStages.optional(),
     ul_unit: z.string().nullable(),
     ul_component: z.enum(['all', 'preformed', 'folic_acid']),
     ul_scope: z.string(),
@@ -105,6 +113,8 @@ const exportRow = z.object({
 
 const ageRange = z.object({ lower: z.number().int().nonnegative().nullable(), upper: z.number().int().nonnegative().nullable(), amount: z.number().positive() }).strict();
 const sexTable = z.object({ male: z.array(ageRange), female: z.array(ageRange) }).strict().nullable();
+const stageRanges = z.array(ageRange).nullable();
+const builtStage = z.object({ rda: stageRanges, ear: stageRanges, ai: stageRanges, ul: stageRanges }).strict().nullable();
 const httpsUrl = z.string().regex(/^https:\/\/\S+$/, 'must be an https URL');
 
 export const builtNutrientSchema = z
@@ -121,6 +131,7 @@ export const builtNutrientSchema = z
     ),
     plain_mass_is_canonical: z.boolean(),
     dri: z.object({ rda: sexTable, ear: sexTable, ai: sexTable, ul: sexTable }).strict().nullable(),
+    life_stages: z.object({ pregnancy: builtStage, lactation: builtStage, infants: builtStage }).strict().nullable(),
     label_dv: z.object({ amount: z.number().positive(), unit: z.string() }).strict().nullable(),
     label_dv_legacy: z.object({ amount: z.number().positive(), unit: z.string() }).strict().nullable(),
     name_overrides_groups: z.array(z.string()),
@@ -156,12 +167,55 @@ function expandBands(table: z.infer<typeof bandTable>, bands: ManualFile['age_ba
   return out;
 }
 
+const STAGE_YEARS: [number, number][] = [
+  [14, 18],
+  [19, 30],
+  [31, 50],
+];
+/** Infant ranges are in months. */
+const INFANT_MONTHS: [number, number][] = [
+  [0, 5],
+  [6, 11],
+];
+
+function stageRangesFrom(values: (number | null)[] | undefined, spans: [number, number][]): AgeRange[] | null {
+  if (!values) return null;
+  const out = values.flatMap((amount, i) => (amount == null ? [] : [{ lower: spans[i]![0], upper: spans[i]![1], amount }]));
+  return out.length ? out : null;
+}
+
+/** Female UL for the age ranges pregnancy and lactation use (the FNB sets them equal unless stated). */
+function femaleUlAt(dri: DriTables | null, years: [number, number]): number | null {
+  return dri?.ul?.female.find((r) => (r.lower ?? 0) <= years[0] && (r.upper ?? Infinity) >= years[1])?.amount ?? null;
+}
+
+function buildLifeStages(n: ManualNutrient, dri: DriTables | null): LifeStageTables | null {
+  if (!dri) return null;
+  const ls = n.life_stages ?? {};
+  const stage = (name: 'pregnancy' | 'lactation'): StageTable | null => {
+    const src = ls[name] ?? {};
+    const t: StageTable = {
+      rda: stageRangesFrom(src.rda, STAGE_YEARS),
+      ear: stageRangesFrom(src.ear, STAGE_YEARS),
+      ai: stageRangesFrom(src.ai, STAGE_YEARS),
+      ul: stageRangesFrom(src.ul ?? STAGE_YEARS.map((y) => femaleUlAt(dri, y)), STAGE_YEARS),
+    };
+    return t.rda || t.ear || t.ai || t.ul ? t : null;
+  };
+  const inf = ls.infants;
+  const infants: StageTable | null = inf
+    ? { rda: stageRangesFrom(inf.rda, INFANT_MONTHS), ear: stageRangesFrom(inf.ear, INFANT_MONTHS), ai: stageRangesFrom(inf.ai, INFANT_MONTHS), ul: stageRangesFrom(inf.ul, INFANT_MONTHS) }
+    : null;
+  return { pregnancy: stage('pregnancy'), lactation: stage('lactation'), infants: infants && (infants.rda || infants.ai || infants.ul || infants.ear) ? infants : null };
+}
+
 function fromManual(n: ManualNutrient, bands: ManualFile['age_bands']): Nutrient {
   let dri: DriTables | null = null;
   if (n.dri_bands) {
     dri = { rda: null, ear: null, ai: null, ul: null };
     for (const t of DRI_TYPES) dri[t] = expandBands(n.dri_bands[t], bands, `${n.id}.dri_bands.${t}`);
   }
+  const life_stages = buildLifeStages(n, dri);
   return {
     id: n.id,
     name: n.name,
@@ -173,6 +227,7 @@ function fromManual(n: ManualNutrient, bands: ManualFile['age_bands']): Nutrient
     unit_conversions: n.unit_conversions,
     plain_mass_is_canonical: n.plain_mass_is_canonical,
     dri,
+    life_stages,
     label_dv: n.label_dv,
     label_dv_legacy: n.label_dv_legacy,
     name_overrides_groups: n.name_overrides_groups,
@@ -230,6 +285,7 @@ function fromExport(row: z.infer<typeof exportRow>): Nutrient {
     unit_conversions: [],
     plain_mass_is_canonical: false,
     dri,
+    life_stages: null,
     label_dv: null,
     label_dv_legacy: null,
     name_overrides_groups: [],

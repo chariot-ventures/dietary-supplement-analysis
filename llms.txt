@@ -20,7 +20,7 @@ POST /v1/stack/analyze with what the user said, as written:
 
 - products: 1-15. Each is a product name ({"query"}), a barcode ({"upc"}), a DSLD ID ({"dsld_id"}), or a custom product with explicit ingredients. Pass "servings_per_day" whenever the user said how much they take; otherwise the label's maximum daily servings is assumed (listed in assumptions).
 - candidates (optional, up to 5): products the user is thinking of adding. Each is evaluated as an addition in candidate_results[].
-- age and sex together enable upper-limit checks. Pregnancy, lactation and ages under 1 return 422 UNSUPPORTED.
+- age and sex together enable upper-limit checks. Add "life_stage": "pregnancy" or "lactation" (female, 14-50) for those reference values. For infants, give age as a fraction of a year (0.25 = 3 months).
 
 Read the response in this order:
 1. agent_summary: two to five plain sentences you can relay as written.

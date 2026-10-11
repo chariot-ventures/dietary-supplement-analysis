@@ -18,6 +18,23 @@ export interface DriTables {
   ul: SexTable | null;
 }
 
+/** Reference values for one life stage: pregnancy and lactation ranges are in years, infant ranges in months. */
+export interface StageTable {
+  rda: AgeRange[] | null;
+  ear: AgeRange[] | null;
+  ai: AgeRange[] | null;
+  ul: AgeRange[] | null;
+}
+
+export interface LifeStageTables {
+  pregnancy: StageTable | null;
+  lactation: StageTable | null;
+  /** Ranges in months: 0-5 and 6-11. */
+  infants: StageTable | null;
+}
+
+export type LifeStage = 'pregnancy' | 'lactation';
+
 export interface NutrientForm {
   name: string;
   kind: string;
@@ -48,6 +65,8 @@ export interface Nutrient {
   /** True when a plain mass label unit (e.g. "mg") already equals the canonical basis (mg NE, mg alpha-tocopherol). */
   plain_mass_is_canonical: boolean;
   dri: DriTables | null;
+  /** Pregnancy, lactation and infant values; null when the nutrient has no DRIs. */
+  life_stages: LifeStageTables | null;
   /** FDA Daily Value used on current labels; lets a plain-mass amount be read in the canonical basis when the label's %DV matches it. */
   label_dv: { amount: number; unit: string } | null;
   /** Pre-2016 FDA Daily Value; only used to recognize the %DV printed on older labels. */

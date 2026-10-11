@@ -115,7 +115,7 @@ describe('errors are 4xx JSON, never 5xx', () => {
     { nutrient: 'vitamin-d', age: 30, sex: 'other' },
     { nutrient: 'vitamin-d', age: -1, sex: 'male' },
     { nutrient: 'vitamin-d', age: 500, sex: 'male' },
-    { nutrient: 'vitamin-d', age: 0.5, sex: 'male' },
+    { nutrient: 'vitamin-d', age: 30, sex: 'male', life_stage: 'pregnancy' },
     { nutrient: 'unobtainium', age: 30, sex: 'male' },
     { products: [] },
     { products: 'all of them' },
@@ -126,8 +126,9 @@ describe('errors are 4xx JSON, never 5xx', () => {
     { products: [{ ingredients: [{ name: 'zinc', amount: -5, unit: 'mg' }] }] },
     { products: [{ ingredients: [{ name: 'zinc', amount: 5 }] }] },
     { age: 30, products: [{ dsld_id: 900001 }] },
-    { age: 30, sex: 'female', pregnant: true, products: [{ dsld_id: 900001 }] },
+    { age: 60, sex: 'female', pregnant: true, products: [{ dsld_id: 900001 }] },
     { lactating: true, products: [{ dsld_id: 900001 }] },
+    { age: 30, sex: 'female', life_stage: 'menopause', products: [{ dsld_id: 900001 }] },
     { tool: 'rm -rf', arguments: {} },
     { tool: 'stack_analyze', arguments: { products: [] } },
     { tool: 'stack_analyze', arguments: 'x' },
@@ -157,11 +158,11 @@ describe('errors are 4xx JSON, never 5xx', () => {
     expect((await post('/v1/products/get', { dsld_id: 1 })).statusCode).toBe(404);
     expect((await post('/v1/products/get', { dsld_id: 1 })).json().error).toMatchObject({ code: 'NOT_FOUND', field: 'dsld_id' });
     expect((await post('/v1/stack/analyze', { products: [{ dsld_id: 900001 }, { dsld_id: 2 }] })).json().error.field).toBe('products.1.dsld_id');
-    const preg = await post('/v1/stack/analyze', { pregnant: true, products: [{ dsld_id: 900001 }] });
+    const preg = await post('/v1/stack/analyze', { age: 55, sex: 'female', pregnant: true, products: [{ dsld_id: 900001 }] });
     expect(preg.statusCode).toBe(422);
-    expect(preg.json().error).toMatchObject({ code: 'UNSUPPORTED', field: 'pregnant' });
-    const infant = await post('/v1/nutrients/reference', { nutrient: 'iron', age: 0.5, sex: 'male' });
-    expect(infant.json().error).toMatchObject({ code: 'UNSUPPORTED', field: 'age' });
+    expect(preg.json().error).toMatchObject({ code: 'UNSUPPORTED', field: 'age' });
+    const male = await post('/v1/nutrients/reference', { nutrient: 'iron', age: 30, sex: 'male', life_stage: 'lactation' });
+    expect(male.json().error).toMatchObject({ code: 'INVALID_INPUT', field: 'life_stage' });
     const invalid = await post('/v1/products/search', { limit: 50, query: 'x' });
     expect(invalid.json().error).toMatchObject({ code: 'INVALID_INPUT', field: 'limit' });
   });

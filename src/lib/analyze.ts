@@ -11,12 +11,14 @@ import { dsldSource, factsheetSource, type Source } from './envelope.js';
 import type { Amount, DataGap, NormalizedLabel } from './label.js';
 import { nutrientIndex } from './nutrients.js';
 import { round } from './text.js';
-import type { Nutrient, Sex } from './types.js';
+import type { LifeStage, Nutrient, Sex } from './types.js';
 import { formatAmount } from './units.js';
 
 export interface Profile {
   age: number;
   sex: Sex;
+  /** Pregnancy or lactation reference values (female, 14-50). */
+  life_stage?: LifeStage | null;
 }
 
 export interface StackProduct {
@@ -203,7 +205,7 @@ export function analyzeStack(products: StackProduct[], profile: Profile | null):
     if (b.contributions.length === 0) continue;
     const n = b.nutrient;
     const complete = !incomplete.has(n.id);
-    const ref: ReferenceValues | null = profile && n.dri ? lookupReference(n, profile.age, profile.sex) : null;
+    const ref: ReferenceValues | null = profile && n.dri ? lookupReference(n, profile.age, profile.sex, profile.life_stage) : null;
     const total = round(b.total, 4);
     const towardUl = round(b.towardUl, 4);
     const flags: Flag[] = [];

@@ -4,7 +4,8 @@
   "as_of": "<date>",
   "profile": {
     "age": 34,
-    "sex": "female"
+    "sex": "female",
+    "life_stage": null
   },
   "summary": {
     "products_matched": 3,

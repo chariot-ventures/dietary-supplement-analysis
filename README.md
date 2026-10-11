@@ -134,7 +134,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 - **Candidates** (up to 5) are products the user is considering. Each is evaluated as an addition to the stack in `candidate_results[]` and isn't counted in the totals.
 - `servings_per_day` defaults to the label's maximum daily servings, or 1 if the label doesn't say. Every default is listed in `assumptions`.
 - `age` and `sex` are optional. Without them you get totals and overlaps, but no reference comparisons.
-- Pregnancy and lactation aren't supported yet. Sending them returns `422 UNSUPPORTED`.
+- `life_stage` (`"pregnancy"` or `"lactation"`, female, ages 14–50) switches to the pregnancy or lactation reference values; `"pregnant": true` and `"breastfeeding": true` work too. For infants, give the age as a fraction of a year (`0.25` is 3 months): the 0–6 and 7–12 month values apply.
 
 The response contains, in this order: `profile`, `summary`, `agent_summary`, `resolutions` (when names or barcodes were given), `assumptions`, `suggestions`, `candidate_results` (when candidates were given), `nutrient_totals`, `overlaps`, `unrecognized_ingredients`, `data_gaps`, `products`, `sources` and `disclaimer`.
 
@@ -166,7 +166,7 @@ Each nutrient total includes:
 |---|---|---|
 | `INVALID_INPUT` | 400 | Malformed or out-of-range input |
 | `NOT_FOUND` | 404 | Unknown DSLD ID, nutrient or route |
-| `UNSUPPORTED` | 422 | Pregnancy or lactation, or age under 1 |
+| `UNSUPPORTED` | 422 | Pregnancy or lactation outside ages 14–50 |
 | `UPSTREAM_UNAVAILABLE` | 424 | DSLD can't be reached and nothing is cached (`retryable: true`) |
 | `INTERNAL_ERROR` | 422 | Unexpected failure. Returned as 4xx because Pocket gateways treat 5xx as a supplier fault |
 
@@ -233,7 +233,7 @@ docker compose up --build     # container on 127.0.0.1:8080
 - Up to 15 products and 5 candidates per analyze call, 10 IDs per get call, and 10 search results.
 - DSLD calls run at most 4 at a time, with a 6 s deadline each and an 8 s budget per request. Labels are cached for 7 days and searches for 24 hours; a stale copy is served if DSLD is down. Measured against live DSLD: a cold 15-product analyze takes 1.5 s and a warm one 17 ms.
 - Text that Pocket gateways treat as an error signal ("timeout", "block not found" and others) is `\u`-escaped in responses. It decodes to the same string.
-- Ages from 1 to 120. Infant, pregnancy and lactation values aren't included in v1.
+- Ages from birth to 120, plus pregnancy and lactation (14–50). Caffeine is checked against FDA guidance (400 mg a day for healthy adults, under 200 mg in pregnancy) and sodium against the 2019 Chronic Disease Risk Reduction Intake (2,300 mg), neither of which is a DRI UL; the response says so in `ul_note`.
 - The public demo endpoint allows 30 requests per minute per client and 600 per minute overall. Relays through Pocket Network aren't limited this way.
 
 ## Disclaimer and licenses

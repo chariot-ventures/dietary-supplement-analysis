@@ -39,6 +39,7 @@ describe('data/nutrients.json', () => {
       if (!n.dri) continue;
       for (const [type, table] of Object.entries(n.dri) as [string, SexTable | null][]) {
         if (!table) continue;
+        if (type === 'ul' && n.ul_scope === 'guidance_healthy_adults') continue; // adult-only guidance (caffeine)
         for (const sex of ['male', 'female'] as const) {
           for (const age of [1, 4, 9, 14, 19, 31, 51, 71, 100]) {
             const hit = table[sex].find((r) => (r.lower ?? -Infinity) <= age && age <= (r.upper ?? Infinity));
