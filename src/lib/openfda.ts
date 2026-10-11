@@ -50,7 +50,7 @@ export interface FdaReport {
 }
 
 const GENERIC_WORDS = new Set(
-  'a an and with the of for plus dietary supplement supplements formula tablet tablets capsule capsules softgel softgels gummy gummies caplet caplets vegetarian veggie count ct mg mcg iu g ml liquid chewable chewables extra strength value size pack bottle'.split(' '),
+  'a an and with the of for plus vitamin vitamins dietary supplement supplements formula tablet tablets capsule capsules softgel softgels gummy gummies caplet caplets vegetarian veggie count ct mg mcg iu g ml liquid chewable chewables extra strength value size pack bottle'.split(' '),
 );
 
 /** Lowercase words with letters and digits split ("1000IU" -> "1000 iu"). */

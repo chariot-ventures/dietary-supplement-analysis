@@ -49,7 +49,7 @@ describe('recall matching', () => {
 
   it('splits words and drops brand, units and dosage forms', () => {
     expect(words('D3 1000IU')).toEqual(['d', '3', '1000', 'iu']);
-    expect(distinctiveWords(key)).toEqual(['vitamin', 'd', '3', '1000']);
+    expect(distinctiveWords(key)).toEqual(['d', '3', '1000']);
   });
 
   it('matches on the barcode core digits however the recall formats them', () => {
@@ -59,7 +59,9 @@ describe('recall matching', () => {
   it('matches on brand plus every name word, and never on the brand alone', () => {
     expect(matchRecall('NATURE MADE VITAMIN D3 1000 IU softgels lot 123', { ...key, upc: null })).toBe('brand_and_name');
     expect(matchRecall('Nature Made Snack Pack W/ Cheese', { ...key, upc: null })).toBeNull();
-    expect(matchRecall('Nature Made(R) D3 1000IU, 125 count', { ...key, upc: null })).toBeNull(); // "vitamin" missing: not claimed
+    // "Vitamin" is a category word: recall notices often write just "D3 1000IU".
+    expect(matchRecall('Nature Made(R) D3 1000IU, 125 count', { ...key, upc: null })).toBe('brand_and_name');
+    expect(matchRecall('Nature Made(R) D3 2000IU, 125 count', { ...key, upc: null })).toBeNull();
   });
 });
 

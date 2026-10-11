@@ -17,6 +17,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . && tsc --noEmit",
     "test": "vitest run",
+    "eval": "tsx eval/run.ts",
+    "eval:llm": "tsx eval/llm-compare.ts",
     "check": "npm run build:nutrients -- --check && npm run build:openapi -- --check && npm run lint && npm test"
   },
   "dependencies": {

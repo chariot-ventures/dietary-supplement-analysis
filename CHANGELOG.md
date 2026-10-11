@@ -2,6 +2,7 @@
 
 ## 0.8.0 (2026-10-11)
 
+- **Accuracy page.** [EVAL.md](EVAL.md): 53 supplement questions with answers worked out by hand from NIH tables ([eval/cases.json](eval/cases.json)); `npm run eval` scores the service (53/53, also enforced in the test suite) and `npm run eval:llm` compares a model alone against the same model with this service.
 - **More suppliers.** CI ([.github/workflows/image.yml](.github/workflows/image.yml)) runs `npm run check` on every push and publishes a multi-arch image (amd64, arm64) to `ghcr.io/micallb/dietary-supplement-analysis` for every release. OPERATORS.md has a "run a supplier in 5 minutes" section, and [deploy/gateway-config.yaml](deploy/gateway-config.yaml) is the SAGE entry as a file.
 - **New: `POST /v1/products/fda`** (tool `products_fda_reports`): FDA recalls and CAERS adverse event reports for one supplement from openFDA, by name, barcode, DSLD ID, or brand and name. A recall is listed only when it carries the product's barcode or the brand and every distinctive name word; recalls that only mention the brand are counted. Adverse event reports are counted with their most common reactions, with FDA's caveat that a report does not show causation. Cached for a day; `OPENFDA_API_KEY` raises openFDA's daily limit; `OPENFDA=off` turns it off.
 

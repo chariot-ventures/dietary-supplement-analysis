@@ -205,6 +205,9 @@ Each nutrient total includes:
 
 ## How the numbers are produced
 
+Accuracy is checked against 53 hand-worked cases; see [EVAL.md](EVAL.md).
+
+
 - **DSLD label details** that current labels need:
   - DSLD often stores vitamin A as plain mcg or mg. It's read as mcg RAE only when the label's %DV matches the 900 mcg RAE Daily Value.
   - When DSLD leaves out a unit (for example "6 NP"), it's inferred only if the label's %DV matches the FDA Daily Value; otherwise it's a gap.

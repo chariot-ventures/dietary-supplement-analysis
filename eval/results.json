@@ -1,0 +1,325 @@
+{
+ "version": "0.8.0",
+ "passed": 53,
+ "total": 53,
+ "results": [
+  {
+   "id": "vitd-5000iu",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "vitd-4000iu",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "vitd-2000iu",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "zinc-50",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "zinc-40",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "zinc-36",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "zinc-35",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "magnesium-400",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "iron-65",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "iron-18",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "b6-100",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "b6-200",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "niacin-500",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "vitc-1000",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "vitc-2000",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "selenium-200",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "selenium-400",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "iodine-1500",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "calcium-1200-age30",
+   "category": "adult UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "calcium-2200-age62",
+   "category": "age-specific UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "child6-zinc15",
+   "category": "children",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "child6-vitd2000",
+   "category": "children",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "teen15-vita2000",
+   "category": "children",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "child10-iron45",
+   "category": "children",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "toddler2-zinc7",
+   "category": "children",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "age75-phosphorus3200",
+   "category": "age-specific UL",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "pregnant30-vita3000",
+   "category": "pregnancy",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "pregnant16-calcium2800",
+   "category": "pregnancy",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "pregnant25-iron60",
+   "category": "pregnancy",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "lactation30-zinc45",
+   "category": "pregnancy",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "two-vitd",
+   "category": "overlap",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "two-zinc",
+   "category": "overlap",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "two-magnesium",
+   "category": "overlap",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "two-b6",
+   "category": "overlap",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "servings-zinc",
+   "category": "servings",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "no-profile",
+   "category": "no profile",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "warfarin-vitk",
+   "category": "medications",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "levothyroxine-calcium",
+   "category": "medications",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "levothyroxine-iron",
+   "category": "medications",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "metformin-b12",
+   "category": "medications",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "cipro-zinc-magnesium",
+   "category": "medications",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "lisinopril-potassium",
+   "category": "medications",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "warfarin-vitc-none",
+   "category": "medications",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "smoker-betacarotene-25mg",
+   "category": "conditions",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "smoker-betacarotene-6mg",
+   "category": "conditions",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "labtest-biotin",
+   "category": "conditions",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "hemochromatosis-iron",
+   "category": "conditions",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "ashwagandha",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "ginkgo-warfarin",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "sjw-sertraline",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "creatine-10g",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "creatine-5g",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "egcg-900",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  }
+ ]
+}

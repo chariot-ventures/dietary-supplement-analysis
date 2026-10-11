@@ -1,0 +1,1610 @@
+{
+ "_doc": "Hand-checked evaluation cases. Each expectation was worked out from the NIH reference tables and fact sheets cited in 'why', independently of the service's output. Run: npm run eval.",
+ "reviewed": "2026-10-11",
+ "cases": [
+  {
+   "id": "vitd-5000iu",
+   "category": "adult UL",
+   "question": "I'm a 45-year-old woman taking vitamin D3 5000 IU daily. Is that too much?",
+   "request": {
+    "age": 45,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin D3",
+        "amount": 5000,
+        "unit": "IU"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "vitamin-d"
+    ],
+    "near": [],
+    "amounts": {
+     "vitamin-d": 125
+    }
+   },
+   "why": "5000 IU = 125 mcg; adult UL 100 mcg (4000 IU) -> 125%."
+  },
+  {
+   "id": "vitd-4000iu",
+   "category": "adult UL",
+   "question": "45-year-old woman, vitamin D3 4000 IU a day. Too much?",
+   "request": {
+    "age": 45,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin D3",
+        "amount": 4000,
+        "unit": "IU"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "vitamin-d"
+    ],
+    "amounts": {
+     "vitamin-d": 100
+    }
+   },
+   "why": "4000 IU = 100 mcg = exactly the UL -> near (90-100%)."
+  },
+  {
+   "id": "vitd-2000iu",
+   "category": "adult UL",
+   "question": "45-year-old woman, vitamin D3 2000 IU daily. Any problem?",
+   "request": {
+    "age": 45,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin D3",
+        "amount": 2000,
+        "unit": "IU"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": []
+   },
+   "why": "50 mcg = 50% of the 100 mcg UL."
+  },
+  {
+   "id": "zinc-50",
+   "category": "adult UL",
+   "question": "40-year-old man taking zinc 50 mg a day for colds. Is that OK?",
+   "request": {
+    "age": 40,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 50,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "zinc"
+    ],
+    "near": [],
+    "amounts": {
+     "zinc": 50
+    }
+   },
+   "why": "Adult zinc UL 40 mg -> 125%."
+  },
+  {
+   "id": "zinc-40",
+   "category": "adult UL",
+   "question": "40-year-old man, zinc 40 mg daily.",
+   "request": {
+    "age": 40,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 40,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "zinc"
+    ]
+   },
+   "why": "40 mg = 100% of the UL -> near."
+  },
+  {
+   "id": "zinc-36",
+   "category": "adult UL",
+   "question": "40-year-old man, zinc 36 mg daily.",
+   "request": {
+    "age": 40,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 36,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "zinc"
+    ]
+   },
+   "why": "36/40 = 90% -> near."
+  },
+  {
+   "id": "zinc-35",
+   "category": "adult UL",
+   "question": "40-year-old man, zinc 35 mg daily.",
+   "request": {
+    "age": 40,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 35,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": []
+   },
+   "why": "35/40 = 87.5%, under the 90% near threshold."
+  },
+  {
+   "id": "magnesium-400",
+   "category": "adult UL",
+   "question": "50-year-old woman taking 400 mg magnesium supplement for sleep. Too much?",
+   "request": {
+    "age": 50,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "magnesium",
+        "amount": 400,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "magnesium"
+    ],
+    "near": []
+   },
+   "why": "Supplemental magnesium UL 350 mg -> 114%."
+  },
+  {
+   "id": "iron-65",
+   "category": "adult UL",
+   "question": "30-year-old woman taking 65 mg iron daily.",
+   "request": {
+    "age": 30,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "iron",
+        "amount": 65,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "iron"
+    ],
+    "near": []
+   },
+   "why": "Iron UL 45 mg -> 144%."
+  },
+  {
+   "id": "iron-18",
+   "category": "adult UL",
+   "question": "30-year-old woman taking 18 mg iron daily.",
+   "request": {
+    "age": 30,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "iron",
+        "amount": 18,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": []
+   },
+   "why": "18/45 = 40%."
+  },
+  {
+   "id": "b6-100",
+   "category": "adult UL",
+   "question": "50-year-old man taking vitamin B6 100 mg daily.",
+   "request": {
+    "age": 50,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin B6",
+        "amount": 100,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "vitamin-b6"
+    ]
+   },
+   "why": "B6 UL 100 mg -> 100%, near."
+  },
+  {
+   "id": "b6-200",
+   "category": "adult UL",
+   "question": "50-year-old man taking vitamin B6 200 mg daily.",
+   "request": {
+    "age": 50,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin B6",
+        "amount": 200,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "vitamin-b6"
+    ],
+    "near": [],
+    "severity": {
+     "vitamin-b6": "high"
+    }
+   },
+   "why": "200% of the UL -> above, severity high (2x)."
+  },
+  {
+   "id": "niacin-500",
+   "category": "adult UL",
+   "question": "40-year-old man taking 500 mg niacin (nicotinic acid) for cholesterol on his own.",
+   "request": {
+    "age": 40,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "niacin",
+        "amount": 500,
+        "unit": "mg",
+        "form": "nicotinic acid"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "niacin"
+    ],
+    "near": []
+   },
+   "why": "Supplemental niacin UL 35 mg -> 1429%."
+  },
+  {
+   "id": "vitc-1000",
+   "category": "adult UL",
+   "question": "35-year-old woman taking 1000 mg vitamin C.",
+   "request": {
+    "age": 35,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin C",
+        "amount": 1000,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": []
+   },
+   "why": "Vitamin C UL 2000 mg -> 50%."
+  },
+  {
+   "id": "vitc-2000",
+   "category": "adult UL",
+   "question": "35-year-old woman taking 2000 mg vitamin C.",
+   "request": {
+    "age": 35,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin C",
+        "amount": 2000,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "vitamin-c"
+    ]
+   },
+   "why": "100% of the UL -> near."
+  },
+  {
+   "id": "selenium-200",
+   "category": "adult UL",
+   "question": "40-year-old woman taking selenium 200 mcg.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "selenium",
+        "amount": 200,
+        "unit": "mcg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": []
+   },
+   "why": "Selenium UL 400 mcg -> 50%."
+  },
+  {
+   "id": "selenium-400",
+   "category": "adult UL",
+   "question": "40-year-old woman taking selenium 400 mcg.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "selenium",
+        "amount": 400,
+        "unit": "mcg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "selenium"
+    ]
+   },
+   "why": "100% of the UL."
+  },
+  {
+   "id": "iodine-1500",
+   "category": "adult UL",
+   "question": "35-year-old man taking kelp iodine 1500 mcg daily.",
+   "request": {
+    "age": 35,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "iodine",
+        "amount": 1500,
+        "unit": "mcg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "iodine"
+    ],
+    "near": []
+   },
+   "why": "Iodine UL 1100 mcg -> 136%."
+  },
+  {
+   "id": "calcium-1200-age30",
+   "category": "adult UL",
+   "question": "30-year-old woman, calcium 1200 mg supplement.",
+   "request": {
+    "age": 30,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "calcium",
+        "amount": 1200,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": []
+   },
+   "why": "UL 2500 mg at 19-50 -> 48%."
+  },
+  {
+   "id": "calcium-2200-age62",
+   "category": "age-specific UL",
+   "question": "62-year-old woman taking 2200 mg calcium supplements.",
+   "request": {
+    "age": 62,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "calcium",
+        "amount": 2200,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "calcium"
+    ],
+    "near": []
+   },
+   "why": "UL drops to 2000 mg at 51+ -> 110%."
+  },
+  {
+   "id": "child6-zinc15",
+   "category": "children",
+   "question": "My 6-year-old son takes a 15 mg zinc gummy. Is that too much?",
+   "request": {
+    "age": 6,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 15,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "zinc"
+    ],
+    "near": []
+   },
+   "why": "Zinc UL ages 4-8 is 12 mg -> 125%."
+  },
+  {
+   "id": "child6-vitd2000",
+   "category": "children",
+   "question": "My 6-year-old takes vitamin D 2000 IU.",
+   "request": {
+    "age": 6,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin D3",
+        "amount": 2000,
+        "unit": "IU"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": []
+   },
+   "why": "50 mcg vs UL 75 mcg at 4-8 -> 67%."
+  },
+  {
+   "id": "teen15-vita2000",
+   "category": "children",
+   "question": "15-year-old girl taking vitamin A (retinyl palmitate) 2000 mcg RAE.",
+   "request": {
+    "age": 15,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin A",
+        "amount": 2000,
+        "unit": "mcg RAE",
+        "form": "retinyl palmitate"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": []
+   },
+   "why": "Preformed vitamin A UL at 14-18 is 2800 mcg -> 71%."
+  },
+  {
+   "id": "child10-iron45",
+   "category": "children",
+   "question": "10-year-old boy given 45 mg iron daily.",
+   "request": {
+    "age": 10,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "iron",
+        "amount": 45,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "iron"
+    ],
+    "near": []
+   },
+   "why": "Iron UL under 14 is 40 mg -> 112.5%."
+  },
+  {
+   "id": "toddler2-zinc7",
+   "category": "children",
+   "question": "2-year-old girl, zinc 7 mg daily.",
+   "request": {
+    "age": 2,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 7,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "zinc"
+    ]
+   },
+   "why": "Zinc UL ages 1-3 is 7 mg -> 100%."
+  },
+  {
+   "id": "age75-phosphorus3200",
+   "category": "age-specific UL",
+   "question": "75-year-old man taking phosphorus 3200 mg a day.",
+   "request": {
+    "age": 75,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "phosphorus",
+        "amount": 3200,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "phosphorus"
+    ],
+    "near": []
+   },
+   "why": "Phosphorus UL is 3000 mg above age 70 -> 107%."
+  },
+  {
+   "id": "pregnant30-vita3000",
+   "category": "pregnancy",
+   "question": "I'm pregnant (30) and my prenatal has 3000 mcg RAE vitamin A as retinyl palmitate.",
+   "request": {
+    "age": 30,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin A",
+        "amount": 3000,
+        "unit": "mcg RAE",
+        "form": "retinyl palmitate"
+       }
+      ]
+     }
+    ],
+    "life_stage": "pregnancy"
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "vitamin-a"
+    ]
+   },
+   "why": "Pregnancy 19-50 preformed vitamin A UL 3000 mcg -> 100%."
+  },
+  {
+   "id": "pregnant16-calcium2800",
+   "category": "pregnancy",
+   "question": "Pregnant 16-year-old taking 2800 mg calcium.",
+   "request": {
+    "age": 16,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "calcium",
+        "amount": 2800,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "life_stage": "pregnancy"
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "calcium"
+    ]
+   },
+   "why": "Pregnancy 14-18 calcium UL 3000 mg -> 93%."
+  },
+  {
+   "id": "pregnant25-iron60",
+   "category": "pregnancy",
+   "question": "Pregnant at 25, taking 60 mg iron.",
+   "request": {
+    "age": 25,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "iron",
+        "amount": 60,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "life_stage": "pregnancy"
+   },
+   "expect": {
+    "above": [
+     "iron"
+    ],
+    "near": []
+   },
+   "why": "Iron UL 45 mg in pregnancy -> 133%."
+  },
+  {
+   "id": "lactation30-zinc45",
+   "category": "pregnancy",
+   "question": "Breastfeeding mom, 30, zinc 45 mg.",
+   "request": {
+    "age": 30,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 45,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "life_stage": "lactation"
+   },
+   "expect": {
+    "above": [
+     "zinc"
+    ],
+    "near": []
+   },
+   "why": "Lactation 19-50 zinc UL 40 mg -> 112.5%."
+  },
+  {
+   "id": "two-vitd",
+   "category": "overlap",
+   "question": "38-year-old man: a multivitamin with 2000 IU D and a separate D3 3000 IU.",
+   "request": {
+    "age": 38,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Multi",
+      "ingredients": [
+       {
+        "name": "vitamin D3",
+        "amount": 2000,
+        "unit": "IU"
+       }
+      ]
+     },
+     {
+      "name": "D3",
+      "ingredients": [
+       {
+        "name": "vitamin D3",
+        "amount": 3000,
+        "unit": "IU"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "vitamin-d"
+    ],
+    "near": [],
+    "amounts": {
+     "vitamin-d": 125
+    }
+   },
+   "why": "50 + 75 = 125 mcg vs 100 -> 125%."
+  },
+  {
+   "id": "two-zinc",
+   "category": "overlap",
+   "question": "40-year-old woman: multivitamin with 25 mg zinc plus an immune product with 20 mg zinc.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Multi",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 25,
+        "unit": "mg"
+       }
+      ]
+     },
+     {
+      "name": "Immune",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 20,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "zinc"
+    ],
+    "near": []
+   },
+   "why": "45 mg vs 40 -> 112.5%."
+  },
+  {
+   "id": "two-magnesium",
+   "category": "overlap",
+   "question": "55-year-old man: magnesium glycinate 200 mg plus a sleep powder with 200 mg magnesium.",
+   "request": {
+    "age": 55,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Mag",
+      "ingredients": [
+       {
+        "name": "magnesium",
+        "amount": 200,
+        "unit": "mg"
+       }
+      ]
+     },
+     {
+      "name": "Sleep",
+      "ingredients": [
+       {
+        "name": "magnesium",
+        "amount": 200,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "magnesium"
+    ],
+    "near": []
+   },
+   "why": "400 vs 350 -> 114%."
+  },
+  {
+   "id": "two-b6",
+   "category": "overlap",
+   "question": "45-year-old woman: B-complex with 50 mg B6 plus a PMS product with 50 mg B6.",
+   "request": {
+    "age": 45,
+    "sex": "female",
+    "products": [
+     {
+      "name": "B complex",
+      "ingredients": [
+       {
+        "name": "vitamin B6",
+        "amount": 50,
+        "unit": "mg"
+       }
+      ]
+     },
+     {
+      "name": "PMS",
+      "ingredients": [
+       {
+        "name": "vitamin B6",
+        "amount": 50,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [
+     "vitamin-b6"
+    ]
+   },
+   "why": "100 vs 100 -> near."
+  },
+  {
+   "id": "servings-zinc",
+   "category": "servings",
+   "question": "40-year-old man takes 2 capsules a day of a 25 mg zinc product.",
+   "request": {
+    "age": 40,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 25,
+        "unit": "mg"
+       }
+      ],
+      "servings_per_day": 2
+     }
+    ]
+   },
+   "expect": {
+    "above": [
+     "zinc"
+    ],
+    "near": [],
+    "amounts": {
+     "zinc": 50
+    }
+   },
+   "why": "25 x 2 = 50 mg -> 125%."
+  },
+  {
+   "id": "no-profile",
+   "category": "no profile",
+   "question": "I take zinc 50 mg. (no age or sex given)",
+   "request": {
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 50,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "gaps": [
+     "PROFILE_MISSING"
+    ]
+   },
+   "why": "Without age and sex no UL comparison is possible; the gap is reported instead of guessing."
+  },
+  {
+   "id": "warfarin-vitk",
+   "category": "medications",
+   "question": "70-year-old man on warfarin; his multivitamin has 100 mcg vitamin K.",
+   "request": {
+    "age": 70,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin K",
+        "amount": 100,
+        "unit": "mcg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "warfarin"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [
+     "warfarin|vitamin-k"
+    ]
+   },
+   "why": "ODS vitamin K fact sheet: vitamin K counteracts warfarin."
+  },
+  {
+   "id": "levothyroxine-calcium",
+   "category": "medications",
+   "question": "55-year-old woman on Synthroid taking calcium 600 mg.",
+   "request": {
+    "age": 55,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "calcium",
+        "amount": 600,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "Synthroid"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [
+     "Synthroid|calcium"
+    ]
+   },
+   "why": "ODS calcium fact sheet: separate levothyroxine and calcium by 4 hours."
+  },
+  {
+   "id": "levothyroxine-iron",
+   "category": "medications",
+   "question": "45-year-old woman on levothyroxine taking iron 18 mg.",
+   "request": {
+    "age": 45,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "iron",
+        "amount": 18,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "levothyroxine"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [
+     "levothyroxine|iron"
+    ]
+   },
+   "why": "ODS iron fact sheet: iron reduces levothyroxine absorption."
+  },
+  {
+   "id": "metformin-b12",
+   "category": "medications",
+   "question": "60-year-old man on metformin taking B12 500 mcg.",
+   "request": {
+    "age": 60,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin B12",
+        "amount": 500,
+        "unit": "mcg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "metformin"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [
+     "metformin|vitamin-b12"
+    ]
+   },
+   "why": "ODS B12 fact sheet: metformin lowers B12 absorption."
+  },
+  {
+   "id": "cipro-zinc-magnesium",
+   "category": "medications",
+   "question": "40-year-old woman prescribed ciprofloxacin; she takes zinc 15 mg and magnesium 100 mg.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "zinc",
+        "amount": 15,
+        "unit": "mg"
+       },
+       {
+        "name": "magnesium",
+        "amount": 100,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "ciprofloxacin"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [
+     "ciprofloxacin|zinc",
+     "ciprofloxacin|magnesium"
+    ]
+   },
+   "why": "ODS zinc and magnesium fact sheets: both reduce quinolone absorption."
+  },
+  {
+   "id": "lisinopril-potassium",
+   "category": "medications",
+   "question": "65-year-old man on lisinopril taking potassium 99 mg.",
+   "request": {
+    "age": 65,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "potassium",
+        "amount": 99,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "lisinopril"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [
+     "lisinopril|potassium"
+    ]
+   },
+   "why": "ODS potassium fact sheet: ACE inhibitors raise potassium."
+  },
+  {
+   "id": "warfarin-vitc-none",
+   "category": "medications",
+   "question": "40-year-old woman on warfarin taking vitamin C 250 mg.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "vitamin C",
+        "amount": 250,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "warfarin"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [],
+    "no_in_stack": true
+   },
+   "why": "No NIH-listed interaction between warfarin and vitamin C; the service must not invent one."
+  },
+  {
+   "id": "smoker-betacarotene-25mg",
+   "category": "conditions",
+   "question": "60-year-old male smoker taking beta-carotene 25 mg.",
+   "request": {
+    "age": 60,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "beta-carotene",
+        "amount": 25000,
+        "unit": "mcg"
+       }
+      ]
+     }
+    ],
+    "conditions": [
+     "smoker"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [
+     "smoker|beta-carotene"
+    ]
+   },
+   "why": "ODS vitamin A fact sheet: 20+ mg/day raised lung cancer risk in smokers (ATBC, CARET)."
+  },
+  {
+   "id": "smoker-betacarotene-6mg",
+   "category": "conditions",
+   "question": "60-year-old male smoker taking beta-carotene 6 mg.",
+   "request": {
+    "age": 60,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "beta-carotene",
+        "amount": 6000,
+        "unit": "mcg"
+       }
+      ]
+     }
+    ],
+    "conditions": [
+     "smoker"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [],
+    "no_in_stack": true
+   },
+   "why": "Below the trial doses; no finding."
+  },
+  {
+   "id": "labtest-biotin",
+   "category": "conditions",
+   "question": "35-year-old woman with a thyroid blood test next week, taking biotin 5000 mcg for hair.",
+   "request": {
+    "age": 35,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "biotin",
+        "amount": 5000,
+        "unit": "mcg"
+       }
+      ]
+     }
+    ],
+    "conditions": [
+     "lab_test_soon"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [
+     "lab_test_soon|biotin"
+    ]
+   },
+   "why": "ODS biotin fact sheet: high-dose biotin interferes with lab tests."
+  },
+  {
+   "id": "hemochromatosis-iron",
+   "category": "conditions",
+   "question": "50-year-old man with hemochromatosis; his multivitamin has 8 mg iron.",
+   "request": {
+    "age": 50,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "iron",
+        "amount": 8,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "conditions": [
+     "hemochromatosis"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "interactions": [
+     "hemochromatosis|iron"
+    ]
+   },
+   "why": "ODS iron fact sheet: people with hemochromatosis should avoid iron supplements."
+  },
+  {
+   "id": "ashwagandha",
+   "category": "botanicals",
+   "question": "40-year-old woman taking ashwagandha root extract 600 mg for stress.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "Ashwagandha root extract",
+        "amount": 600,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": [
+     "ashwagandha"
+    ]
+   },
+   "why": "NCCIH: rare liver injury cases linked to ashwagandha."
+  },
+  {
+   "id": "ginkgo-warfarin",
+   "category": "botanicals",
+   "question": "70-year-old man on warfarin taking ginkgo biloba 120 mg.",
+   "request": {
+    "age": 70,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "Ginkgo biloba leaf extract",
+        "amount": 120,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "warfarin"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": [
+     "ginkgo"
+    ],
+    "interactions": [
+     "warfarin|ginkgo"
+    ]
+   },
+   "why": "NCCIH: ginkgo may increase bleeding risk with anticoagulants."
+  },
+  {
+   "id": "sjw-sertraline",
+   "category": "botanicals",
+   "question": "35-year-old woman on sertraline wants to add St. John's wort 900 mg.",
+   "request": {
+    "age": 35,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "St. John's wort extract",
+        "amount": 900,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "sertraline"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": [
+     "st-johns-wort"
+    ],
+    "interactions": [
+     "sertraline|st-johns-wort"
+    ]
+   },
+   "why": "NCCIH: serious serotonin-related effects with antidepressants."
+  },
+  {
+   "id": "creatine-10g",
+   "category": "botanicals",
+   "question": "25-year-old man taking creatine 10 g a day long-term.",
+   "request": {
+    "age": 25,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "creatine monohydrate",
+        "amount": 10,
+        "unit": "g"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": [
+     "creatine"
+    ],
+    "dose": [
+     "creatine"
+    ]
+   },
+   "why": "ODS: 3-5 g/day maintenance; 20 g only for 5-7 day loading."
+  },
+  {
+   "id": "creatine-5g",
+   "category": "botanicals",
+   "question": "25-year-old man taking creatine 5 g a day.",
+   "request": {
+    "age": 25,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "creatine monohydrate",
+        "amount": 5,
+        "unit": "g"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": []
+   },
+   "why": "Within the usual maintenance dose: nothing to report."
+  },
+  {
+   "id": "egcg-900",
+   "category": "botanicals",
+   "question": "50-year-old woman taking a green tea extract with 450 mg EGCG twice a day.",
+   "request": {
+    "age": 50,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "EGCG",
+        "amount": 450,
+        "unit": "mg"
+       }
+      ],
+      "servings_per_day": 2
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": [
+     "green-tea-extract"
+    ],
+    "dose": [
+     "green-tea-extract"
+    ]
+   },
+   "why": "900 mg EGCG/day; ODS: 843 mg/day raised liver enzymes in the Minnesota Green Tea Trial."
+  }
+ ]
+}

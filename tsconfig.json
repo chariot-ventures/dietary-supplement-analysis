@@ -15,5 +15,5 @@
     "outDir": "dist",
     "sourceMap": true
   },
-  "include": ["src", "scripts", "test", "data/nutrients.json", "vitest.config.ts", "eslint.config.js"]
+  "include": ["src", "scripts", "test", "eval", "data/nutrients.json", "vitest.config.ts", "eslint.config.js"]
 }
