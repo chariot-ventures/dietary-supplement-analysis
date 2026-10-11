@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.3 (2026-10-11)
+
+- Fix: a version find-and-replace in 0.12.1 turned the eslint range into `^10.12.1`, which doesn't exist, and `npm ci` looped instead of failing. That stalled CI and the server's 0.12.1 and 0.12.2 builds; the service stayed on 0.12.0 throughout.
+  - Restored the correct range.
+  - A test now checks that package.json and the lockfile agree.
+  - CI jobs time out after 15 minutes.
+  - `npm run bump` edits only the version fields.
+
 ## 0.12.2 (2026-10-11)
 
 - **Live check** every 30 minutes from GitHub: 16 end-to-end checks of the public service (`npm run live-check`). Once a day it also runs the Pocket portal audit and compares the on-chain card with `card/card.json`. Failures open an issue that closes itself on recovery.
