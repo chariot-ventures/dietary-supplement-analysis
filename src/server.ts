@@ -13,7 +13,11 @@ const dsld = new DsldClient({
   ...(fixturesDir ? { fetchImpl: createFixtureFetch(loadFixtureLabels(fixturesDir)) } : {}),
 });
 
-const app = buildApp({ dsld, logger: { level: process.env.LOG_LEVEL ?? 'info' } });
+const app = buildApp({
+  dsld,
+  logger: { level: process.env.LOG_LEVEL ?? 'info' },
+  ...(process.env.UPSTREAM_BUDGET_MS ? { upstreamBudgetMs: Number(process.env.UPSTREAM_BUDGET_MS) } : {}),
+});
 
 async function main(): Promise<void> {
   await app.listen({ port, host });

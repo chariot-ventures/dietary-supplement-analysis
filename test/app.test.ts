@@ -9,7 +9,7 @@ import { DsldClient } from '../src/lib/dsld.js';
 import { buildOpenApi } from '../src/openapi.js';
 import { ROOT, fixtureClient, testApp } from './helpers.js';
 
-const GATEWAY_PHRASES = ['timeout', 'bad gateway', 'service unavailable', 'gateway timeout', 'connection refused', 'connection reset'];
+import { GATEWAY_PHRASES } from '../src/lib/phrases.js';
 const FORBIDDEN_WORDING = [/\bsafe\b/i, /\bno risk\b/i, /\bno interactions\b/i];
 
 const app = testApp();
@@ -225,6 +225,34 @@ describe('request parsing', () => {
     });
     await server.close();
     expect(JSON.parse(body).summary.products_matched).toBe(4);
+  });
+});
+
+describe('gateway phrase escaping', () => {
+  it('escapes phrases from caller and upstream text but returns identical strings', async () => {
+    const res = await post('/v1/products/search', { query: 'Gateway Timeout block not found' });
+    expect(res.statusCode).toBe(200);
+    const lower = res.body.toLowerCase();
+    for (const phrase of GATEWAY_PHRASES) expect(lower).not.toContain(phrase);
+    expect(res.json().query.query).toBe('Gateway Timeout block not found');
+  });
+});
+
+describe('upstream budget', () => {
+  it('stops waiting on DSLD after the request budget and answers 424', async () => {
+    const slow = buildApp({
+      upstreamBudgetMs: 300,
+      dsld: new DsldClient({
+        concurrency: 1,
+        fetchImpl: (_url, init) => new Promise((_r, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal!.reason))),
+      }),
+    });
+    const started = Date.now();
+    const res = await slow.inject({ method: 'POST', url: '/v1/stack/analyze', payload: { products: [1, 2, 3, 4, 5, 6].map((id) => ({ dsld_id: id })) } });
+    expect(Date.now() - started).toBeLessThan(2000);
+    expect(res.statusCode).toBe(424);
+    expect(res.json().error).toMatchObject({ code: 'UPSTREAM_UNAVAILABLE', retryable: true });
+    await slow.close();
   });
 });
 

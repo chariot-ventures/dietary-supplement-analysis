@@ -343,7 +343,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
       "unii_codes": [
         "PQ6CK8PD0R"
-      ]
+      ],
+      "label_dv": {
+        "amount": 90,
+        "unit": "mg"
+      }
     },
     {
       "id": "vitamin-d",
@@ -440,7 +444,11 @@
       "unii_codes": [
         "1C6V77QF41",
         "9VU1KI44GP"
-      ]
+      ],
+      "label_dv": {
+        "amount": 20,
+        "unit": "mcg"
+      }
     },
     {
       "id": "vitamin-e",
@@ -615,7 +623,11 @@
       "unii_codes": [
         "A7E6112E4N",
         "H4N855PNZ1"
-      ]
+      ],
+      "label_dv": {
+        "amount": 15,
+        "unit": "mg"
+      }
     },
     {
       "id": "other-tocopherols",
@@ -759,7 +771,11 @@
         "71ANL51TLA",
         "8427BML8NY",
         "A034SE7857"
-      ]
+      ],
+      "label_dv": {
+        "amount": 120,
+        "unit": "mcg"
+      }
     },
     {
       "id": "thiamin",
@@ -845,7 +861,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
       "unii_codes": [
         "X66NSO3N35"
-      ]
+      ],
+      "label_dv": {
+        "amount": 1.2,
+        "unit": "mg"
+      }
     },
     {
       "id": "riboflavin",
@@ -925,7 +945,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
       "unii_codes": [
         "TLM2976OFR"
-      ]
+      ],
+      "label_dv": {
+        "amount": 1.3,
+        "unit": "mg"
+      }
     },
     {
       "id": "niacin",
@@ -1040,7 +1064,11 @@
       "unii_codes": [
         "25X51I8RD4",
         "2679MF687A"
-      ]
+      ],
+      "label_dv": {
+        "amount": 16,
+        "unit": "mg"
+      }
     },
     {
       "id": "vitamin-b6",
@@ -1144,7 +1172,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
       "unii_codes": [
         "KV2JZ1BI6Z"
-      ]
+      ],
+      "label_dv": {
+        "amount": 1.7,
+        "unit": "mg"
+      }
     },
     {
       "id": "folate",
@@ -1377,7 +1409,11 @@
       "unii_codes": [
         "8406EY2OQA",
         "BR1SN1JS2W"
-      ]
+      ],
+      "label_dv": {
+        "amount": 2.4,
+        "unit": "mcg"
+      }
     },
     {
       "id": "biotin",
@@ -1420,7 +1456,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/",
       "unii_codes": [
         "6SO6U10H04"
-      ]
+      ],
+      "label_dv": {
+        "amount": 30,
+        "unit": "mcg"
+      }
     },
     {
       "id": "pantothenic-acid",
@@ -1469,7 +1509,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/PantothenicAcid-HealthProfessional/",
       "unii_codes": [
         "19F5HK2737"
-      ]
+      ],
+      "label_dv": {
+        "amount": 5,
+        "unit": "mg"
+      }
     },
     {
       "id": "choline",
@@ -1531,7 +1575,11 @@
       "unii_codes": [
         "6K2W7T9V6Y",
         "N91BDP6H0X"
-      ]
+      ],
+      "label_dv": {
+        "amount": 550,
+        "unit": "mg"
+      }
     },
     {
       "id": "calcium",
@@ -1644,7 +1692,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
       "unii_codes": [
         "SY7Q814VUP"
-      ]
+      ],
+      "label_dv": {
+        "amount": 1300,
+        "unit": "mg"
+      }
     },
     {
       "id": "chromium",
@@ -1709,7 +1761,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Chromium-HealthProfessional/",
       "unii_codes": [
         "0R0008Q3JB"
-      ]
+      ],
+      "label_dv": {
+        "amount": 35,
+        "unit": "mcg"
+      }
     },
     {
       "id": "copper",
@@ -1794,7 +1850,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/",
       "unii_codes": [
         "789U1901C5"
-      ]
+      ],
+      "label_dv": {
+        "amount": 0.9,
+        "unit": "mg"
+      }
     },
     {
       "id": "iodine",
@@ -1872,7 +1932,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/",
       "unii_codes": [
         "9679TC07X4"
-      ]
+      ],
+      "label_dv": {
+        "amount": 150,
+        "unit": "mcg"
+      }
     },
     {
       "id": "iron",
@@ -1985,7 +2049,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
       "unii_codes": [
         "E1UOL152H7"
-      ]
+      ],
+      "label_dv": {
+        "amount": 18,
+        "unit": "mg"
+      }
     },
     {
       "id": "magnesium",
@@ -2118,7 +2186,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
       "unii_codes": [
         "I38ZP9992A"
-      ]
+      ],
+      "label_dv": {
+        "amount": 420,
+        "unit": "mg"
+      }
     },
     {
       "id": "manganese",
@@ -2194,7 +2266,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Manganese-HealthProfessional/",
       "unii_codes": [
         "42Z2K6ZL8P"
-      ]
+      ],
+      "label_dv": {
+        "amount": 2.3,
+        "unit": "mg"
+      }
     },
     {
       "id": "molybdenum",
@@ -2263,7 +2339,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Molybdenum-HealthProfessional/",
       "unii_codes": [
         "81AH48963U"
-      ]
+      ],
+      "label_dv": {
+        "amount": 45,
+        "unit": "mcg"
+      }
     },
     {
       "id": "phosphorus",
@@ -2337,7 +2417,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/",
       "unii_codes": [
         "27YLU75U4W"
-      ]
+      ],
+      "label_dv": {
+        "amount": 1250,
+        "unit": "mg"
+      }
     },
     {
       "id": "potassium",
@@ -2402,7 +2486,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/",
       "unii_codes": [
         "RWP5GA015D"
-      ]
+      ],
+      "label_dv": {
+        "amount": 4700,
+        "unit": "mg"
+      }
     },
     {
       "id": "selenium",
@@ -2483,7 +2571,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
       "unii_codes": [
         "H6241UJ22B"
-      ]
+      ],
+      "label_dv": {
+        "amount": 55,
+        "unit": "mcg"
+      }
     },
     {
       "id": "zinc",
@@ -2592,7 +2684,11 @@
       "factsheet_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
       "unii_codes": [
         "J41CSQ7QDS"
-      ]
+      ],
+      "label_dv": {
+        "amount": 11,
+        "unit": "mg"
+      }
     },
     {
       "id": "boron",
@@ -2778,5 +2874,6 @@
       "factsheet_url": "https://www.nccih.nih.gov/health/coenzyme-q10",
       "unii_codes": []
     }
-  ]
+  ],
+  "label_dv_source": "FDA Daily Values for adults and children 4 years and older, 21 CFR 101.9(c)(8)(iv) and 101.36 (2016 Nutrition and Supplement Facts rule). Used only to read a label amount whose unit DSLD omits or gives without its basis, and only when the label %DV matches."
 }

@@ -1,0 +1,53 @@
+{
+  "schema": "pocket-service-card/v1",
+  "description": "Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and daily upper limits (UL). POST JSON, get a JSON object. /v1/products/search {query|brand|ingredient, limit<=10} -> product summaries. /v1/products/get {dsld_id|dsld_ids<=10} -> normalized labels (label amount kept next to converted amount). /v1/nutrients/reference {nutrient, age, sex} -> rda, ear, ai, ul (offline). /v1/stack/analyze {age?, sex?, products:[{dsld_id}|{name, ingredients:[{name, amount, unit}]}] <=15} -> per-nutrient daily totals, percent of RDA/UL, above_ul/below_reference flags, overlaps, data gaps and assumptions, each number traced to its label and NIH fact sheet. Results vary as DSLD updates. Label and reference data only; not medical advice; drug and supplement interactions are not assessed (see Pocket services med-safety and fda for medications).",
+  "rpc_types": [
+    {
+      "type": "REST",
+      "intent": "expected",
+      "backend_hint": "dietary-supplement-analysis container on :8080, mounted at /",
+      "notes": "POST /v1/products/search, /v1/products/get, /v1/nutrients/reference, /v1/stack/analyze, /v1/tool; GET /v1/health, /v1/version, /openapi.json. All responses are JSON objects; errors are 4xx JSON with a stable error.code."
+    }
+  ],
+  "apis": ["dietary-supplement-analysis-api"],
+  "specs": [
+    {
+      "kind": "openapi",
+      "api": "dietary-supplement-analysis-api",
+      "url": "https://raw.githubusercontent.com/micallb/dietary-supplement-analysis/v0.1.0/openapi/openapi.json",
+      "notes": "Pinned to tag v0.1.0. Also served by every backend at GET /openapi.json."
+    }
+  ],
+  "access": "public",
+  "results": "variable",
+  "serving": {
+    "backend": "The dietary-supplement-analysis container (Node 22) behind the HA RelayMiner with the rest backend pointed at http://<backend>:8080. No auth toward the backend; callers cannot send headers. Needs outbound HTTPS to api.ods.od.nih.gov.",
+    "implementations": ["dietary-supplement-analysis >= 0.1.0"],
+    "docs": "https://github.com/micallb/dietary-supplement-analysis/blob/main/OPERATORS.md",
+    "min_disk_gb": 2,
+    "min_ram_gb": 1,
+    "healthcheck": [
+      {
+        "rpc_type": "REST",
+        "request": { "path": "/v1/version", "method": "GET" },
+        "expect": { "json_path": "$.service", "matches": "^dietary-supplement-analysis$" },
+        "notes": "Identity probe."
+      },
+      {
+        "rpc_type": "REST",
+        "request": { "path": "/v1/health", "method": "GET" },
+        "expect": { "json_path": "$.status", "matches": "^ok$" },
+        "notes": "Readiness probe."
+      },
+      {
+        "rpc_type": "REST",
+        "request": { "path": "/v1/nutrients/reference", "method": "POST", "body": { "nutrient": "vitamin-d", "age": 30, "sex": "female" } },
+        "expect": { "json_path": "$.nutrient.id", "matches": "^vitamin-d$" },
+        "notes": "Functional probe; offline and deterministic."
+      }
+    ],
+    "notes": "Optional DSLD_API_KEY. Max 15 products per analyze call. DSLD calls are cached (labels 7 d) and capped at 8 s per request; typical response under 3 s warm. Gateway operators: type passthrough, rpc_types [\"rest\"], relay_timeout 30s."
+  },
+  "docs": "https://github.com/micallb/dietary-supplement-analysis#readme",
+  "updated": "2026-10-11"
+}

@@ -1,5 +1,6 @@
 import Fastify, { LogController, type FastifyInstance, type FastifyServerOptions } from 'fastify';
 import { AppError } from './lib/errors.js';
+import { escapeGatewayPhrases } from './lib/phrases.js';
 import { registerMetaRoutes } from './routes/meta.js';
 import { registerNutrientRoutes } from './routes/nutrients.js';
 import { registerProductRoutes } from './routes/products.js';
@@ -24,6 +25,9 @@ export function buildApp(opts: AppOptions): FastifyInstance {
     return503OnClosing: false,
     routerOptions: { ignoreTrailingSlash: true },
   });
+
+  // Upstream and caller text (product names, echoed queries) can contain phrases the gateway treats as failures.
+  app.setReplySerializer((payload) => escapeGatewayPhrases(JSON.stringify(payload)));
 
   // Parse every body as JSON regardless of Content-Type (gateways may drop or rewrite it).
   app.removeAllContentTypeParsers();

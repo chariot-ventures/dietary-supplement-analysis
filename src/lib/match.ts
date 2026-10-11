@@ -15,7 +15,7 @@ export interface IngredientInput {
   ingredientGroup?: string | null;
   uniiCode?: string | null;
   alternateNames?: string[];
-  forms?: { name: string; uniiCode?: string | null; ingredientGroup?: string | null }[];
+  forms?: { name: string; uniiCode?: string | null; ingredientGroup?: string | null; percent?: number | null }[];
 }
 
 export type MatchedBy = 'ingredient_group' | 'unii' | 'name' | 'form';

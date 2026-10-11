@@ -6,7 +6,26 @@ A Pocket Network service (`dietary-supplement-analysis`) for AI agents. Give it 
 - **Reference values:** Food and Nutrition Board DRIs, as published on the [NIH Office of Dietary Supplements fact sheets](https://ods.od.nih.gov/factsheets/list-all/)
 - **What it is not:** medical advice, an efficacy database or an interaction checker. It reports what labels declare and how the totals compare with published reference values. For medications, see the Pocket services `med-safety` and `fda`.
 
-> **Status:** Phases 1–3 of [PLAN.md](PLAN.md) are done: backend, data layer, DSLD client and analysis. Beta TestNet deployment (Phase 4) hasn't started yet, and the demo endpoint and judge instructions will be added in Phase 6.
+> **Status:** Phases 1–3 of [PLAN.md](PLAN.md) are done and tested against the live NIH DSLD API. Pocket's own backend linter (`lint_backend.py`) passes, and the service card ([card/card.json](card/card.json)) passes the schema check. Beta TestNet deployment (Phase 4) hasn't started yet; the demo endpoint and judge instructions come in Phase 6.
+
+### Try it (real DSLD labels)
+
+```bash
+curl -s http://localhost:8080/v1/stack/analyze -H 'Content-Type: application/json' -d '{
+  "age": 34, "sex": "female",
+  "products": [
+    {"dsld_id": 230932},
+    {"dsld_id": 338022},
+    {"dsld_id": 332278},
+    {"name": "Custom magnesium", "ingredients": [{"name": "magnesium", "amount": 250, "unit": "mg"}]}
+  ]}'
+```
+
+The stack is a vitamin D3 5000 IU softgel, a women's multivitamin, Natrol Magnesium Night (which contains a proprietary sleep blend) and 250 mg of magnesium. Two flags come back:
+- Vitamin D `above_ul`: 150 mcg against a 100 mcg UL.
+- Magnesium `above_ul`: 575 mg against the 350 mg UL for supplements.
+
+Folate counts only the 480 mcg of folic acid toward its UL, the blend's unquantified melatonin is reported as a data gap, and every number links to its DSLD label.
 
 ## Endpoints
 
@@ -84,6 +103,12 @@ The response contains `summary`, `assumptions`, `nutrient_totals`, `overlaps`, `
 
 ## How the numbers are produced
 
+- **DSLD label details** that current labels need:
+  - DSLD often stores vitamin A as plain mcg or mg. It's read as mcg RAE only when the label's %DV matches the 900 mcg RAE Daily Value.
+  - When DSLD leaves out a unit (for example "6 NP"), it's inferred only if the label's %DV matches the FDA Daily Value; otherwise it's a gap.
+  - Rows nested under a nutrient break it down by form (folate 800 mcg DFE = folic acid 480 mcg). They give the exact UL portion and are never counted twice.
+  - Stated form shares ("40% as beta-carotene") split IU conversions exactly when they cover 100%. When they cover less, the rest is treated as an unknown form.
+  - Gamma and delta tocopherols and tocotrienols are not counted as vitamin E.
 - **Matching** an ingredient to a nutrient tries, in order: the DSLD `ingredientGroup`, the UNII code, an exact synonym, then an exact form name that belongs to exactly one nutrient. There's no substring or fuzzy matching, so "Vitamin B" never matches "Vitamin B12". Anything else goes to `unrecognized_ingredients`.
 - **Unit conversion** happens only when the result is unambiguous:
   - Vitamin D: 1 mcg = 40 IU.
@@ -115,13 +140,15 @@ docker compose up --build     # container on 127.0.0.1:8080
 | `DSLD_API_KEY` | none | Sent to DSLD as `X-Api-Key` if set |
 | `DSLD_BASE_URL` | `https://api.ods.od.nih.gov/dsld/v9` | DSLD API base |
 | `DSLD_PREWARM_IDS` | none | Comma-separated label IDs to cache at startup |
-| `DSLD_FIXTURES_DIR` | none | Serve DSLD from local `label-<id>.json` files (dev only) |
+| `DSLD_FIXTURES_DIR` | none | Serve DSLD from local `label-<id>.json` files (dev only; `test/fixtures/dsld/real` holds 12 real labels) |
+| `UPSTREAM_BUDGET_MS` | `8000` | Total time one request may spend waiting on DSLD before answering `424` |
 | `LOG_LEVEL` | `info` | Logs record method, path, status and duration only, never request bodies |
 
 ## Limits
 
 - Up to 15 products per analyze call, 10 IDs per get call, and 10 search results.
-- DSLD calls run at most 4 at a time with a 6 s deadline each. Labels are cached for 7 days and searches for 24 hours; a stale copy is served if DSLD is down.
+- DSLD calls run at most 4 at a time, with a 6 s deadline each and an 8 s budget per request. Labels are cached for 7 days and searches for 24 hours; a stale copy is served if DSLD is down. Measured against live DSLD: a cold 15-product analyze takes 1.5 s and a warm one 17 ms.
+- Text that Pocket gateways treat as an error signal ("timeout", "block not found" and others) is `\u`-escaped in responses. It decodes to the same string.
 - Ages from 1 to 120. Infant, pregnancy and lactation values aren't included in v1.
 
 ## Disclaimer and licenses

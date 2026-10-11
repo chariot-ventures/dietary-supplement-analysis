@@ -1,0 +1,1097 @@
+{
+  "src": "01-raw/2025-09-25/data/label_286.json",
+  "id": 331688,
+  "nhanesId": "",
+  "bundleName": "",
+  "fullName": "Multi+ Immune ",
+  "brandName": "vitafusion",
+  "brandIpSymbol": "\u2122",
+  "upcSku": "0 27917 28013 4",
+  "productVersionCode": "VFSL-28013-01 72022299",
+  "pdf": "331688_document.pdf",
+  "thumbnail": "331688_thumbnail.jpg",
+  "servingsPerContainer": "45",
+  "hasOuterCarton": null,
+  "percentDvFootnote": "Percent Daily Values are based on a 2,000 calorie diet.",
+  "labelRelationships": [],
+  "contacts": [
+    {
+      "contactId": 7581,
+      "text": "Manufactured for",
+      "types": [
+        "Distributor"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_3.json",
+        "id": 7581,
+        "name": "Church & Dwight Co., Inc.",
+        "streetAddress": "",
+        "city": "Ewing",
+        "state": "NJ",
+        "country": "",
+        "zipCode": "08628",
+        "phoneNumber": "1-888-334-5389",
+        "email": "",
+        "webAddress": "www.vitafusion.com"
+      }
+    }
+  ],
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 90,
+      "unit": "Gummy(ies)",
+      "display": "90 Gummy(ies)"
+    }
+  ],
+  "physicalState": {
+    "langualCode": "E0176",
+    "langualCodeDescription": "Gummy or Jelly"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 2,
+      "maxQuantity": 2,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Gummy Vitamin(s)",
+      "notes": "",
+      "inSFB": true
+    }
+  ],
+  "targetGroups": [
+    "Adult (18 - 50 Years)",
+    "Gluten Free",
+    "Dairy Free"
+  ],
+  "productType": {
+    "langualCode": "A1315",
+    "langualCodeDescription": "Multi-Vitamin and Mineral (MVM)"
+  },
+  "statements": [
+    {
+      "type": "Formula re: Contains",
+      "notes": "Gummy Vitamins\r\n2 in 1\r\nMulti + Vitamin C & Zinc\r\nTangerine + Strawberry Flavor"
+    },
+    {
+      "type": "Formulation re: Other",
+      "notes": "Immune support"
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "America's #1 Gummy vitamin brand"
+    },
+    {
+      "type": "FDA Statement of Identity",
+      "notes": "Dietary Supplement"
+    },
+    {
+      "type": "Suggested/Recommended/Usage/Directions",
+      "notes": "Suggested use: As a dietary supplement, adults take two (2) gummy vitamins per day. Chew thoroughly before swallowing."
+    },
+    {
+      "type": "Precautions re: Allergies",
+      "notes": "Contains: tree nuts (coconut). Processed in a facility with products that contain egg, fish, shellfish, soy and tree nuts."
+    },
+    {
+      "type": "Precautions re: Children",
+      "notes": "Keep out of reach of children."
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Questions, comments? call 1-888-334-5389 M-F 9AM-5PM ET www.vitafusion.com\r\nDiscard, seal, empty & replace cap\r\nBottle not recyclable unless label removed\r\nPlastic bottle plastic label\r\nhow2recycle.info\r\nScan me"
+    },
+    {
+      "type": "Seals/Symbols",
+      "notes": "We buy 100% Certified Renewable Energy Green-e.org"
+    },
+    {
+      "type": "Formulation re: Other",
+      "notes": "Our commitment\r\nMade with 100% certified renewable electricity."
+    },
+    {
+      "type": "Formulation re: Other",
+      "notes": "To ensure quality and potency through expiration, this dietary supplement is manufactured with higher active ingredient levels than the indicated Amount Per Serving."
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Take only as directed. Do not exceed suggested dosage."
+    },
+    {
+      "type": "Precautions re: Pregnant or Nursing or Prescription Medications",
+      "notes": "If you have a medical condition, are on medication, are pregnant or nursing or have questions regarding your nutritional needs, consult a qualified healthcare professional before using this product."
+    },
+    {
+      "type": "Suggested/Recommended/Usage/Directions",
+      "notes": "An individual's need for this product may be met through a varied and well balanced diet. "
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Do not use if the inner seal is broken or missing."
+    },
+    {
+      "type": "Storage",
+      "notes": "This product may settle during shipping. Store in a cool, dry place. "
+    },
+    {
+      "type": "Formulation re: Other",
+      "notes": "Colors may vary, differ in proportion than illustrated, and will darken over time; this does not impact product potency."
+    },
+    {
+      "type": "FDA Disclaimer Statement",
+      "notes": "These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease."
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "Vitafusion Multi 9 + Immune has 2-in-1 benefits and flavors. Each bi-layer gummy provides a daily multivitamin plus immune support with Vitamin C and Zinc. And you will enjoy the Tangerine and Strawberry flavor combination. They are twice as fun!\r\n\r\n"
+    },
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "No artificial flavors or sweeteners\r\nNo gluten\r\nNo high fructose corn syrup\r\nNo dairy\r\nNo synthetic FD&C dyes"
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Growing communities with Fruitful Planting\r\nWe believe in holistic wellness and realize it\u2019s more than just taking vitamins. That\u2019s why we support the Fruit Tree Planting Foundation and together have planted more than 200,000 fruit trees in underserved communities.\r\nJoint our mission vitafusion.com"
+    },
+    {
+      "type": "Seals/Symbols",
+      "notes": "Made in the USA with US & International Ingredients"
+    }
+  ],
+  "claims": [
+    {
+      "langualCode": "P0065",
+      "langualCodeDescription": "Nutrient "
+    },
+    {
+      "langualCode": "P0115",
+      "langualCodeDescription": "All Other"
+    },
+    {
+      "langualCode": "P0265",
+      "langualCodeDescription": "Structure/Function"
+    }
+  ],
+  "events": [
+    {
+      "date": "2025-09-25",
+      "type": "Date entered into DSLD"
+    }
+  ],
+  "userGroups": [
+    {
+      "dailyValueTargetGroupName": "Adults and children 4 or more years of age",
+      "langualCode": "P0250",
+      "langualCodeDescription": "Adults and Children 4 years and above"
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "ingredientId": 52877,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 25,
+          "unit": "Calorie(s)",
+          "dailyValueTargetGroup": [],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Calories",
+      "category": "other",
+      "ingredientGroup": "Header",
+      "uniiCode": null,
+      "alternateNames": [],
+      "forms": []
+    },
+    {
+      "order": 2,
+      "ingredientId": 18580,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 5,
+          "unit": "Gram(s)",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 2,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 3,
+          "ingredientId": 64839,
+          "description": "",
+          "notes": "",
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 2,
+              "operator": "=",
+              "quantity": 4,
+              "unit": "Gram(s)",
+              "dailyValueTargetGroup": [
+                {
+                  "name": "Adults and children 4 or more years of age",
+                  "operator": null,
+                  "percent": null,
+                  "footnote": "Daily Value not established"
+                }
+              ],
+              "servingSizeUnit": "Gummy Vitamin(s)"
+            }
+          ],
+          "nestedRows": [
+            {
+              "order": 4,
+              "ingredientId": 158042,
+              "description": "",
+              "notes": "",
+              "quantity": [
+                {
+                  "servingSizeOrder": 1,
+                  "servingSizeQuantity": 2,
+                  "operator": "=",
+                  "quantity": 4,
+                  "unit": "Gram(s)",
+                  "dailyValueTargetGroup": [
+                    {
+                      "name": "Adults and children 4 or more years of age",
+                      "operator": "=",
+                      "percent": 8,
+                      "footnote": null
+                    }
+                  ],
+                  "servingSizeUnit": "Gummy Vitamin(s)"
+                }
+              ],
+              "nestedRows": [],
+              "name": "added Sugars",
+              "category": "sugar",
+              "ingredientGroup": "Sugar (unspecified)",
+              "uniiCode": null,
+              "alternateNames": [],
+              "forms": []
+            }
+          ],
+          "name": "Total Sugars",
+          "category": "sugar",
+          "ingredientGroup": "Carbohydrate (unspecified)",
+          "uniiCode": null,
+          "alternateNames": [],
+          "forms": []
+        }
+      ],
+      "name": "Total Carbohydrate",
+      "category": "sugar",
+      "ingredientGroup": "Carbohydrate (unspecified)",
+      "uniiCode": null,
+      "alternateNames": [],
+      "forms": []
+    },
+    {
+      "order": 5,
+      "ingredientId": 281599,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 450,
+          "unit": "mcg RAE",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 50,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin A",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin A",
+      "uniiCode": "81G40H8B0T",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 281212,
+          "prefix": null,
+          "percent": null,
+          "name": "Retinyl Palmitate",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin A",
+          "uniiCode": "1D1K0N0VVC"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "ingredientId": 279078,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 36,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 40,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin C",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin C",
+      "uniiCode": "PQ6CK8PD0R",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 278604,
+          "prefix": null,
+          "percent": null,
+          "name": "Ascorbic Acid",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin C",
+          "uniiCode": "PQ6CK8PD0R"
+        },
+        {
+          "order": 2,
+          "ingredientId": 278915,
+          "prefix": null,
+          "percent": null,
+          "name": "Sodium Ascorbate",
+          "category": "mineral",
+          "ingredientGroup": "Sodium",
+          "uniiCode": "S033EH8359"
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "ingredientId": 280179,
+      "description": "",
+      "notes": "1000 IU",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 25,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 125,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin D",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin D",
+      "uniiCode": "9VU1KI44GP",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280176,
+          "prefix": null,
+          "percent": null,
+          "name": "Cholecalciferol",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin D",
+          "uniiCode": "1C6V77QF41"
+        }
+      ]
+    },
+    {
+      "order": 8,
+      "ingredientId": 281760,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 15,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin E",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin E",
+      "uniiCode": "H4N855PNZ1",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280484,
+          "prefix": null,
+          "percent": null,
+          "name": "DL-Alpha-Tocopheryl Acetate",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin E",
+          "uniiCode": "WR1WPI7EW8"
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "ingredientId": 280455,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 0.9,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 53,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin B6",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B6",
+      "uniiCode": "KV2JZ1BI6Z",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280215,
+          "prefix": null,
+          "percent": null,
+          "name": "Pyridoxine Hydrochloride",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B6",
+          "uniiCode": "68Y4CF58BV"
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "ingredientId": 200212,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 400,
+          "unit": "mcg DFE",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [
+        {
+          "order": 11,
+          "ingredientId": 43110,
+          "description": "",
+          "notes": "",
+          "quantity": [
+            {
+              "servingSizeOrder": 1,
+              "servingSizeQuantity": 2,
+              "operator": "=",
+              "quantity": 240,
+              "unit": "mcg",
+              "dailyValueTargetGroup": [],
+              "servingSizeUnit": "Gummy Vitamin(s)"
+            }
+          ],
+          "nestedRows": [],
+          "name": "Folic Acid",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B9 (folic acid) ",
+          "uniiCode": null,
+          "alternateNames": [],
+          "forms": []
+        }
+      ],
+      "name": "Folate",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B9 (Folate)",
+      "uniiCode": null,
+      "alternateNames": [],
+      "forms": []
+    },
+    {
+      "order": 12,
+      "ingredientId": 281279,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 2.4,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin B12",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B12",
+      "uniiCode": "8406EY2OQA",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280323,
+          "prefix": null,
+          "percent": null,
+          "name": "Cyanocobalamin",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B12",
+          "uniiCode": "P6YC3EG204"
+        }
+      ]
+    },
+    {
+      "order": 13,
+      "ingredientId": 7562,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 30,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Biotin",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B7 (biotin)",
+      "uniiCode": null,
+      "alternateNames": [],
+      "forms": []
+    },
+    {
+      "order": 14,
+      "ingredientId": 38925,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 2.5,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 50,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Pantothenic Acid",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B5 (Pantothenic Acid)",
+      "uniiCode": null,
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280490,
+          "prefix": null,
+          "percent": null,
+          "name": "Calcium D-Pantothenate",
+          "category": "mineral",
+          "ingredientGroup": "Calcium",
+          "uniiCode": "568ET80C3D"
+        }
+      ]
+    },
+    {
+      "order": 15,
+      "ingredientId": 294802,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 38,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 25,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Iodine",
+      "category": "mineral",
+      "ingredientGroup": "Iodine",
+      "uniiCode": "9679TC07X4",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 294760,
+          "prefix": null,
+          "percent": null,
+          "name": "Potassium Iodide",
+          "category": "mineral",
+          "ingredientGroup": "Potassium",
+          "uniiCode": "1C4QK22F9J"
+        }
+      ]
+    },
+    {
+      "order": 16,
+      "ingredientId": 293050,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 6,
+          "unit": "NP",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 55,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Zinc",
+      "category": "mineral",
+      "ingredientGroup": "Zinc",
+      "uniiCode": "J41CSQ7QDS",
+      "alternateNames": [
+        "Zn"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 293049,
+          "prefix": null,
+          "percent": null,
+          "name": "Zinc Chelate",
+          "category": "mineral",
+          "ingredientGroup": "Zinc",
+          "uniiCode": "J41CSQ7QDS"
+        }
+      ]
+    },
+    {
+      "order": 17,
+      "ingredientId": 294273,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 35,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Chromium",
+      "category": "mineral",
+      "ingredientGroup": "Chromium",
+      "uniiCode": "0R0008Q3JB",
+      "alternateNames": [
+        "Cr"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 293493,
+          "prefix": null,
+          "percent": null,
+          "name": "Chromium Picolinate",
+          "category": "mineral",
+          "ingredientGroup": "Chromium",
+          "uniiCode": "S71T8B8Z6P"
+        }
+      ]
+    },
+    {
+      "order": 18,
+      "ingredientId": 296114,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 11,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 24,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Molybdenum",
+      "category": "mineral",
+      "ingredientGroup": "Molybdenum",
+      "uniiCode": "81AH48963U",
+      "alternateNames": [
+        "Mo"
+      ],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 296097,
+          "prefix": null,
+          "percent": null,
+          "name": "Molybdenum Citrate",
+          "category": "mineral",
+          "ingredientGroup": "Molybdenum",
+          "uniiCode": "BQ2CRB3TW9"
+        }
+      ]
+    },
+    {
+      "order": 19,
+      "ingredientId": 292597,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 10,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "<",
+              "percent": 1,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Sodium",
+      "category": "mineral",
+      "ingredientGroup": "Sodium",
+      "uniiCode": "9NEZ333N27",
+      "alternateNames": [
+        "Na"
+      ],
+      "forms": []
+    },
+    {
+      "order": 20,
+      "ingredientId": 292554,
+      "description": "",
+      "notes": "",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 2,
+          "operator": "=",
+          "quantity": 150,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": null,
+              "percent": null,
+              "footnote": "Daily Value not established"
+            }
+          ],
+          "servingSizeUnit": "Gummy Vitamin(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Boron",
+      "category": "mineral",
+      "ingredientGroup": "Boron",
+      "uniiCode": "N9E3X5056Q",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 292545,
+          "prefix": null,
+          "percent": null,
+          "name": "Boron Citrate",
+          "category": "mineral",
+          "ingredientGroup": "Boron",
+          "uniiCode": "S043P4DV22"
+        }
+      ]
+    }
+  ],
+  "otheringredients": {
+    "text": null,
+    "ingredients": [
+      {
+        "order": 1,
+        "ingredientId": 24805,
+        "name": "Glucose syrup",
+        "category": "sugar",
+        "ingredientGroup": "Glucose",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 2,
+        "ingredientId": 46047,
+        "name": "Sugar",
+        "category": "sugar",
+        "ingredientGroup": "Sucrose",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 3,
+        "ingredientId": 4737,
+        "name": "Water",
+        "category": "other",
+        "ingredientGroup": "Water",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 4,
+        "ingredientId": 108227,
+        "name": "Gelatin",
+        "category": "protein",
+        "ingredientGroup": "Gelatin",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 5,
+        "ingredientId": 196153,
+        "name": "Coconut Oil",
+        "category": "fat",
+        "ingredientGroup": "coconut oil",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 6,
+        "ingredientId": 156045,
+        "name": "Palm Oil",
+        "category": "fat",
+        "ingredientGroup": "Palm oil",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 7,
+        "ingredientId": 11829,
+        "name": "Beeswax",
+        "category": "animal part or source",
+        "ingredientGroup": "Beeswax",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 8,
+        "ingredientId": 150702,
+        "name": "Carnauba Wax",
+        "category": "non-nutrient/non-botanical",
+        "ingredientGroup": "Carnauba wax",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 9,
+        "ingredientId": 9336,
+        "name": "Citric Acid",
+        "category": "non-nutrient/non-botanical",
+        "ingredientGroup": "Citric Acid",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 10,
+        "ingredientId": 187396,
+        "name": "Lutein",
+        "category": "non-nutrient/non-botanical",
+        "ingredientGroup": "Lutein",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 11,
+        "ingredientId": 118137,
+        "name": "Lycopene",
+        "category": "non-nutrient/non-botanical",
+        "ingredientGroup": "Lycopene",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 12,
+        "ingredientId": 339755,
+        "name": "Malic Acid",
+        "category": "non-nutrient/non-botanical",
+        "ingredientGroup": "Malic Acid",
+        "uniiCode": "817L1N4CKP",
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 13,
+        "ingredientId": 9502,
+        "name": "Natural flavor",
+        "category": "other",
+        "ingredientGroup": "Flavor",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 14,
+        "ingredientId": 64135,
+        "name": "Pectin",
+        "category": "fiber",
+        "ingredientGroup": "Pectin",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      }
+    ]
+  },
+  "offMarket": 0,
+  "entryDate": "2025-09-25"
+}

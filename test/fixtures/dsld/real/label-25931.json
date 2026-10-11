@@ -1,0 +1,774 @@
+{
+  "src": "01-raw/2025-09-25/data/label_293.json",
+  "id": 25931,
+  "nhanesId": "1-000-9712-00",
+  "bundleName": "",
+  "fullName": "Mutli-Day Multivitamin",
+  "brandName": "Natural Wealth",
+  "brandIpSymbol": "®",
+  "upcSku": "0 74312 81580 5",
+  "productVersionCode": "Prod. No. 1580 B16738 13E",
+  "pdf": "",
+  "thumbnail": "",
+  "servingsPerContainer": null,
+  "hasOuterCarton": false,
+  "percentDvFootnote": "Not Present",
+  "labelRelationships": [],
+  "contacts": [
+    {
+      "contactId": 2213,
+      "text": "Nutrition Questions? or Comments? Call",
+      "types": [
+        "Other"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_1.json",
+        "id": 2213,
+        "name": "",
+        "streetAddress": "",
+        "city": "",
+        "state": "",
+        "country": "",
+        "zipCode": "",
+        "phoneNumber": "1-800-344-8482",
+        "email": "",
+        "webAddress": ""
+      }
+    },
+    {
+      "contactId": 5024,
+      "text": "Carefully Manufactured by",
+      "types": [
+        "Manufacturer"
+      ],
+      "contactDetails": {
+        "src": "01-raw/2025-09-25/data/contact_2.json",
+        "id": 5024,
+        "name": "Natural Wealth Nutrition Corp.",
+        "streetAddress": "",
+        "city": "Bohemia",
+        "state": "NY",
+        "country": "U.S.A.",
+        "zipCode": "11716",
+        "phoneNumber": "",
+        "email": "",
+        "webAddress": ""
+      }
+    }
+  ],
+  "netContents": [
+    {
+      "order": 1,
+      "quantity": 100,
+      "unit": "Tablet(s)",
+      "display": "100 Tablet(s)"
+    }
+  ],
+  "physicalState": {
+    "langualCode": "E0155",
+    "langualCodeDescription": "Tablet or Pill"
+  },
+  "servingSizes": [
+    {
+      "order": 1,
+      "minQuantity": 1,
+      "maxQuantity": 1,
+      "minDailyServings": 1,
+      "maxDailyServings": 1,
+      "unit": "Tablet(s)",
+      "inSFB": true
+    }
+  ],
+  "targetGroups": [
+    "Adult (18 - 50 Years)",
+    "Gluten Free",
+    "Dairy Free",
+    "Sugar Free"
+  ],
+  "productType": {
+    "langualCode": "A1325",
+    "langualCodeDescription": "Other Combinations"
+  },
+  "statements": [
+    {
+      "type": "General: Product/Version Code",
+      "notes": "Prod. No. 1580 B16738 13E"
+    },
+    {
+      "type": "Seals/Symbols",
+      "notes": "GUARANTEED QUALITY LABORATORY TESTED"
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "Daily Vitamins Plus Iron"
+    },
+    {
+      "type": "FDA Statement of Identity",
+      "notes": "MULTIVITAMIN SUPPLEMENT"
+    },
+    {
+      "type": "Brand IP Statement(s) re: (c), (TM), (SM)",
+      "notes": "(C) 2010 Natural Wealth Nutrition Corp,"
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "COMPARE AND SAVE $"
+    },
+    {
+      "type": "Precautions re: Pregnant or Nursing or Prescription Medications",
+      "notes": "WARNING: If you are pregnant, nursing or taking any medications, consult your doctor before use."
+    },
+    {
+      "type": "Storage",
+      "notes": "Store at room temperature."
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Discontinue use and consult your doctor if any adverse reactions occur."
+    },
+    {
+      "type": "Precautions re: All Other",
+      "notes": "Do not use if seal under cap is broken or missing."
+    },
+    {
+      "type": "General Statements: All Other Content",
+      "notes": "Nutrition Questions? or Comments? \nCall 1-800-344-8482 \nMon. - Fri. 9 AM - 7 PM ET"
+    },
+    {
+      "type": "Formula re: Contains",
+      "notes": "Contains fish (cod, pollock, haddock, hake, cusk, redfish, sole, flounder) ingredients."
+    },
+    {
+      "type": "Formulation re: Does NOT Contain",
+      "notes": "No Artificial Flavor, No Sugar, No Milk, No Lactose, No Gluten, No Wheat, No Yeast, No Shellfish. Sodium Free."
+    },
+    {
+      "type": "Precautions re: Allergies",
+      "notes": "Contains fish (cod, pollock, haddock, hake, cusk, redfish, sole, flounder) ingredients."
+    },
+    {
+      "type": "Suggested/Recommended/Usage/Directions",
+      "notes": "DIRECTIONS: For adults, take one (1) tablet daily, preferably with a meal."
+    },
+    {
+      "type": "Precautions re: Children",
+      "notes": "WARNING: Accidental overdose of iron-congaing products is a leading cause of fatal poisoning in children under six. KEEP THIS PRODUCT OUT OF REACH OF CHILDREN. In the case of accidental overdose, call a doctor or Poison Control Center immediately."
+    }
+  ],
+  "claims": [
+    {
+      "langualCode": "P0065",
+      "langualCodeDescription": "Nutrient "
+    },
+    {
+      "langualCode": "P0115",
+      "langualCodeDescription": "All Other"
+    }
+  ],
+  "events": [
+    {
+      "date": "2013-09-25",
+      "type": "Date entered into DSLD"
+    }
+  ],
+  "userGroups": [
+    {
+      "dailyValueTargetGroupName": "Adults and children 4 or more years of age",
+      "langualCode": "P0250",
+      "langualCodeDescription": "Adults and Children 4 years and above"
+    }
+  ],
+  "ingredientRows": [
+    {
+      "order": 1,
+      "ingredientId": 281583,
+      "description": null,
+      "notes": "Vitamin A (Form: as Retinyl Acetate, and Beta-Carotene) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 5000,
+          "unit": "IU",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin A",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin A",
+      "uniiCode": "81G40H8B0T",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280109,
+          "prefix": null,
+          "percent": null,
+          "name": "Beta-Carotene",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin A",
+          "uniiCode": "01YAE03M7J"
+        },
+        {
+          "order": 2,
+          "ingredientId": 281296,
+          "prefix": null,
+          "percent": null,
+          "name": "Retinyl Acetate",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin A",
+          "uniiCode": "3LE3D9D6OY"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "ingredientId": 278603,
+      "description": null,
+      "notes": null,
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 60,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin C",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin C",
+      "uniiCode": "PQ6CK8PD0R",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 278604,
+          "prefix": null,
+          "percent": null,
+          "name": "Ascorbic Acid",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin C",
+          "uniiCode": "PQ6CK8PD0R"
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "ingredientId": 281609,
+      "description": null,
+      "notes": "Vitamin D (Form: as Ergocalciferol) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 400,
+          "unit": "IU",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin D",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin D",
+      "uniiCode": "VS041H42XC",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280175,
+          "prefix": null,
+          "percent": null,
+          "name": "Ergocalciferol",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin D",
+          "uniiCode": "VS041H42XC"
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "ingredientId": 281760,
+      "description": null,
+      "notes": "Vitamin E (Form: as DL-Alpha Tocopheryl Acetate) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 30,
+          "unit": "IU",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin E",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin E",
+      "uniiCode": "H4N855PNZ1",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280484,
+          "prefix": null,
+          "percent": null,
+          "name": "DL-Alpha-Tocopheryl Acetate",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin E",
+          "uniiCode": "WR1WPI7EW8"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "ingredientId": 281559,
+      "description": null,
+      "notes": "Thiamin (Form: as Thiamin Mononitrate) (Alt. Name: Vitamin B-1) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 1.5,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Thiamine",
+      "category": "vitamin",
+      "ingredientGroup": "Thiamin",
+      "uniiCode": "X66NSO3N35",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 278857,
+          "prefix": null,
+          "percent": null,
+          "name": "Thiamine Mononitrate",
+          "category": "vitamin",
+          "ingredientGroup": "Thiamin",
+          "uniiCode": "8K0I04919X"
+        },
+        {
+          "order": 2,
+          "ingredientId": 278835,
+          "prefix": null,
+          "percent": null,
+          "name": "Vitamin B1",
+          "category": "vitamin",
+          "ingredientGroup": "Thiamin",
+          "uniiCode": "X66NSO3N35"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "ingredientId": 279469,
+      "description": null,
+      "notes": null,
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 1.7,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Riboflavin",
+      "category": "vitamin",
+      "ingredientGroup": "Riboflavin",
+      "uniiCode": "TLM2976OFR",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 279466,
+          "prefix": null,
+          "percent": null,
+          "name": "Vitamin B2",
+          "category": "vitamin",
+          "ingredientGroup": "Riboflavin",
+          "uniiCode": "TLM2976OFR"
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "ingredientId": 280746,
+      "description": null,
+      "notes": "Niacin (Form: as Niacinamide) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 20,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Niacin",
+      "category": "vitamin",
+      "ingredientGroup": "Niacin",
+      "uniiCode": "2679MF687A",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280445,
+          "prefix": null,
+          "percent": null,
+          "name": "Niacinamide",
+          "category": "vitamin",
+          "ingredientGroup": "Niacin",
+          "uniiCode": "25X51I8RD4"
+        }
+      ]
+    },
+    {
+      "order": 8,
+      "ingredientId": 280455,
+      "description": null,
+      "notes": "Vitamin B-6 (Form: as Pyridoxine Hydrochloride) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 2,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin B6",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B6",
+      "uniiCode": "KV2JZ1BI6Z",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280215,
+          "prefix": null,
+          "percent": null,
+          "name": "Pyridoxine Hydrochloride",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B6",
+          "uniiCode": "68Y4CF58BV"
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "ingredientId": 279040,
+      "description": null,
+      "notes": null,
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 400,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Folic Acid",
+      "category": "vitamin",
+      "ingredientGroup": "Folate",
+      "uniiCode": "935E97BOY8",
+      "alternateNames": [],
+      "forms": []
+    },
+    {
+      "order": 10,
+      "ingredientId": 281279,
+      "description": null,
+      "notes": "Vitamin B-12 (Form: as Cyanocobalamin) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 6,
+          "unit": "mcg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Vitamin B12",
+      "category": "vitamin",
+      "ingredientGroup": "Vitamin B12",
+      "uniiCode": "8406EY2OQA",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 280323,
+          "prefix": null,
+          "percent": null,
+          "name": "Cyanocobalamin",
+          "category": "vitamin",
+          "ingredientGroup": "Vitamin B12",
+          "uniiCode": "P6YC3EG204"
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "ingredientId": 280871,
+      "description": null,
+      "notes": "Pantothenic Acid (Form: as D-Calcium Pantothenate) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 10,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Pantothenic Acid",
+      "category": "vitamin",
+      "ingredientGroup": "Pantothenic Acid (Vitamin B5)",
+      "uniiCode": "19F5HK2737",
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 293281,
+          "prefix": null,
+          "percent": null,
+          "name": "D-Calcium Pantothenate",
+          "category": "mineral",
+          "ingredientGroup": "Calcium",
+          "uniiCode": "568ET80C3D"
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "ingredientId": 38325,
+      "description": null,
+      "notes": "Iron (Form: as Ferrous Fumarate) ",
+      "quantity": [
+        {
+          "servingSizeOrder": 1,
+          "servingSizeQuantity": 1,
+          "operator": "=",
+          "quantity": 18,
+          "unit": "mg",
+          "dailyValueTargetGroup": [
+            {
+              "name": "Adults and children 4 or more years of age",
+              "operator": "=",
+              "percent": 100,
+              "footnote": null
+            }
+          ],
+          "servingSizeUnit": "Tablet(s)"
+        }
+      ],
+      "nestedRows": [],
+      "name": "Iron",
+      "category": "mineral",
+      "ingredientGroup": "Iron",
+      "uniiCode": null,
+      "alternateNames": [],
+      "forms": [
+        {
+          "order": 1,
+          "ingredientId": 4324,
+          "prefix": "as",
+          "percent": null,
+          "name": "Ferrous Fumarate",
+          "category": "mineral",
+          "ingredientGroup": "Iron",
+          "uniiCode": null
+        }
+      ]
+    }
+  ],
+  "otheringredients": {
+    "text": null,
+    "ingredients": [
+      {
+        "order": 1,
+        "ingredientId": 3810,
+        "name": "Vegetable Cellulose",
+        "category": "fiber",
+        "ingredientGroup": "Cellulose",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": []
+      },
+      {
+        "order": 2,
+        "ingredientId": 87694,
+        "name": "Contains <2% of:",
+        "category": "other",
+        "ingredientGroup": "Header",
+        "uniiCode": null,
+        "alternateNames": [],
+        "forms": [
+          {
+            "order": 1,
+            "ingredientId": 15875,
+            "prefix": null,
+            "percent": null,
+            "name": "FD&C Yellow No. 5 Lake",
+            "category": "other",
+            "ingredientGroup": "Color",
+            "uniiCode": null
+          },
+          {
+            "order": 2,
+            "ingredientId": 6045,
+            "prefix": null,
+            "percent": null,
+            "name": "FD&C Yellow No. 6 Lake",
+            "category": "other",
+            "ingredientGroup": "Color",
+            "uniiCode": null
+          },
+          {
+            "order": 3,
+            "ingredientId": 285558,
+            "prefix": null,
+            "percent": null,
+            "name": "Stearic Acid",
+            "category": "fatty acid",
+            "ingredientGroup": "Stearic Acid",
+            "uniiCode": "4ELV7Z65AP"
+          },
+          {
+            "order": 4,
+            "ingredientId": 3803,
+            "prefix": null,
+            "percent": null,
+            "name": "Titanium Dioxide color",
+            "category": "other",
+            "ingredientGroup": "Titanium Dioxide",
+            "uniiCode": null
+          },
+          {
+            "order": 5,
+            "ingredientId": 3813,
+            "prefix": null,
+            "percent": null,
+            "name": "Vegetable Magnesium Stearate",
+            "category": "other",
+            "ingredientGroup": "Magnesium stearate",
+            "uniiCode": null
+          }
+        ]
+      }
+    ]
+  },
+  "offMarket": 0,
+  "entryDate": "2013-09-25"
+}

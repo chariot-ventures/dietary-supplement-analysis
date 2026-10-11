@@ -71,6 +71,25 @@ describe('real DSLD labels', () => {
     expect(ing(74373, 'vitamin-a')).toMatchObject({ form_kind: 'preformed', per_serving: { amount: 3000, unit: 'mcg RAE' }, toward_ul_per_serving: 3000 });
   });
 
+  it('331688 DSLD lists zinc as "6 NP"; the 55% DV identifies the unit as mg', () => {
+    expect(ing(331688, 'zinc')).toMatchObject({ label_amount: { amount: 6, unit: 'NP' }, per_serving: { amount: 6, unit: 'mg' } });
+    expect(ing(331688, 'zinc').conversion_note).toMatch(/55% DV matches the 11 mg Daily Value/);
+    expect(normalizedFixture(331688).data_gaps.filter((g) => g.nutrient_id === 'zinc')).toEqual([]);
+  });
+
+  it('19853 "as 20% beta-carotene" leaves 80% of the IU in an unstated form: a gap, not an under-count', () => {
+    const a = ing(19853, 'vitamin-a');
+    expect(a.per_serving).toBeNull();
+    const gap = normalizedFixture(19853).data_gaps.find((g) => g.nutrient_id === 'vitamin-a')!;
+    expect(gap).toMatchObject({ code: 'UNIT_NOT_CONVERTIBLE' });
+    expect(gap.detail).toMatch(/20% Beta-Carotene; the form of the remaining 80% is not stated/);
+  });
+
+  it('25931 IU vitamin A as retinyl acetate and beta-carotene with no shares stays a gap', () => {
+    expect(ing(25931, 'vitamin-a').per_serving).toBeNull();
+    expect(ing(25931, 'vitamin-e')).toMatchObject({ form_kind: 'synthetic', per_serving: { amount: 13.5, unit: 'mg' } });
+  });
+
   it('284181 uses the label daily maximum of 3 servings', () => {
     expect(normalizedFixture(284181).serving.daily_servings).toEqual({ min: 1, max: 3 });
   });

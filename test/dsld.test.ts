@@ -13,6 +13,10 @@ describe('DsldClient', () => {
     const u = new URL(urls[0]!);
     expect(u.pathname).toBe('/dsld/v9/search-filter');
     expect(u.searchParams.get('q')).toBe('vitamin d3 & k2/mk-7');
+    await client.search({ brand: 'Thorne', onMarketOnly: false, size: 3 });
+    // DSLD requires q; "*" is its term-less search.
+    expect(new URL(urls[1]!).searchParams.get('q')).toBe('*');
+    expect(new URL(urls[1]!).searchParams.get('status')).toBe('2');
     expect(u.searchParams.get('status')).toBe('1');
     expect(u.searchParams.get('size')).toBe('5');
     expect(urls[0]).not.toContain(' & ');
@@ -39,6 +43,9 @@ describe('DsldClient', () => {
     await expect(fixtureClient().getLabel(1)).rejects.toMatchObject({ code: 'NOT_FOUND' });
     const empty = new DsldClient({ fetchImpl: async () => jsonResponse({}) });
     await expect(empty.getLabel(5)).rejects.toMatchObject({ code: 'NOT_FOUND' });
+    // What the live API actually returns for an unknown label: HTTP 200 with [].
+    const live = new DsldClient({ fetchImpl: async () => jsonResponse([]) });
+    await expect(live.getLabel(9999999)).rejects.toMatchObject({ code: 'NOT_FOUND' });
   });
 
   it('returns UPSTREAM_UNAVAILABLE (retryable) when DSLD fails and nothing is cached', async () => {

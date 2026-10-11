@@ -3,7 +3,7 @@ import { AppError } from '../lib/errors.js';
 import { dsldSource, envelope } from '../lib/envelope.js';
 import { normalizeDsldLabel, type NormalizedLabel } from '../lib/label.js';
 import { getRequest, parseBody, searchRequest } from '../schemas/requests.js';
-import type { Deps } from './deps.js';
+import { upstreamBudget, type Deps } from './deps.js';
 
 /** Product summary for search results: small, no ingredient detail. */
 function summarize(l: NormalizedLabel) {
@@ -40,15 +40,16 @@ export function serializeLabel(l: NormalizedLabel) {
 
 export async function searchProducts(body: unknown, deps: Deps) {
   const req = parseBody(searchRequest, body);
+  const signal = upstreamBudget(deps);
   const result = await deps.dsld.search({
     query: req.query,
     brand: req.brand,
     ingredient: req.ingredient,
     onMarketOnly: req.on_market_only,
     size: req.limit,
-  });
+  }, { signal });
   const ids = result.ids.slice(0, req.limit);
-  const settled = await Promise.allSettled(ids.map((id) => deps.dsld.getLabel(id)));
+  const settled = await Promise.allSettled(ids.map((id) => deps.dsld.getLabel(id, { signal })));
   const labels = settled.flatMap((s) => (s.status === 'fulfilled' ? [s.value] : []));
   const upstream = settled.find((s) => s.status === 'rejected' && s.reason instanceof AppError && s.reason.code === 'UPSTREAM_UNAVAILABLE');
   if (ids.length && labels.length === 0 && upstream) throw (upstream as PromiseRejectedResult).reason;
@@ -73,9 +74,10 @@ export async function getProducts(body: unknown, deps: Deps) {
   const req = parseBody(getRequest, body);
   const ids = req.dsld_ids ?? [req.dsld_id!];
   const unique = [...new Set(ids)];
+  const signal = upstreamBudget(deps);
   const labels = await Promise.all(
     unique.map((id) =>
-      deps.dsld.getLabel(id).catch((err: unknown) => {
+      deps.dsld.getLabel(id, { signal }).catch((err: unknown) => {
         if (err instanceof AppError && err.code === 'NOT_FOUND') {
           throw new AppError('NOT_FOUND', err.message, { field: req.dsld_ids ? `dsld_ids.${ids.indexOf(id)}` : 'dsld_id' });
         }

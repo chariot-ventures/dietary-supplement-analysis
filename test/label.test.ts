@@ -81,6 +81,26 @@ describe('normalizeDsldLabel', () => {
     expect(l.ingredients.every((i) => i.per_serving === null)).toBe(true);
   });
 
+  it('a missing unit is a gap unless the %DV identifies it', () => {
+    const noDv = normalizeDsldLabel(makeLabel(5, [{ name: 'Zinc', ingredientGroup: 'Zinc', quantity: q(15, 'NP') }]));
+    expect(noDv.data_gaps).toEqual([expect.objectContaining({ code: 'UNIT_NOT_CONVERTIBLE', nutrient_id: 'zinc' })]);
+    const wrongDv = normalizeDsldLabel(
+      makeLabel(6, [{ name: 'Zinc', ingredientGroup: 'Zinc', quantity: [{ servingSizeOrder: 1, quantity: 15, unit: 'NP', dailyValueTargetGroup: [{ name: 'Adults and children 4 or more years of age', percent: 100 }] }] }]),
+    );
+    expect(wrongDv.ingredients[0]?.per_serving).toBeNull(); // 15 mg would be 136%, not 100% (old 15 mg DV): not guessed
+  });
+
+  it('splits IU vitamin A exactly when the stated form shares cover 100%', () => {
+    const row = (notes: string) => [{ name: 'Vitamin A', ingredientGroup: 'Vitamin A', notes, forms: [{ name: 'Retinyl Palmitate' }, { name: 'Beta Carotene' }], quantity: q(5000, 'IU') }];
+    const full = normalizeDsldLabel(makeLabel(7, row('Vitamin A (Form: 60% as Retinyl Palmitate, 40% as Beta Carotene)'))).ingredients[0]!;
+    // 3000 IU x 0.3 + 2000 IU x 0.15 = 900 + 300 mcg RAE; only the retinyl palmitate counts toward the UL
+    expect(full).toMatchObject({ per_serving: { amount: 1200, unit: 'mcg RAE' }, toward_ul_per_serving: 900 });
+    const dsldPercent = normalizeDsldLabel(
+      makeLabel(8, [{ name: 'Vitamin A', ingredientGroup: 'Vitamin A', forms: [{ name: 'Retinyl Palmitate', percent: 60 }, { name: 'Beta Carotene', percent: 40 }], quantity: q(5000, 'IU') }]),
+    ).ingredients[0]!;
+    expect(dsldPercent.per_serving).toEqual({ amount: 1200, unit: 'mcg RAE' });
+  });
+
   it('lists unrecognized ingredients with their label amount', () => {
     expect(normalizedFixture(900005).unrecognized_ingredients[0]).toMatchObject({ label_name: 'Ashwagandha root extract', per_serving: { amount: 300, unit: 'mg' } });
   });

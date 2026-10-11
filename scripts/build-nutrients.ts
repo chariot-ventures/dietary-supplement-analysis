@@ -71,6 +71,7 @@ const manualFile = z
   .object({
     _doc: z.string().optional(),
     dri_reviewed: z.string(),
+    label_dv_source: z.string().optional(),
     age_bands: z.array(z.tuple([z.number().int().nonnegative(), z.number().int().nonnegative().nullable()])),
     nutrients: z.array(manualNutrient),
   })

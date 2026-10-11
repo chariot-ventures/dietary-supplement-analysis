@@ -4,7 +4,7 @@ import { AppError } from '../lib/errors.js';
 import { envelope } from '../lib/envelope.js';
 import { normalizeCustomProduct, normalizeDsldLabel } from '../lib/label.js';
 import { analyzeRequest, assertSupportedAge, parseBody } from '../schemas/requests.js';
-import type { Deps } from './deps.js';
+import { upstreamBudget, type Deps } from './deps.js';
 
 export async function analyze(body: unknown, deps: Deps) {
   const req = parseBody(analyzeRequest, body);
@@ -12,11 +12,12 @@ export async function analyze(body: unknown, deps: Deps) {
 
   // Fetch each distinct DSLD label once (shared concurrency limit in the client).
   const ids = [...new Set(req.products.flatMap((p) => ('dsld_id' in p ? [p.dsld_id] : [])))];
+  const signal = upstreamBudget(deps);
   const fetched = new Map(
     await Promise.all(
       ids.map(async (id) => {
         try {
-          return [id, await deps.dsld.getLabel(id)] as const;
+          return [id, await deps.dsld.getLabel(id, { signal })] as const;
         } catch (err) {
           if (err instanceof AppError && err.code === 'NOT_FOUND') {
             const index = req.products.findIndex((p) => 'dsld_id' in p && p.dsld_id === id);

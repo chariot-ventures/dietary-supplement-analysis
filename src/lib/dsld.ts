@@ -26,6 +26,8 @@ export interface DsldForm {
   name: string;
   ingredientGroup?: string | null;
   uniiCode?: string | null;
+  /** Share of the row declared as this form, when the label states one ("50% as beta-carotene"). */
+  percent?: number | null;
 }
 
 export interface DsldIngredientRow {
@@ -82,6 +84,11 @@ export interface SearchResult {
   retrieved: string;
 }
 
+/** Per-call options: `signal` carries the caller's overall request budget. */
+export interface CallOptions {
+  signal?: AbortSignal;
+}
+
 export interface LabelResult {
   label: DsldLabel;
   retrieved: string;
@@ -112,8 +119,23 @@ export class Semaphore {
   private readonly queue: (() => void)[] = [];
   constructor(private readonly limit: number) {}
 
-  async run<T>(fn: () => Promise<T>): Promise<T> {
-    if (this.active >= this.limit) await new Promise<void>((resolve) => this.queue.push(resolve));
+  async run<T>(fn: () => Promise<T>, signal?: AbortSignal): Promise<T> {
+    if (this.active >= this.limit) {
+      await new Promise<void>((resolve, reject) => {
+        const wake = () => {
+          signal?.removeEventListener('abort', onAbort);
+          resolve();
+        };
+        const onAbort = () => {
+          const i = this.queue.indexOf(wake);
+          if (i >= 0) this.queue.splice(i, 1);
+          reject(signal!.reason);
+        };
+        if (signal?.aborted) return reject(signal.reason);
+        signal?.addEventListener('abort', onAbort, { once: true });
+        this.queue.push(wake);
+      });
+    }
     this.active++;
     try {
       return await fn();
@@ -156,13 +178,13 @@ export class DsldClient {
     this.searches = new LRUCache({ max: opts.maxSearches ?? 1000, ttl: opts.searchTtlMs ?? DAY_MS, ...cacheOpts });
   }
 
-  async getLabel(id: number): Promise<LabelResult> {
+  async getLabel(id: number, opts: CallOptions = {}): Promise<LabelResult> {
     const fresh = this.labels.get(id);
     if (fresh) return { label: fresh.value, retrieved: fresh.retrieved };
 
     return this.dedupe(`label:${id}`, async () => {
       try {
-        const body = await this.getJson(`/label/${encodeURIComponent(String(id))}`);
+        const body = await this.getJson(`/label/${encodeURIComponent(String(id))}`, opts.signal);
         const label = asLabel(body);
         if (!label) throw new AppError('NOT_FOUND', `No DSLD label with id ${id}`, { field: 'dsld_id' });
         const entry = { value: label, retrieved: todayIso() };
@@ -181,11 +203,11 @@ export class DsldClient {
   }
 
   /** Fetch several labels with the shared concurrency limit. Rejects on the first NOT_FOUND / upstream error. */
-  async getLabels(ids: number[]): Promise<LabelResult[]> {
-    return Promise.all(ids.map((id) => this.getLabel(id)));
+  async getLabels(ids: number[], opts: CallOptions = {}): Promise<LabelResult[]> {
+    return Promise.all(ids.map((id) => this.getLabel(id, opts)));
   }
 
-  async search(p: SearchParams): Promise<SearchResult> {
+  async search(p: SearchParams, opts: CallOptions = {}): Promise<SearchResult> {
     const params = new URLSearchParams();
     // DSLD requires q; "*" is its term-less search, and brand / ingredient_name only filter alongside it.
     params.set('q', p.query || '*');
@@ -201,7 +223,7 @@ export class DsldClient {
 
     return this.dedupe(`search:${key}`, async () => {
       try {
-        const body = await this.getJson(`/search-filter?${key}`);
+        const body = await this.getJson(`/search-filter?${key}`, opts.signal);
         const parsed = parseSearch(body, p.onMarketOnly);
         const entry = { value: parsed, retrieved: todayIso() };
         this.searches.set(key, entry);
@@ -227,7 +249,7 @@ export class DsldClient {
     return p;
   }
 
-  private async getJson(pathAndQuery: string): Promise<unknown> {
+  private async getJson(pathAndQuery: string, budget?: AbortSignal): Promise<unknown> {
     const url = `${this.baseUrl}${pathAndQuery}`;
     const headers: Record<string, string> = { Accept: 'application/json' };
     if (this.apiKey) headers['X-Api-Key'] = this.apiKey;
@@ -235,17 +257,19 @@ export class DsldClient {
     return this.sem.run(async () => {
       for (let attempt = 0; ; attempt++) {
         try {
-          const res = await this.fetchImpl(url, { headers, signal: AbortSignal.timeout(this.deadlineMs) });
+          const deadline = AbortSignal.timeout(this.deadlineMs);
+          const signal = budget ? AbortSignal.any([deadline, budget]) : deadline;
+          const res = await this.fetchImpl(url, { headers, signal });
           if (!res.ok) throw new UpstreamHttpError(res.status);
           return (await res.json()) as unknown;
         } catch (err) {
           const isAbort = err instanceof Error && (err.name === 'TimeoutError' || err.name === 'AbortError');
           const isNetwork = err instanceof TypeError;
-          if (attempt === 0 && isNetwork && !isAbort) continue;
+          if (attempt === 0 && isNetwork && !isAbort && !budget?.aborted) continue;
           throw err;
         }
       }
-    });
+    }, budget);
   }
 }
 

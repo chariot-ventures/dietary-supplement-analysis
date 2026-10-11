@@ -12,7 +12,7 @@ import { dsldLabelUrl } from './dsld.js';
 import { formKindsOf, groupQualifier, matchIngredient, type IngredientInput, type MatchedBy } from './match.js';
 import { round } from './text.js';
 import type { Nutrient } from './types.js';
-import { convertMass, parseUnit, toCanonical, ulPortion, type ConversionResult } from './units.js';
+import { convertMass, parseUnit, toCanonical, ulPortion, type ConversionResult, type MassUnit } from './units.js';
 
 export interface Amount {
   amount: number;
@@ -105,8 +105,14 @@ const MISSING_UNITS = new Set(['', 'np', 'n/a', 'na']);
 function labelAmount(q: DsldQuantity | undefined): Amount | null {
   if (!q || typeof q.quantity !== 'number' || !Number.isFinite(q.quantity)) return null;
   const unit = (q.unit ?? '').trim();
-  if (MISSING_UNITS.has(unit.toLowerCase())) return null;
+  // DSLD writes "NP" (or nothing) when no unit was captured. Keep a positive
+  // amount as declared; convertWithDvCheck may recover the unit from the %DV.
+  if (isMissingUnit(unit)) return q.quantity > 0 ? { amount: q.quantity, unit: unit || 'NP' } : null;
   return { amount: q.quantity, unit };
+}
+
+function isMissingUnit(unit: string): boolean {
+  return MISSING_UNITS.has(unit.trim().toLowerCase());
 }
 
 function pickQuantity(row: DsldIngredientRow, servingOrder: number): DsldQuantity | undefined {
@@ -135,6 +141,41 @@ interface RowInput extends IngredientInput {
   blendName?: string;
   isCustom: boolean;
   breakdown?: FormBreakdownEntry[];
+  notes?: string | null;
+}
+
+type FormSplit = { status: 'none' } | { status: 'partial'; detail: string } | { status: 'full'; parts: { kind: string; pct: number }[] };
+
+const NOTE_PERCENT = /(\d+(?:\.\d+)?)\s*%\s*(?:as\s+|from\s+)?([a-z][a-z0-9' -]*?)(?=\s*(?:,|\)|;|\band\b|$))/gi;
+
+/**
+ * Older labels state form shares: "Vitamin A 5000 IU (40% as beta-carotene)".
+ * Shares come from DSLD's forms[].percent or the row notes. When they cover
+ * 100% of the amount with known forms, the amount is split exactly; when they
+ * cover less, the rest has an unstated form and is treated as mixed.
+ */
+function formSplit(n: Nutrient, row: RowInput): FormSplit {
+  const entries: { kind: string | null; pct: number; name: string }[] = [];
+  for (const f of row.forms ?? []) {
+    if (typeof f.percent !== 'number' || !(f.percent > 0 && f.percent <= 100)) continue;
+    const kinds = formKindsOf(n, [f.name, groupQualifier(f.ingredientGroup)]);
+    entries.push({ kind: kinds.size === 1 ? [...kinds][0]! : null, pct: f.percent, name: f.name });
+  }
+  if (entries.length === 0 && row.notes) {
+    for (const m of row.notes.matchAll(NOTE_PERCENT)) {
+      const pct = Number(m[1]);
+      const kinds = formKindsOf(n, [m[2]!.trim()]);
+      if (kinds.size === 1 && pct > 0 && pct <= 100) entries.push({ kind: [...kinds][0]!, pct, name: m[2]!.trim() });
+    }
+  }
+  if (entries.length === 0) return { status: 'none' };
+  const total = entries.reduce((sum, e) => sum + e.pct, 0);
+  if (entries.every((e) => e.kind !== null) && Math.abs(total - 100) <= 1) {
+    const parts = new Map<string, number>();
+    for (const e of entries) parts.set(e.kind!, (parts.get(e.kind!) ?? 0) + e.pct);
+    return { status: 'full', parts: [...parts].map(([kind, pct]) => ({ kind, pct })) };
+  }
+  return { status: 'partial', detail: `the label states ${entries.map((e) => `${e.pct}% ${e.name}`).join(', ')}; the form of the remaining ${Math.max(0, 100 - total)}% is not stated` };
 }
 
 /**
@@ -143,21 +184,32 @@ interface RowInput extends IngredientInput {
  * canonical basis, read the amount in that basis.
  */
 function convertWithDvCheck(n: Nutrient, amount: Amount, formKind: string | null, pctDv: number | null): ConversionResult {
-  const conv = toCanonical(n, amount.amount, amount.unit, formKind);
-  if (conv.ok || !n.label_dv || pctDv === null) return conv;
-  const src = parseUnit(amount.unit);
+  const missingUnit = isMissingUnit(amount.unit);
+  const conv: ConversionResult = missingUnit
+    ? { ok: false, reason: `DSLD lists ${amount.amount} for ${n.name} with no unit${n.label_dv && pctDv !== null ? ' and the %DV does not identify one' : ''}` }
+    : toCanonical(n, amount.amount, amount.unit, formKind);
+  if (conv.ok || !n.label_dv || pctDv === null || pctDv <= 0) return conv;
   const dv = parseUnit(n.label_dv.unit);
-  if (src.kind !== 'mass' || src.basis !== null || dv.kind !== 'mass') return conv;
-  const inDvUnit = convertMass(amount.amount, src.unit, dv.unit);
-  const expected = (inDvUnit / n.label_dv.amount) * 100;
-  if (Math.abs(expected - pctDv) > Math.max(1.5, pctDv * 0.05)) return conv;
-  const retry = toCanonical(n, inDvUnit, n.label_dv.unit, formKind);
-  if (!retry.ok) return conv;
-  return {
-    ...retry,
-    converted: true,
-    note: `Label unit "${amount.unit}" read as ${n.label_dv.unit}: the label's ${pctDv}% DV matches the ${n.label_dv.amount} ${n.label_dv.unit} Daily Value`,
-  };
+  if (dv.kind !== 'mass') return conv;
+
+  // Units to try: the declared plain mass unit (read in the DV's basis), or every mass unit when none was captured.
+  const src = parseUnit(amount.unit);
+  const candidates: MassUnit[] = missingUnit ? ['mcg', 'mg', 'g'] : src.kind === 'mass' && src.basis === null ? [src.unit] : [];
+  for (const unit of candidates) {
+    const inDvUnit = convertMass(amount.amount, unit, dv.unit);
+    const expected = (inDvUnit / n.label_dv.amount) * 100;
+    if (Math.abs(expected - pctDv) > Math.max(1.5, pctDv * 0.05)) continue;
+    const retry = toCanonical(n, inDvUnit, n.label_dv.unit, formKind);
+    if (!retry.ok) continue;
+    return {
+      ...retry,
+      converted: true,
+      note: missingUnit
+        ? `DSLD lists no unit; read as ${amount.amount} ${unit} because the label's ${pctDv}% DV matches the ${n.label_dv.amount} ${n.label_dv.unit} Daily Value`
+        : `Label unit "${amount.unit}" read as ${n.label_dv.unit}: the label's ${pctDv}% DV matches the ${n.label_dv.amount} ${n.label_dv.unit} Daily Value`,
+    };
+  }
+  return conv;
 }
 
 /** UL portion from a form breakdown, when every entry has a known form and amount. */
@@ -182,6 +234,27 @@ function ulFromBreakdown(n: Nutrient, breakdown: FormBreakdownEntry[]): number |
   return round(sum, 4);
 }
 
+/** Convert a row whose amount is split across forms by stated percentages. */
+function convertSplit(n: Nutrient, amount: Amount, parts: { kind: string; pct: number }[]): ConversionResult & { towardUl?: number | null } {
+  let total = 0;
+  let towardUl: number | null = 0;
+  for (const p of parts) {
+    const c = toCanonical(n, (amount.amount * p.pct) / 100, amount.unit, p.kind);
+    if (!c.ok) return { ok: false, reason: `${c.reason} (for the ${p.pct}% stated as ${p.kind})` };
+    total += c.amount;
+    const ul = ulPortion(n, c.amount, p.kind);
+    towardUl = towardUl === null || ul === null ? null : towardUl + ul;
+  }
+  return {
+    ok: true,
+    amount: round(total, 4),
+    unit: n.canonical_unit,
+    converted: true,
+    note: `Split by the label's stated form shares: ${parts.map((p) => `${p.pct}% ${p.kind}`).join(', ')}`,
+    towardUl: towardUl === null ? null : round(towardUl, 4),
+  };
+}
+
 /** Shared by DSLD rows and custom ingredients: match, convert, and record gaps. */
 function addRow(row: RowInput, ctx: RowContext): { nutrient: Nutrient | null; quantified: boolean } {
   const { out, productRef } = ctx;
@@ -200,7 +273,10 @@ function addRow(row: RowInput, ctx: RowContext): { nutrient: Nutrient | null; qu
   const n = match.nutrient;
   const breakdown = row.breakdown ?? [];
   const kinds = new Set([...match.form_kinds, ...breakdown.flatMap((b) => (b.form_kind ? [b.form_kind] : []))]);
-  const formKind = kinds.size === 1 ? [...kinds][0]! : null;
+  const split = row.isCustom ? ({ status: 'none' } as const) : formSplit(n, row);
+  let formKind = kinds.size === 1 ? [...kinds][0]! : null;
+  if (split.status === 'partial') formKind = null;
+  if (split.status === 'full' && split.parts.length === 1) formKind = split.parts[0]!.kind;
   const ing: NormalizedIngredient = {
     label_name: row.name,
     nutrient_id: n.id,
@@ -232,13 +308,17 @@ function addRow(row: RowInput, ctx: RowContext): { nutrient: Nutrient | null; qu
         : `Label row "${row.name}" names a compound; its amount may be compound weight, not elemental ${n.name}`,
     );
   } else {
-    const conv = convertWithDvCheck(n, row.amount, formKind, row.percentDv);
+    const multi = split.status === 'full' && split.parts.length > 1 ? convertSplit(n, row.amount, split.parts) : null;
+    const conv = multi ?? convertWithDvCheck(n, row.amount, formKind, row.percentDv);
     if (conv.ok) {
       ing.per_serving = { amount: conv.amount, unit: conv.unit };
       ing.conversion_note = conv.note;
-      ing.toward_ul_per_serving = (n.ul_component === 'all' ? null : ulFromBreakdown(n, breakdown)) ?? ulPortion(n, conv.amount, formKind);
+      ing.toward_ul_per_serving =
+        multi?.ok === true
+          ? (multi.towardUl ?? null)
+          : ((n.ul_component === 'all' ? null : ulFromBreakdown(n, breakdown)) ?? ulPortion(n, conv.amount, formKind));
     } else {
-      gap('UNIT_NOT_CONVERTIBLE', conv.reason);
+      gap('UNIT_NOT_CONVERTIBLE', split.status === 'partial' ? `${conv.reason} (${split.detail})` : conv.reason);
     }
   }
   out.ingredients.push(ing);
@@ -258,6 +338,7 @@ function rowInput(row: DsldIngredientRow, servingOrder: number): RowInput {
     percentDv: percentDv(q),
     inBlend: false,
     isCustom: false,
+    notes: row.notes ?? null,
   };
 }
 
