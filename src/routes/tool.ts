@@ -3,6 +3,7 @@ import { parseBody, toolRequest } from '../schemas/requests.js';
 import type { Deps } from './deps.js';
 import { nutrientReference } from './nutrients.js';
 import { getProducts, lookupProduct, searchProducts } from './products.js';
+import { checkInteractions } from './interactions.js';
 import { analyze } from './stack.js';
 
 /** MCP-style dispatcher: {"tool":"stack_analyze","arguments":{...}} -> same result as the matching route. */
@@ -20,6 +21,8 @@ export function registerToolRoute(app: FastifyInstance, deps: Deps): void {
         return nutrientReference(args);
       case 'stack_analyze':
         return analyze(args, deps);
+      case 'interactions_check':
+        return checkInteractions(args, deps);
     }
   });
 }

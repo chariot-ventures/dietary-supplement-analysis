@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { GUIDE } from '../lib/guide.js';
 import { requestSchema } from '../openapi.js';
-import { analyzeRequest, getRequest, lookupRequest, referenceRequest, searchRequest } from '../schemas/requests.js';
+import { analyzeRequest, getRequest, interactionsRequest, lookupRequest, referenceRequest, searchRequest } from '../schemas/requests.js';
 import { DOCS_URL, SERVICE_ID, VERSION } from '../version.js';
 
 /**
@@ -14,7 +14,7 @@ export function toolDefinitions() {
       name: 'stack_analyze',
       path: '/v1/stack/analyze',
       description:
-        'Check a list of dietary supplements for a person: per-nutrient daily totals against NIH upper limits (UL) and RDA/AI, which products overlap, what each UL protects against, and single-product changes that would bring an above-UL nutrient back under it. Products can be given as names ("Centrum Silver Women 50+"), barcodes, DSLD IDs, or custom ingredient lists; optional candidates are evaluated as additions. Returns agent_summary (plain sentences to relay), resolutions, suggestions, nutrient_totals and data_gaps. Label data only; food and medications are not included.',
+        'Check a list of dietary supplements for a person: per-nutrient daily totals against NIH upper limits (UL) and RDA/AI, which products overlap, what each UL protects against, and single-product changes that would bring an above-UL nutrient back under it. Products can be given as names ("Centrum Silver Women 50+"), barcodes, DSLD IDs, or custom ingredient lists; optional candidates are evaluated as additions. Pass the person\'s medications and conditions (smoker, kidney_disease, hemochromatosis, lab_test_soon, cancer_treatment) to check them against the interactions in the NIH fact sheets. Returns agent_summary (plain sentences to relay), resolutions, suggestions, interactions, nutrient_totals and data_gaps. Label data only; food is included only with diet "typical".',
       input_schema: requestSchema(analyzeRequest),
     },
     {
@@ -34,6 +34,13 @@ export function toolDefinitions() {
       path: '/v1/products/get',
       description: 'Full normalized supplement labels by DSLD ID (up to 10): every ingredient with label amount, converted amount, form and %DV.',
       input_schema: requestSchema(getRequest),
+    },
+    {
+      name: 'interactions_check',
+      path: '/v1/interactions/check',
+      description:
+        'Which vitamins and minerals interact with given medications (generic or brand names, e.g. "warfarin", "Synthroid") or conditions, per the NIH Office of Dietary Supplements fact sheets, with timing advice (e.g. take levothyroxine 4 hours apart from calcium). No product list needed; to check an actual stack, pass medications to stack_analyze instead. Not exhaustive.',
+      input_schema: requestSchema(interactionsRequest),
     },
     {
       name: 'nutrients_reference',

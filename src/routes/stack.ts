@@ -7,9 +7,11 @@ import type { CallOptions, DsldClient, LabelResult } from '../lib/dsld.js';
 import { AppError } from '../lib/errors.js';
 import { dedupeSources, envelope, type Source } from '../lib/envelope.js';
 import { normalizeCustomProduct, normalizeDsldLabel, type DataGap } from '../lib/label.js';
+import { conditionName, evaluateInteractions, INTERACTIONS_REVIEWED, matchMedications, type InteractionFinding, type MedicationMatch } from '../lib/interactions.js';
 import { provenanceShort } from '../lib/provenance.js';
 import { analyzeRequest, assertSupportedProfile, parseBody, type StackProductInput } from '../schemas/requests.js';
 import { upstreamBudget, type Deps } from './deps.js';
+import { INTERACTIONS_SCOPE } from './interactions.js';
 
 export interface Resolution {
   /** Where the input was: "products.2" or "candidates.0". */
@@ -108,6 +110,7 @@ export async function analyze(body: unknown, deps: Deps) {
   // 1. Resolve names and barcodes to DSLD IDs (in parallel).
   const resolutions: Resolution[] = [];
   const all = [...req.products.map((p, i) => ({ p, path: `products.${i}` })), ...(req.candidates ?? []).map((p, i) => ({ p, path: `candidates.${i}` }))];
+  const medsPromise: Promise<MedicationMatch[]> = req.medications ? matchMedications(req.medications, deps.rxnorm ?? null, signal) : Promise.resolve([]);
   const resolved = await Promise.all(all.map(({ p, path }) => resolveItem(p, path, deps.dsld, opts, resolutions)));
   resolutions.sort((a, b) => all.findIndex((x) => x.path === a.input_path) - all.findIndex((x) => x.path === b.input_path));
   const base = resolved.slice(0, req.products.length);
@@ -199,6 +202,21 @@ export async function analyze(body: unknown, deps: Deps) {
   }
   const dietFlags = dietOnlyFlags(analysis).map(({ t, est }) => ({ name: t.name, percent_of_ul: est.percent_of_ul, flag: est.flags[0]! }));
 
+  // Medication and condition interactions (NIH ODS fact sheets only).
+  const meds = await medsPromise;
+  const checked = Boolean(req.medications || req.conditions);
+  const findings: InteractionFinding[] = checked ? evaluateInteractions(analysis, baseProducts, meds, req.conditions ?? []) : [];
+  if (req.medications) {
+    const i = analysis.data_gaps.findIndex((g) => g.code === 'INTERACTIONS_NOT_ASSESSED');
+    const unrec: DataGap[] = meds
+      .filter((m) => m.status === 'not_recognized')
+      .map((m) => ({ code: 'MEDICATION_NOT_RECOGNIZED', detail: `"${m.input}" did not match a medication class in the NIH fact sheet interaction list, so nothing was checked for it.` }));
+    analysis.data_gaps.splice(i < 0 ? analysis.data_gaps.length : i, i < 0 ? 0 : 1, { code: 'INTERACTIONS_PARTIAL', detail: `${INTERACTIONS_SCOPE} Supplement-to-supplement interactions are not evaluated.` }, ...unrec);
+    analysis.summary.data_gaps += unrec.length;
+  }
+  for (const f of findings) extraSources.push({ name: f.source.name, url: f.source.url, retrieved: INTERACTIONS_REVIEWED });
+  const inStack = findings.filter((f) => f.in_stack);
+
   const suggestions = suggestFixes(analysis);
   const lowConfidence = resolutions
     .filter((r) => r.status === 'resolved' && r.confidence === 'low' && 'query' in r.input)
@@ -210,6 +228,7 @@ export async function analyze(body: unknown, deps: Deps) {
     unresolved: resolutions.filter((r) => r.status === 'not_found').map((r) => ('query' in r.input ? r.input.query : `UPC ${r.input.upc}`)),
     lowConfidence,
     candidates: candidateResults,
+    interactions: checked ? { findings: inStack, medicationsGiven: meds.length, unrecognized: meds.filter((m) => m.status === 'not_recognized').map((m) => m.input), conditionNames: (req.conditions ?? []).map(conditionName) } : undefined,
   });
 
   const { sources, products, summary, profile: prof, assumptions, nutrient_totals, overlaps, unrecognized_ingredients, data_gaps } = analysis;
@@ -218,6 +237,7 @@ export async function analyze(body: unknown, deps: Deps) {
     products_unresolved: unresolvedGaps.length,
     suggestions: suggestions.length,
     ...(req.diet === 'typical' ? { diet_estimates: dietApplied, diet_only_flags: dietFlags.length } : {}),
+    ...(checked ? { interaction_findings: findings.length, interaction_findings_in_stack: inStack.length } : {}),
   };
   const allSources = dedupeSources([...sources, ...extraSources]);
 
@@ -255,6 +275,16 @@ export async function analyze(body: unknown, deps: Deps) {
         })),
         suggestions: suggestions.map((s) => ({ nutrient_id: s.nutrient_id, action: s.action, product_ref: s.product_ref, resolves: s.resolves, text: s.text })),
         ...(req.candidates ? { candidate_results: candidateResults.map((c) => ({ product_ref: c.product_ref, verdict: c.verdict, text: c.text })) } : {}),
+        ...(checked
+          ? {
+              interactions: {
+                medications: meds.map((m) => ({ input: m.input, status: m.status, matched_name: m.matched_name })),
+                // In-stack findings in full; the rest (nutrients the stack does not supply) as a count.
+                findings: inStack.map((f) => ({ trigger: f.trigger, trigger_name: f.trigger_name, nutrient_ids: f.nutrient_ids, product_refs: f.product_refs, kind: f.kind, summary: f.summary, timing: f.timing })),
+                not_in_stack: findings.length - inStack.length,
+              },
+            }
+          : {}),
         data_gap_codes: [...new Set(data_gaps.map((g) => g.code))],
         provenance: provenanceShort(),
       },
@@ -272,6 +302,7 @@ export async function analyze(body: unknown, deps: Deps) {
       assumptions,
       suggestions,
       ...(req.candidates ? { candidate_results: candidateResults } : {}),
+      ...(checked ? { interactions: { scope: INTERACTIONS_SCOPE, reviewed: INTERACTIONS_REVIEWED, medications: meds, findings } } : {}),
       nutrient_totals,
       overlaps,
       unrecognized_ingredients,

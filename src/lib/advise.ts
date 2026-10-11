@@ -8,6 +8,7 @@
  */
 import type { Amount } from './label.js';
 import type { NutrientTotal, ProductSummary, StackAnalysis } from './analyze.js';
+import type { InteractionFinding } from './interactions.js';
 import { round } from './text.js';
 
 export interface Suggestion {
@@ -57,6 +58,7 @@ export function num(v: number): string {
   return String(r);
 }
 
+const cap = (s: string) => (s ? s[0]!.toUpperCase() + s.slice(1) : s);
 const lower = (s: string) => (s ? s[0]!.toLowerCase() + s.slice(1) : s);
 const nameOf = (t: NutrientTotal) => (/^[A-Z][a-z]/.test(t.name) && !/^Vitamin|^DHA|^EPA/.test(t.name) ? t.name.toLowerCase() : t.name);
 
@@ -219,6 +221,8 @@ export interface SummaryContext {
   unresolved: string[];
   lowConfidence: { input: string; chosen: string }[];
   candidates: CandidateResult[];
+  /** Present when medications or conditions were given. findings: those involving a nutrient the stack supplies. */
+  interactions?: { findings: InteractionFinding[]; medicationsGiven: number; unrecognized: string[]; conditionNames: string[] } | undefined;
 }
 
 /**
@@ -260,6 +264,7 @@ export function agentSummary(a: StackAnalysis, ctx: SummaryContext): string {
     const items = ctx.dietFlags.map((d) => `${d.name} would be ${d.flag === 'above_ul' ? 'above' : 'near'} its UL${d.percent_of_ul === null ? '' : ` (${num(d.percent_of_ul)}%)`}`);
     parts.push(`With average US food and drink intake added, ${items.join('; ')}.`);
   }
+  if (ctx.interactions) parts.push(...interactionSentences(ctx.interactions, a));
   for (const c of ctx.candidates) parts.push(c.text);
   if (ctx.unresolved.length) parts.push(`Not identified, so not counted: ${ctx.unresolved.map((u) => `"${u}"`).join(', ')}.`);
   if (ctx.lowConfidence.length) {
@@ -268,10 +273,33 @@ export function agentSummary(a: StackAnalysis, ctx: SummaryContext): string {
   if (a.summary.data_suspect) {
     parts.push(`${a.summary.data_suspect} label entr${a.summary.data_suspect === 1 ? 'y looks' : 'ies look'} inconsistent in the NIH database (DATA_SUSPECT in data_gaps); check the label before relying on ${a.summary.data_suspect === 1 ? 'it' : 'them'}.`);
   }
+  const medNote = ctx.interactions?.medicationsGiven ? ' Medication checks cover only interactions named in NIH fact sheets; a pharmacist can check the full list.' : '';
   parts.push(
     ctx.dietApplied
-      ? 'Supplement totals exclude medications; the food estimate is a US average, not this person\'s diet. Label data, not medical advice.'
-      : 'Totals exclude food, drinks and medications. Label data, not medical advice.',
+      ? `Supplement totals exclude medications; the food estimate is a US average, not this person's diet.${medNote} Label data, not medical advice.`
+      : `Totals exclude food, drinks and medications.${medNote} Label data, not medical advice.`,
   );
   return parts.join(' ');
+}
+
+const MAX_INTERACTION_SENTENCES = 3;
+
+function interactionSentences(ix: NonNullable<SummaryContext['interactions']>, a: StackAnalysis): string[] {
+  const out: string[] = [];
+  const nutrientName = new Map(a.nutrient_totals.map((t) => [t.nutrient_id, t.name]));
+  const meds = ix.findings.filter((f) => f.type === 'medication');
+  if (ix.medicationsGiven && !meds.length) {
+    out.push('The NIH fact sheets list no interaction between the medications given and the nutrients in this stack (the list is not exhaustive).');
+  }
+  // Findings arrive sorted (supplement acts on the drug first); one short sentence each.
+  for (const f of ix.findings.slice(0, MAX_INTERACTION_SENTENCES)) {
+    const what = f.nutrient_ids.map((id) => nutrientName.get(id) ?? id).join('/');
+    const first = f.summary.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? f.summary;
+    const lead = f.type === 'medication' ? `${cap(f.trigger)} with ${what} in this stack` : `${what} in this stack (${lower(f.trigger_name.replace(/\s*\(.*\)$/, ''))})`;
+    out.push(`${lead}: ${first}${f.timing ? ` ${f.timing}` : ''}`);
+  }
+  const more = ix.findings.length - MAX_INTERACTION_SENTENCES;
+  if (more > 0) out.push(`${more} more interaction finding${more === 1 ? '' : 's'} in interactions.findings.`);
+  if (ix.unrecognized.length) out.push(`Not recognized, so not checked: ${ix.unrecognized.map((u) => `"${u}"`).join(', ')}.`);
+  return out;
 }

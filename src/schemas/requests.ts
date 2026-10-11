@@ -1,10 +1,12 @@
 import { z } from 'zod';
 import { AppError } from '../lib/errors.js';
+import { CONDITION_IDS } from '../lib/interactions.js';
 
 export const MAX_STACK_PRODUCTS = 15;
 export const MAX_GET_IDS = 10;
 export const MAX_SEARCH_LIMIT = 10;
 export const MAX_CANDIDATES = 5;
+export const MAX_MEDICATIONS = 30;
 
 const dsldId = z.number().int().positive().max(10_000_000).describe('DSLD label ID, e.g. from /v1/products/search');
 const sex = z.enum(['male', 'female']);
@@ -12,6 +14,20 @@ const age = z.number().min(0).max(120).describe('Age in years. For infants use a
 const lifeStage = z
   .enum(['pregnancy', 'lactation'])
   .describe('Pregnancy or lactation (breastfeeding) reference values; requires sex "female" and age 14-50');
+const medications = z
+  .array(z.string().trim().min(2).max(100))
+  .min(1)
+  .max(MAX_MEDICATIONS)
+  .describe(
+    'Medications the person takes, as generic or brand names ("warfarin", "Synthroid", "metformin 500 mg"). Checked against the medication interactions listed in the NIH ODS fact sheets; not exhaustive. Never logged.',
+  );
+const conditions = z
+  .array(z.enum(CONDITION_IDS))
+  .min(1)
+  .max(CONDITION_IDS.length)
+  .describe(
+    'Conditions that change how NIH reads a dose: smoker (current or former, or asbestos exposure: beta-carotene), kidney_disease (potassium, magnesium, phosphorus), hemochromatosis (iron, vitamin C), lab_test_soon (biotin interferes with lab tests), cancer_treatment (antioxidant doses)',
+  );
 const servingsPerDay = z
   .number()
   .positive()
@@ -108,6 +124,8 @@ export const analyzeRequest = z
       .describe(
         `1-${MAX_STACK_PRODUCTS} products. Each is one of: {"dsld_id"}, {"query"} (a product name, resolved server-side), {"upc"} (barcode), or a custom product {"name","ingredients"}. Add "servings_per_day" to any of them.`,
       ),
+    medications: medications.optional(),
+    conditions: conditions.optional(),
     candidates: z
       .array(stackProduct)
       .min(1)
@@ -117,8 +135,22 @@ export const analyzeRequest = z
   })
   .refine((v) => (v.age === undefined) === (v.sex === undefined), { message: 'Give age and sex together, or neither', path: ['age'] });
 
+export const interactionsRequest = z
+  .object({
+    medications: medications.optional(),
+    conditions: conditions.optional(),
+    nutrients: z
+      .array(z.string().trim().min(1).max(100))
+      .min(1)
+      .max(40)
+      .optional()
+      .describe('Optional: only report interactions involving these nutrients (IDs or names, e.g. "vitamin-k", "magnesium")'),
+  })
+  .strict()
+  .refine((v) => v.medications || v.conditions, { message: 'Give medications, conditions or both', path: ['medications'] });
+
 export const toolRequest = z.object({
-  tool: z.enum(['products_search', 'products_get', 'products_lookup', 'nutrients_reference', 'stack_analyze']),
+  tool: z.enum(['products_search', 'products_get', 'products_lookup', 'nutrients_reference', 'stack_analyze', 'interactions_check']),
   arguments: z.record(z.string(), z.unknown()).default({}),
 });
 
@@ -128,6 +160,7 @@ export type ReferenceRequest = z.infer<typeof referenceRequest>;
 export type AnalyzeRequest = z.infer<typeof analyzeRequest>;
 export type StackProductInput = z.infer<typeof stackProduct>;
 export type LookupRequest = z.infer<typeof lookupRequest>;
+export type InteractionsRequest = z.infer<typeof interactionsRequest>;
 
 /** Booleans some callers send instead of life_stage. */
 const LIFE_STAGE_ALIASES: Record<string, 'pregnancy' | 'lactation'> = {

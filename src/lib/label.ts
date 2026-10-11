@@ -68,7 +68,9 @@ export type DataGapCode =
   | 'SERVINGS_UNKNOWN'
   | 'DATA_SUSPECT'
   | 'PRODUCT_NOT_RESOLVED'
-  | 'INTERACTIONS_NOT_ASSESSED';
+  | 'INTERACTIONS_NOT_ASSESSED'
+  | 'INTERACTIONS_PARTIAL'
+  | 'MEDICATION_NOT_RECOGNIZED';
 
 /** Why a DATA_SUSPECT gap was raised. */
 export type SuspectCheck = 'duplicate_row' | 'nested_exceeds_parent' | 'percent_dv_mismatch' | 'implausible_amount';

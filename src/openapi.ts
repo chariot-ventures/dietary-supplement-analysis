@@ -5,7 +5,7 @@
  * test fails if it drifts from this function.
  */
 import { z } from 'zod';
-import { analyzeRequest, getRequest, lookupRequest, referenceRequest, searchRequest, toolRequest } from './schemas/requests.js';
+import { analyzeRequest, getRequest, interactionsRequest, lookupRequest, referenceRequest, searchRequest, toolRequest } from './schemas/requests.js';
 import { DOCS_URL, SERVICE_ID, VERSION } from './version.js';
 
 type Json = Record<string, unknown>;
@@ -52,6 +52,31 @@ const components: Json = {
     },
     required: ['error'],
   },
+  MedicationMatch: {
+    type: 'object',
+    properties: {
+      input: { type: 'string' },
+      status: { type: 'string', enum: ['matched', 'not_recognized'] },
+      matched_name: nullable('string'),
+      via: { oneOf: [{ type: 'string', enum: ['name', 'rxnorm'] }, { type: 'null' }], description: '"rxnorm": the name was normalized to its ingredient with NIH RxNav' },
+      classes: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, name: { type: 'string' } } } },
+    },
+  },
+  InteractionFinding: {
+    type: 'object',
+    properties: {
+      type: { type: 'string', enum: ['medication', 'condition'] },
+      trigger: { type: 'string', description: 'The medication as given, or the condition id' },
+      trigger_name: { type: 'string' },
+      nutrient_ids: { type: 'array', items: { type: 'string' } },
+      in_stack: { type: 'boolean', description: 'True when the stack supplies one of the nutrients (condition findings: at or above the checked dose)' },
+      product_refs: { type: 'array', items: { type: 'string' } },
+      kind: { type: 'string', enum: ['supplement_changes_drug', 'drug_lowers_nutrient', 'drug_raises_nutrient', 'additive_risk', 'two_way', 'condition'] },
+      summary: { type: 'string' },
+      timing: nullable('string'),
+      source: { type: 'object', properties: { name: { type: 'string' }, url: { type: 'string' } } },
+    },
+  },
   DataGap: {
     type: 'object',
     properties: {
@@ -71,6 +96,8 @@ const components: Json = {
           'DATA_SUSPECT',
           'PRODUCT_NOT_RESOLVED',
           'INTERACTIONS_NOT_ASSESSED',
+          'INTERACTIONS_PARTIAL',
+          'MEDICATION_NOT_RECOGNIZED',
         ],
       },
       product_ref: { type: 'string' },
@@ -412,6 +439,18 @@ export function buildOpenApi(): Json {
           assumptions: { type: 'array', items: { type: 'string' } },
           suggestions: { type: 'array', items: { $ref: '#/components/schemas/Suggestion' } },
           candidate_results: { type: 'array', items: { $ref: '#/components/schemas/CandidateResult' }, description: 'Present when candidates were given' },
+          interactions: {
+            type: 'object',
+            description:
+              'Present when medications or conditions were given. Full form: scope, reviewed, medications (how each name was matched) and findings (all NIH-listed interactions, those involving nutrients in the stack first). Summary form: medications, in-stack findings, and a not_in_stack count.',
+            properties: {
+              scope: { type: 'string' },
+              reviewed: { type: 'string' },
+              medications: { type: 'array', items: { $ref: '#/components/schemas/MedicationMatch' } },
+              findings: { type: 'array', items: { $ref: '#/components/schemas/InteractionFinding' } },
+              not_in_stack: { type: 'integer' },
+            },
+          },
           nutrient_totals: { type: 'array', items: { $ref: '#/components/schemas/NutrientTotal' } },
           overlaps: {
             type: 'array',
@@ -444,7 +483,29 @@ export function buildOpenApi(): Json {
           },
           what_if: { age: 34, sex: 'female', products: [{ dsld_id: 338022 }], candidates: [{ query: 'vitamin d3 5000 iu' }] },
           custom: { age: 6, sex: 'male', products: [{ name: 'Immune gummy', ingredients: [{ name: 'zinc', amount: 10, unit: 'mg' }] }] },
+          with_medications: {
+            age: 58,
+            sex: 'male',
+            detail: 'summary',
+            medications: ['warfarin', 'Synthroid'],
+            conditions: ['smoker'],
+            products: [{ name: 'Daily multi', ingredients: [{ name: 'vitamin K', amount: 120, unit: 'mcg' }, { name: 'calcium', amount: 500, unit: 'mg' }] }],
+          },
         },
+      ),
+      '/v1/interactions/check': post(
+        'Medication and condition interactions',
+        'Vitamin and mineral interactions for the given medications (generic or brand names, normalized with NIH RxNorm when the name is not in the list) and conditions, as listed in the NIH Office of Dietary Supplements fact sheets. Not exhaustive. To check an actual stack, pass medications to /v1/stack/analyze.',
+        interactionsRequest,
+        ok('Interactions', {
+          summary: { type: 'object', properties: { medications: { type: 'integer' }, medications_recognized: { type: 'integer' }, findings: { type: 'integer' } } },
+          scope: { type: 'string' },
+          reviewed: { type: 'string' },
+          medications: { type: 'array', items: { $ref: '#/components/schemas/MedicationMatch' } },
+          findings: { type: 'array', items: { $ref: '#/components/schemas/InteractionFinding' } },
+          data_gaps: { type: 'array', items: { $ref: '#/components/schemas/DataGap' } },
+        }),
+        { levothyroxine: { medications: ['levothyroxine'] }, warfarin_vitamin_k: { medications: ['Coumadin'], nutrients: ['vitamin k'] }, condition: { conditions: ['kidney_disease'] } },
       ),
       '/v1/provenance': {
         get: {

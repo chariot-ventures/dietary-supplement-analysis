@@ -1,6 +1,6 @@
 {
   "service": "dietary-supplement-analysis",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "as_of": "<date>",
   "profile": {
     "age": 34,
@@ -651,7 +651,7 @@
     },
     {
       "code": "INTERACTIONS_NOT_ASSESSED",
-      "detail": "Drug and supplement interactions are not evaluated. For medications, see Pocket services med-safety and fda."
+      "detail": "No medications were given, so medication interactions were not checked (pass medications[]). Supplement-to-supplement interactions are not evaluated."
     }
   ],
   "products": [
@@ -687,7 +687,7 @@
     }
   ],
   "provenance": {
-    "version": "0.5.0",
+    "version": "0.6.0",
     "commit": null,
     "reference_values_reviewed": "2026-10-11"
   },

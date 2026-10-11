@@ -2,6 +2,7 @@ import warmQueries from '../data/warm-queries.json' with { type: 'json' };
 import { buildApp } from './app.js';
 import { DsldClient } from './lib/dsld.js';
 import { createFixtureFetch, loadFixtureLabels } from './lib/dsld-fixtures.js';
+import { RxNormClient } from './lib/interactions.js';
 import { openLabelStore } from './lib/store.js';
 import { startWarmer } from './lib/warm.js';
 import { SERVICE_ID, VERSION } from './version.js';
@@ -22,6 +23,8 @@ const dsld = new DsldClient({
 
 const app = buildApp({
   dsld,
+  // RXNORM=off (or offline fixtures) keeps medication matching to the names in data/interactions.json.
+  rxnorm: fixturesDir || process.env.RXNORM === 'off' ? null : new RxNormClient(undefined, process.env.RXNORM_BASE_URL || undefined),
   logger: { level: process.env.LOG_LEVEL ?? 'info' },
   ...(process.env.UPSTREAM_BUDGET_MS ? { upstreamBudgetMs: Number(process.env.UPSTREAM_BUDGET_MS) } : {}),
 });

@@ -19,6 +19,7 @@ import { SERVICE_ID, VERSION } from '../version.js';
 import type { Deps } from './deps.js';
 import { nutrientReference } from './nutrients.js';
 import { getProducts, lookupProduct, searchProducts } from './products.js';
+import { checkInteractions } from './interactions.js';
 import { analyze } from './stack.js';
 import { toolDefinitions } from './tools.js';
 
@@ -36,8 +37,8 @@ const rpcError = (id: Id, code: number, message: string) => ({ jsonrpc: '2.0', i
 const rpcResult = (id: Id, result: unknown) => ({ jsonrpc: '2.0', id, result });
 
 const INSTRUCTIONS =
-  'Use stack_analyze for any question about whether a set of dietary supplements is too much, overlaps, or what to change. Pass products the way the user names them ({"query": "..."}), with age and sex. Relay agent_summary; do not call a stack "safe". ' +
-  'products_lookup takes a barcode; nutrients_reference gives RDA/UL for one nutrient. Label and reference data only, not medical advice.';
+  'Use stack_analyze for any question about whether a set of dietary supplements is too much, overlaps, or what to change. Pass products the way the user names them ({"query": "..."}), with age and sex, plus any medications and conditions the user mentions. Relay agent_summary; do not call a stack "safe". ' +
+  'interactions_check lists NIH-documented medication interactions without a stack; products_lookup takes a barcode; nutrients_reference gives RDA/UL for one nutrient. Label and reference data only, not medical advice.';
 
 async function callTool(name: string, args: Record<string, unknown>, deps: Deps): Promise<unknown> {
   switch (name) {
@@ -51,6 +52,8 @@ async function callTool(name: string, args: Record<string, unknown>, deps: Deps)
       return getProducts(args, deps);
     case 'nutrients_reference':
       return nutrientReference(args);
+    case 'interactions_check':
+      return checkInteractions(args, deps);
     default:
       throw new AppError('NOT_FOUND', `Unknown tool "${name}"`, { field: 'name' });
   }

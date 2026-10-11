@@ -1,0 +1,1325 @@
+{
+ "_doc": "Medication and condition interactions listed in the NIH ODS health-professional fact sheets (Interactions with Medications, and the health-risk sections for conditions). Only interactions named there are included; the list is not exhaustive. \"kind\": supplement_changes_drug | drug_lowers_nutrient | drug_raises_nutrient | additive_risk | two_way. Medication names are matched case-insensitively against generic and brand names; unknown names are normalized with NIH RxNorm when the service can reach it.",
+ "reviewed": "2026-10-11",
+ "drug_classes": {
+  "vitamin_k_antagonists": {
+   "name": "Warfarin and similar vitamin K antagonists",
+   "members": [
+    "warfarin",
+    "coumadin",
+    "jantoven",
+    "phenprocoumon",
+    "acenocoumarol"
+   ]
+  },
+  "anticoagulants": {
+   "name": "Anticoagulants",
+   "members": [
+    "warfarin",
+    "coumadin",
+    "jantoven",
+    "phenprocoumon",
+    "acenocoumarol",
+    "apixaban",
+    "eliquis",
+    "rivaroxaban",
+    "xarelto",
+    "dabigatran",
+    "pradaxa",
+    "edoxaban",
+    "savaysa",
+    "heparin",
+    "enoxaparin",
+    "lovenox"
+   ]
+  },
+  "antiplatelets": {
+   "name": "Antiplatelet medications",
+   "members": [
+    "clopidogrel",
+    "plavix",
+    "prasugrel",
+    "effient",
+    "ticagrelor",
+    "brilinta",
+    "dipyridamole",
+    "cilostazol"
+   ]
+  },
+  "bile_acid_sequestrants": {
+   "name": "Bile acid sequestrants",
+   "members": [
+    "cholestyramine",
+    "questran",
+    "prevalite",
+    "colestipol",
+    "colestid",
+    "colesevelam",
+    "welchol"
+   ]
+  },
+  "orlistat": {
+   "name": "Orlistat",
+   "members": [
+    "orlistat",
+    "alli",
+    "xenical"
+   ]
+  },
+  "retinoids": {
+   "name": "Oral retinoids",
+   "members": [
+    "acitretin",
+    "soriatane",
+    "bexarotene",
+    "targretin",
+    "isotretinoin",
+    "accutane",
+    "absorica",
+    "claravis",
+    "amnesteem"
+   ]
+  },
+  "dolutegravir": {
+   "name": "Dolutegravir",
+   "members": [
+    "dolutegravir",
+    "tivicay",
+    "dovato",
+    "triumeq",
+    "juluca"
+   ]
+  },
+  "levothyroxine": {
+   "name": "Levothyroxine",
+   "members": [
+    "levothyroxine",
+    "synthroid",
+    "levoxyl",
+    "unithroid",
+    "euthyrox",
+    "tirosint",
+    "levo-t"
+   ]
+  },
+  "lithium": {
+   "name": "Lithium",
+   "members": [
+    "lithium",
+    "eskalith",
+    "lithobid",
+    "lithium carbonate"
+   ]
+  },
+  "quinolones": {
+   "name": "Quinolone antibiotics",
+   "members": [
+    "ciprofloxacin",
+    "cipro",
+    "levofloxacin",
+    "levaquin",
+    "moxifloxacin",
+    "avelox",
+    "gemifloxacin",
+    "factive",
+    "ofloxacin",
+    "delafloxacin"
+   ]
+  },
+  "tetracyclines": {
+   "name": "Tetracycline antibiotics",
+   "members": [
+    "tetracycline",
+    "doxycycline",
+    "vibramycin",
+    "doryx",
+    "minocycline",
+    "minocin",
+    "solodyn",
+    "demeclocycline",
+    "sarecycline"
+   ]
+  },
+  "levodopa": {
+   "name": "Levodopa",
+   "members": [
+    "levodopa",
+    "carbidopa/levodopa",
+    "carbidopa-levodopa",
+    "sinemet",
+    "rytary",
+    "stalevo",
+    "duopa"
+   ]
+  },
+  "ppis": {
+   "name": "Proton pump inhibitors",
+   "members": [
+    "omeprazole",
+    "prilosec",
+    "esomeprazole",
+    "nexium",
+    "lansoprazole",
+    "prevacid",
+    "pantoprazole",
+    "protonix",
+    "rabeprazole",
+    "aciphex",
+    "dexlansoprazole",
+    "dexilant"
+   ]
+  },
+  "h2_blockers": {
+   "name": "H2 blockers",
+   "members": [
+    "famotidine",
+    "pepcid",
+    "cimetidine",
+    "tagamet",
+    "ranitidine",
+    "zantac",
+    "nizatidine"
+   ]
+  },
+  "bisphosphonates": {
+   "name": "Oral bisphosphonates",
+   "members": [
+    "alendronate",
+    "fosamax",
+    "risedronate",
+    "actonel",
+    "atelvia",
+    "ibandronate",
+    "boniva"
+   ]
+  },
+  "loop_diuretics": {
+   "name": "Loop diuretics",
+   "members": [
+    "furosemide",
+    "lasix",
+    "bumetanide",
+    "bumex",
+    "torsemide",
+    "demadex",
+    "ethacrynic acid"
+   ]
+  },
+  "thiazide_diuretics": {
+   "name": "Thiazide diuretics",
+   "members": [
+    "hydrochlorothiazide",
+    "hctz",
+    "chlorthalidone",
+    "chlorothiazide",
+    "diuril",
+    "metolazone",
+    "zaroxolyn",
+    "indapamide"
+   ]
+  },
+  "potassium_sparing_diuretics": {
+   "name": "Potassium-sparing diuretics",
+   "members": [
+    "spironolactone",
+    "aldactone",
+    "amiloride",
+    "midamor",
+    "eplerenone",
+    "inspra",
+    "triamterene",
+    "dyrenium"
+   ]
+  },
+  "ace_inhibitors": {
+   "name": "ACE inhibitors",
+   "members": [
+    "lisinopril",
+    "zestril",
+    "prinivil",
+    "benazepril",
+    "lotensin",
+    "enalapril",
+    "vasotec",
+    "ramipril",
+    "altace",
+    "fosinopril",
+    "monopril",
+    "quinapril",
+    "accupril",
+    "captopril",
+    "perindopril",
+    "trandolapril"
+   ]
+  },
+  "arbs": {
+   "name": "Angiotensin receptor blockers",
+   "members": [
+    "losartan",
+    "cozaar",
+    "valsartan",
+    "diovan",
+    "irbesartan",
+    "avapro",
+    "olmesartan",
+    "benicar",
+    "telmisartan",
+    "micardis",
+    "candesartan",
+    "atacand",
+    "azilsartan",
+    "edarbi"
+   ]
+  },
+  "penicillamine": {
+   "name": "Penicillamine",
+   "members": [
+    "penicillamine",
+    "cuprimine",
+    "depen"
+   ]
+  },
+  "methotrexate": {
+   "name": "Methotrexate",
+   "members": [
+    "methotrexate",
+    "trexall",
+    "rheumatrex",
+    "otrexup",
+    "rasuvo",
+    "xatmep"
+   ]
+  },
+  "antiepileptics": {
+   "name": "Antiepileptics (enzyme-inducing)",
+   "members": [
+    "phenytoin",
+    "dilantin",
+    "phenytek",
+    "carbamazepine",
+    "tegretol",
+    "carbatrol",
+    "equetro",
+    "epitol",
+    "valproate",
+    "valproic acid",
+    "divalproex",
+    "depakote",
+    "depakene",
+    "phenobarbital",
+    "primidone",
+    "mysoline"
+   ]
+  },
+  "sulfasalazine": {
+   "name": "Sulfasalazine",
+   "members": [
+    "sulfasalazine",
+    "azulfidine"
+   ]
+  },
+  "metformin": {
+   "name": "Metformin",
+   "members": [
+    "metformin",
+    "glucophage",
+    "glumetza",
+    "fortamet",
+    "riomet"
+   ]
+  },
+  "insulin": {
+   "name": "Insulin",
+   "members": [
+    "insulin",
+    "insulin glargine",
+    "lantus",
+    "basaglar",
+    "toujeo",
+    "insulin lispro",
+    "humalog",
+    "insulin aspart",
+    "novolog",
+    "insulin detemir",
+    "levemir",
+    "insulin degludec",
+    "tresiba",
+    "humulin",
+    "novolin"
+   ]
+  },
+  "antidiabetics": {
+   "name": "Diabetes medications",
+   "members": [
+    "metformin",
+    "glucophage",
+    "glipizide",
+    "glucotrol",
+    "glyburide",
+    "glimepiride",
+    "amaryl",
+    "sitagliptin",
+    "januvia",
+    "pioglitazone",
+    "actos",
+    "empagliflozin",
+    "jardiance",
+    "dapagliflozin",
+    "farxiga",
+    "canagliflozin",
+    "invokana",
+    "semaglutide",
+    "ozempic",
+    "rybelsus",
+    "liraglutide",
+    "victoza",
+    "dulaglutide",
+    "trulicity",
+    "tirzepatide",
+    "mounjaro",
+    "insulin",
+    "lantus",
+    "humalog",
+    "novolog"
+   ]
+  },
+  "cycloserine": {
+   "name": "Cycloserine",
+   "members": [
+    "cycloserine",
+    "seromycin"
+   ]
+  },
+  "theophylline": {
+   "name": "Theophylline",
+   "members": [
+    "theophylline",
+    "theo-24",
+    "elixophyllin",
+    "uniphyl"
+   ]
+  },
+  "tb_isoniazid_pyrazinamide": {
+   "name": "Isoniazid and pyrazinamide",
+   "members": [
+    "isoniazid",
+    "pyrazinamide",
+    "rifater"
+   ]
+  },
+  "antithyroid": {
+   "name": "Antithyroid medications",
+   "members": [
+    "methimazole",
+    "tapazole",
+    "propylthiouracil",
+    "ptu"
+   ]
+  },
+  "cisplatin": {
+   "name": "Cisplatin",
+   "members": [
+    "cisplatin"
+   ]
+  },
+  "fluorouracil": {
+   "name": "Fluorouracil",
+   "members": [
+    "fluorouracil",
+    "5-fluorouracil",
+    "5-fu",
+    "adrucil",
+    "capecitabine",
+    "xeloda"
+   ]
+  },
+  "corticosteroids": {
+   "name": "Oral corticosteroids",
+   "members": [
+    "prednisone",
+    "prednisolone",
+    "methylprednisolone",
+    "medrol",
+    "dexamethasone",
+    "decadron",
+    "hydrocortisone",
+    "cortef"
+   ]
+  },
+  "statins": {
+   "name": "Statins",
+   "members": [
+    "atorvastatin",
+    "lipitor",
+    "simvastatin",
+    "zocor",
+    "lovastatin",
+    "mevacor",
+    "altoprev",
+    "rosuvastatin",
+    "crestor",
+    "pravastatin",
+    "pravachol",
+    "pitavastatin",
+    "livalo"
+   ]
+  }
+ },
+ "interactions": [
+  {
+   "class": "vitamin_k_antagonists",
+   "nutrients": [
+    "vitamin-k"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Vitamin K counteracts warfarin; NIH describes a serious and potentially dangerous interaction. People on warfarin need a consistent vitamin K intake, because sudden changes raise or lower its anticoagulant effect.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin K fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/"
+   }
+  },
+  {
+   "class": "bile_acid_sequestrants",
+   "nutrients": [
+    "vitamin-k"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Bile acid sequestrants can reduce vitamin K absorption, especially with long-term use.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin K fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/"
+   }
+  },
+  {
+   "class": "orlistat",
+   "nutrients": [
+    "vitamin-k",
+    "vitamin-a",
+    "vitamin-d",
+    "beta-carotene"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Orlistat reduces absorption of fat-soluble vitamins (A, D, K and beta-carotene); with warfarin it may markedly raise prothrombin time.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin K fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/"
+   }
+  },
+  {
+   "class": "anticoagulants",
+   "nutrients": [
+    "vitamin-e"
+   ],
+   "kind": "additive_risk",
+   "summary": "Large doses of vitamin E may increase bleeding risk with anticoagulants, especially with low vitamin K intake; the amount needed is unknown but probably above 400 IU (about 180-270 mg) a day.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin E fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/"
+   }
+  },
+  {
+   "class": "antiplatelets",
+   "nutrients": [
+    "vitamin-e"
+   ],
+   "kind": "additive_risk",
+   "summary": "Large doses of vitamin E may increase bleeding risk with antiplatelet medications; the amount needed is unknown but probably above 400 IU a day.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin E fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/"
+   }
+  },
+  {
+   "class": "anticoagulants",
+   "nutrients": [
+    "epa",
+    "dha"
+   ],
+   "kind": "additive_risk",
+   "summary": "High-dose fish oil may prolong clotting time and raise INR with warfarin and similar anticoagulants, although 3-6 g a day usually does not change anticoagulant status; omega-3 drug labels advise periodic INR checks.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Omega-3 Fatty Acids fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-HealthProfessional/"
+   }
+  },
+  {
+   "class": "retinoids",
+   "nutrients": [
+    "vitamin-a"
+   ],
+   "kind": "additive_risk",
+   "summary": "Oral retinoids (acitretin, bexarotene, isotretinoin) taken with vitamin A supplements increase the risk of vitamin A toxicity.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin A fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/"
+   }
+  },
+  {
+   "class": "dolutegravir",
+   "nutrients": [
+    "calcium"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Calcium supplements can sharply reduce dolutegravir levels.",
+   "timing": "Take dolutegravir 2 hours before or 6 hours after calcium.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Calcium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "levothyroxine",
+   "nutrients": [
+    "calcium"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Calcium carbonate can interfere with levothyroxine absorption.",
+   "timing": "Avoid taking levothyroxine within 4 hours of calcium carbonate.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Calcium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "lithium",
+   "nutrients": [
+    "calcium"
+   ],
+   "kind": "additive_risk",
+   "summary": "Long-term lithium can cause high blood calcium; calcium supplements could add to that risk.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Calcium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "quinolones",
+   "nutrients": [
+    "calcium"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Calcium reduces absorption of quinolone antibiotics.",
+   "timing": "Take the antibiotic 2 hours before or 2 hours after calcium.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Calcium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "levodopa",
+   "nutrients": [
+    "iron"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Iron may reduce levodopa absorption.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Iron fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/"
+   }
+  },
+  {
+   "class": "levothyroxine",
+   "nutrients": [
+    "iron"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Iron taken at the same time can reduce levothyroxine efficacy.",
+   "timing": "Separate levothyroxine and iron by at least 4 hours.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Iron fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/"
+   }
+  },
+  {
+   "class": "ppis",
+   "nutrients": [
+    "iron"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Proton pump inhibitors reduce iron absorption; iron-deficient patients on them may respond less well to iron supplements.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Iron fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/"
+   }
+  },
+  {
+   "class": "bisphosphonates",
+   "nutrients": [
+    "magnesium"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Magnesium-rich supplements may reduce absorption of oral bisphosphonates.",
+   "timing": "Separate by at least 2 hours.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Magnesium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "tetracyclines",
+   "nutrients": [
+    "magnesium"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Magnesium binds tetracycline antibiotics and reduces their absorption.",
+   "timing": "Take the antibiotic at least 2 hours before or 4-6 hours after magnesium.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Magnesium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "quinolones",
+   "nutrients": [
+    "magnesium"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Magnesium binds quinolone antibiotics and reduces their absorption.",
+   "timing": "Take the antibiotic at least 2 hours before or 4-6 hours after magnesium.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Magnesium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "loop_diuretics",
+   "nutrients": [
+    "magnesium"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Long-term loop diuretics increase magnesium loss in urine and may deplete it.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Magnesium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "thiazide_diuretics",
+   "nutrients": [
+    "magnesium"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Long-term thiazide diuretics increase magnesium loss in urine and may deplete it.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Magnesium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "potassium_sparing_diuretics",
+   "nutrients": [
+    "magnesium"
+   ],
+   "kind": "drug_raises_nutrient",
+   "summary": "Potassium-sparing diuretics reduce magnesium excretion.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Magnesium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "ppis",
+   "nutrients": [
+    "magnesium"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Proton pump inhibitors taken for more than about a year can cause low blood magnesium, which supplements do not always correct; FDA advises checking magnesium levels.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Magnesium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "quinolones",
+   "nutrients": [
+    "zinc"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Zinc and quinolone antibiotics reduce each other's absorption.",
+   "timing": "Take the antibiotic at least 2 hours before or 4-6 hours after zinc.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Zinc fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/"
+   }
+  },
+  {
+   "class": "tetracyclines",
+   "nutrients": [
+    "zinc"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Zinc and tetracycline antibiotics reduce each other's absorption.",
+   "timing": "Take the antibiotic at least 2 hours before or 4-6 hours after zinc.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Zinc fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/"
+   }
+  },
+  {
+   "class": "penicillamine",
+   "nutrients": [
+    "zinc"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Zinc can reduce penicillamine absorption and action.",
+   "timing": "Take zinc and penicillamine at least 1 hour apart.",
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Zinc fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/"
+   }
+  },
+  {
+   "class": "thiazide_diuretics",
+   "nutrients": [
+    "zinc"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Thiazide diuretics increase zinc loss in urine and lower blood zinc.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Zinc fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/"
+   }
+  },
+  {
+   "class": "orlistat",
+   "nutrients": [
+    "vitamin-d"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Orlistat reduces vitamin D absorption from food and supplements.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin D fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
+   }
+  },
+  {
+   "class": "statins",
+   "nutrients": [
+    "vitamin-d"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "High vitamin D intakes, especially from supplements, might reduce the potency of atorvastatin, lovastatin and simvastatin; statins may also lower vitamin D synthesis.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin D fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
+   }
+  },
+  {
+   "class": "corticosteroids",
+   "nutrients": [
+    "vitamin-d",
+    "calcium"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Corticosteroids such as prednisone can reduce calcium absorption and impair vitamin D metabolism.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin D fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
+   }
+  },
+  {
+   "class": "thiazide_diuretics",
+   "nutrients": [
+    "vitamin-d"
+   ],
+   "kind": "additive_risk",
+   "summary": "Thiazide diuretics reduce calcium loss in urine; with vitamin D supplements this might lead to high blood calcium, especially in older adults or people with reduced kidney function.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin D fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
+   }
+  },
+  {
+   "class": "methotrexate",
+   "nutrients": [
+    "folate"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Folate supplements could interfere with methotrexate's anticancer effect (consult the oncologist); with low-dose methotrexate for arthritis or psoriasis, folate may reduce side effects.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Folate fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/"
+   }
+  },
+  {
+   "class": "antiepileptics",
+   "nutrients": [
+    "folate"
+   ],
+   "kind": "two_way",
+   "summary": "Antiepileptics such as phenytoin, carbamazepine and valproate can lower folate, and folate supplements may lower blood levels of these drugs.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Folate fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/"
+   }
+  },
+  {
+   "class": "sulfasalazine",
+   "nutrients": [
+    "folate"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Sulfasalazine inhibits folate absorption and can cause folate deficiency.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Folate fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/"
+   }
+  },
+  {
+   "class": "ppis",
+   "nutrients": [
+    "vitamin-b12"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Proton pump inhibitors can reduce vitamin B12 absorption from food and lead to deficiency.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin B12 fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/"
+   }
+  },
+  {
+   "class": "h2_blockers",
+   "nutrients": [
+    "vitamin-b12"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "H2 blockers can reduce vitamin B12 absorption from food and lead to deficiency.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin B12 fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/"
+   }
+  },
+  {
+   "class": "metformin",
+   "nutrients": [
+    "vitamin-b12"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Metformin might reduce vitamin B12 absorption and significantly lower blood B12.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin B12 fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/"
+   }
+  },
+  {
+   "class": "cycloserine",
+   "nutrients": [
+    "vitamin-b6"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Cycloserine increases vitamin B6 loss; supplements can help prevent its seizures and neurotoxicity.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin B6 fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/"
+   }
+  },
+  {
+   "class": "antiepileptics",
+   "nutrients": [
+    "vitamin-b6"
+   ],
+   "kind": "two_way",
+   "summary": "Valproate, carbamazepine and phenytoin increase vitamin B6 breakdown; pyridoxine at 200 mg a day may lower blood levels of phenytoin and phenobarbital.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin B6 fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/"
+   }
+  },
+  {
+   "class": "theophylline",
+   "nutrients": [
+    "vitamin-b6"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "People taking theophylline often have low vitamin B6, which could contribute to its side effects.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Vitamin B6 fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/"
+   }
+  },
+  {
+   "class": "tb_isoniazid_pyrazinamide",
+   "nutrients": [
+    "niacin"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Isoniazid and pyrazinamide interfere with niacin production and can cause pellagra; more niacin can prevent it.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Niacin fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/"
+   }
+  },
+  {
+   "class": "antidiabetics",
+   "nutrients": [
+    "niacin"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Large doses of nicotinic acid can raise blood glucose; glucose should be monitored and medication doses might need adjusting.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Niacin fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/"
+   }
+  },
+  {
+   "class": "ace_inhibitors",
+   "nutrients": [
+    "potassium"
+   ],
+   "kind": "additive_risk",
+   "summary": "ACE inhibitors reduce potassium excretion and can lead to high blood potassium; monitoring is recommended, especially with reduced kidney function.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Potassium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "arbs",
+   "nutrients": [
+    "potassium"
+   ],
+   "kind": "additive_risk",
+   "summary": "Angiotensin receptor blockers reduce potassium excretion and can lead to high blood potassium; monitoring is recommended.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Potassium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "potassium_sparing_diuretics",
+   "nutrients": [
+    "potassium"
+   ],
+   "kind": "additive_risk",
+   "summary": "Potassium-sparing diuretics can cause high blood potassium; monitoring is recommended.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Potassium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "loop_diuretics",
+   "nutrients": [
+    "potassium"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Loop diuretics increase potassium loss and can cause low blood potassium.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Potassium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "thiazide_diuretics",
+   "nutrients": [
+    "potassium"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Thiazide diuretics increase potassium loss and can cause low blood potassium.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Potassium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "cisplatin",
+   "nutrients": [
+    "selenium"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Cisplatin can lower selenium levels; the evidence that selenium reduces cisplatin toxicity is insufficient.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Selenium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "antithyroid",
+   "nutrients": [
+    "iodine"
+   ],
+   "kind": "additive_risk",
+   "summary": "High-dose iodine with antithyroid medication may have an additive effect and cause hypothyroidism.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Iodine fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/"
+   }
+  },
+  {
+   "class": "ace_inhibitors",
+   "nutrients": [
+    "iodine"
+   ],
+   "kind": "additive_risk",
+   "summary": "Potassium iodide with ACE inhibitors may increase the risk of high blood potassium.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Iodine fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/"
+   }
+  },
+  {
+   "class": "potassium_sparing_diuretics",
+   "nutrients": [
+    "iodine"
+   ],
+   "kind": "additive_risk",
+   "summary": "Potassium iodide with potassium-sparing diuretics may increase the risk of high blood potassium.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Iodine fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Iodine-HealthProfessional/"
+   }
+  },
+  {
+   "class": "insulin",
+   "nutrients": [
+    "chromium"
+   ],
+   "kind": "additive_risk",
+   "summary": "Chromium may increase insulin sensitivity, raising the risk of low blood sugar with insulin.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Chromium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Chromium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "antidiabetics",
+   "nutrients": [
+    "chromium"
+   ],
+   "kind": "additive_risk",
+   "summary": "Chromium may lower blood glucose and add to diabetes medications, raising the risk of low blood sugar.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Chromium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Chromium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "levothyroxine",
+   "nutrients": [
+    "chromium"
+   ],
+   "kind": "supplement_changes_drug",
+   "summary": "Chromium picolinate taken at the same time reduced levothyroxine absorption in a small study.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Chromium fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Chromium-HealthProfessional/"
+   }
+  },
+  {
+   "class": "loop_diuretics",
+   "nutrients": [
+    "thiamin"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Furosemide is linked to lower thiamin levels through urinary loss.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Thiamin fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/"
+   }
+  },
+  {
+   "class": "fluorouracil",
+   "nutrients": [
+    "thiamin"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Fluorouracil may increase thiamin breakdown; cases of beriberi and Wernicke encephalopathy have been reported.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Thiamin fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/"
+   }
+  },
+  {
+   "class": "antiepileptics",
+   "nutrients": [
+    "biotin"
+   ],
+   "kind": "drug_lowers_nutrient",
+   "summary": "Long-term anticonvulsants are linked to lower biotin levels.",
+   "timing": null,
+   "source": {
+    "name": "NIH Office of Dietary Supplements: Biotin fact sheet, Interactions with Medications",
+    "url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/"
+   }
+  }
+ ],
+ "conditions": {
+  "smoker": {
+   "name": "Current or former smoker, or asbestos exposure",
+   "checks": [
+    {
+     "nutrient": "beta-carotene",
+     "min_daily": {
+      "amount": 20000,
+      "unit": "mcg"
+     },
+     "summary": "Beta-carotene supplements raised lung cancer risk in smokers: 20 mg a day in the ATBC trial (lung cancer up 18%) and 30 mg a day with retinyl palmitate in CARET (up 28%). NIH considers large supplemental doses harmful for current or former smokers and people exposed to asbestos.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Vitamin A and Carotenoids fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/"
+     }
+    }
+   ]
+  },
+  "kidney_disease": {
+   "name": "Chronic kidney disease or reduced kidney function",
+   "checks": [
+    {
+     "nutrient": "potassium",
+     "min_daily": {
+      "amount": 1,
+      "unit": "mg"
+     },
+     "summary": "With reduced kidney function, potassium is cleared poorly; NIH notes even intakes below the AI can cause high blood potassium. Check potassium-containing supplements and salt substitutes with a clinician.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Potassium fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/"
+     }
+    },
+    {
+     "nutrient": "magnesium",
+     "min_daily": {
+      "amount": 1,
+      "unit": "mg"
+     },
+     "summary": "Impaired kidney function raises the risk of magnesium toxicity from supplements and magnesium-containing laxatives and antacids, because the kidneys cannot remove the excess.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Magnesium fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/"
+     }
+    },
+    {
+     "nutrient": "phosphorus",
+     "min_daily": {
+      "amount": 1,
+      "unit": "mg"
+     },
+     "summary": "People with chronic kidney disease are prone to high blood phosphate and are usually advised to limit phosphorus; check phosphorus-containing supplements with a clinician.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Phosphorus fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/"
+     }
+    }
+   ]
+  },
+  "hemochromatosis": {
+   "name": "Hereditary hemochromatosis or iron overload",
+   "checks": [
+    {
+     "nutrient": "iron",
+     "min_daily": {
+      "amount": 0.1,
+      "unit": "mg"
+     },
+     "summary": "People with hereditary hemochromatosis absorb too much iron; iron supplements add to iron overload.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Iron fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/"
+     }
+    },
+    {
+     "nutrient": "vitamin-c",
+     "min_daily": {
+      "amount": 500,
+      "unit": "mg"
+     },
+     "summary": "In hereditary hemochromatosis, chronic high-dose vitamin C could worsen iron overload and cause tissue damage, because it increases iron absorption.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Vitamin C fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/"
+     }
+    }
+   ]
+  },
+  "lab_test_soon": {
+   "name": "Blood test coming up (thyroid, troponin, hormone or vitamin D tests)",
+   "checks": [
+    {
+     "nutrient": "biotin",
+     "min_daily": {
+      "amount": 1000,
+      "unit": "mcg"
+     },
+     "summary": "High-dose biotin can make some laboratory tests (thyroid hormones, troponin, vitamin D and others) read falsely high or low; a single 10 mg dose interfered with thyroid tests drawn within 24 hours, and the FDA reported a death after a falsely low troponin result. Tell the clinician and lab about biotin.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Biotin fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Biotin-HealthProfessional/"
+     }
+    }
+   ]
+  },
+  "cancer_treatment": {
+   "name": "Undergoing chemotherapy or radiation therapy",
+   "checks": [
+    {
+     "nutrient": "vitamin-c",
+     "min_daily": {
+      "amount": 1,
+      "unit": "mg"
+     },
+     "summary": "Oncologists generally advise checking antioxidant supplements such as vitamin C during chemotherapy and radiation, because they might reduce treatment effectiveness; the evidence is mixed.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Vitamin C fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/"
+     }
+    },
+    {
+     "nutrient": "vitamin-e",
+     "min_daily": {
+      "amount": 1,
+      "unit": "mg"
+     },
+     "summary": "Oncologists generally advise against antioxidant supplements such as vitamin E during chemotherapy and radiation, because they might reduce treatment effectiveness; a systematic review has questioned this.",
+     "source": {
+      "name": "NIH Office of Dietary Supplements: Vitamin E fact sheet",
+      "url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/"
+     }
+    }
+   ]
+  }
+ }
+}

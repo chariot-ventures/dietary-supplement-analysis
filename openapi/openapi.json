@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Dietary Supplement Label and Nutrient Intake Analysis",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "description": "Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Label and reference data only; not medical advice."
   },
   "externalDocs": {
@@ -873,6 +873,33 @@
                     },
                     "description": "1-15 products. Each is one of: {\"dsld_id\"}, {\"query\"} (a product name, resolved server-side), {\"upc\"} (barcode), or a custom product {\"name\",\"ingredients\"}. Add \"servings_per_day\" to any of them."
                   },
+                  "medications": {
+                    "minItems": 1,
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 100
+                    },
+                    "description": "Medications the person takes, as generic or brand names (\"warfarin\", \"Synthroid\", \"metformin 500 mg\"). Checked against the medication interactions listed in the NIH ODS fact sheets; not exhaustive. Never logged."
+                  },
+                  "conditions": {
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "smoker",
+                        "kidney_disease",
+                        "hemochromatosis",
+                        "lab_test_soon",
+                        "cancer_treatment"
+                      ]
+                    },
+                    "description": "Conditions that change how NIH reads a dose: smoker (current or former, or asbestos exposure: beta-carotene), kidney_disease (potassium, magnesium, phosphorus), hemochromatosis (iron, vitamin C), lab_test_soon (biotin interferes with lab tests), cancer_treatment (antioxidant doses)"
+                  },
                   "candidates": {
                     "description": "Optional, up to 5: products the user is considering adding. Each is evaluated as an addition to the stack in candidate_results[]; they are not included in nutrient_totals.",
                     "minItems": 1,
@@ -1074,6 +1101,37 @@
                       }
                     ]
                   }
+                },
+                "with_medications": {
+                  "value": {
+                    "age": 58,
+                    "sex": "male",
+                    "detail": "summary",
+                    "medications": [
+                      "warfarin",
+                      "Synthroid"
+                    ],
+                    "conditions": [
+                      "smoker"
+                    ],
+                    "products": [
+                      {
+                        "name": "Daily multi",
+                        "ingredients": [
+                          {
+                            "name": "vitamin K",
+                            "amount": 120,
+                            "unit": "mcg"
+                          },
+                          {
+                            "name": "calcium",
+                            "amount": 500,
+                            "unit": "mg"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 }
               }
             }
@@ -1211,6 +1269,33 @@
                         "$ref": "#/components/schemas/CandidateResult"
                       },
                       "description": "Present when candidates were given"
+                    },
+                    "interactions": {
+                      "type": "object",
+                      "description": "Present when medications or conditions were given. Full form: scope, reviewed, medications (how each name was matched) and findings (all NIH-listed interactions, those involving nutrients in the stack first). Summary form: medications, in-stack findings, and a not_in_stack count.",
+                      "properties": {
+                        "scope": {
+                          "type": "string"
+                        },
+                        "reviewed": {
+                          "type": "string"
+                        },
+                        "medications": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MedicationMatch"
+                          }
+                        },
+                        "findings": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/InteractionFinding"
+                          }
+                        },
+                        "not_in_stack": {
+                          "type": "integer"
+                        }
+                      }
                     },
                     "nutrient_totals": {
                       "type": "array",
@@ -1353,6 +1438,201 @@
         }
       }
     },
+    "/v1/interactions/check": {
+      "post": {
+        "summary": "Medication and condition interactions",
+        "description": "Vitamin and mineral interactions for the given medications (generic or brand names, normalized with NIH RxNorm when the name is not in the list) and conditions, as listed in the NIH Office of Dietary Supplements fact sheets. Not exhaustive. To check an actual stack, pass medications to /v1/stack/analyze.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "medications": {
+                    "minItems": 1,
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 100
+                    },
+                    "description": "Medications the person takes, as generic or brand names (\"warfarin\", \"Synthroid\", \"metformin 500 mg\"). Checked against the medication interactions listed in the NIH ODS fact sheets; not exhaustive. Never logged."
+                  },
+                  "conditions": {
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "smoker",
+                        "kidney_disease",
+                        "hemochromatosis",
+                        "lab_test_soon",
+                        "cancer_treatment"
+                      ]
+                    },
+                    "description": "Conditions that change how NIH reads a dose: smoker (current or former, or asbestos exposure: beta-carotene), kidney_disease (potassium, magnesium, phosphorus), hemochromatosis (iron, vitamin C), lab_test_soon (biotin interferes with lab tests), cancer_treatment (antioxidant doses)"
+                  },
+                  "nutrients": {
+                    "description": "Optional: only report interactions involving these nutrients (IDs or names, e.g. \"vitamin-k\", \"magnesium\")",
+                    "minItems": 1,
+                    "maxItems": 40,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "examples": {
+                "levothyroxine": {
+                  "value": {
+                    "medications": [
+                      "levothyroxine"
+                    ]
+                  }
+                },
+                "warfarin_vitamin_k": {
+                  "value": {
+                    "medications": [
+                      "Coumadin"
+                    ],
+                    "nutrients": [
+                      "vitamin k"
+                    ]
+                  }
+                },
+                "condition": {
+                  "value": {
+                    "conditions": [
+                      "kidney_disease"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Interactions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string",
+                      "const": "dietary-supplement-analysis"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "as_of": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "summary": {
+                      "type": "object",
+                      "properties": {
+                        "medications": {
+                          "type": "integer"
+                        },
+                        "medications_recognized": {
+                          "type": "integer"
+                        },
+                        "findings": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "scope": {
+                      "type": "string"
+                    },
+                    "reviewed": {
+                      "type": "string"
+                    },
+                    "medications": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MedicationMatch"
+                      }
+                    },
+                    "findings": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/InteractionFinding"
+                      }
+                    },
+                    "data_gaps": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DataGap"
+                      }
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Source"
+                      }
+                    },
+                    "disclaimer": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND (unknown DSLD ID or nutrient)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "UNSUPPORTED (pregnancy or lactation outside ages 14-50)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "UPSTREAM_UNAVAILABLE: NIH DSLD unreachable and nothing cached (retryable)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/provenance": {
       "get": {
         "summary": "Code and data provenance",
@@ -1430,7 +1710,8 @@
                       "products_get",
                       "products_lookup",
                       "nutrients_reference",
-                      "stack_analyze"
+                      "stack_analyze",
+                      "interactions_check"
                     ]
                   },
                   "arguments": {
@@ -1562,6 +1843,122 @@
           "error"
         ]
       },
+      "MedicationMatch": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "matched",
+              "not_recognized"
+            ]
+          },
+          "matched_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "via": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "name",
+                  "rxnorm"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "\"rxnorm\": the name was normalized to its ingredient with NIH RxNav"
+          },
+          "classes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "InteractionFinding": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "medication",
+              "condition"
+            ]
+          },
+          "trigger": {
+            "type": "string",
+            "description": "The medication as given, or the condition id"
+          },
+          "trigger_name": {
+            "type": "string"
+          },
+          "nutrient_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "in_stack": {
+            "type": "boolean",
+            "description": "True when the stack supplies one of the nutrients (condition findings: at or above the checked dose)"
+          },
+          "product_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "supplement_changes_drug",
+              "drug_lowers_nutrient",
+              "drug_raises_nutrient",
+              "additive_risk",
+              "two_way",
+              "condition"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "timing": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
       "DataGap": {
         "type": "object",
         "properties": {
@@ -1580,7 +1977,9 @@
               "SERVINGS_UNKNOWN",
               "DATA_SUSPECT",
               "PRODUCT_NOT_RESOLVED",
-              "INTERACTIONS_NOT_ASSESSED"
+              "INTERACTIONS_NOT_ASSESSED",
+              "INTERACTIONS_PARTIAL",
+              "MEDICATION_NOT_RECOGNIZED"
             ]
           },
           "product_ref": {

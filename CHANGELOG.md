@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0 (2026-10-11)
+
+- **Medication interactions.** `/v1/stack/analyze` takes `medications` (generic or brand names, as the user says them, up to 30). Each is matched to a drug class (35 classes; NIH RxNorm normalizes names the list doesn't know) and checked against the 55 interactions listed in the NIH ODS fact sheets, with timing advice where NIH gives it. Findings involving a nutrient the stack supplies come first, cite their fact sheet, and lead the `agent_summary`. Never logged.
+- **Conditions.** `conditions`: `smoker` (beta-carotene from 20 mg), `kidney_disease` (potassium, magnesium, phosphorus), `hemochromatosis` (iron, vitamin C from 500 mg), `lab_test_soon` (biotin from 1 mg), `cancer_treatment` (antioxidant doses).
+- **New: `POST /v1/interactions/check`** (tool `interactions_check`): NIH-listed interactions for medications or conditions without a stack, optionally filtered by nutrient.
+- New data gap codes `INTERACTIONS_PARTIAL` and `MEDICATION_NOT_RECOGNIZED`; `INTERACTIONS_NOT_ASSESSED` now appears only when no medications were given.
+
 ## 0.5.0 (2026-10-11)
 
 - **Remote MCP server** at `POST /mcp` (Streamable HTTP, stateless): the same five tools for Claude, claude.ai connectors, Cursor and other MCP clients. `stack_analyze` defaults to the compact summary there. [mcp/dsa-mcp.mjs](mcp/dsa-mcp.mjs) is a zero-dependency stdio bridge that can send every call through Pocket Network via a local `pocket-ap` listener. [mcp/server.json](mcp/server.json) is ready for the official MCP Registry.

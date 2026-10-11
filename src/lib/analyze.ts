@@ -296,7 +296,7 @@ export function analyzeStack(products: StackProduct[], profile: Profile | null):
   }
   gaps.push({
     code: 'INTERACTIONS_NOT_ASSESSED',
-    detail: 'Drug and supplement interactions are not evaluated. For medications, see Pocket services med-safety and fda.',
+    detail: 'No medications were given, so medication interactions were not checked (pass medications[]). Supplement-to-supplement interactions are not evaluated.',
   });
 
   return {

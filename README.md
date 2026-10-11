@@ -104,7 +104,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.5.0"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.6.0"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
 | POST | `/mcp` | Remote MCP server (Streamable HTTP, stateless): the same tools for MCP clients |
@@ -112,6 +112,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | GET | `/v1/tools` | Tool definitions (`name`, `description`, JSON Schema `input_schema`) for function calling |
 | GET | `/v1/guide` | Usage guide for agents, as markdown inside JSON (same text as [llms.txt](llms.txt)) |
 | POST | `/v1/stack/analyze` | One call: per-nutrient totals across 1–15 products (names, barcodes, IDs or custom), flags, fixes, what-if candidates |
+| POST | `/v1/interactions/check` | NIH-listed nutrient interactions for medications or conditions, no stack needed: `{"medications":["Synthroid"],"nutrients":["calcium"]}` |
 | POST | `/v1/products/search` | Find products in DSLD: `{"query":"vitamin d3 5000","brand":"NOW","limit":5}`; label versions collapsed |
 | POST | `/v1/products/lookup` | Label for a barcode: `{"upc":"031604026974"}` |
 | POST | `/v1/products/get` | Normalized labels: `{"dsld_id":12345}` or `{"dsld_ids":[...]}` (max 10) |
@@ -130,6 +131,8 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
     { "dsld_id": 67890 },
     { "name": "Homemade magnesium", "ingredients": [ { "name": "magnesium glycinate", "amount": 200, "unit": "mg", "nutrient_basis": "elemental" } ] }
   ],
+  "medications": [ "warfarin", "Synthroid 50 mcg" ],
+  "conditions": [ "smoker" ],
   "candidates": [ { "query": "vitamin d3 5000 iu" } ]
 }
 ```
@@ -137,13 +140,15 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 - **Products** (1–15) can be a product name (`query`, optionally with `brand`), a barcode (`upc`), a DSLD ID, or a custom product with explicit ingredients. Custom ingredients may give a `form` (for example `"folic acid"` or `"d-alpha tocopherol"`) so IU and DFE conversions can be applied.
 - **Names and barcodes** are resolved server-side. A name is matched against DSLD search results by the share of its words found in the brand and product name; label versions of the same product are collapsed and the newest on-market one is used. `resolutions[]` records each match with `confidence` (`high`: every word matched one product; `medium`: every word matched but other products did too, or most words matched; `low`: under 60%) and up to three alternatives. A product that can't be identified is reported (`PRODUCT_NOT_RESOLVED`) and left out; the call fails with 404 only when nothing could be identified.
 - **`diet: "typical"`** adds the US average daily intake from food and drinks for the age and sex (What We Eat in America, NHANES 2017–March 2020) and repeats the comparisons in `with_typical_diet`. Food counts toward a UL only where the UL covers it: all of it for total-intake ULs, food folic acid for folate, retinol for vitamin A, added vitamin E for vitamin E, none for magnesium. It isn't applied under age 2 or in pregnancy and lactation.
+- **`medications`** (up to 30, generic or brand names as the user gives them) are matched to 35 drug classes and checked against the 55 medication interactions listed in the NIH Office of Dietary Supplements fact sheets ([data/interactions.json](data/interactions.json)). Names the list doesn't know are normalized to their ingredient with NIH RxNorm (RxNav) when the service can reach it; matching is whole-word, never fuzzy. `interactions.findings[]` gives each interaction's kind (`supplement_changes_drug`, `drug_lowers_nutrient`, `drug_raises_nutrient`, `additive_risk`, `two_way`), NIH's timing advice where it gives any, the fact sheet, and `in_stack` with the products involved; in-stack findings come first and lead `agent_summary`. The list is not exhaustive (`INTERACTIONS_PARTIAL`), and medication names are never logged.
+- **`conditions`**: `smoker` (current or former, or asbestos exposure: beta-carotene from 20 mg a day, counting vitamin A declared as beta-carotene), `kidney_disease` (potassium, magnesium, phosphorus), `hemochromatosis` (iron; vitamin C from 500 mg), `lab_test_soon` (biotin from 1 mg skews thyroid, troponin and other tests), `cancer_treatment` (high-dose vitamin C and E).
 - **`detail: "summary"`** returns only what an agent needs to answer (`agent_summary`, `flagged` nutrients, `suggestions`, `resolutions`, candidate verdicts, `data_gap_codes`, `provenance`), typically 1–3 KB instead of 20–40 KB.
 - **Candidates** (up to 5) are products the user is considering. Each is evaluated as an addition to the stack in `candidate_results[]` and isn't counted in the totals.
 - `servings_per_day` defaults to the label's maximum daily servings, or 1 if the label doesn't say. Every default is listed in `assumptions`.
 - `age` and `sex` are optional. Without them you get totals and overlaps, but no reference comparisons.
 - `life_stage` (`"pregnancy"` or `"lactation"`, female, ages 14–50) switches to the pregnancy or lactation reference values; `"pregnant": true` and `"breastfeeding": true` work too. For infants, give the age as a fraction of a year (`0.25` is 3 months): the 0–6 and 7–12 month values apply.
 
-The response contains, in this order: `profile`, `summary`, `agent_summary`, `resolutions` (when names or barcodes were given), `assumptions`, `suggestions`, `candidate_results` (when candidates were given), `nutrient_totals`, `overlaps`, `unrecognized_ingredients`, `data_gaps`, `products`, `sources` and `disclaimer`.
+The response contains, in this order: `profile`, `summary`, `agent_summary`, `resolutions` (when names or barcodes were given), `assumptions`, `suggestions`, `candidate_results` (when candidates were given), `interactions` (when medications or conditions were given), `nutrient_totals`, `overlaps`, `unrecognized_ingredients`, `data_gaps`, `products`, `sources` and `disclaimer`.
 
 - **`agent_summary`** is two to five plain sentences, generated deterministically from the numbers below, that an agent can relay as written.
 - **`suggestions`** lists, for each above-UL nutrient, up to three single-product changes (`reduce_servings` or `remove_product`) with the resulting amount, whether that alone brings the nutrient to or under the UL (`resolves`), which other above-UL nutrients it also fixes, and which other nutrients a removal would lower. They're arithmetic, not advice.
@@ -191,7 +196,9 @@ Each nutrient total includes:
 | `PROFILE_MISSING` | No age and sex, so no reference comparison |
 | `PRODUCT_NOT_RESOLVED` | A product name or barcode couldn't be matched to a DSLD label; it isn't counted |
 | `DATA_SUSPECT` | NIH's label record looks inconsistent; the amount is still counted. `check` says which test failed: `duplicate_row` (the same ingredient twice under one heading, like EPA entered as DHA), `nested_exceeds_parent` (rows add up to more than their declared total), `percent_dv_mismatch` (the printed %DV contradicts the amount under both the current and the pre-2016 Daily Value), `implausible_amount` (over 50 times the highest adult UL, typically mg typed for mcg) |
-| `INTERACTIONS_NOT_ASSESSED` | Always present: drug and supplement interactions are out of scope |
+| `INTERACTIONS_NOT_ASSESSED` | No `medications` were given, so medication interactions weren't checked. Supplement-to-supplement interactions are never evaluated |
+| `INTERACTIONS_PARTIAL` | Medications were checked, but only against the interactions named in the NIH ODS fact sheets; the list is not exhaustive |
+| `MEDICATION_NOT_RECOGNIZED` | A medication name matched no class in the NIH fact sheet interaction list (directly or through RxNorm), so nothing was checked for it |
 
 ## How the numbers are produced
 
