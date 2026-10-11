@@ -1,6 +1,6 @@
 {
   "service": "dietary-supplement-analysis",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "as_of": "<date>",
   "profile": {
     "age": 34,
@@ -17,7 +17,7 @@
     "products_unresolved": 0,
     "suggestions": 4
   },
-  "agent_summary": "2 nutrients are above the upper limit (UL) for a 34-year-old female from these supplements alone. Magnesium: 575 mg a day vs a UL of 350 mg (164%), mostly from Natrol Magnesium Night High Absorption 325 mg Naturally Flavored. The UL guards against diarrhea and other gastrointestinal upset from supplemental magnesium. Vitamin D: 150 mcg a day vs a UL of 100 mcg (150%), mostly from Natural Healthy Concepts Vitamin D3 Concepts 5000. The UL guards against high blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues. Leaving out Custom magnesium would bring magnesium to 325 mg (92.9% of the UL), still near it. Totals exclude food, drinks and medications. Label data, not medical advice.",
+  "agent_summary": "2 nutrients are above the upper limit (UL) for a 34-year-old female from these supplements alone. Magnesium: 575 mg a day vs a UL of 350 mg (164%), mostly from Natrol Magnesium Night High Absorption 325 mg Naturally Flavored. The UL guards against diarrhea and other gastrointestinal upset from supplemental magnesium. Vitamin D: 150 mcg a day vs a UL of 100 mcg (150%), mostly from Natural Healthy Concepts Vitamin D3 Concepts 5000. The UL guards against high blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues. Leaving out Custom magnesium would bring magnesium to 325 mg (92.9% of the UL), still near it. Timing: Fat in the gut enhances vitamin D absorption, so taking it with a meal that contains some fat may help (some is absorbed without fat). Totals exclude food, drinks and medications. Label data, not medical advice.",
   "assumptions": [
     "dsld:230932: servings_per_day not given; used label maximum of 1 (label: 1 Softgel(s), 1 time(s) daily)",
     "dsld:338022: servings_per_day not given; used label maximum of 1 (label: 1 Tablet(s), 1 time(s) daily)",
@@ -116,6 +116,24 @@
         "zinc"
       ],
       "text": "Leaving out Noor Vitamins Women's Complete Multivitamin would bring Vitamin D to 125 mcg (125% of the UL), still above it."
+    }
+  ],
+  "timing": [
+    {
+      "id": "vitamin_d_with_fat",
+      "nutrient_ids": [
+        "vitamin-d"
+      ],
+      "product_refs": [
+        "dsld:230932",
+        "dsld:338022"
+      ],
+      "advice": "Fat in the gut enhances vitamin D absorption, so taking it with a meal that contains some fat may help (some is absorbed without fat).",
+      "advice_es": "La grasa en el intestino mejora la absorción de la vitamina D, así que tomarla con una comida que tenga algo de grasa puede ayudar (algo se absorbe sin grasa).",
+      "source": {
+        "name": "NIH Office of Dietary Supplements: Vitamin D fact sheet",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
+      }
     }
   ],
   "nutrient_totals": [
@@ -1222,7 +1240,7 @@
     }
   ],
   "provenance": {
-    "version": "0.9.0",
+    "version": "0.10.0",
     "commit": null,
     "reference_values_reviewed": "2026-10-11"
   },

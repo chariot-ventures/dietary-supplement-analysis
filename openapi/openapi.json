@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Dietary Supplement Label and Nutrient Intake Analysis",
-    "version": "0.9.0",
+    "version": "0.10.0",
     "description": "Look up dietary supplement labels from the NIH Dietary Supplement Label Database (DSLD) and total vitamin and mineral intake across a list of supplements, compared with NIH recommended amounts (RDA/AI) and upper limits (UL). Label and reference data only; not medical advice."
   },
   "externalDocs": {
@@ -1198,6 +1198,47 @@
                     },
                     "description": "Conditions that change how NIH reads a dose: smoker (current or former, or asbestos exposure: beta-carotene), kidney_disease (potassium, magnesium, phosphorus), hemochromatosis (iron, vitamin C), lab_test_soon (biotin interferes with lab tests), cancer_treatment (antioxidant doses)"
                   },
+                  "foods": {
+                    "description": "Optional, up to 30: what the person eats in a day, e.g. [{\"query\":\"spinach cooked\",\"amount\":1,\"unit\":\"cup\"},{\"query\":\"whole milk\",\"grams\":488}]. Added to the supplement totals in nutrient_totals[].with_foods (USDA SR28, offline). Use instead of diet \"typical\".",
+                    "minItems": 1,
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "description": "Food as the user named it, e.g. \"spinach cooked\", \"whole milk\"; matched to a USDA SR28 food (see foods.items)",
+                          "type": "string",
+                          "minLength": 2,
+                          "maxLength": 120
+                        },
+                        "ndb_number": {
+                          "description": "USDA NDB number (SR Legacy), e.g. \"11458\"",
+                          "type": "string",
+                          "pattern": "^\\d{4,5}$"
+                        },
+                        "grams": {
+                          "description": "Amount eaten per day, in grams",
+                          "type": "number",
+                          "exclusiveMinimum": 0,
+                          "maximum": 5000
+                        },
+                        "amount": {
+                          "description": "Amount in \"unit\" per day, e.g. 1.5 with unit \"cup\"",
+                          "type": "number",
+                          "exclusiveMinimum": 0,
+                          "maximum": 100
+                        },
+                        "unit": {
+                          "description": "cup, tbsp, tsp, slice, large, medium, oz, lb, kg, g, fl oz... must match a USDA portion for the food (or be a weight)",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 30
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
                   "candidates": {
                     "description": "Optional, up to 5: products the user is considering adding. Each is evaluated as an addition to the stack in candidate_results[]; they are not included in nutrient_totals.",
                     "minItems": 1,
@@ -1576,6 +1617,17 @@
                         "$ref": "#/components/schemas/CandidateResult"
                       },
                       "description": "Present when candidates were given"
+                    },
+                    "timing": {
+                      "type": "array",
+                      "description": "NIH ODS timing statements that apply to this stack (calcium dose size and form, calcium and iron, iron and zinc, iron with food, vitamin D with fat, green tea extract with food, and medication timing for in-stack interactions): id, nutrient_ids, product_refs, advice, advice_es, source. Summary form: the advice strings, in Spanish with \"lang\": \"es\".",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "foods": {
+                      "type": "object",
+                      "description": "Present with \"foods\": source (USDA SR28), items (how each food was matched: ndb_number, description, confidence, grams, portion used, alternatives, nutrients not analyzed) and totals (per nutrient from the foods; food-only nutrients carry percent_of_ul and flags). Supplement totals with the foods added are in nutrient_totals[].with_foods."
                     },
                     "botanicals": {
                       "type": "array",
@@ -2302,7 +2354,9 @@
               "INTERACTIONS_NOT_ASSESSED",
               "INTERACTIONS_PARTIAL",
               "MEDICATION_NOT_RECOGNIZED",
-              "FDA_UNAVAILABLE"
+              "FDA_UNAVAILABLE",
+              "FOOD_NOT_RESOLVED",
+              "FOOD_PORTION_UNKNOWN"
             ]
           },
           "product_ref": {

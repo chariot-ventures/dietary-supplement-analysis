@@ -1,6 +1,6 @@
 {
   "service": "dietary-supplement-analysis",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "as_of": "<date>",
   "profile": {
     "age": 34,
@@ -18,7 +18,7 @@
     "suggestions": 5,
     "botanicals_with_signals": 1
   },
-  "agent_summary": "2 nutrients are above the upper limit (UL) for a 34-year-old female from these supplements alone. Vitamin D: 175 mcg a day vs a UL of 100 mcg (175%), mostly from Fixture Labs Vitamin D3 5000 IU. The UL guards against high blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues. Magnesium: 400 mg a day vs a UL of 350 mg (114%), mostly from Fixture Labs Daily Multivitamin. The UL guards against diarrhea and other gastrointestinal upset from supplemental magnesium. Leaving out Fixture Labs Vitamin D3 5000 IU would bring Vitamin D to 50 mcg (50% of the UL). Totals exclude food, drinks and medications. Label data, not medical advice.",
+  "agent_summary": "2 nutrients are above the upper limit (UL) for a 34-year-old female from these supplements alone. Vitamin D: 175 mcg a day vs a UL of 100 mcg (175%), mostly from Fixture Labs Vitamin D3 5000 IU. The UL guards against high blood calcium (hypercalcemia), which can lead to kidney stones and calcification of soft tissues. Magnesium: 400 mg a day vs a UL of 350 mg (114%), mostly from Fixture Labs Daily Multivitamin. The UL guards against diarrhea and other gastrointestinal upset from supplemental magnesium. Leaving out Fixture Labs Vitamin D3 5000 IU would bring Vitamin D to 50 mcg (50% of the UL). Timing (1 of 2 tips in timing): Fat in the gut enhances vitamin D absorption, so taking it with a meal that contains some fat may help (some is absorbed without fat). Totals exclude food, drinks and medications. Label data, not medical advice.",
   "assumptions": [
     "dsld:900001: servings_per_day not given; used label maximum of 1 (label: 1 Softgel(s), 1 time(s) daily)",
     "dsld:900002: servings_per_day not given; used label maximum of 2 (label: 1-2 Tablet(s), 1 time(s) daily)",
@@ -133,6 +133,38 @@
         "zinc"
       ],
       "text": "Leaving out Fixture Labs Daily Multivitamin would bring magnesium to 200 mg (57.1% of the UL)."
+    }
+  ],
+  "timing": [
+    {
+      "id": "vitamin_d_with_fat",
+      "nutrient_ids": [
+        "vitamin-d"
+      ],
+      "product_refs": [
+        "dsld:900001",
+        "dsld:900002"
+      ],
+      "advice": "Fat in the gut enhances vitamin D absorption, so taking it with a meal that contains some fat may help (some is absorbed without fat).",
+      "advice_es": "La grasa en el intestino mejora la absorción de la vitamina D, así que tomarla con una comida que tenga algo de grasa puede ayudar (algo se absorbe sin grasa).",
+      "source": {
+        "name": "NIH Office of Dietary Supplements: Vitamin D fact sheet",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
+      }
+    },
+    {
+      "id": "green_tea_extract_with_food",
+      "nutrient_ids": [],
+      "product_refs": [
+        "dsld:900002"
+      ],
+      "advice": "Take green tea extract with food: liver problems are more likely when it is taken on an empty stomach (USP, cited by NIH ODS).",
+      "advice_es": "Tome el extracto de té verde con alimentos: los problemas hepáticos son más probables si se toma en ayunas (USP, citado por NIH ODS).",
+      "source": {
+        "name": "NIH Office of Dietary Supplements: Dietary Supplements for Weight Loss fact sheet",
+        "url": "https://ods.od.nih.gov/factsheets/WeightLoss-HealthProfessional/"
+      },
+      "relay": false
     }
   ],
   "botanicals": [
@@ -713,7 +745,7 @@
     }
   ],
   "provenance": {
-    "version": "0.9.0",
+    "version": "0.10.0",
     "commit": null,
     "reference_values_reviewed": "2026-10-11"
   },

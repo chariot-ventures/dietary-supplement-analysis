@@ -7,6 +7,7 @@ export const MAX_GET_IDS = 10;
 export const MAX_SEARCH_LIMIT = 10;
 export const MAX_CANDIDATES = 5;
 export const MAX_MEDICATIONS = 30;
+export const MAX_FOODS = 30;
 
 const dsldId = z.number().int().positive().max(10_000_000).describe('DSLD label ID, e.g. from /v1/products/search');
 const sex = z.enum(['male', 'female']);
@@ -85,6 +86,21 @@ export const customIngredient = z.object({
     .describe('For minerals: whether amount is elemental or the whole compound weight'),
 });
 
+export const foodItem = z
+  .object({
+    query: z.string().trim().min(2).max(120).optional().describe('Food as the user named it, e.g. "spinach cooked", "whole milk"; matched to a USDA SR28 food (see foods.items)'),
+    ndb_number: z.string().trim().regex(/^\d{4,5}$/).optional().describe('USDA NDB number (SR Legacy), e.g. "11458"'),
+    grams: z.number().positive().max(5000).optional().describe('Amount eaten per day, in grams'),
+    amount: z.number().positive().max(100).optional().describe('Amount in "unit" per day, e.g. 1.5 with unit "cup"'),
+    unit: z.string().trim().min(1).max(30).optional().describe('cup, tbsp, tsp, slice, large, medium, oz, lb, kg, g, fl oz... must match a USDA portion for the food (or be a weight)'),
+  })
+  .strict()
+  .refine((v) => (v.query === undefined) !== (v.ndb_number === undefined), { message: 'Give exactly one of query or ndb_number', path: ['query'] })
+  .refine((v) => (v.grams !== undefined) !== (v.amount !== undefined && v.unit !== undefined) && (v.amount === undefined) === (v.unit === undefined), {
+    message: 'Give grams, or amount with unit',
+    path: ['grams'],
+  });
+
 export const dsldProduct = z.object({ dsld_id: dsldId, servings_per_day: servingsPerDay.optional() }).strict();
 export const queryProduct = z
   .object({
@@ -130,6 +146,12 @@ export const analyzeRequest = z
       ),
     medications: medications.optional(),
     conditions: conditions.optional(),
+    foods: z
+      .array(foodItem)
+      .min(1)
+      .max(MAX_FOODS)
+      .optional()
+      .describe(`Optional, up to ${MAX_FOODS}: what the person eats in a day, e.g. [{"query":"spinach cooked","amount":1,"unit":"cup"},{"query":"whole milk","grams":488}]. Added to the supplement totals in nutrient_totals[].with_foods (USDA SR28, offline). Use instead of diet "typical".`),
     candidates: z
       .array(stackProduct)
       .min(1)
@@ -137,7 +159,8 @@ export const analyzeRequest = z
       .optional()
       .describe(`Optional, up to ${MAX_CANDIDATES}: products the user is considering adding. Each is evaluated as an addition to the stack in candidate_results[]; they are not included in nutrient_totals.`),
   })
-  .refine((v) => (v.age === undefined) === (v.sex === undefined), { message: 'Give age and sex together, or neither', path: ['age'] });
+  .refine((v) => (v.age === undefined) === (v.sex === undefined), { message: 'Give age and sex together, or neither', path: ['age'] })
+  .refine((v) => !(v.foods && v.diet === 'typical'), { message: 'Give foods or diet "typical", not both (they would count food twice)', path: ['foods'] });
 
 export const interactionsRequest = z
   .object({

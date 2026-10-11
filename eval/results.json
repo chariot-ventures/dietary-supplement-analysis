@@ -1,7 +1,7 @@
 {
- "version": "0.9.0",
- "passed": 53,
- "total": 53,
+ "version": "0.10.0",
+ "passed": 56,
+ "total": 56,
  "results": [
   {
    "id": "vitd-5000iu",
@@ -318,6 +318,24 @@
   {
    "id": "egcg-900",
    "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "food-liver-vita",
+   "category": "foods",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "food-brazil-selenium",
+   "category": "foods",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "food-carrots-not-ul",
+   "category": "foods",
    "pass": true,
    "problems": []
   }

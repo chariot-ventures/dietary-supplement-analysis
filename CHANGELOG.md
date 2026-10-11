@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.0 (2026-10-11)
+
+- **Real foods.** `foods` on `/v1/stack/analyze` takes what the person eats ("1 cup cooked spinach", "488 g whole milk") and matches it offline against the 8,789 foods of USDA SR28 (FoodData Central's SR Legacy), with USDA household portions. The foods are added to the supplement totals in `with_foods`, and food-only nutrients are checked too. Example: Brazil nuts alone can put selenium over its UL, and beef liver can do the same for vitamin A. Food counts toward a UL only where that UL covers food. Missing USDA analyses are listed rather than treated as zero, and three corrupt SR28 manganese values are excluded and reported. The table is built from the unchanged USDA files by `npm run build:foods` (checksums verified) and checked in `npm run check`.
+- **Timing.** `timing` gives the NIH statements on when to take things that apply to the stack (calcium in doses of 500 mg or less, calcium carbonate with a meal, calcium and iron apart, iron 25 mg+ apart from zinc, iron with food at high doses, vitamin D with some fat, green tea extract with food, medication spacing), each with its products and fact sheet, in English and Spanish. The first tip is in `agent_summary`.
+- 3 more accuracy cases (foods); 56 in all.
+
 ## 0.9.0 (2026-10-11)
 
 - **Spanish summaries.** `"lang": "es"` on `/v1/stack/analyze` writes `agent_summary` in Spanish (English kept in `agent_summary_en`), covering limits, fixes, candidates, interactions, conditions and botanicals. All 251 NIH data phrases that can reach a summary have Spanish translations in [data/i18n-es.json](data/i18n-es.json), and a test fails if one is missing.

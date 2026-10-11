@@ -47,6 +47,42 @@ export function foodIntake(nutrientId: string, profile: Profile): { total: numbe
 
 const pct = (v: number, of: number | null | undefined) => (of == null || of <= 0 ? null : round((v / of) * 100, 1));
 
+export type FoodGetter = (nutrientId: string) => { total: number; towardUl: number | null; unit: string } | null;
+
+/**
+ * Adds a food estimate (field) to each nutrient total that has food data.
+ * Leaves supplement-only fields untouched. Returns how many totals got one.
+ */
+export function applyFoodEstimate(a: StackAnalysis, field: 'with_typical_diet' | 'with_foods', food: FoodGetter): number {
+  let applied = 0;
+  for (const t of a.nutrient_totals) {
+    const f = food(t.nutrient_id);
+    if (!f || !t.reference) continue;
+    t[field] = estimate(t, f);
+    applied++;
+  }
+  return applied;
+}
+
+function estimate(t: NutrientTotal, food: { total: number; towardUl: number | null; unit: string }): DietEstimate {
+  const total = round(t.daily_total.amount + food.total, 2);
+  const ul = t.reference!.ul;
+  const toward = t.amount_toward_ul && food.towardUl !== null ? round(t.amount_toward_ul.amount + food.towardUl, 2) : null;
+  const percentUl = toward !== null ? pct(toward, ul) : null;
+  const flags: Flag[] = [];
+  if (percentUl !== null && percentUl > 100) flags.push('above_ul');
+  else if (percentUl !== null && percentUl >= NEAR_UL_PERCENT) flags.push('near_ul');
+  const target = t.reference!.rda !== null ? { reference: 'rda' as const, amount: t.reference!.rda } : t.reference!.ai !== null ? { reference: 'ai' as const, amount: t.reference!.ai } : null;
+  return {
+    food: { amount: food.total, unit: food.unit },
+    estimated_total: { amount: total, unit: t.daily_total.unit },
+    amount_toward_ul: toward !== null ? { amount: toward, unit: t.amount_toward_ul!.unit } : null,
+    percent_of_ul: percentUl,
+    coverage: target ? { reference: target.reference, percent: pct(total, target.amount)! } : null,
+    flags,
+  };
+}
+
 /**
  * Adds with_typical_diet to each nutrient total that has food data, and returns
  * the assumption text to add. Leaves supplement-only fields untouched.
@@ -56,29 +92,8 @@ export function applyTypicalDiet(a: StackAnalysis): { applied: number; note: str
   if (a.profile.age < 2 || a.profile.life_stage) {
     return { applied: 0, note: 'diet "typical" was not applied: US food intake data covers ages 2 and up, without pregnancy or lactation.' };
   }
-  let applied = 0;
-  for (const t of a.nutrient_totals) {
-    const food = foodIntake(t.nutrient_id, a.profile);
-    if (!food || !t.reference) continue;
-    const total = round(t.daily_total.amount + food.total, 2);
-    const ul = t.reference.ul;
-    const toward = t.amount_toward_ul && food.towardUl !== null ? round(t.amount_toward_ul.amount + food.towardUl, 2) : null;
-    const percentUl = toward !== null ? pct(toward, ul) : null;
-    const flags: Flag[] = [];
-    if (percentUl !== null && percentUl > 100) flags.push('above_ul');
-    else if (percentUl !== null && percentUl >= NEAR_UL_PERCENT) flags.push('near_ul');
-    const target = t.reference.rda !== null ? { reference: 'rda' as const, amount: t.reference.rda } : t.reference.ai !== null ? { reference: 'ai' as const, amount: t.reference.ai } : null;
-    const est: DietEstimate = {
-      food: { amount: food.total, unit: food.unit },
-      estimated_total: { amount: total, unit: t.daily_total.unit },
-      amount_toward_ul: toward !== null ? { amount: toward, unit: t.amount_toward_ul!.unit } : null,
-      percent_of_ul: percentUl,
-      coverage: target ? { reference: target.reference, percent: pct(total, target.amount)! } : null,
-      flags,
-    };
-    t.with_typical_diet = est;
-    applied++;
-  }
+  const profile = a.profile;
+  const applied = applyFoodEstimate(a, 'with_typical_diet', (id) => foodIntake(id, profile));
   return {
     applied,
     note: `with_typical_diet adds the US average intake from food and drinks for a ${a.profile.sex} of this age (What We Eat in America, NHANES 2017-March 2020) to the supplement totals. A person's own diet can be much higher or lower.`,
@@ -86,8 +101,8 @@ export function applyTypicalDiet(a: StackAnalysis): { applied: number; note: str
 }
 
 /** Nutrients that are flagged only once typical food intake is added. */
-export function dietOnlyFlags(a: StackAnalysis): { t: NutrientTotal; est: DietEstimate }[] {
+export function dietOnlyFlags(a: StackAnalysis, field: 'with_typical_diet' | 'with_foods' = 'with_typical_diet'): { t: NutrientTotal; est: DietEstimate }[] {
   return a.nutrient_totals
-    .map((t) => ({ t, est: t.with_typical_diet }))
+    .map((t) => ({ t, est: t[field] }))
     .filter((x): x is { t: NutrientTotal; est: DietEstimate } => !!x.est && x.est.flags.length > 0 && x.t.flags.length === 0);
 }

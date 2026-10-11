@@ -14,6 +14,8 @@ export interface Expect {
   botanicals?: string[];
   dose?: string[];
   gaps?: string[];
+  /** Nutrients above the UL once the listed foods are added (with_foods, or food-only totals). */
+  food_above?: string[];
 }
 export interface EvalCase {
   id: string;
@@ -36,6 +38,7 @@ export interface Claims {
   botanicals?: string[];
   dose?: string[];
   gaps?: string[];
+  food_above?: string[];
 }
 
 const sameSet = (a: string[], b: string[]) => a.length === b.length && a.every((x) => b.includes(x));
@@ -56,6 +59,7 @@ export function score(e: Expect, c: Claims): string[] {
   if (e.botanicals && !sameSet([...new Set(c.botanicals ?? [])].sort(), [...e.botanicals].sort())) p.push(`botanicals: expected [${e.botanicals}] got [${c.botanicals}]`);
   for (const d of e.dose ?? []) if (!(c.dose ?? []).includes(d)) p.push(`missing dose finding for ${d}`);
   for (const g of e.gaps ?? []) if (!(c.gaps ?? []).includes(g)) p.push(`missing gap ${g}`);
+  if (e.food_above && !sameSet([...new Set(c.food_above ?? [])].sort(), [...e.food_above].sort())) p.push(`above_ul with foods: expected [${e.food_above}] got [${c.food_above}]`);
   return p;
 }
 
@@ -73,5 +77,9 @@ export function claimsFromService(body: Record<string, unknown>): Claims {
     botanicals: bots.map((b) => b.id),
     dose: bots.filter((b) => b.dose_findings.length).map((b) => b.id),
     gaps: ((body.data_gaps ?? []) as { code: string }[]).map((g) => g.code),
+    food_above: [
+      ...(body.nutrient_totals as { nutrient_id: string; with_foods?: { flags: string[] } }[] ?? []).filter((t) => t.with_foods?.flags.includes('above_ul')).map((t) => t.nutrient_id),
+      ...(((body.foods as { totals?: { nutrient_id: string; flags?: string[] }[] } | undefined)?.totals ?? []).filter((t) => t.flags?.includes('above_ul')).map((t) => t.nutrient_id)),
+    ],
   };
 }

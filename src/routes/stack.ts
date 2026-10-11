@@ -2,7 +2,11 @@ import type { FastifyInstance } from 'fastify';
 import { agentSummary, compareCandidate, suggestFixes, type CandidateResult, type SummaryContext } from '../lib/advise.js';
 import { agentSummaryEs } from '../lib/summary-es.js';
 import { analyzeStack, type Profile, type StackAnalysis, type StackProduct } from '../lib/analyze.js';
-import { applyTypicalDiet, DIET_SOURCE, dietOnlyFlags } from '../lib/diet.js';
+import { applyFoodEstimate, applyTypicalDiet, DIET_SOURCE, dietOnlyFlags } from '../lib/diet.js';
+import { lookupReference } from '../lib/dri.js';
+import { timingTips } from '../lib/timing.js';
+import { FOODS_SOURCE, resolveFoods } from '../lib/foods.js';
+import { nutrientIndex } from '../lib/nutrients.js';
 import { lookupUpc, resolveQuery, type Candidate, type Confidence } from '../lib/catalog.js';
 import type { CallOptions, DsldClient, LabelResult } from '../lib/dsld.js';
 import { AppError } from '../lib/errors.js';
@@ -204,6 +208,39 @@ export async function analyze(body: unknown, deps: Deps) {
   }
   const dietFlags = dietOnlyFlags(analysis).map(({ t, est }) => ({ name: t.name, percent_of_ul: est.percent_of_ul, flag: est.flags[0]! }));
 
+  // Foods the person listed (USDA SR28), added to the supplement totals in with_foods.
+  const foods = req.foods ? resolveFoods(req.foods) : null;
+  const foodFlags: { nutrient_id: string; name: string; percent_of_ul: number | null; flag: string }[] = [];
+  if (foods) {
+    const byId = new Map(foods.totals.map((t) => [t.nutrient_id, t]));
+    applyFoodEstimate(analysis, 'with_foods', (id) => {
+      const f = byId.get(id);
+      return f ? { total: f.amount, towardUl: f.toward_ul, unit: f.unit } : null;
+    });
+    foodFlags.push(...dietOnlyFlags(analysis, 'with_foods').map(({ t, est }) => ({ nutrient_id: t.nutrient_id, name: t.name, percent_of_ul: est.percent_of_ul, flag: est.flags[0]! })));
+    // Nutrients only the foods supply: food alone against the UL.
+    const inStack = new Set(analysis.nutrient_totals.map((t) => t.nutrient_id));
+    for (const t of foods.totals) {
+      if (inStack.has(t.nutrient_id) || !profile) continue;
+      const n = nutrientIndex.get(t.nutrient_id);
+      const ul = n ? lookupReference(n, profile.age, profile.sex, profile.life_stage).ul : null;
+      t.percent_of_ul = ul && t.toward_ul !== null ? Math.round((t.toward_ul / ul) * 1000) / 10 : null;
+      t.flags = t.percent_of_ul === null ? [] : t.percent_of_ul > 100 ? ['above_ul'] : t.percent_of_ul >= 90 ? ['near_ul'] : [];
+      if (t.flags.length) foodFlags.push({ nutrient_id: t.nutrient_id, name: t.name, percent_of_ul: t.percent_of_ul, flag: t.flags[0]! });
+    }
+    const foodGaps: DataGap[] = foods.items.flatMap((f): DataGap[] =>
+      f.status === 'not_found'
+        ? [{ code: 'FOOD_NOT_RESOLVED', detail: `${f.input_path}: "${f.input.query ?? f.input.ndb_number}" matched no USDA SR28 food and is not counted. Try fewer or different words.` }]
+        : f.status === 'portion_unknown'
+          ? [{ code: 'FOOD_PORTION_UNKNOWN', detail: `${f.input_path}: USDA lists no "${f.input.unit}" portion for ${f.description}; give grams. Listed portions: ${(f.portions ?? []).join('; ') || 'none'}.` }]
+          : (f.data_suspect ?? []).map((x): DataGap => ({ code: 'DATA_SUSPECT', detail: `${f.input_path}: the USDA ${x.nutrient} value for ${f.description} is implausible (${x.why}) and is not counted.` })),
+    );
+    analysis.data_gaps.push(...foodGaps);
+    analysis.summary.data_gaps += foodGaps.length;
+    analysis.assumptions.push('with_foods adds the foods listed (USDA SR28 values per 100 g, scaled to the amounts given) to the supplement totals; other food and drinks are not included. Food counts toward a UL only where that UL covers food.');
+    extraSources.push({ name: FOODS_SOURCE.name, url: FOODS_SOURCE.url, retrieved: FOODS_SOURCE.retrieved });
+  }
+
   // Medication and condition interactions (NIH ODS fact sheets only).
   const meds = await medsPromise;
   const botanicals: BotanicalDetection[] = detectBotanicals(baseProducts, new Map(analysis.products.map((p) => [p.product_ref, p.servings_per_day_used])));
@@ -225,13 +262,16 @@ export async function analyze(body: unknown, deps: Deps) {
   const lowConfidence = resolutions
     .filter((r) => r.status === 'resolved' && r.confidence === 'low' && 'query' in r.input)
     .map((r) => ({ input: (r.input as { query: string }).query, chosen: [r.brand, r.name].filter(Boolean).join(' ') }));
+  const timing = timingTips(analysis, baseProducts, botanicals, findings);
   const summaryCtx: SummaryContext = {
+    timing,
     dietFlags,
     dietApplied: dietApplied > 0,
     suggestions,
     unresolved: resolutions.filter((r) => r.status === 'not_found').map((r) => ('query' in r.input ? r.input.query : `UPC ${r.input.upc}`)),
     lowConfidence,
     candidates: candidateResults,
+    foods: foods ? { flags: foodFlags, applied: foods.items.some((f) => f.status === 'resolved'), unresolved: foods.items.filter((f) => f.status !== 'resolved').map((f) => f.input.query ?? f.input.ndb_number ?? '') } : undefined,
     botanicals,
     pregnancyOrLactation: req.life_stage !== undefined,
     interactions: checked ? { findings: inStack, medicationsGiven: meds.length, unrecognized: meds.filter((m) => m.status === 'not_recognized').map((m) => m.input), conditionNames: (req.conditions ?? []).map(conditionName) } : undefined,
@@ -248,12 +288,13 @@ export async function analyze(body: unknown, deps: Deps) {
     ...(req.diet === 'typical' ? { diet_estimates: dietApplied, diet_only_flags: dietFlags.length } : {}),
     ...(checked ? { interaction_findings: findings.length, interaction_findings_in_stack: inStack.length } : {}),
     ...(botanicals.length ? { botanicals_with_signals: botanicals.length } : {}),
+    ...(foods ? { foods_counted: foods.items.filter((f) => f.status === 'resolved').length, food_flags: foodFlags.length } : {}),
   };
   const allSources = dedupeSources([...sources, ...extraSources]);
 
   if (req.detail === 'summary') {
     // Compact form: only what an agent needs to answer, typically 1-3 KB.
-    const flagged = nutrient_totals.filter((t) => t.flags.length || t.with_typical_diet?.flags.length);
+    const flagged = nutrient_totals.filter((t) => t.flags.length || t.with_typical_diet?.flags.length || t.with_foods?.flags.length);
     return envelope(
       {
         detail: 'summary',
@@ -283,9 +324,24 @@ export async function analyze(body: unknown, deps: Deps) {
           severity: t.severity,
           ul_basis: t.reference?.ul_basis ?? null,
           ...(t.with_typical_diet ? { with_typical_diet: { percent_of_ul: t.with_typical_diet.percent_of_ul, flags: t.with_typical_diet.flags } } : {}),
+          ...(t.with_foods ? { with_foods: { percent_of_ul: t.with_foods.percent_of_ul, flags: t.with_foods.flags } } : {}),
         })),
         suggestions: suggestions.map((s) => ({ nutrient_id: s.nutrient_id, action: s.action, product_ref: s.product_ref, resolves: s.resolves, text: s.text })),
         ...(req.candidates ? { candidate_results: candidateResults.map((c) => ({ product_ref: c.product_ref, verdict: c.verdict, text: c.text })) } : {}),
+        ...(foods
+          ? {
+              foods: {
+                items: foods.items.map((f) => ({ input_path: f.input_path, status: f.status, ndb_number: f.ndb_number, description: f.description, confidence: f.confidence, grams: f.grams })),
+                food_only_flags: foods.totals.filter((t) => t.flags?.length).map((t) => ({ nutrient_id: t.nutrient_id, name: t.name, percent_of_ul: t.percent_of_ul, flags: t.flags })),
+              },
+            }
+          : {}),
+        // Other tips (the first relayed one is already in agent_summary), at most two; all are in the full form.
+        ...(() => {
+          const shown = timing.find((t) => t.id !== 'medication_timing' && t.relay !== false);
+          const rest = timing.filter((t) => t !== shown && t.id !== 'medication_timing').slice(0, 2);
+          return rest.length ? { more_timing: rest.map((t) => (req.lang === 'es' ? t.advice_es : t.advice)) } : {};
+        })(),
         ...(botanicals.length
           ? { botanicals: botanicals.map((b) => ({ id: b.id, name: b.name, product_refs: b.product_refs, signal: (b.signals.find((s) => s.relay !== false) ?? b.signals[0])?.summary ?? null, ...(b.dose_findings.length ? { dose: b.dose_findings[0]!.summary } : {}) })) }
           : {}),
@@ -317,6 +373,8 @@ export async function analyze(body: unknown, deps: Deps) {
       assumptions,
       suggestions,
       ...(req.candidates ? { candidate_results: candidateResults } : {}),
+      ...(timing.length ? { timing } : {}),
+      ...(foods ? { foods: { source: FOODS_SOURCE, items: foods.items, totals: foods.totals } } : {}),
       ...(botanicals.length ? { botanicals } : {}),
       ...(checked ? { interactions: { scope: INTERACTIONS_SCOPE, reviewed: INTERACTIONS_REVIEWED, medications: meds, findings } } : {}),
       nutrient_totals,

@@ -80,6 +80,8 @@ export interface NutrientTotal {
   contributions: Contribution[];
   /** Present with "diet": "typical": the same comparisons with US average food intake added. */
   with_typical_diet?: DietEstimate;
+  /** With "foods": the listed foods (USDA SR28) added to the supplement totals. */
+  with_foods?: DietEstimate;
 }
 
 export interface DietEstimate {

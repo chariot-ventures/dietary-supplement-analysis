@@ -1605,6 +1605,113 @@
     ]
    },
    "why": "900 mg EGCG/day; ODS: 843 mg/day raised liver enzymes in the Minnesota Green Tea Trial."
+  },
+  {
+   "id": "food-liver-vita",
+   "category": "foods",
+   "question": "40-year-old woman: multivitamin with 1500 mcg vitamin A as retinyl palmitate, and she eats 3 oz of beef liver a day.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Multi",
+      "ingredients": [
+       {
+        "name": "vitamin A",
+        "amount": 1500,
+        "unit": "mcg RAE",
+        "form": "retinyl palmitate"
+       }
+      ]
+     }
+    ],
+    "foods": [
+     {
+      "query": "beef liver",
+      "amount": 3,
+      "unit": "oz"
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "food_above": [
+     "vitamin-a"
+    ]
+   },
+   "why": "Supplement alone is 50% of the 3000 mcg UL. USDA SR28 raw beef liver has 4,968 mcg retinol per 100 g; 85 g = 4,223 mcg; total 5,723 mcg -> 191% with food."
+  },
+  {
+   "id": "food-brazil-selenium",
+   "category": "foods",
+   "question": "40-year-old woman taking vitamin C 100 mg who eats 60 g of Brazil nuts a day.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "C",
+      "ingredients": [
+       {
+        "name": "vitamin C",
+        "amount": 100,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "foods": [
+     {
+      "query": "brazil nuts",
+      "grams": 60
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "food_above": [
+     "selenium"
+    ]
+   },
+   "why": "SR28 Brazil nuts: 1,917 mcg selenium per 100 g; 60 g = 1,150 mcg vs the 400 mcg UL -> 288% from food alone."
+  },
+  {
+   "id": "food-carrots-not-ul",
+   "category": "foods",
+   "question": "40-year-old woman taking 1500 mcg vitamin A (retinyl palmitate) who eats 2 cups of chopped raw carrots daily.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Multi",
+      "ingredients": [
+       {
+        "name": "vitamin A",
+        "amount": 1500,
+        "unit": "mcg RAE",
+        "form": "retinyl palmitate"
+       }
+      ]
+     }
+    ],
+    "foods": [
+     {
+      "query": "carrots raw",
+      "amount": 2,
+      "unit": "cup"
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "food_above": []
+   },
+   "why": "Carrot vitamin A is all carotenoid (retinol 0), and the vitamin A UL covers preformed vitamin A only, so food adds nothing toward the UL: still 50%."
   }
  ]
 }

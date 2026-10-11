@@ -1,6 +1,6 @@
 {
   "name": "dietary-supplement-analysis",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Pocket Network service: NIH DSLD supplement labels and per-nutrient stack totals compared with NIH reference intakes.",
   "private": true,
   "type": "module",
@@ -14,12 +14,13 @@
     "build": "tsc -p tsconfig.build.json",
     "build:nutrients": "tsx scripts/build-nutrients.ts",
     "build:openapi": "tsx scripts/build-openapi.ts",
+    "build:foods": "tsx scripts/build-foods.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . && tsc --noEmit",
     "test": "vitest run",
     "eval": "tsx eval/run.ts",
     "eval:llm": "tsx eval/llm-compare.ts",
-    "check": "npm run build:nutrients -- --check && npm run build:openapi -- --check && npm run lint && npm test"
+    "check": "npm run build:nutrients -- --check && npm run build:foods -- --check && npm run build:openapi -- --check && npm run lint && npm test"
   },
   "dependencies": {
     "fastify": "^5.12.5",
@@ -30,6 +31,7 @@
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.20.5",
     "eslint": "^10.12.0",
+    "fda-nutrient-database": "1.0.2",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.71.1",

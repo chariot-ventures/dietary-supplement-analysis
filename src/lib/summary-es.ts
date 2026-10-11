@@ -129,8 +129,15 @@ export function agentSummaryEs(a: StackAnalysis, ctx: SummaryContext): string {
     const items = ctx.dietFlags.map((d) => `${lower(tr(d.name))} ${d.flag === 'above_ul' ? 'superaría' : 'estaría cerca de'} su UL${d.percent_of_ul === null ? '' : ` (${pct(d.percent_of_ul)})`}`);
     parts.push(`Sumando la ingesta media de alimentos y bebidas en EE. UU., ${items.join('; ')}.`);
   }
+  if (ctx.foods?.flags.length) {
+    const items = ctx.foods.flags.map((d) => `${nName(d.nutrient_id, d.name)} ${d.flag === 'above_ul' ? 'superaría' : 'estaría cerca de'} su UL${d.percent_of_ul === null ? '' : ` (${pct(d.percent_of_ul)})`}`);
+    parts.push(`Sumando los alimentos indicados, ${items.join('; ')}.`);
+  }
+  if (ctx.foods?.unresolved.length) parts.push(`Alimentos no contados (no encontrados, o sin porción del USDA para la unidad indicada): ${ctx.foods.unresolved.map((u) => `"${u}"`).join(', ')}.`);
   if (ctx.botanicals?.length) parts.push(...botanicalSentencesEs(ctx.botanicals, a, ctx.pregnancyOrLactation ?? false));
   if (ctx.interactions) parts.push(...interactionSentencesEs(ctx.interactions));
+  const tip = ctx.timing?.find((t) => t.id !== 'medication_timing' && t.relay !== false);
+  if (tip) parts.push(`Momento de toma${ctx.timing!.length > 1 ? ` (1 de ${ctx.timing!.length} consejos en timing)` : ''}: ${tip.advice_es}`);
   for (const c of ctx.candidates) parts.push(candidateEs(c));
   if (ctx.unresolved.length) parts.push(`No identificados, así que no se contaron: ${ctx.unresolved.map((u) => `"${u}"`).join(', ')}.`);
   if (ctx.lowConfidence.length) {
@@ -143,7 +150,9 @@ export function agentSummaryEs(a: StackAnalysis, ctx: SummaryContext): string {
   parts.push(
     ctx.dietApplied
       ? `Los totales de suplementos no incluyen medicamentos; la estimación de alimentos es una media de EE. UU., no la dieta de esta persona.${medNote} Datos de etiquetas, no consejo médico.`
-      : `Los totales no incluyen alimentos, bebidas ni medicamentos.${medNote} Datos de etiquetas, no consejo médico.`,
+      : ctx.foods?.applied
+        ? `Los totales de suplementos no incluyen medicamentos; with_foods suma solo los alimentos indicados.${medNote} Datos de etiquetas, no consejo médico.`
+        : `Los totales no incluyen alimentos, bebidas ni medicamentos.${medNote} Datos de etiquetas, no consejo médico.`,
   );
   return parts.join(' ');
 }

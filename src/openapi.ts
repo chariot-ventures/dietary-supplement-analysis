@@ -100,6 +100,8 @@ const components: Json = {
           'INTERACTIONS_PARTIAL',
           'MEDICATION_NOT_RECOGNIZED',
           'FDA_UNAVAILABLE',
+          'FOOD_NOT_RESOLVED',
+          'FOOD_PORTION_UNKNOWN',
         ],
       },
       product_ref: { type: 'string' },
@@ -474,6 +476,16 @@ export function buildOpenApi(): Json {
           assumptions: { type: 'array', items: { type: 'string' } },
           suggestions: { type: 'array', items: { $ref: '#/components/schemas/Suggestion' } },
           candidate_results: { type: 'array', items: { $ref: '#/components/schemas/CandidateResult' }, description: 'Present when candidates were given' },
+          timing: {
+            type: 'array',
+            description: 'NIH ODS timing statements that apply to this stack (calcium dose size and form, calcium and iron, iron and zinc, iron with food, vitamin D with fat, green tea extract with food, and medication timing for in-stack interactions): id, nutrient_ids, product_refs, advice, advice_es, source. Summary form: the advice strings, in Spanish with "lang": "es".',
+            items: { type: 'object' },
+          },
+          foods: {
+            type: 'object',
+            description:
+              'Present with "foods": source (USDA SR28), items (how each food was matched: ndb_number, description, confidence, grams, portion used, alternatives, nutrients not analyzed) and totals (per nutrient from the foods; food-only nutrients carry percent_of_ul and flags). Supplement totals with the foods added are in nutrient_totals[].with_foods.',
+          },
           botanicals: {
             type: 'array',
             description:

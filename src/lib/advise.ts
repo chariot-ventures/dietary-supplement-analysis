@@ -222,6 +222,10 @@ export interface SummaryContext {
   unresolved: string[];
   lowConfidence: { input: string; chosen: string }[];
   candidates: CandidateResult[];
+  /** Present with "foods": nutrients flagged only once the listed foods are added, and foods not counted. */
+  foods?: { flags: { nutrient_id: string; name: string; percent_of_ul: number | null; flag: string }[]; applied: boolean; unresolved: string[] } | undefined;
+  /** Timing statements that apply to this stack (see timing.ts). */
+  timing?: { advice: string; advice_es: string; id: string; relay?: boolean }[];
   /** Botanicals in the stack with NIH safety signals. */
   botanicals?: BotanicalDetection[];
   /** True with life_stage pregnancy or lactation: botanical pregnancy statements are relayed. */
@@ -269,8 +273,15 @@ export function agentSummary(a: StackAnalysis, ctx: SummaryContext): string {
     const items = ctx.dietFlags.map((d) => `${d.name} would be ${d.flag === 'above_ul' ? 'above' : 'near'} its UL${d.percent_of_ul === null ? '' : ` (${num(d.percent_of_ul)}%)`}`);
     parts.push(`With average US food and drink intake added, ${items.join('; ')}.`);
   }
+  if (ctx.foods?.flags.length) {
+    const items = ctx.foods.flags.map((d) => `${d.name} would be ${d.flag === 'above_ul' ? 'above' : 'near'} its UL${d.percent_of_ul === null ? '' : ` (${num(d.percent_of_ul)}%)`}`);
+    parts.push(`With the foods listed added, ${items.join('; ')}.`);
+  }
+  if (ctx.foods?.unresolved.length) parts.push(`Foods not counted (not found, or no USDA portion for the unit given): ${ctx.foods.unresolved.map((u) => `"${u}"`).join(', ')}.`);
   if (ctx.botanicals?.length) parts.push(...botanicalSentences(ctx.botanicals, a, ctx.pregnancyOrLactation ?? false));
   if (ctx.interactions) parts.push(...interactionSentences(ctx.interactions, a));
+  const tip = ctx.timing?.find((t) => t.id !== 'medication_timing' && t.relay !== false);
+  if (tip) parts.push(`Timing${ctx.timing!.length > 1 ? ` (1 of ${ctx.timing!.length} tips in timing)` : ''}: ${tip.advice}`);
   for (const c of ctx.candidates) parts.push(c.text);
   if (ctx.unresolved.length) parts.push(`Not identified, so not counted: ${ctx.unresolved.map((u) => `"${u}"`).join(', ')}.`);
   if (ctx.lowConfidence.length) {
@@ -283,7 +294,9 @@ export function agentSummary(a: StackAnalysis, ctx: SummaryContext): string {
   parts.push(
     ctx.dietApplied
       ? `Supplement totals exclude medications; the food estimate is a US average, not this person's diet.${medNote} Label data, not medical advice.`
-      : `Totals exclude food, drinks and medications.${medNote} Label data, not medical advice.`,
+      : ctx.foods?.applied
+        ? `Supplement totals exclude medications; with_foods adds only the foods listed.${medNote} Label data, not medical advice.`
+        : `Totals exclude food, drinks and medications.${medNote} Label data, not medical advice.`,
   );
   return parts.join(' ');
 }

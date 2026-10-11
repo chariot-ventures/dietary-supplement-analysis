@@ -72,7 +72,9 @@ export type DataGapCode =
   | 'PRODUCT_NOT_RESOLVED'
   | 'INTERACTIONS_NOT_ASSESSED'
   | 'INTERACTIONS_PARTIAL'
-  | 'MEDICATION_NOT_RECOGNIZED';
+  | 'MEDICATION_NOT_RECOGNIZED'
+  | 'FOOD_NOT_RESOLVED'
+  | 'FOOD_PORTION_UNKNOWN';
 
 /** Why a DATA_SUSPECT gap was raised. */
 export type SuspectCheck = 'duplicate_row' | 'nested_exceeds_parent' | 'percent_dv_mismatch' | 'implausible_amount';
