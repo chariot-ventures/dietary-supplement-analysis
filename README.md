@@ -210,7 +210,7 @@ Each nutrient total includes:
 
 ## How the numbers are produced
 
-Accuracy is checked against 53 hand-worked cases; see [EVAL.md](EVAL.md).
+Accuracy is checked against 56 hand-worked cases; see [EVAL.md](EVAL.md).
 
 
 - **DSLD label details** that current labels need:
