@@ -301,8 +301,20 @@ $AGENTS_HOST {
 	}
 	rate_limit {
 		zone per_client {
+			match {
+				not path /mcp
+			}
 			key {remote_host}
 			events 30
+			window 1m
+		}
+		# MCP clients (claude.ai and others) share egress IPs; the backend limits per connection.
+		zone per_client_mcp {
+			match {
+				path /mcp
+			}
+			key {remote_host}
+			events 300
 			window 1m
 		}
 		zone all_clients {
@@ -314,7 +326,7 @@ $AGENTS_HOST {
 	reverse_proxy $SERVICE_ID-backend:8080
 	handle_errors 429 {
 		header Content-Type application/json
-		respond \`{"error":{"code":"RATE_LIMITED","message":"Demo endpoint limit reached (30 requests per minute per client). Retry shortly, or use the service through Pocket Network.","retryable":true,"field":null}}\` 429
+		respond \`{"error":{"code":"RATE_LIMITED","message":"Demo endpoint rate limit reached. Retry shortly, or use the service through Pocket Network.","retryable":true,"field":null}}\` 429
 	}
 }
 CADDY
