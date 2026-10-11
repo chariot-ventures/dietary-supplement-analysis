@@ -38,12 +38,21 @@ export function updatedDate(html: string): string | null {
 async function main() {
   const recorded: Record<string, string> = existsSync(DATES) ? JSON.parse(readFileSync(DATES, 'utf8')).pages ?? {} : {};
   const current: Record<string, string | null> = {};
+  const why: Record<string, string> = {};
   for (const u of urls()) {
     try {
-      const res = await fetch(u, { headers: { 'user-agent': 'dietary-supplement-analysis fact-sheet check (github.com/micallb/dietary-supplement-analysis)' } });
+      const res = await fetch(u, {
+        headers: {
+          'user-agent': 'Mozilla/5.0 (compatible; dietary-supplement-analysis fact-sheet check; +https://github.com/micallb/dietary-supplement-analysis)',
+          accept: 'text/html,application/xhtml+xml',
+          'accept-language': 'en-US,en;q=0.9',
+        },
+      });
       current[u] = res.ok ? updatedDate(await res.text()) : null;
-    } catch {
+      if (!current[u]) why[u] = res.ok ? 'no "Updated" date on the page' : `HTTP ${res.status}`;
+    } catch (err) {
       current[u] = null;
+      why[u] = err instanceof Error ? err.message : 'fetch failed';
     }
     await new Promise((r) => setTimeout(r, 500));
   }
@@ -61,7 +70,7 @@ async function main() {
     `Checked ${Object.keys(current).length} NIH pages cited in data/.`,
     changed.length ? `\n**Updated since our review (${changed.length}):**\n${changed.map(([u, d]) => `- ${u}: ${recorded[u]} -> ${d}`).join('\n')}` : '\nNo cited page has changed since our review.',
     unknown.length ? `\nNot yet recorded (${unknown.length}): ${unknown.map(([u, d]) => `${u} (${d})`).join(', ')}` : '',
-    unreadable.length ? `\nNo date found (${unreadable.length}): ${unreadable.map(([u]) => u).join(', ')}` : '',
+    unreadable.length ? `\nNo date found (${unreadable.length}): ${unreadable.map(([u]) => `${u} (${why[u]})`).join(', ')}` : '',
     changed.length || unknown.length ? '\nReview the data for the changed pages, then run `npx tsx scripts/check-factsheets.ts --write` and commit data/factsheet-dates.json.' : '',
   ];
   console.log(lines.filter(Boolean).join('\n'));
