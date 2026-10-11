@@ -13,7 +13,7 @@ Fields for the Pocket Network Agentic Services Hackathon form (PLAN.md section 1
 
 ## Service description
 
-Agents ask one question for people who take supplements: is anything I take too much, and what should I change? Send the products the way the user names them (product names, barcodes or NIH label IDs) with age and sex. The service finds each label in the NIH Dietary Supplement Label Database, totals every vitamin and mineral per day, and checks the totals against NIH upper limits and recommended intakes, including pregnancy, lactation, infants and an optional typical-diet estimate. It returns a plain-language summary an agent can relay, what each upper limit protects against, the single change that would fix an excess, and the effect of adding a product the user is considering, with every number traced to its label or NIH fact sheet.
+Agents ask one question for people who take supplements: is anything I take too much, does it clash with my medications, and what should I change? Send the products the way the user names them (product names, barcodes or NIH label IDs) with age and sex, plus any medications and conditions. The service finds each label in the NIH Dietary Supplement Label Database, totals every vitamin and mineral per day, and checks the totals against NIH upper limits and recommended intakes, including pregnancy, lactation, infants and an optional typical-diet estimate. It checks the person's medications (brand or generic, normalized with NIH RxNorm) against the interactions in the NIH fact sheets, flags herbs with NIH safety signals (liver injury, bleeding, drug interactions) and doses above what NIH cites, and looks up FDA recalls and adverse event reports. It returns a plain-language summary an agent can relay, in English or Spanish, the single change that would fix an excess, and the effect of adding a product the user is considering, with every number traced to its label or NIH fact sheet. It's also a remote MCP server, and its accuracy is checked against 53 hand-worked cases ([EVAL.md](../EVAL.md)).
 
 ## How judges can test it
 
@@ -30,13 +30,26 @@ curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: 
     {"query": "Thompson Zinc 50 mg", "servings_per_day": 1}],
   "candidates": [{"query": "vitamin d3 5000 iu"}]}' | jq '.agent_summary, .suggestions[0].text'
 
-# 2. Barcode lookup
+# 2. Medications, a herb, and a Spanish summary
+curl -s https://agents.trackmysupplement.com/v1/stack/analyze -H 'Content-Type: application/json' -d '{
+  "age": 70, "sex": "male", "lang": "es", "detail": "summary",
+  "medications": ["warfarin", "Synthroid"],
+  "products": [{"query": "Centrum Silver Men 50+"},
+               {"name": "Herbal", "ingredients": [{"name": "Ginkgo biloba leaf extract", "amount": 120, "unit": "mg"}]}]}' | jq '.agent_summary, .interactions.findings[].trigger'
+
+# 3. FDA recalls and adverse event reports for a product
+curl -s https://agents.trackmysupplement.com/v1/products/fda -H 'Content-Type: application/json' -d '{"query":"Nature Made Vitamin D3 1000 IU"}' | jq '.agent_summary'
+
+# 4. Remote MCP server (add https://agents.trackmysupplement.com/mcp as a custom connector in Claude)
+curl -s https://agents.trackmysupplement.com/mcp -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | jq '.result.tools[].name'
+
+# 5. Barcode lookup
 curl -s https://agents.trackmysupplement.com/v1/products/lookup -H 'Content-Type: application/json' -d '{"upc":"031604026974"}' | jq '.product.name'
 
-# 3. Reference values (offline), including pregnancy
+# 6. Reference values (offline), including pregnancy
 curl -s https://agents.trackmysupplement.com/v1/nutrients/reference -H 'Content-Type: application/json' -d '{"nutrient":"folate","age":30,"sex":"female","life_stage":"pregnancy"}'
 
-# 4. Tool definitions for agent frameworks
+# 7. Tool definitions for agent frameworks
 curl -s https://agents.trackmysupplement.com/v1/tools | jq '.tools[].name'
 ```
 
