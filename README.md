@@ -114,6 +114,7 @@ pocket-ap call --config deploy/beta-stake/pocket-ap.yaml \
 | Supplier staked, 60,000 POKT | [`9CBCBAAF…51FA`](https://sauron-api.beta.infra.pocket.network/cosmos/tx/v1beta1/txs/9CBCBAAF6BCF9DA0A32CBCF818D3D2B410539DFA3DAC4FC97B78E914FAB351FA) | 722747 |
 | Test application staked, 1,100 POKT | [`6734D5F4…05EE`](https://sauron-api.beta.infra.pocket.network/cosmos/tx/v1beta1/txs/6734D5F40BE1E94F5A3434E0EE8A677F00CA52A24863BA22873F1956678005EE) | 722744 |
 | Claim for the first paid relay (settled at block 722813) | [`F3D81B3F…88EB`](https://sauron-api.beta.infra.pocket.network/cosmos/tx/v1beta1/txs/F3D81B3F797F86830CE1ACDBFBEA473EE989D4816093179A082BB423D9C788EB) | 722793 |
+| Claim for a relay of the judges' example A on v0.12.6, sent with `pocket-ap` from the owner's Mac on 2026-10-11 (settled; 500 compute units debited from the app stake) | [`A9A5B384…3DA5`](https://sauron-api.beta.infra.pocket.network/cosmos/tx/v1beta1/txs/A9A5B3849C032011799A6CD966E7BC22135B78125495862577C3A156A9EC3DA5) | 724433 |
 
 Details and the server setup are in [deploy/PHASE4_READINESS.md](deploy/PHASE4_READINESS.md).
 

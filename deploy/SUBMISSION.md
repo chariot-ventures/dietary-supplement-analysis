@@ -20,7 +20,7 @@ Fields for the [Pocket Network Agentic Services Hackathon form](https://docs.goo
 As entered in the form:
 
 ```text
-It's a REST service on Pocket Network Beta TestNet: service ID dietary-supplement-analysis, rpc_type REST, 500 compute units per relay, served by a staked supplier at https://pokt-beta.trackmysupplement.com. It passes all 9 Pocket portal audit rules (A1-A9), and the test transaction above is the settled claim for a paid relay. Audit: https://mcp.pocketmcp.network/api/audit?network=beta&ids=dietary-supplement-analysis
+It's a REST service on Pocket Network Beta TestNet: service ID dietary-supplement-analysis, rpc_type REST, 500 compute units per relay, served by a staked supplier at https://pokt-beta.trackmysupplement.com. It passes all 9 Pocket portal audit rules (A1-A9), and the test transaction above is the settled claim for a paid relay. The exact request in A below was relayed again on 2026-10-11 against the current version (0.12.6), and its claim settled too: A9A5B3849C032011799A6CD966E7BC22135B78125495862577C3A156A9EC3DA5 (block 724433). Audit: https://mcp.pocketmcp.network/api/audit?network=beta&ids=dietary-supplement-analysis
 
 A. Through Pocket Network, the way paying agents call it. With an application staked for dietary-supplement-analysis on Beta, relay with pocket-ap and the client config in the repo (deploy/beta-stake/pocket-ap.yaml):
 POCKET_APP_PRIVATE_KEY=<app key hex> pocket-ap call --config deploy/beta-stake/pocket-ap.yaml --service dietary-supplement-analysis --rpc-type rest -X POST --path /v1/stack/analyze -d '{"age":74,"sex":"female","detail":"summary","medications":["Coumadin"],"products":[{"query":"Centrum Silver Women 50+"},{"query":"Nature Made Fish Oil 1200 mg"},{"query":"Ginkgo Biloba 120 mg"}]}' -v

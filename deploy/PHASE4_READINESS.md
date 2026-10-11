@@ -45,6 +45,7 @@ Chain values are governance parameters: re-run `live_params.py` before acting on
 | Republish card (v0.8 features: interactions, botanicals, FDA, MCP) | `B6B588DEB7DB4EA9EA1E1BE470A8AF67CD217FF56A460AE1E56B946A17CADC8C` | 723817 | code 0; gas only. Portal audit then warned on A2 (description didn't mention JSON). |
 | Republish card (adds "Every response is a JSON object") | `C7808CD1F23443E210C97ED30C426989743350A0755F0BD061C9D9ED96CFE412` | 723827 | code 0; gas only. Portal audit at 15:22 UTC on 2026-10-11: PASS on A1-A9, no warnings, card 4,058 bytes. |
 | Republish card (links moved to github.com/chariot-ventures) | `CB7B56AA4041541F413D77FE1BE3F2CCDF98009E007CE445B1DDD36B6AE596AB` | 724169 | code 0; gas only. On-chain card sha256 35d15170… matches `card/card.json` (4,085 bytes). |
+| Relay re-test on v0.12.6: `pocket-ap` v0.1.2 `call` from the Mac with the judges' example A (`POST /v1/stack/analyze`, Coumadin, Centrum Silver, fish oil, ginkgo) | `A9A5B3849C032011799A6CD966E7BC22135B78125495862577C3A156A9EC3DA5` (claim) | session 724401-724420, claim 724433 | exit 0, version 0.12.6, answer identical to the demo endpoint; claim settled by block 724456 (app stake 1,099,999,979 to 1,099,999,958 uPOKT) |
 
 ## Order followed (skill workflow steps 6-9)
 
