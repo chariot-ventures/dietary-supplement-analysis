@@ -90,7 +90,7 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.10.0"}
+# {"service":"dietary-supplement-analysis","version":"0.11.0"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.
@@ -108,6 +108,8 @@ The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`
 | `DSLD_WARM` | `1` | With the store on, a background job fetches popular products into it at about one request per second (queries in [data/warm-queries.json](data/warm-queries.json)). `0` turns it off |
 | `RXNORM` / `RXNORM_BASE_URL` | on / `https://rxnav.nlm.nih.gov/REST` | `off` keeps medication matching to the names in data/interactions.json |
 | `OPENFDA` / `OPENFDA_API_KEY` / `OPENFDA_BASE_URL` | on / none / `https://api.fda.gov` | `off` disables `/v1/products/fda`. Without a key openFDA allows about 1,000 requests a day per IP; answers are cached for a day |
+| `FREE_TIER_HOSTS` | none | Comma-separated host names that get the free-trial quotas (the reference supplier sets its demo host). Requests on any other host, including relays, are never metered |
+| `FREE_TIER_PER_SESSION` / `FREE_TIER_PER_IP` / `FREE_TIER_PER_IP_MCP` / `FREE_TIER_GLOBAL` | 25 / 100 / 1000 / 5000 | Daily quotas: MCP tool calls per connection, REST calls per IP, MCP tool calls per IP, and all free calls. Counters persist in `FREE_TIER_DB` (default `free-tier.sqlite` beside the label store) as salted hashes |
 | `UPSTREAM_BUDGET_MS` | `8000` | Total time one request may wait on DSLD before answering `424 UPSTREAM_UNAVAILABLE` |
 
 Do not set `DSLD_FIXTURES_DIR` in production; it serves test fixtures instead of live data.

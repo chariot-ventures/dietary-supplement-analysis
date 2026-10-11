@@ -9,6 +9,8 @@ services:
     restart: unless-stopped
     environment:
       LOG_LEVEL: info
+      # Free trial on the public demo route only (see src/lib/freetier.ts); paid relays are never metered.
+      FREE_TIER_HOSTS: agents.trackmysupplement.com
     expose: ["8080"]
     mem_limit: 512m
     volumes:

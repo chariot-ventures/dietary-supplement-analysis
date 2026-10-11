@@ -8,7 +8,9 @@ Add this URL as a custom connector or remote MCP server (Claude, claude.ai, Curs
 https://agents.trackmysupplement.com/mcp
 ```
 
-It exposes `stack_analyze`, `products_search`, `products_lookup`, `products_get` and `nutrients_reference`. `stack_analyze` returns the compact `"detail": "summary"` form by default, because MCP results go straight into the model's context. Pass `"detail": "full"` for every field. The demo endpoint allows 30 requests per minute per client.
+It exposes `stack_analyze`, `interactions_check`, `products_fda_reports`, `products_search`, `products_lookup`, `products_get` and `nutrients_reference`. `stack_analyze` returns the compact `"detail": "summary"` form by default, because MCP results go straight into the model's context; pass `"detail": "full"` for every field.
+
+This remote endpoint is a **free trial**: 25 tool calls per connection per day (plenty for one person), with a per-address and an overall daily cap behind it. Each result's `_meta.free_tier` shows what's left. When a quota is used up, the tool returns a plain message with the reset time (00:00 UTC) and the paid route. For regular or automated use, run it through Pocket Network as below; that route has no quotas.
 
 ## Local, paid through Pocket Network
 

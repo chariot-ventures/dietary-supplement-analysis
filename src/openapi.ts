@@ -42,7 +42,7 @@ const components: Json = {
       error: {
         type: 'object',
         properties: {
-          code: { type: 'string', enum: ['INVALID_INPUT', 'NOT_FOUND', 'UNSUPPORTED', 'UPSTREAM_UNAVAILABLE', 'INTERNAL_ERROR'] },
+          code: { type: 'string', enum: ['INVALID_INPUT', 'NOT_FOUND', 'UNSUPPORTED', 'UPSTREAM_UNAVAILABLE', 'INTERNAL_ERROR', 'RATE_LIMITED'] },
           message: { type: 'string' },
           retryable: { type: 'boolean' },
           field: { type: 'string' },

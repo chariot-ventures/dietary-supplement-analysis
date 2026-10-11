@@ -9,6 +9,7 @@ export const ERROR_STATUS = {
   UNSUPPORTED: 422,
   UPSTREAM_UNAVAILABLE: 424,
   INTERNAL_ERROR: 422,
+  RATE_LIMITED: 429,
 } as const;
 
 export type ErrorCode = keyof typeof ERROR_STATUS;
@@ -23,7 +24,7 @@ export class AppError extends Error {
     this.name = 'AppError';
     this.code = code;
     this.field = opts.field;
-    this.retryable = opts.retryable ?? code === 'UPSTREAM_UNAVAILABLE';
+    this.retryable = opts.retryable ?? (code === 'UPSTREAM_UNAVAILABLE' || code === 'RATE_LIMITED');
   }
 
   get status(): number {

@@ -1,6 +1,6 @@
 {
   "name": "dietary-supplement-analysis",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Pocket Network service: NIH DSLD supplement labels and per-nutrient stack totals compared with NIH reference intakes.",
   "private": true,
   "type": "module",

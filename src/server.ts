@@ -1,7 +1,9 @@
+import path from 'node:path';
 import warmQueries from '../data/warm-queries.json' with { type: 'json' };
 import { buildApp } from './app.js';
 import { DsldClient } from './lib/dsld.js';
 import { createFixtureFetch, loadFixtureLabels } from './lib/dsld-fixtures.js';
+import { DEFAULT_LIMITS, openFreeTier } from './lib/freetier.js';
 import { RxNormClient } from './lib/interactions.js';
 import { OpenFdaClient } from './lib/openfda.js';
 import { openLabelStore } from './lib/store.js';
@@ -15,6 +17,19 @@ const fixturesDir = process.env.DSLD_FIXTURES_DIR;
 const storePath = process.env.DSLD_STORE_PATH ?? '';
 const opened = storePath && !fixturesDir ? await openLabelStore(storePath) : { store: null };
 
+// Free trial on the public demo hostname(s), e.g. FREE_TIER_HOSTS=agents.trackmysupplement.com. Empty: off.
+const envInt = (name: string, fallback: number) => (process.env[name] && Number.isFinite(Number(process.env[name])) ? Number(process.env[name]) : fallback);
+const freeTier = await openFreeTier(
+  (process.env.FREE_TIER_HOSTS ?? '').split(','),
+  {
+    perSession: envInt('FREE_TIER_PER_SESSION', DEFAULT_LIMITS.perSession),
+    perIpRest: envInt('FREE_TIER_PER_IP', DEFAULT_LIMITS.perIpRest),
+    perIpMcp: envInt('FREE_TIER_PER_IP_MCP', DEFAULT_LIMITS.perIpMcp),
+    global: envInt('FREE_TIER_GLOBAL', DEFAULT_LIMITS.global),
+  },
+  process.env.FREE_TIER_DB ?? (storePath && storePath !== ':memory:' ? path.join(path.dirname(storePath), 'free-tier.sqlite') : null),
+);
+
 const dsld = new DsldClient({
   baseUrl: process.env.DSLD_BASE_URL,
   apiKey: process.env.DSLD_API_KEY,
@@ -24,6 +39,7 @@ const dsld = new DsldClient({
 
 const app = buildApp({
   dsld,
+  freeTier,
   // RXNORM=off (or offline fixtures) keeps medication matching to the names in data/interactions.json.
   openfda: fixturesDir || process.env.OPENFDA === 'off' ? null : new OpenFdaClient(undefined, process.env.OPENFDA_BASE_URL || undefined, process.env.OPENFDA_API_KEY || undefined),
   rxnorm: fixturesDir || process.env.RXNORM === 'off' ? null : new RxNormClient(undefined, process.env.RXNORM_BASE_URL || undefined),

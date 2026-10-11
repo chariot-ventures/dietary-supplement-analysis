@@ -104,7 +104,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.10.0"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.11.0"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
 | POST | `/mcp` | Remote MCP server (Streamable HTTP, stateless): the same tools for MCP clients |
@@ -262,7 +262,14 @@ docker compose up --build     # container on 127.0.0.1:8080
 - DSLD calls run at most 4 at a time, with a 6 s deadline each and an 8 s budget per request. Labels are cached in memory for 7 days and searches for 24 hours, and labels are also kept in the persistent label store (refreshed after 30 days). If DSLD is down, stale copies and the label store answer instead; search results from the store say `"search_source": "local"`. Measured against live DSLD: a cold 15-product analyze takes 1.5 s and a warm one 17 ms.
 - Text that Pocket gateways treat as an error signal ("timeout", "block not found" and others) is `\u`-escaped in responses. It decodes to the same string.
 - Ages from birth to 120, plus pregnancy and lactation (14–50). Caffeine is checked against FDA guidance (400 mg a day for healthy adults, under 200 mg in pregnancy) and sodium against the 2019 Chronic Disease Risk Reduction Intake (2,300 mg), neither of which is a DRI UL; the response says so in `ul_note`.
-- The public demo endpoint allows 30 requests per minute per client and 600 per minute overall. Relays through Pocket Network aren't limited this way.
+- **The public demo endpoint is a free trial.** It allows 30 requests per minute per client, plus daily quotas that reset at 00:00 UTC:
+  - 25 tool calls per MCP connection (each connection gets its own `Mcp-Session-Id`);
+  - 100 REST calls per IP;
+  - 1,000 MCP calls per IP (hosted clients such as claude.ai share egress addresses);
+  - 5,000 free calls in total.
+  Discovery (`GET` routes, `initialize`, `tools/list`) is free. Results are never degraded. REST responses carry `X-Free-Tier-Remaining`, `X-Free-Tier-Limit` and `X-Free-Tier-Reset` headers, and MCP results carry the same in `_meta.free_tier`. Past a quota, REST answers `429 RATE_LIMITED`, and MCP returns a readable tool result saying when the quota resets and how to switch to the paid Pocket route.
+  - Counters are salted hashes, kept for two days.
+  - Relays through Pocket Network are never metered.
 
 ## Disclaimer and licenses
 

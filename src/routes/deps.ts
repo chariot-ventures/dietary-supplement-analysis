@@ -1,5 +1,6 @@
 import type { DsldClient } from '../lib/dsld.js';
 import type { RxNormClient } from '../lib/interactions.js';
+import type { FreeTier } from '../lib/freetier.js';
 import type { OpenFdaClient } from '../lib/openfda.js';
 
 export interface Deps {
@@ -8,6 +9,8 @@ export interface Deps {
   rxnorm?: RxNormClient | null;
   /** FDA recalls and adverse event reports. Null or absent: /v1/products/fda answers 422 UNSUPPORTED. */
   openfda?: OpenFdaClient | null;
+  /** Free-trial quotas for the public demo hostname. Null or absent: nothing is metered. */
+  freeTier?: FreeTier | null;
   /** Overall time allowed for upstream DSLD calls in one request (gateways cut relays off at 10-30 s). */
   upstreamBudgetMs?: number;
 }

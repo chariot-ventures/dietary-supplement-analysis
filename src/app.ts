@@ -1,5 +1,6 @@
 import Fastify, { LogController, type FastifyInstance, type FastifyServerOptions } from 'fastify';
 import { AppError } from './lib/errors.js';
+import { limitMessage, PAID_ROUTE_URL } from './lib/freetier.js';
 import { escapeGatewayPhrases } from './lib/phrases.js';
 import { registerFdaRoutes } from './routes/fda.js';
 import { registerInteractionRoutes } from './routes/interactions.js';
@@ -49,6 +50,21 @@ export function buildApp(opts: AppOptions): FastifyInstance {
     // Method, path, status and duration only. Never the body or query string.
     req.log.info({ method: req.method, path: req.routeOptions.url ?? 'unmatched', status: reply.statusCode, ms: Math.round(reply.elapsedTime) });
   });
+
+  // Free trial on the demo hostname: metered POST calls (paid relays never come in on that host).
+  const metered = new Set(['/v1/stack/analyze', '/v1/products/search', '/v1/products/lookup', '/v1/products/get', '/v1/products/fda', '/v1/nutrients/reference', '/v1/interactions/check', '/v1/tool']);
+  const freeTier = opts.freeTier ?? null;
+  if (freeTier?.enabled) {
+    app.addHook('preHandler', async (req, reply) => {
+      if (req.method !== 'POST' || !metered.has(req.routeOptions.url ?? '') || !freeTier.applies(req)) return;
+      const v = freeTier.take('rest', freeTier.clientIp(req));
+      if (!v.ok) {
+        const body = new AppError('RATE_LIMITED', limitMessage(v)).toBody();
+        return reply.code(429).header('retry-after', String(Math.max(60, Math.round((Date.parse(v.resets_at) - Date.now()) / 1000)))).send({ ...body, free_tier: { scope: v.scope, limit: v.limit, resets_at: v.resets_at, paid_route: PAID_ROUTE_URL } });
+      }
+      reply.header('x-free-tier-limit', String(v.limit)).header('x-free-tier-remaining', String(v.remaining)).header('x-free-tier-reset', v.resets_at);
+    });
+  }
 
   app.setErrorHandler((err, req, reply) => {
     if (err instanceof AppError) return reply.code(err.status).send(err.toBody());

@@ -13,7 +13,9 @@
  * context window.
  */
 import type { FastifyInstance, FastifyReply } from 'fastify';
+import { randomUUID } from 'node:crypto';
 import { AppError } from '../lib/errors.js';
+import { limitMessage, PAID_ROUTE_URL } from '../lib/freetier.js';
 import { GUIDE } from '../lib/guide.js';
 import { SERVICE_ID, VERSION } from '../version.js';
 import type { Deps } from './deps.js';
@@ -62,7 +64,12 @@ async function callTool(name: string, args: Record<string, unknown>, deps: Deps)
   }
 }
 
-async function handle(msg: RpcRequest, deps: Deps): Promise<object | null> {
+/** Per-request context: the free-trial meter for tool calls, when the request is on the demo hostname. */
+interface Ctx {
+  meter: (() => ReturnType<NonNullable<Deps['freeTier']>['take']>) | null;
+}
+
+async function handle(msg: RpcRequest, deps: Deps, ctx: Ctx = { meter: null }): Promise<object | null> {
   const id: Id = msg.id ?? null;
   if (msg.jsonrpc !== '2.0' || typeof msg.method !== 'string') return rpcError(id, -32600, 'Invalid Request');
   const isNotification = msg.id === undefined;
@@ -87,9 +94,17 @@ async function handle(msg: RpcRequest, deps: Deps): Promise<object | null> {
     case 'tools/call': {
       const name = typeof params.name === 'string' ? params.name : '';
       const args = (params.arguments && typeof params.arguments === 'object' && !Array.isArray(params.arguments) ? params.arguments : {}) as Record<string, unknown>;
+      const v = ctx.meter?.() ?? null;
+      if (v && !v.ok) {
+        // A readable result, not a protocol error, so the assistant can tell the person what happened.
+        const message = limitMessage(v);
+        const body = { error: { code: 'RATE_LIMITED', message, retryable: true }, free_tier: { scope: v.scope, limit: v.limit, resets_at: v.resets_at, paid_route: PAID_ROUTE_URL } };
+        return rpcResult(id, { content: [{ type: 'text', text: message }], structuredContent: body, isError: true });
+      }
+      const meta = v?.ok ? { _meta: { free_tier: { remaining: v.remaining, limit: v.limit, resets_at: v.resets_at } } } : {};
       try {
         const result = await callTool(name, args, deps);
-        return rpcResult(id, { content: [{ type: 'text', text: JSON.stringify(result) }], structuredContent: result, isError: false });
+        return rpcResult(id, { content: [{ type: 'text', text: JSON.stringify(result) }], structuredContent: result, isError: false, ...meta });
       } catch (err) {
         // Tool failures are results the model can read and act on, not protocol errors.
         const body = err instanceof AppError ? err.toBody() : new AppError('INTERNAL_ERROR', 'The request could not be processed').toBody();
@@ -109,14 +124,24 @@ async function handle(msg: RpcRequest, deps: Deps): Promise<object | null> {
 export function registerMcpRoute(app: FastifyInstance, deps: Deps): void {
   app.post('/mcp', async (req, reply: FastifyReply) => {
     const body = req.body as unknown;
+    const ft = deps.freeTier ?? null;
+    const free = !!ft?.applies(req);
+    const sessionHeader = req.headers['mcp-session-id'];
+    const session = typeof sessionHeader === 'string' && sessionHeader.length <= 128 ? sessionHeader : null;
+    const ctx: Ctx = { meter: free ? () => ft!.take('mcp', ft!.clientIp(req), session) : null };
+    // Each connection gets its own id, so the free trial counts per connection rather than per shared IP.
+    const isInit = (m: unknown) => !!m && typeof m === 'object' && (m as RpcRequest).method === 'initialize';
+    if (Array.isArray(body) ? body.some(isInit) : isInit(body)) reply.header('mcp-session-id', randomUUID());
     if (body === undefined || body === null || typeof body !== 'object') return reply.code(400).send(rpcError(null, -32700, 'Parse error'));
     if (Array.isArray(body)) {
-      const out = (await Promise.all(body.map((m) => handle(m as RpcRequest, deps)))).filter((r) => r !== null);
+      const out = (await Promise.all(body.map((m) => handle(m as RpcRequest, deps, ctx)))).filter((r) => r !== null);
       return out.length ? reply.send(out) : reply.code(202).send();
     }
-    const out = await handle(body as RpcRequest, deps);
+    const out = await handle(body as RpcRequest, deps, ctx);
     return out ? reply.send(out) : reply.code(202).send();
   });
+  // Clients end a session with DELETE; nothing is kept server-side, so just acknowledge.
+  app.delete('/mcp', async () => ({ ok: true }));
   // No server-initiated stream: clients fall back to plain request/response.
   app.get('/mcp', async (_req, reply) => reply.code(405).header('allow', 'POST').send({ error: { code: 'INVALID_INPUT', message: 'This MCP endpoint accepts POST only (stateless, JSON responses).', retryable: false } }));
 }

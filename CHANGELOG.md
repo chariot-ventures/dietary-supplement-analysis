@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.0 (2026-10-11)
+
+- **Free trial on the demo host, paid route unchanged.** `agents.trackmysupplement.com` (REST and `/mcp`) now has daily quotas that reset at 00:00 UTC: 25 tool calls per MCP connection, 100 REST calls per IP, 1,000 MCP calls per IP, and 5,000 free calls in total. Discovery calls are free, and results are never degraded.
+  - Callers see how many calls they have left (`X-Free-Tier-*` headers, MCP `_meta.free_tier`).
+  - Past a quota, the reply is a readable message with the reset time and the Pocket Network route: `429 RATE_LIMITED` for REST, a tool result for MCP.
+  - Relays through Pocket are never metered.
+  - Counters persist across redeploys as salted hashes, kept for two days.
+  - `/mcp` now gives each connection an `Mcp-Session-Id` and accepts `DELETE`.
+
 ## 0.10.0 (2026-10-11)
 
 - **Real foods.** `foods` on `/v1/stack/analyze` takes what the person eats ("1 cup cooked spinach", "488 g whole milk") and matches it offline against the 8,789 foods of USDA SR28 (FoodData Central's SR Legacy), with USDA household portions. The foods are added to the supplement totals in `with_foods`, and food-only nutrients are checked too. Example: Brazil nuts alone can put selenium over its UL, and beef liver can do the same for vitamin A. Food counts toward a UL only where that UL covers food. Missing USDA analyses are listed rather than treated as zero, and three corrupt SR28 manganese values are excluded and reported. The table is built from the unchanged USDA files by `npm run build:foods` (checksums verified) and checked in `npm run check`.

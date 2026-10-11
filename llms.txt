@@ -1,4 +1,4 @@
-# dietary-supplement-analysis 0.10.0
+# dietary-supplement-analysis 0.11.0
 
 > Supplement label lookup (NIH Dietary Supplement Label Database, DSLD) and per-nutrient intake checks against NIH reference values. One call answers "is anything in my supplements too high, why does that matter, and what change would fix it". Label and reference data only; not medical advice.
 
@@ -50,6 +50,7 @@ Read the response in this order:
 - POST /v1/nutrients/reference {"nutrient", "age", "sex"}: RDA, EAR, AI, UL and UL basis. Offline.
 - POST /v1/tool {"tool", "arguments"}: one dispatcher for all of the above.
 - GET /v1/tools: tool definitions with JSON Schema inputs, ready for function calling.
+- Free trial: the public demo host meters calls per day (25 tool calls per MCP connection, 100 REST calls per IP; see the X-Free-Tier-Remaining header or _meta.free_tier). Relays through Pocket Network are unmetered.
 - POST /mcp: the same tools as a remote MCP server (Streamable HTTP); stack_analyze defaults to detail "summary" there.
 - GET /v1/provenance: code version, git commit and data editions behind every answer.
 - GET /openapi.json: OpenAPI 3.1.
