@@ -26,6 +26,8 @@ export ANTHROPIC_API_KEY=...
 python examples/agent_loop.py "I'm 66, on Synthroid, and take Centrum Silver and Caltrate. Anything I should know?"
 ```
 
+Tested on 2026-10-11 with `claude-sonnet-5-5` and the question "I'm 66, on Synthroid, and take Centrum Silver Women 50+ and Caltrate 600+D3. Anything I should know?": the model made one `stack_analyze` call (about 16,000 input and 900 output tokens in all). It answered with the calcium and iron spacing NIH gives for levothyroxine, pointed out that the Centrum needs spacing too, not just the Caltrate, and cited the NIH label IDs and fact sheets. The [docs check](../.github/workflows/docs-check.yml) runs the loop daily with a stand-in model, and with the real model only when started by hand.
+
 MCP clients get the same tools from `https://agents.trackmysupplement.com/mcp`.
 
 ## Paying per call
