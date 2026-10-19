@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.0 (2026-10-19)
+
+- **Five more herbs with NIH warnings:** garlic, Asian ginseng, saw palmetto, milk thistle and licorice root, each from its NIH NCCIH fact sheet (21 herbs and non-nutrients in all).
+  - Garlic supplements may raise bleeding risk, and are paired with anticoagulants such as warfarin.
+  - Asian ginseng may interfere with blood clotting, and is paired with diabetes medicines because it might lower blood sugar.
+  - Licorice root's glycyrrhizin can cause irregular heartbeat, and it is paired with corticosteroids such as prednisone.
+  - Milk thistle can cause allergic reactions in people allergic to ragweed and related plants.
+  - Saw palmetto's pregnancy statement is relayed only for pregnancy or breastfeeding; its mild side effects are listed in `botanicals[]` but not in the summary.
+  - Plain "ginseng" isn't matched, because it could be American or Siberian ginseng, which are different plants. DGL (deglycyrrhizinated) licorice is never reported as licorice, even when NIH files it under the licorice group.
+  - Spanish summaries cover all five. The monthly fact-sheet check now watches their NCCIH pages too.
+- Three new accuracy cases (59 in all): garlic with warfarin, Korean red ginseng with metformin, and DGL licorice (nothing reported).
+- Dependency updates: fastify 5.12.7, eslint 10.13.0, typescript-eslint 8.71.2, vitest 5.0.5 and zod 4.6.7. Dependabot's grouped update had stalled.
+
 ## 0.12.7 (2026-10-11)
 
 - **Agentic Portal relay route.** `POST /v1/tool` now runs `stack_analyze` when the body is just `{"arguments": {...}}`, the convention the Agentic Portal uses for its relay route, and accepts `"name"` (the MCP `tools/call` field) in place of `"tool"`. Existing calls are unchanged.

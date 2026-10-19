@@ -42,6 +42,25 @@ describe('botanical matching', () => {
     expect(matchBotanical(['Creatinine'])).toBeNull();
   });
 
+  it('matches the herbs added in 0.13.0 by exact name only', () => {
+    expect(matchBotanical(['Garlic', 'Aged Garlic Extract'])?.id).toBe('garlic');
+    expect(matchBotanical(['Panax ginseng root extract'])?.id).toBe('asian-ginseng');
+    expect(matchBotanical(['Korean Red Ginseng'])?.id).toBe('asian-ginseng');
+    // "Ginseng" alone could be American or Siberian ginseng: not guessed.
+    expect(matchBotanical(['Ginseng', 'Ginseng root'])).toBeNull();
+    expect(matchBotanical(['Siberian ginseng'])).toBeNull();
+    expect(matchBotanical(['Saw Palmetto Berry Extract'])?.id).toBe('saw-palmetto');
+    expect(matchBotanical(['Milk Thistle seed extract'])?.id).toBe('milk-thistle');
+    expect(matchBotanical(['Licorice root'])?.id).toBe('licorice-root');
+    expect(matchBotanical(['Glycyrrhiza glabra root extract'])?.id).toBe('licorice-root');
+  });
+
+  it('does not report DGL (deglycyrrhizinated) licorice as licorice, even under the DSLD group "Licorice"', () => {
+    expect(matchBotanical(['Licorice', 'DGL Licorice root extract'])).toBeNull();
+    expect(matchBotanical(['Licorice', 'Deglycyrrhizinated Licorice'])).toBeNull();
+    expect(matchBotanical(['Licorice', 'Licorice root extract'])?.id).toBe('licorice-root');
+  });
+
   it('splits sentences without breaking on "St."', () => {
     expect(firstSentence("NCCIH: St. John's wort can weaken drugs. Second.")).toBe("NCCIH: St. John's wort can weaken drugs.");
   });
@@ -103,6 +122,27 @@ describe('botanicals in stack_analyze', () => {
     expect(pairs).toEqual(['Yaz:st-johns-wort', 'sertraline:st-johns-wort', 'warfarin:ginkgo', 'warfarin:st-johns-wort']);
     expect(f.every((x: { in_stack: boolean }) => x.in_stack)).toBe(true);
     expect(body.agent_summary).toMatch(/with St\. John's wort in this stack/);
+  });
+
+  it('pairs garlic with anticoagulants and relays the licorice heart warning', async () => {
+    const body = await analyze({
+      age: 70,
+      sex: 'female',
+      medications: ['warfarin', 'prednisone'],
+      products: [custom([{ name: 'garlic bulb extract', amount: 600, unit: 'mg' }, { name: 'licorice root', amount: 500, unit: 'mg' }])],
+    });
+    expect(body.botanicals.map((b: { id: string }) => b.id).sort()).toEqual(['garlic', 'licorice-root']);
+    const pairs = body.interactions.findings.filter((x: { botanical_ids: string[] }) => x.botanical_ids.length).map((x: { trigger: string; botanical_ids: string[] }) => `${x.trigger}:${x.botanical_ids[0]}`).sort();
+    expect(pairs).toEqual(['prednisone:licorice-root', 'warfarin:garlic']);
+    expect(body.agent_summary).toMatch(/Licorice root \(in Herbal\): NCCIH: glycyrrhizin in licorice root can cause irregular heartbeat/);
+  });
+
+  it('keeps saw palmetto out of the summary except for pregnancy', async () => {
+    const products = [custom([{ name: 'saw palmetto berry extract', amount: 320, unit: 'mg' }])];
+    const plain = await analyze({ age: 60, sex: 'male', products });
+    expect(plain.botanicals[0].id).toBe('saw-palmetto');
+    expect(plain.agent_summary).not.toMatch(/saw palmetto/i);
+    expect((await analyze({ age: 30, sex: 'female', life_stage: 'pregnancy', products })).agent_summary).toMatch(/saw palmetto may be unsafe during pregnancy/);
   });
 
   it('gives a compact list in the summary detail', async () => {

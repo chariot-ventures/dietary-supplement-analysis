@@ -32,6 +32,8 @@ interface DoseCheck {
 interface Botanical {
   name: string;
   match: string[];
+  /** Whole words that rule a match out (DGL licorice has its glycyrrhizin removed). */
+  exclude_words?: string[];
   signals: { kind: string; summary: string; relay?: boolean }[];
   pregnancy: string | null;
   medications: BotanicalMed[];
@@ -74,13 +76,23 @@ for (const [id, b] of Object.entries(file.botanicals)) {
   for (const m of [b.name, ...b.match]) byName.set(normalizeBotanical(m), id);
 }
 
-/** Botanical id and the listed name it matched, or null. */
+/**
+ * Botanical id and the listed name it matched, or null. A botanical's
+ * exclude_words (whole words in any of the names) rule the match out, so
+ * "DGL Licorice" under the DSLD group "Licorice" is not reported as licorice.
+ */
 export function matchBotanical(names: (string | null | undefined)[]): { id: string; term: string } | null {
   for (const n of names) {
     if (!n) continue;
     for (const form of nameForms(n)) {
       const id = byName.get(form);
-      if (id) return { id, term: form };
+      if (!id) continue;
+      const exclude = file.botanicals[id]!.exclude_words;
+      if (exclude?.length) {
+        const words = new Set(names.flatMap((x) => (x ? normalizeBotanical(x).split(' ') : [])));
+        if (exclude.some((w) => words.has(w))) return null;
+      }
+      return { id, term: form };
     }
   }
   return null;

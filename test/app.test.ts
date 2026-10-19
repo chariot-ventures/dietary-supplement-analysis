@@ -42,12 +42,12 @@ const SUCCESS_CALLS: [string, string, unknown?][] = [
 describe('identity and health', () => {
   it('/v1/version is exactly service + version', async () => {
     const res = await app.inject({ method: 'GET', url: '/v1/version' });
-    expect(res.json()).toEqual({ service: 'dietary-supplement-analysis', version: '0.12.7' });
+    expect(res.json()).toEqual({ service: 'dietary-supplement-analysis', version: '0.13.0' });
   });
 
   it('version matches package.json', () => {
     const pkg = JSON.parse(readFileSync(path.join(ROOT, 'package.json'), 'utf8')) as { version: string };
-    expect(pkg.version).toBe('0.12.7');
+    expect(pkg.version).toBe('0.13.0');
   });
 
   it('GET / and HEAD / answer 2xx JSON', async () => {

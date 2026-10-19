@@ -1607,6 +1607,103 @@
    "why": "900 mg EGCG/day; ODS: 843 mg/day raised liver enzymes in the Minnesota Green Tea Trial."
   },
   {
+   "id": "garlic-warfarin",
+   "category": "botanicals",
+   "question": "72-year-old woman on warfarin taking an aged garlic extract, 600 mg.",
+   "request": {
+    "age": 72,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "Aged Garlic Extract",
+        "amount": 600,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "warfarin"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": [
+     "garlic"
+    ],
+    "interactions": [
+     "warfarin|garlic"
+    ]
+   },
+   "why": "NCCIH: garlic supplements may increase the risk of bleeding; talk with a provider first if taking anticoagulants."
+  },
+  {
+   "id": "ginseng-metformin",
+   "category": "botanicals",
+   "question": "58-year-old man on metformin taking Korean red ginseng, 1 g.",
+   "request": {
+    "age": 58,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "Korean Red Ginseng root extract",
+        "amount": 1000,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "metformin"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": [
+     "asian-ginseng"
+    ],
+    "interactions": [
+     "metformin|asian-ginseng"
+    ]
+   },
+   "why": "NCCIH: Asian ginseng (Panax ginseng, including Korean red ginseng) might lower blood sugar; people with diabetes should consult a provider."
+  },
+  {
+   "id": "dgl-licorice",
+   "category": "botanicals",
+   "question": "45-year-old woman with heartburn taking DGL licorice 760 mg.",
+   "request": {
+    "age": 45,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "DGL Licorice root extract",
+        "amount": 760,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": []
+   },
+   "why": "NCCIH's glycyrrhizin warnings concern licorice that contains it; deglycyrrhizinated licorice (DGL) has it removed, so no licorice warning applies."
+  },
+  {
    "id": "food-liver-vita",
    "category": "foods",
    "question": "40-year-old woman: multivitamin with 1500 mcg vitamin A as retinyl palmitate, and she eats 3 oz of beef liver a day.",

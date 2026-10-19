@@ -1,5 +1,5 @@
 {
- "_doc": "Botanicals and other non-nutrient ingredients with safety signals in NIH NCCIH fact sheets (\"Herbs at a Glance\") and NIH ODS fact sheets. An ingredient is matched when its DSLD ingredient group or name equals one of \"match\" after normalization and removal of trailing plant-part/preparation words (root, leaf, extract, powder...); never by substring. Signals summarize the cited page; the list is not exhaustive. A signal with \"relay\": false is listed in botanicals[] but kept out of agent_summary, because the ingredient is common in small amounts (multivitamins) and the signal concerns concentrated or high-dose products; a dose check surfaces it when one applies.",
+ "_doc": "Botanicals and other non-nutrient ingredients with safety signals in NIH NCCIH fact sheets (\"Herbs at a Glance\") and NIH ODS fact sheets. An ingredient is matched when its DSLD ingredient group or name equals one of \"match\" after normalization and removal of trailing plant-part/preparation words (root, leaf, extract, powder...); never by substring. A botanical's exclude_words (whole words in the label name or group) rule a match out, for example DGL licorice. Signals summarize the cited page; the list is not exhaustive. A signal with \"relay\": false is listed in botanicals[] but kept out of agent_summary, because the ingredient is common in small amounts (multivitamins) and the signal concerns concentrated or high-dose products; a dose check surfaces it when one applies.",
  "reviewed": "2026-10-11",
  "descriptor_words": [
   "root",
@@ -493,6 +493,159 @@
    "source": {
     "name": "NIH NCCIH: Echinacea",
     "url": "https://www.nccih.nih.gov/health/echinacea"
+   }
+  },
+  "garlic": {
+   "name": "Garlic",
+   "match": [
+    "garlic",
+    "allium sativum",
+    "garlic bulb",
+    "aged garlic",
+    "odorless garlic",
+    "odor free garlic"
+   ],
+   "signals": [
+    {
+     "kind": "bleeding",
+     "summary": "NCCIH: garlic supplements may increase the risk of bleeding; tell your health care providers, especially before surgery or if you take anticoagulants or aspirin."
+    },
+    {
+     "kind": "other",
+     "summary": "NCCIH: side effects include breath and body odor, abdominal pain, gas and nausea; some people are allergic to garlic."
+    }
+   ],
+   "pregnancy": "NCCIH: garlic in amounts larger than those in food may be unsafe during pregnancy or while breastfeeding.",
+   "medications": [
+    {
+     "class": "anticoagulants",
+     "kind": "additive_risk",
+     "summary": "NCCIH: garlic supplements may increase the risk of bleeding; talk with your health care provider before using garlic with an anticoagulant."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Garlic",
+    "url": "https://www.nccih.nih.gov/health/garlic"
+   }
+  },
+  "asian-ginseng": {
+   "name": "Asian ginseng",
+   "match": [
+    "asian ginseng",
+    "panax ginseng",
+    "korean ginseng",
+    "chinese ginseng",
+    "red ginseng",
+    "korean red ginseng",
+    "white ginseng",
+    "ginseng asian",
+    "ginseng korean"
+   ],
+   "signals": [
+    {
+     "kind": "bleeding",
+     "summary": "NCCIH: Asian ginseng may interfere with blood clotting and may worsen autoimmune disorders."
+    },
+    {
+     "kind": "other",
+     "summary": "NCCIH: trouble sleeping is the most common side effect; uncommon reports include severe rash, liver damage and severe allergic reactions."
+    }
+   ],
+   "pregnancy": "NCCIH: Asian ginseng taken by mouth may be unsafe during pregnancy (a chemical in it caused birth defects in animals); little is known about breastfeeding.",
+   "medications": [
+    {
+     "class": "antidiabetics",
+     "kind": "additive_risk",
+     "summary": "NCCIH: Asian ginseng might lower blood sugar; people with diabetes should consult their health care provider before using it."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Asian Ginseng",
+    "url": "https://www.nccih.nih.gov/health/asian-ginseng"
+   }
+  },
+  "saw-palmetto": {
+   "name": "Saw palmetto",
+   "match": [
+    "saw palmetto",
+    "saw palmetto berry",
+    "saw palmetto berries",
+    "serenoa repens",
+    "serenoa serrulata",
+    "sabal serrulata"
+   ],
+   "signals": [
+    {
+     "kind": "other",
+     "summary": "NCCIH: side effects are mild and infrequent and may include digestive symptoms, dizziness and headache.",
+     "relay": false
+    }
+   ],
+   "pregnancy": "NCCIH: saw palmetto may be unsafe during pregnancy or while breastfeeding.",
+   "medications": [],
+   "source": {
+    "name": "NIH NCCIH: Saw Palmetto",
+    "url": "https://www.nccih.nih.gov/health/saw-palmetto"
+   }
+  },
+  "milk-thistle": {
+   "name": "Milk thistle",
+   "match": [
+    "milk thistle",
+    "silybum marianum",
+    "carduus marianus",
+    "silymarin",
+    "mary thistle"
+   ],
+   "signals": [
+    {
+     "kind": "allergy",
+     "summary": "NCCIH: milk thistle may cause allergic reactions, particularly in people allergic to related plants such as ragweed, chrysanthemum, marigold and daisy."
+    },
+    {
+     "kind": "other",
+     "summary": "NCCIH: some products have contained amounts of silymarin very different from the label, or pesticides, microbes or mold toxins."
+    }
+   ],
+   "pregnancy": "NCCIH: little is known about milk thistle's safety during pregnancy or breastfeeding.",
+   "medications": [],
+   "source": {
+    "name": "NIH NCCIH: Milk Thistle",
+    "url": "https://www.nccih.nih.gov/health/milk-thistle"
+   }
+  },
+  "licorice-root": {
+   "name": "Licorice root",
+   "match": [
+    "licorice",
+    "liquorice",
+    "glycyrrhiza glabra",
+    "glycyrrhiza uralensis",
+    "glycyrrhiza inflata",
+    "glycyrrhizin",
+    "glycyrrhizic acid",
+    "gan cao"
+   ],
+   "exclude_words": [
+    "dgl",
+    "deglycyrrhizinated"
+   ],
+   "signals": [
+    {
+     "kind": "cardiovascular",
+     "summary": "NCCIH: glycyrrhizin in licorice root can cause irregular heartbeat and cardiac arrest, especially in large amounts or with long-term use. Even small amounts have been linked to severe effects in people with high blood pressure, heart or kidney conditions, or a high-salt diet."
+    }
+   ],
+   "pregnancy": "NCCIH: large amounts of licorice (about 250 g a week) during pregnancy are unsafe and can raise the risk of delivery before 38 weeks; little is known about breastfeeding.",
+   "medications": [
+    {
+     "class": "corticosteroids",
+     "summary": "NCCIH: interactions between licorice and corticosteroids have been reported."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Licorice Root",
+    "url": "https://www.nccih.nih.gov/health/licorice-root"
    }
   },
   "creatine": {

@@ -489,7 +489,7 @@ export function buildOpenApi(): Json {
           botanicals: {
             type: 'array',
             description:
-              'Present when the stack contains a botanical or other non-nutrient ingredient with an NIH NCCIH/ODS safety signal (ashwagandha, kava, St. John\'s wort, ginkgo, green tea extract, turmeric, black cohosh, garcinia, red yeast rice, goldenseal, berberine, yohimbe, ephedra, valerian, echinacea, creatine). Matched exactly on the DSLD ingredient group or name. Each has signals (kind, summary), the pregnancy statement, dose_findings (creatine, EGCG, valerian amounts against cited doses) and the source. Summary form: id, name, product_refs, signal, dose.',
+              'Present when the stack contains a botanical or other non-nutrient ingredient with an NIH NCCIH/ODS safety signal (ashwagandha, kava, St. John\'s wort, ginkgo, green tea extract, turmeric, black cohosh, garcinia, red yeast rice, goldenseal, berberine, yohimbe, ephedra, valerian, echinacea, garlic, Asian ginseng, saw palmetto, milk thistle, licorice root, creatine). Matched exactly on the DSLD ingredient group or name. Each has signals (kind, summary), the pregnancy statement, dose_findings (creatine, EGCG, valerian amounts against cited doses) and the source. Summary form: id, name, product_refs, signal, dose.',
             items: { type: 'object' },
           },
           interactions: {

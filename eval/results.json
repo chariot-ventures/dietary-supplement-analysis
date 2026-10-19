@@ -1,7 +1,7 @@
 {
- "version": "0.10.0",
- "passed": 56,
- "total": 56,
+ "version": "0.13.0",
+ "passed": 59,
+ "total": 59,
  "results": [
   {
    "id": "vitd-5000iu",
@@ -317,6 +317,24 @@
   },
   {
    "id": "egcg-900",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "garlic-warfarin",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "ginseng-metformin",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "dgl-licorice",
    "category": "botanicals",
    "pass": true,
    "problems": []
