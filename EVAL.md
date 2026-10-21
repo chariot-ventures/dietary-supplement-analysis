@@ -14,7 +14,7 @@ How do we know the numbers are right? [eval/cases.json](eval/cases.json) holds 5
 `npm run eval` runs every case through the service offline and checks the flags, amounts, severity, interactions, botanicals and data gaps. The same check runs in the test suite, so a release can't ship with a failing case.
 
 <!-- service:start -->
-Service 0.13.0: **59 of 59 cases pass.**
+Service 0.14.0: **59 of 59 cases pass.**
 
 | Category | Cases | Pass |
 |---|---|---|

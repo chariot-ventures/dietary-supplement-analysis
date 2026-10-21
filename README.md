@@ -6,6 +6,7 @@ It runs on Pocket Network Beta TestNet as the paid service `dietary-supplement-a
 
 | | |
 |---|---|
+| Website | [agents.trackmysupplement.com](https://agents.trackmysupplement.com): connect buttons for every major agent client, a live demo, pricing and status. Agents get [`llms.txt`](https://agents.trackmysupplement.com/llms.txt), [`agents.md`](https://agents.trackmysupplement.com/agents.md) and [`status.json`](https://agents.trackmysupplement.com/status.json) |
 | Try it | [For judges: try it in one minute](#for-judges-try-it-in-one-minute) |
 | Pocket Network | Service ID `dietary-supplement-analysis` on Beta TestNet, relay endpoint `https://pokt-beta.trackmysupplement.com`. Passes all 9 Pocket portal acceptance rules, with a paid relay settled on-chain ([record](#on-chain-record-beta-testnet)) |
 | MCP server | `https://agents.trackmysupplement.com/mcp`, listed in the [official MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=dietary-supplement-analysis) and on [Smithery](https://smithery.ai/servers/chariot-ventures/dietary-supplement-analysis). See [mcp/README.md](mcp/README.md) |
@@ -134,7 +135,7 @@ All inputs come from the JSON request body. All responses are JSON objects, erro
 | Method | Path | Purpose |
 |---|---|---|
 | GET/HEAD | `/` | Service identity |
-| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.13.0"}` |
+| GET | `/v1/version` | `{"service":"dietary-supplement-analysis","version":"0.14.0"}` |
 | GET | `/v1/health` | `{"status":"ok"}` |
 | GET | `/openapi.json` | OpenAPI 3.1 spec (also at [openapi/openapi.json](openapi/openapi.json)) |
 | POST | `/mcp` | Remote MCP server (Streamable HTTP, stateless): the same tools for MCP clients |

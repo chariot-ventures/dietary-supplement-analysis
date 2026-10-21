@@ -41,6 +41,8 @@ const dsld = new DsldClient({
 const app = buildApp({
   dsld,
   freeTier,
+  // The landing page and discovery files are served on the demo host (SITE_HOSTS, defaulting to FREE_TIER_HOSTS).
+  siteHosts: (process.env.SITE_HOSTS ?? process.env.FREE_TIER_HOSTS ?? '').split(','),
   // RXNORM=off (or offline fixtures) keeps medication matching to the names in data/interactions.json.
   openfda: fixturesDir || process.env.OPENFDA === 'off' ? null : new OpenFdaClient(undefined, process.env.OPENFDA_BASE_URL || undefined, process.env.OPENFDA_API_KEY || undefined),
   rxnorm: fixturesDir || process.env.RXNORM === 'off' ? null : new RxNormClient(undefined, process.env.RXNORM_BASE_URL || undefined),

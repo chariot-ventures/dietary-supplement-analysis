@@ -18,6 +18,8 @@ RUN mkdir -p /data && chown node:node /data
 COPY --from=build --chown=node:node /app/package.json ./
 COPY --from=build --chown=node:node /app/node_modules ./node_modules
 COPY --from=build --chown=node:node /app/dist ./dist
+# Accuracy result of this release, reported at /status.json.
+COPY --chown=node:node eval/results.json ./eval/results.json
 USER node
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \

@@ -160,6 +160,19 @@ await check('Agents', 'MCP server', async () => {
   return { detail: `${tools.length} tools: ${tools.join(', ')}` };
 });
 
+await check('Agents', 'Discovery: landing page, llms.txt, agents.md, status', async () => {
+  const page = await fetch(`${BASE}/`, { headers: { accept: 'text/html' }, signal: AbortSignal.timeout(30_000) });
+  expect(/text\/html/.test(page.headers.get('content-type') ?? ''), `landing page answered ${page.headers.get('content-type')}`);
+  for (const path of ['/llms.txt', '/agents.md', '/robots.txt', '/sitemap.xml']) {
+    const res = await fetch(`${BASE}${path}`, { signal: AbortSignal.timeout(30_000) });
+    expect(res.ok, `${path} answered HTTP ${res.status}`);
+  }
+  const s = await call('/status.json');
+  expect(s.json.status === 'ok', `status.json says ${String(s.json.status)}`);
+  const acc = s.json.accuracy as { passed: number; total: number } | null;
+  return { detail: `page, 4 text files and status.json served${acc ? `; accuracy ${acc.passed}/${acc.total}` : ''}` };
+});
+
 await check('Agents', 'Free-trial metering on the demo host', async () => {
   const r = await call('/v1/nutrients/reference', { nutrient: 'zinc', age: 40, sex: 'male' });
   const left = r.headers.get('x-free-tier-remaining');

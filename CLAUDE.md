@@ -26,7 +26,7 @@ npx tsx scripts/record-fixtures.ts <dsld_id...>          # record more real labe
 
 ## Rules the code depends on
 
-- **Gateway response rules:** every response is a JSON object, client errors are 4xx, nothing is ever 5xx, and there's no compression. Gateway error phrases are `\u`-escaped by the reply serializer (`src/lib/phrases.ts`).
+- **Gateway response rules:** every response is a JSON object, client errors are 4xx, nothing is ever 5xx, and there's no compression. Gateway error phrases are `\u`-escaped by the reply serializer (`src/lib/phrases.ts`). The one exception is the demo host's landing page and discovery text files (`src/routes/site.ts`): they are served only on `SITE_HOSTS`, and relays get 404 JSON for those paths.
 - **Logging:** never log request bodies or query strings.
 - **Data gaps over guesses:** no substring or fuzzy ingredient matching. A unit is converted only when its form is unambiguous.
 - **Wording:** never say a stack is "safe" or carries "no risk".

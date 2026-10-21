@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.14.0 (2026-10-21)
+
+- **A website for people and agents at [agents.trackmysupplement.com](https://agents.trackmysupplement.com).** Browsers get a landing page; agents calling the same URL still get JSON.
+  - The page has connect instructions and copy buttons for Claude Code, Claude, ChatGPT, Cursor and VS Code (one-click install), Windsurf, Gemini CLI, the OpenAI Agents SDK, LangChain, CrewAI, n8n, plain HTTP and Pocket Network relays.
+  - It also has a live "try it" box, the tools, pricing and free-trial limits, the Pocket Network service details with the live audit, a FAQ, contact details and schema.org data for search engines.
+  - New discovery files: `/llms.txt` (also at `/.well-known/llms.txt`), `/llms-full.txt` (the guide plus every tool schema), `/agents.md`, `/robots.txt`, `/sitemap.xml` and `/ai.txt`.
+  - `/status.json` reports the live version, uptime, this release's accuracy result, the NIH data editions, how to connect and the Pocket details. `/.well-known/mcp.json` serves the MCP Registry entry.
+  - The page and text files are served only on the demo host (`SITE_HOSTS`, which defaults to `FREE_TIER_HOSTS`). Pocket relays still get JSON only. Discovery is never counted against the free trial.
+- The live check also checks the website and discovery files, for 17 checks in all.
+
 ## 0.13.0 (2026-10-19)
 
 - **Five more herbs with NIH warnings:** garlic, Asian ginseng, saw palmetto, milk thistle and licorice root, each from its NIH NCCIH fact sheet (21 herbs and non-nutrients in all).

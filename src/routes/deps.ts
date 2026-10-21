@@ -11,6 +11,8 @@ export interface Deps {
   openfda?: OpenFdaClient | null;
   /** Free-trial quotas for the public demo hostname. Null or absent: nothing is metered. */
   freeTier?: FreeTier | null;
+  /** Public demo host names that also serve the landing page and discovery files (llms.txt, agents.md...). */
+  siteHosts?: string[];
   /** Overall time allowed for upstream DSLD calls in one request (gateways cut relays off at 10-30 s). */
   upstreamBudgetMs?: number;
 }

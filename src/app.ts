@@ -8,6 +8,7 @@ import { registerMcpRoute } from './routes/mcp.js';
 import { registerMetaRoutes } from './routes/meta.js';
 import { registerNutrientRoutes } from './routes/nutrients.js';
 import { registerProductRoutes } from './routes/products.js';
+import { registerSiteRoutes } from './routes/site.js';
 import { registerStackRoutes } from './routes/stack.js';
 import { registerToolRoute } from './routes/tool.js';
 import { registerToolsRoutes } from './routes/tools.js';
@@ -82,6 +83,7 @@ export function buildApp(opts: AppOptions): FastifyInstance {
     reply.code(404).send(new AppError('NOT_FOUND', `No route for ${req.method} ${req.url.split('?')[0]}. See GET /openapi.json`).toBody()),
   );
 
+  registerSiteRoutes(app, opts, opts.siteHosts ?? []);
   registerMetaRoutes(app, opts);
   registerNutrientRoutes(app);
   registerProductRoutes(app, opts);

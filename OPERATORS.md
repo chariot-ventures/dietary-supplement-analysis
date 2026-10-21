@@ -90,7 +90,7 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.13.0"}
+# {"service":"dietary-supplement-analysis","version":"0.14.0"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.
@@ -102,7 +102,7 @@ The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`
 | Deploy the newest release (build, smoke test, swap, roll back on failure, prune old images and build cache) | `dsa-autodeploy.timer` on the server | every 5 minutes | rolls back; logged in `autodeploy/deploy.log`; the live check notices |
 | Mirror NIH DSLD's full download into the label store | `dsa-dsld-mirror.timer` on the server | Sundays 07:30 UTC, only when NIH publishes a new download | logged in `mirror/mirror.log`; searches keep using the live API |
 | Security updates, and a reboot when the kernel needs one | unattended-upgrades on the server | daily; reboots at 09:00 UTC | containers restart themselves; the live check notices |
-| Live check of the public service (16 checks; daily also the Pocket portal audit A1-A9 and on-chain card match) | [.github/workflows/live-check.yml](.github/workflows/live-check.yml) | every 30 minutes | opens the issue "Live check failing" and closes it when a run passes |
+| Live check of the public service (17 checks; daily also the Pocket portal audit A1-A9 and on-chain card match) | [.github/workflows/live-check.yml](.github/workflows/live-check.yml) | every 30 minutes | opens the issue "Live check failing" and closes it when a run passes |
 | Every documented command (README, the hackathon form text, examples/agent-flows.sh) run as written against the demo, plus the agent-loop example | [.github/workflows/docs-check.yml](.github/workflows/docs-check.yml) | daily 13:37 UTC, and on demand | the run fails and GitHub emails the owner |
 | NIH fact-sheet freshness (NCCIH automatically; ODS refuses servers, so it's listed for a manual check) | [.github/workflows/factsheets.yml](.github/workflows/factsheets.yml) | monthly | opens the issue "NIH fact sheets updated: review data" |
 | Tests, lint, data freshness, accuracy cases (59) | [.github/workflows/image.yml](.github/workflows/image.yml) | every push and PR | the push's check fails |
@@ -137,6 +137,7 @@ Get a free key at [api.data.gov/signup](https://api.data.gov/signup/). One key r
 | `DSLD_WARM` | `1` | With the store on, a background job fetches popular products into it at about one request per second (queries in [data/warm-queries.json](data/warm-queries.json)). `0` turns it off |
 | `RXNORM` / `RXNORM_BASE_URL` | on / `https://rxnav.nlm.nih.gov/REST` | `off` keeps medication matching to the names in data/interactions.json |
 | `OPENFDA` / `OPENFDA_API_KEY` / `OPENFDA_BASE_URL` | on / none / `https://api.fda.gov` | `off` disables `/v1/products/fda`. Without a key openFDA allows about 1,000 requests a day per IP; answers are cached for a day |
+| `SITE_HOSTS` | `FREE_TIER_HOSTS` | Comma-separated host names that also serve the landing page and discovery files (`/llms.txt`, `/llms-full.txt`, `/agents.md`, `/robots.txt`, `/sitemap.xml`, `/ai.txt`). On any other host, including relays, those paths are 404 JSON and `GET /` is always JSON |
 | `FREE_TIER_HOSTS` | none | Comma-separated host names that get the free-trial quotas (the reference supplier sets its demo host). Requests on any other host, including relays, are never metered |
 | `FREE_TIER_PER_SESSION_MINUTE` | 20 | Burst limit: MCP tool calls per minute per connection |
 | `FREE_TIER_PER_SESSION` / `FREE_TIER_PER_IP` / `FREE_TIER_PER_IP_MCP` / `FREE_TIER_GLOBAL` | 25 / 100 / 1000 / 5000 | Daily quotas: MCP tool calls per connection, REST calls per IP, MCP tool calls per IP, and all free calls. Counters persist in `FREE_TIER_DB` (default `free-tier.sqlite` beside the label store) as salted hashes |
