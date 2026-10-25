@@ -3,7 +3,7 @@
   "name": "io.github.chariot-ventures/dietary-supplement-analysis",
   "title": "Dietary Supplement Analysis (NIH data)",
   "description": "NIH supplement checks: upper limits, drug and herb interactions, FDA recalls, with citations.",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "websiteUrl": "https://github.com/chariot-ventures/dietary-supplement-analysis",
   "repository": {
     "url": "https://github.com/chariot-ventures/dietary-supplement-analysis",

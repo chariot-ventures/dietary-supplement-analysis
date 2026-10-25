@@ -1,7 +1,7 @@
 {
- "version": "0.14.0",
- "passed": 59,
- "total": 59,
+ "version": "0.15.0",
+ "passed": 62,
+ "total": 62,
  "results": [
   {
    "id": "vitd-5000iu",
@@ -335,6 +335,24 @@
   },
   {
    "id": "dgl-licorice",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "bitter-orange",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "cinnamon-metformin",
+   "category": "botanicals",
+   "pass": true,
+   "problems": []
+  },
+  {
+   "id": "senna-not-cinnamon",
    "category": "botanicals",
    "pass": true,
    "problems": []

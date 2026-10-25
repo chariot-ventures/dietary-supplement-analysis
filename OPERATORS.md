@@ -90,7 +90,7 @@ Then start it:
 ```bash
 docker compose -p dietary-supplement-analysis up -d --build
 docker exec dietary-supplement-analysis-backend node -e "fetch('http://127.0.0.1:8080/v1/version').then(r=>r.text()).then(console.log)"
-# {"service":"dietary-supplement-analysis","version":"0.14.0"}
+# {"service":"dietary-supplement-analysis","version":"0.15.0"}
 ```
 
 The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`.
@@ -102,10 +102,10 @@ The image runs as a non-root user and has a Docker `HEALTHCHECK` on `/v1/health`
 | Deploy the newest release (build, smoke test, swap, roll back on failure, prune old images and build cache) | `dsa-autodeploy.timer` on the server | every 5 minutes | rolls back; logged in `autodeploy/deploy.log`; the live check notices |
 | Mirror NIH DSLD's full download into the label store | `dsa-dsld-mirror.timer` on the server | Sundays 07:30 UTC, only when NIH publishes a new download | logged in `mirror/mirror.log`; searches keep using the live API |
 | Security updates, and a reboot when the kernel needs one | unattended-upgrades on the server | daily; reboots at 09:00 UTC | containers restart themselves; the live check notices |
-| Live check of the public service (17 checks; daily also the Pocket portal audit A1-A9 and on-chain card match) | [.github/workflows/live-check.yml](.github/workflows/live-check.yml) | every 30 minutes | opens the issue "Live check failing" and closes it when a run passes |
+| Live check of the public service (17 checks; daily also the Pocket portal audit A1-A9 and on-chain card match) | [.github/workflows/live-check.yml](.github/workflows/live-check.yml) | every 30 minutes (at :13 and :43), daily audit at 13:07 UTC; GitHub often starts scheduled runs late, sometimes only every few hours | opens the issue "Live check failing" and closes it when a run passes |
 | Every documented command (README, the hackathon form text, examples/agent-flows.sh) run as written against the demo, plus the agent-loop example | [.github/workflows/docs-check.yml](.github/workflows/docs-check.yml) | daily 13:37 UTC, and on demand | the run fails and GitHub emails the owner |
 | NIH fact-sheet freshness (NCCIH automatically; ODS refuses servers, so it's listed for a manual check) | [.github/workflows/factsheets.yml](.github/workflows/factsheets.yml) | monthly | opens the issue "NIH fact sheets updated: review data" |
-| Tests, lint, data freshness, accuracy cases (59) | [.github/workflows/image.yml](.github/workflows/image.yml) | every push and PR | the push's check fails |
+| Tests, lint, data freshness, accuracy cases (62) | [.github/workflows/image.yml](.github/workflows/image.yml) | every push and PR | the push's check fails |
 | Multi-arch image for other suppliers | same workflow | every release | |
 | Dependency updates (minor and patch) | [.github/dependabot.yml](.github/dependabot.yml) | weekly (npm), monthly (actions) | PRs, tested by CI; major versions go to the weekly Claude review |
 | Merge passing dependency PRs (npm patch/minor, actions/*) | [.github/workflows/dependabot-automerge.yml](.github/workflows/dependabot-automerge.yml) | when a PR's CI passes | majors get a comment and wait |

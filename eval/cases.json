@@ -1704,6 +1704,97 @@
    "why": "NCCIH's glycyrrhizin warnings concern licorice that contains it; deglycyrrhizinated licorice (DGL) has it removed, so no licorice warning applies."
   },
   {
+   "id": "bitter-orange",
+   "category": "botanicals",
+   "question": "30-year-old man taking a fat burner with bitter orange (Citrus aurantium) fruit extract, 500 mg.",
+   "request": {
+    "age": 30,
+    "sex": "male",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "Citrus aurantium fruit extract",
+        "amount": 500,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": [
+     "bitter-orange"
+    ]
+   },
+   "why": "NCCIH: serious concerns have been raised about supplements containing bitter orange (Citrus aurantium), including reports of abnormal heart rhythms, heart attacks and strokes."
+  },
+  {
+   "id": "cinnamon-metformin",
+   "category": "botanicals",
+   "question": "62-year-old woman on metformin taking a cinnamon bark extract, 1 g.",
+   "request": {
+    "age": 62,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "Cinnamon bark extract",
+        "amount": 1000,
+        "unit": "mg"
+       }
+      ]
+     }
+    ],
+    "medications": [
+     "metformin"
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": [
+     "cinnamon"
+    ],
+    "interactions": [
+     "metformin|cinnamon"
+    ]
+   },
+   "why": "NCCIH (Diabetes and Dietary Supplements): using herbal supplements such as cinnamon with conventional diabetes drugs can cause unwanted side effects."
+  },
+  {
+   "id": "senna-not-cinnamon",
+   "category": "botanicals",
+   "question": "40-year-old woman taking senna (Cassia angustifolia) leaf, 25 mg, for constipation.",
+   "request": {
+    "age": 40,
+    "sex": "female",
+    "products": [
+     {
+      "name": "Supplement",
+      "ingredients": [
+       {
+        "name": "Cassia angustifolia leaf",
+        "amount": 25,
+        "unit": "mg"
+       }
+      ]
+     }
+    ]
+   },
+   "expect": {
+    "above": [],
+    "near": [],
+    "botanicals": []
+   },
+   "why": "Senna's Latin name is Cassia angustifolia, a different plant from cassia cinnamon (Cinnamomum cassia); the cinnamon statements don't apply, and names are never matched by substring."
+  },
+  {
    "id": "food-liver-vita",
    "category": "foods",
    "question": "40-year-old woman: multivitamin with 1500 mcg vitamin A as retinyl palmitate, and she eats 3 oz of beef liver a day.",

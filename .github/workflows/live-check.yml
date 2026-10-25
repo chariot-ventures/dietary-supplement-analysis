@@ -1,11 +1,11 @@
-# Every 30 minutes: check the live service end to end (scripts/live-check.ts).
+# Every 30 minutes (at :13 and :43, off the busy top of the hour; GitHub may still run it late): check the live service end to end (scripts/live-check.ts).
 # Once a day (13:07 UTC) also run the Pocket portal audit and compare the on-chain card.
 # A failure opens (or updates) one issue; the next passing run closes it.
 name: live check
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '13,43 * * * *'
     - cron: '7 13 * * *'
   workflow_dispatch:
     inputs:

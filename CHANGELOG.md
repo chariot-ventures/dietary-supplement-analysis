@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.15.0 (2026-10-25)
+
+- **Three more herbs with NIH warnings:** bitter orange, fenugreek and cinnamon, each from its NIH NCCIH fact sheet (24 herbs and non-nutrients in all).
+  - Bitter orange (Citrus aurantium), common in fat burners and pre-workouts: NIH's heart concerns (abnormal heart rhythms, heart attacks and strokes reported, mostly with multi-ingredient products) are relayed in the summary. Synephrine listed on its own isn't reported as bitter orange, because it may be synthetic.
+  - Fenugreek: possible serious allergic reactions, and a harmful drop in blood sugar at large doses. Its pregnancy statement (amounts above food levels are unsafe and have been linked to birth defects) is relayed for pregnancy or breastfeeding.
+  - Cinnamon: paired with diabetes medicines, as NIH's diabetes page names it. The cassia coumarin and liver statement is listed in `botanicals[]` but kept out of the summary, because cinnamon is common in small amounts. "Cassia" alone isn't matched, because Cassia is also senna, a different plant.
+  - Spanish summaries cover all three. The monthly fact-sheet check now watches their NCCIH pages too.
+- Three new accuracy cases (62 in all): bitter orange, cinnamon with metformin, and senna (Cassia angustifolia, nothing reported).
+- Build and CI upkeep: the Docker image steps moved to their current major versions (setup-qemu 4, setup-buildx 4, login 4, build-push 7) and the docs check to setup-python 7. The live check now runs at :13 and :43 past the hour, which GitHub delays less than the top of the hour. The docs now say GitHub can start scheduled runs late.
+
 ## 0.14.0 (2026-10-21)
 
 - **A website for people and agents at [agents.trackmysupplement.com](https://agents.trackmysupplement.com).** Browsers get a landing page; agents calling the same URL still get JSON.

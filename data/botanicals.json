@@ -1,6 +1,6 @@
 {
  "_doc": "Botanicals and other non-nutrient ingredients with safety signals in NIH NCCIH fact sheets (\"Herbs at a Glance\") and NIH ODS fact sheets. An ingredient is matched when its DSLD ingredient group or name equals one of \"match\" after normalization and removal of trailing plant-part/preparation words (root, leaf, extract, powder...); never by substring. A botanical's exclude_words (whole words in the label name or group) rule a match out, for example DGL licorice. Signals summarize the cited page; the list is not exhaustive. A signal with \"relay\": false is listed in botanicals[] but kept out of agent_summary, because the ingredient is common in small amounts (multivitamins) and the signal concerns concentrated or high-dose products; a dose check surfaces it when one applies.",
- "reviewed": "2026-10-11",
+ "reviewed": "2026-10-25",
  "descriptor_words": [
   "root",
   "roots",
@@ -646,6 +646,97 @@
    "source": {
     "name": "NIH NCCIH: Licorice Root",
     "url": "https://www.nccih.nih.gov/health/licorice-root"
+   }
+  },
+  "bitter-orange": {
+   "name": "Bitter orange",
+   "match": [
+    "bitter orange",
+    "citrus aurantium",
+    "seville orange",
+    "sour orange",
+    "zhi shi",
+    "bitter orange peel",
+    "citrus aurantium peel"
+   ],
+   "signals": [
+    {
+     "kind": "cardiovascular",
+     "summary": "NCCIH: serious concerns have been raised about supplements containing bitter orange; abnormal heart rhythms, heart attacks and strokes have been reported, mostly with products that had several ingredients, and studies of its effect on blood pressure and heart rate disagree."
+    },
+    {
+     "kind": "other",
+     "summary": "NCCIH: in FDA testing few bitter orange supplements matched the synephrine content on their labels, and some contained synthetic amines that are not legal dietary ingredients; the NCAA lists synephrine (bitter orange) as a banned stimulant.",
+     "relay": false
+    }
+   ],
+   "pregnancy": "NCCIH: bitter orange may be unsafe during pregnancy or while breastfeeding.",
+   "medications": [],
+   "source": {
+    "name": "NIH NCCIH: Bitter Orange",
+    "url": "https://www.nccih.nih.gov/health/bitter-orange"
+   }
+  },
+  "fenugreek": {
+   "name": "Fenugreek",
+   "match": [
+    "fenugreek",
+    "trigonella foenum graecum",
+    "trigonella foenum-graecum",
+    "testofen",
+    "testofen fenugreek"
+   ],
+   "signals": [
+    {
+     "kind": "allergy",
+     "summary": "NCCIH: fenugreek can cause allergic reactions, including serious reactions, in some people."
+    },
+    {
+     "kind": "other",
+     "summary": "NCCIH: side effects include diarrhea, nausea and other digestive symptoms; large doses may cause a harmful drop in blood sugar."
+    }
+   ],
+   "pregnancy": "NCCIH: fenugreek in amounts greater than those in food is unsafe during pregnancy and has been linked to birth defects in animals and people; little is known about larger amounts while breastfeeding.",
+   "medications": [],
+   "source": {
+    "name": "NIH NCCIH: Fenugreek",
+    "url": "https://www.nccih.nih.gov/health/fenugreek"
+   }
+  },
+  "cinnamon": {
+   "name": "Cinnamon",
+   "match": [
+    "cinnamon",
+    "ceylon cinnamon",
+    "cassia cinnamon",
+    "cinnamomum verum",
+    "cinnamomum zeylanicum",
+    "cinnamomum cassia",
+    "cinnamomum aromaticum"
+   ],
+   "signals": [
+    {
+     "kind": "liver_injury",
+     "summary": "NCCIH: cassia cinnamon, the most common type sold in the US, contains coumarin, which might cause or worsen liver disease; most products don't contain enough to make you sick, but prolonged use or large amounts could be a problem for people with liver disease. Ceylon cinnamon has only traces, and labels often don't say which type was used.",
+     "relay": false
+    },
+    {
+     "kind": "other",
+     "summary": "NCCIH: larger amounts or long-term use are sometimes linked to digestive problems or allergic reactions.",
+     "relay": false
+    }
+   ],
+   "pregnancy": "NCCIH: Ceylon cinnamon in amounts larger than those in food is considered unsafe during pregnancy; little is known about larger amounts while breastfeeding.",
+   "medications": [
+    {
+     "class": "antidiabetics",
+     "kind": "additive_risk",
+     "summary": "NCCIH (Diabetes and Dietary Supplements): using herbal supplements such as cinnamon with diabetes medicines can cause unwanted side effects; tell your health care provider about any herbal supplements you take."
+    }
+   ],
+   "source": {
+    "name": "NIH NCCIH: Cinnamon",
+    "url": "https://www.nccih.nih.gov/health/cinnamon"
    }
   },
   "creatine": {

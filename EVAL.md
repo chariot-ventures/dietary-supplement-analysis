@@ -1,6 +1,6 @@
 # Accuracy
 
-How do we know the numbers are right? [eval/cases.json](eval/cases.json) holds 59 supplement questions with the answer worked out by hand from the NIH reference tables and fact sheets, independently of the service. Each case says why (for example "5000 IU = 125 mcg; adult UL 100 mcg -> 125%"). The cases cover:
+How do we know the numbers are right? [eval/cases.json](eval/cases.json) holds 62 supplement questions with the answer worked out by hand from the NIH reference tables and fact sheets, independently of the service. Each case says why (for example "5000 IU = 125 mcg; adult UL 100 mcg -> 125%"). The cases cover:
 
 - adult upper limits at, just under, and over each threshold (90% is "near", over 100% is "above")
 - age-specific limits for children, older adults, pregnancy and lactation
@@ -14,7 +14,7 @@ How do we know the numbers are right? [eval/cases.json](eval/cases.json) holds 5
 `npm run eval` runs every case through the service offline and checks the flags, amounts, severity, interactions, botanicals and data gaps. The same check runs in the test suite, so a release can't ship with a failing case.
 
 <!-- service:start -->
-Service 0.14.0: **59 of 59 cases pass.**
+Service 0.15.0: **62 of 62 cases pass.**
 
 | Category | Cases | Pass |
 |---|---|---|
@@ -27,7 +27,7 @@ Service 0.14.0: **59 of 59 cases pass.**
 | no profile | 1 | 1 |
 | medications | 7 | 7 |
 | conditions | 4 | 4 |
-| botanicals | 9 | 9 |
+| botanicals | 12 | 12 |
 | foods | 3 | 3 |
 <!-- service:end -->
 

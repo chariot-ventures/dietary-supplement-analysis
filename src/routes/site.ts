@@ -82,7 +82,7 @@ export function registerSiteRoutes(app: FastifyInstance, deps: Deps, siteHosts: 
       uptime_seconds: Math.round((Date.now() - STARTED_AT.getTime()) / 1000),
       commit: p.commit,
       accuracy: ACCURACY,
-      monitoring: { live_check: 'End-to-end checks of the public service every 30 minutes, and the Pocket portal audit daily', history: `${REPO_URL}/actions/workflows/live-check.yml` },
+      monitoring: { live_check: 'End-to-end checks of the public service on a 30-minute schedule, and the Pocket portal audit daily', history: `${REPO_URL}/actions/workflows/live-check.yml` },
       data: {
         labels_in_store: p.data.labels.mirror?.labels_in_store ?? null,
         nih_label_edition: p.data.labels.mirror?.version ?? null,

@@ -61,6 +61,25 @@ describe('botanical matching', () => {
     expect(matchBotanical(['Licorice', 'Licorice root extract'])?.id).toBe('licorice-root');
   });
 
+  it('matches the herbs added in 0.15.0 by exact name only', () => {
+    expect(matchBotanical(['Bitter Orange', 'Bitter Orange fruit extract'])?.id).toBe('bitter-orange');
+    expect(matchBotanical(['Citrus aurantium fruit extract'])?.id).toBe('bitter-orange');
+    expect(matchBotanical(['Bitter Orange peel'])?.id).toBe('bitter-orange');
+    // Synephrine on its own may be synthetic, and plain orange is a food: neither is reported as bitter orange.
+    expect(matchBotanical(['Synephrine'])).toBeNull();
+    expect(matchBotanical(['p-Synephrine'])).toBeNull();
+    expect(matchBotanical(['Orange'])).toBeNull();
+    expect(matchBotanical(['Sweet orange peel'])).toBeNull();
+    expect(matchBotanical(['Fenugreek seed extract'])?.id).toBe('fenugreek');
+    expect(matchBotanical(['Trigonella foenum-graecum seed'])?.id).toBe('fenugreek');
+    expect(matchBotanical(['Cinnamon bark powder'])?.id).toBe('cinnamon');
+    expect(matchBotanical(['Ceylon Cinnamon'])?.id).toBe('cinnamon');
+    expect(matchBotanical(['Cinnamomum cassia bark extract'])?.id).toBe('cinnamon');
+    // "Cassia" alone could be Cassia (senna), a different plant.
+    expect(matchBotanical(['Cassia'])).toBeNull();
+    expect(matchBotanical(['Cassia angustifolia leaf'])).toBeNull();
+  });
+
   it('splits sentences without breaking on "St."', () => {
     expect(firstSentence("NCCIH: St. John's wort can weaken drugs. Second.")).toBe("NCCIH: St. John's wort can weaken drugs.");
   });
@@ -143,6 +162,28 @@ describe('botanicals in stack_analyze', () => {
     expect(plain.botanicals[0].id).toBe('saw-palmetto');
     expect(plain.agent_summary).not.toMatch(/saw palmetto/i);
     expect((await analyze({ age: 30, sex: 'female', life_stage: 'pregnancy', products })).agent_summary).toMatch(/saw palmetto may be unsafe during pregnancy/);
+  });
+
+  it('relays the bitter orange heart warning and pairs cinnamon with diabetes medicines', async () => {
+    const body = await analyze({
+      age: 55,
+      sex: 'male',
+      medications: ['metformin'],
+      products: [custom([{ name: 'Citrus aurantium fruit extract', amount: 500, unit: 'mg' }, { name: 'cinnamon bark extract', amount: 500, unit: 'mg' }, { name: 'fenugreek seed', amount: 600, unit: 'mg' }])],
+    });
+    expect(body.botanicals.map((b: { id: string }) => b.id).sort()).toEqual(['bitter-orange', 'cinnamon', 'fenugreek']);
+    const pairs = body.interactions.findings.filter((x: { botanical_ids: string[] }) => x.botanical_ids.length).map((x: { trigger: string; botanical_ids: string[] }) => `${x.trigger}:${x.botanical_ids[0]}`);
+    expect(pairs).toEqual(['metformin:cinnamon']);
+    expect(body.agent_summary).toMatch(/Bitter orange \(in Herbal\): NCCIH: serious concerns have been raised/);
+    expect(body.agent_summary).not.toMatch(/coumarin/);
+  });
+
+  it('relays the fenugreek and cinnamon pregnancy statements only in pregnancy', async () => {
+    const products = [custom([{ name: 'fenugreek seed extract', amount: 600, unit: 'mg' }, { name: 'ceylon cinnamon', amount: 1000, unit: 'mg' }])];
+    const preg = (await analyze({ age: 30, sex: 'female', life_stage: 'pregnancy', products })).agent_summary;
+    expect(preg).toMatch(/fenugreek in amounts greater than those in food is unsafe during pregnancy/);
+    expect(preg).toMatch(/Ceylon cinnamon in amounts larger than those in food is considered unsafe during pregnancy/);
+    expect((await analyze({ age: 30, sex: 'female', products })).agent_summary).not.toMatch(/pregnan/);
   });
 
   it('gives a compact list in the summary detail', async () => {
