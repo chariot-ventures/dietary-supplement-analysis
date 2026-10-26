@@ -37,7 +37,7 @@
     "fda-nutrient-database": "1.0.2",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.71.1",
+    "typescript-eslint": "^8.72.0",
     "vitest": "^5.0.3"
   }
 }
