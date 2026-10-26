@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.1 (2026-10-26)
+
+Automatic release (weekly release train):
+
+- build(deps-dev): bump typescript-eslint (#11)
+
 ## 0.15.0 (2026-10-25)
 
 - **Three more herbs with NIH warnings:** bitter orange, fenugreek and cinnamon, each from its NIH NCCIH fact sheet (24 herbs and non-nutrients in all).
