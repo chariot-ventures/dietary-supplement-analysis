@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.2 (2026-11-09)
+
+Automatic release (weekly release train):
+
+- build(deps): bump fastify (#13)
+
 ## 0.15.1 (2026-10-26)
 
 Automatic release (weekly release train):
